@@ -19,4 +19,9 @@ public class MainActivity extends AppCompatActivity {
         game.dollarClick();
         guiManager.changeCurrentMoneyText();
     }
+
+    public void investmentClick(View view) {
+        game.investmentClick();
+        guiManager.setMoneyPerSecText();
+    }
 }

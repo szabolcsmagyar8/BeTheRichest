@@ -2,6 +2,8 @@ package com.betherichest.android;
 
 import java.text.NumberFormat;
 import java.util.Locale;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * Created by Szabi on 2018.03.04..
@@ -11,6 +13,9 @@ public class Game {
     private double currentMoney = 0d;
     private double moneyPerTap = 1d;
     private double moneyPerSec = 0d;
+
+    public static Integer FPS = 24;
+    Timer T = new Timer();
 
     private static Game instance;
 
@@ -51,5 +56,28 @@ public class Game {
 
     public void dollarClick() {
         currentMoney += moneyPerTap;
+    }
+
+    public void investmentClick() {
+        moneyPerSec++;
+    }
+
+    public Game() {
+        StartTimer();
+    }
+
+    private void StartTimer() {
+        T.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                earnMoney(getMoneyPerSec() / FPS);
+
+            }
+        }, 0, 1000 / FPS);
+
+    }
+
+    private void earnMoney(double money) {
+        currentMoney += money;
     }
 }

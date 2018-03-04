@@ -29,4 +29,8 @@ public class GUIManager {
     public void changeCurrentMoneyText() {
         currentMoneyText.setText(game.getCurrentMoneyAsString());
     }
+
+    public void setMoneyPerSecText() {
+        moneyPerSecText.setText(game.getMoneyPerSecAsString());
+    }
 }
