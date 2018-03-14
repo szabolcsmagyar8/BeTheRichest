@@ -92,4 +92,8 @@ public class InvestmentAdapter extends BaseAdapter{
 
         return listItemView;
     }
+
+    public void notifyDataSetChanged() {
+        super.notifyDataSetChanged();
+    }
 }

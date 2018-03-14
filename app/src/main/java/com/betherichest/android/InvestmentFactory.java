@@ -32,7 +32,7 @@ public class InvestmentFactory {
                 "Pedalo",
                 400,
                 1,
-                "Get a used pedalo and rent it out on the beach, it's a lot of fun.",
+                "getInstance a used pedalo and rent it out on the beach, it's a lot of fun.",
                 R.drawable.pedalo
         ), map);
 //        AddToMap(new Investment(
@@ -109,7 +109,7 @@ public class InvestmentFactory {
 //                "Casino",
 //                35722000,
 //                3750,
-//                "Manage a casino to get a lot of money from rich risk takers.",
+//                "Manage a casino to getInstance a lot of money from rich risk takers.",
 //                R.drawable.casino
 //        ), map);
 //        AddToMap(new Investment(

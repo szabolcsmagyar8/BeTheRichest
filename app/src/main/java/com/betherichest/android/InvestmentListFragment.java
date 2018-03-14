@@ -51,7 +51,7 @@ public class InvestmentListFragment extends android.support.v4.app.Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        game = Game.Get();
+        game = Game.getInstance();
 
         List<Investment> items = game.getInvestments();
 

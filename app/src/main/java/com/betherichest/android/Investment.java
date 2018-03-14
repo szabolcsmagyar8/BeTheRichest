@@ -1,7 +1,5 @@
 package com.betherichest.android;
 
-import java.util.ArrayList;
-
 /**
  * Created by Szabi on 2018. 03. 14..
  */
@@ -64,7 +62,7 @@ public class Investment {
     }
 
     public boolean isBuyable() {
-        return Game.Get().getCurrentMoney() >= getPrice();
+        return Game.getInstance().getCurrentMoney() >= getPrice();
     }
 
     public double getMoneyPerSecPerRank() {
