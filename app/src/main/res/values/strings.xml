@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Be The Richest</string>
+    <string name="not_enough_money">You don\'t have enough money</string>
 </resources>

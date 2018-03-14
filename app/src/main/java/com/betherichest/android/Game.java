@@ -1,6 +1,14 @@
 package com.betherichest.android;
 
+import android.os.Build;
+import android.support.annotation.RequiresApi;
+
 import java.text.NumberFormat;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -10,14 +18,17 @@ import java.util.TimerTask;
  */
 
 public class Game {
+    private static Game instance;
+
     private double currentMoney = 0d;
     private double moneyPerTap = 1d;
     private double moneyPerSec = 0d;
 
     public static Integer FPS = 24;
+
     Timer T = new Timer();
 
-    private static Game instance;
+    private HashMap<Integer, Investment> investments;
 
     private NumberFormat nf = NumberFormat.getNumberInstance(Locale.FRANCE);
 
@@ -27,6 +38,12 @@ public class Game {
             instance = new Game();
         }
         return instance;
+    }
+
+    public Game() {
+        StartTimer();
+        //FactoryManager.StartProduction();
+        investments = InvestmentFactory.createInvestments();
     }
 
     public double getCurrentMoney() {
@@ -59,11 +76,7 @@ public class Game {
     }
 
     public void investmentClick() {
-        moneyPerSec++;
-    }
 
-    public Game() {
-        StartTimer();
     }
 
     private void StartTimer() {
@@ -79,5 +92,26 @@ public class Game {
 
     private void earnMoney(double money) {
         currentMoney += money;
+    }
+
+    private void deduceMoney(double price) {
+        currentMoney -= price;
+    }
+
+    public List<Investment> getInvestments() {
+        ArrayList<Investment> list = new ArrayList<>(investments.values());
+        Collections.sort(list, new Comparator<Investment>() {
+            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+            @Override
+            public int compare(Investment o1, Investment o2) {
+                return Integer.compare(o1.getId(), o2.getId());
+            }
+        });
+        return list;
+    }
+
+    public void buyInvestment(Investment selectedInvestment) {
+        deduceMoney(selectedInvestment.getPrice());
+        selectedInvestment.increaseRank();
     }
 }
