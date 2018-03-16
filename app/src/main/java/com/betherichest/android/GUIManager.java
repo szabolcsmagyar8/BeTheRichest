@@ -10,7 +10,8 @@ import android.widget.TextView;
 
 public class GUIManager {
     View view;
-    Game game = Game.Get();
+    Game game;
+    private static GUIManager instance;
 
     TextView currentMoneyText;
     TextView moneyPerSecText;
@@ -18,6 +19,12 @@ public class GUIManager {
     ImageView dollarImage;
 
     public GUIManager(View view) {
+        if (instance == null) {
+            instance = this;
+        }
+
+        game = Game.getInstance();
+
         this.view = view;
 
         currentMoneyText = view.findViewById(R.id.currentMoneyText);
@@ -30,7 +37,17 @@ public class GUIManager {
         currentMoneyText.setText(game.getCurrentMoneyAsString());
     }
 
-    public void setMoneyPerSecText() {
+    public void setMainUITexts() {
+        currentMoneyText.setText(game.getCurrentMoneyAsString());
         moneyPerSecText.setText(game.getMoneyPerSecAsString());
+        moneyPerTapText.setText(game.getMoneyPerTapAsString());
+    }
+
+    public void onTotalMoneyChanged(String currentMoneyAsString) {
+        currentMoneyText.setText(currentMoneyAsString);
+    }
+
+    public static GUIManager getInstance() {
+        return instance;
     }
 }
