@@ -1,5 +1,7 @@
 package com.betherichest.android;
 
+import android.net.ConnectivityManager;
+
 import java.text.NumberFormat;
 import java.util.Locale;
 import java.util.Timer;
@@ -80,4 +82,5 @@ public class Game {
     private void earnMoney(double money) {
         currentMoney += money;
     }
+
 }
