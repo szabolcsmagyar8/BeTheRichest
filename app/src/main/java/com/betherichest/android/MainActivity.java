@@ -30,13 +30,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void openInvestmentList() {
-        FragmentManager fm = getSupportFragmentManager();
-        FragmentTransaction ft = fm.beginTransaction();
-        //ft.setCustomAnimations(R.anim.slide_in_bottom, R.anim.slide_out_bottom);
-        ft.addToBackStack(InvestmentListFragment.class.getName());
-        ft.replace(R.id.investment_list_container, new InvestmentListFragment());
-        ft.commit();
+        FragmentManager manager = getSupportFragmentManager();
+        guiManager.openFragment(manager);
 
-        //setDollarMargin(0);
+
     }
 }

@@ -52,14 +52,18 @@ public class InvestmentListFragment extends android.support.v4.app.Fragment {
         super.onActivityCreated(savedInstanceState);
 
         game = Game.getInstance();
-
         List<Investment> items = game.getInvestments();
 
         final InvestmentAdapter adapter = new InvestmentAdapter(items);
-
         final ListView listView = rootView.findViewById(R.id.investment_listview);
         listView.setAdapter(adapter);
 
+        game.adapterRefreshListener = new AdapterRefreshListener() {
+            @Override
+            public void refreshAdapter() {
+                adapter.notifyDataSetChanged();
+            }
+        };
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

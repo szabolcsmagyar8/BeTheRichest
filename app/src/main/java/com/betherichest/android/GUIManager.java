@@ -1,5 +1,7 @@
 package com.betherichest.android;
 
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -17,6 +19,7 @@ public class GUIManager {
     TextView moneyPerSecText;
     TextView moneyPerTapText;
     ImageView dollarImage;
+    ImageView smallDollar;
 
     public GUIManager(View view) {
         if (instance == null) {
@@ -31,6 +34,15 @@ public class GUIManager {
         moneyPerSecText = view.findViewById(R.id.moneyPerSecText);
         moneyPerTapText = view.findViewById(R.id.moneyPerTapText);
         dollarImage = view.findViewById(R.id.dollar);
+        smallDollar = view.findViewById(R.id.smallDollar);
+        smallDollar.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                game.cheat();
+                return true;
+            }
+        });
+
     }
 
     public void changeCurrentMoneyText() {
@@ -49,5 +61,12 @@ public class GUIManager {
 
     public static GUIManager getInstance() {
         return instance;
+    }
+
+    public void openFragment(FragmentManager manager) {
+        FragmentTransaction ft = manager.beginTransaction();
+        ft.addToBackStack(InvestmentListFragment.class.getName());
+        ft.replace(R.id.investment_list_container, new InvestmentListFragment());
+        ft.commit();
     }
 }

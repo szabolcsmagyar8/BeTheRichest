@@ -40,6 +40,8 @@ public class Game {
 
     public Handler handler;
     public MoneyChangedListener moneyChangedListener;
+    public AdapterRefreshListener adapterRefreshListener;
+
     //endregion
 
     //region CONSTRUCTORS
@@ -99,28 +101,35 @@ public class Game {
             @Override
             public void run() {
                 earnMoney(getMoneyPerSec() / FPS);
-                postMoneyChanged();
             }
         }, 0, 1000 / FPS);
 
+        T.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                postAdapterRefreshRequest();
+            }
+        }, 0, 300);
+    }
+
+    private void postAdapterRefreshRequest() {
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                if (adapterRefreshListener != null) {
+                    adapterRefreshListener.refreshAdapter();
+                }
+            }
+        });
     }
 
     private void InitializeEventListeners() {
         moneyChangedListener = new MoneyChangedListener() {
             @Override
-            public void onTotalMoneyChanged() {
+            public void onMoneyChanged() {
                 GUIManager.getInstance().setMainUITexts();
-            }
 
-//            @Override
-//            public void onMoneyPerTapChanged(String moneyPerTap) {
-//                moneyPerTapText.setText(moneyPerTap);
-//            }
-//
-//            @Override
-//            public void onMoneyPerSecChanged(String moneyPerSec) {
-//                moneyPerSecText.setText(moneyPerSec);
-//            }
+            }
         };
     }
 
@@ -129,7 +138,7 @@ public class Game {
             @Override
             public void run() {
                 if (moneyChangedListener != null) {
-                    moneyChangedListener.onTotalMoneyChanged();
+                    moneyChangedListener.onMoneyChanged();
                 }
             }
         });
@@ -137,6 +146,7 @@ public class Game {
 
     private void earnMoney(double money) {
         currentMoney += money;
+        postMoneyChanged();
     }
 
     private void deduceMoney(double price) {
@@ -170,7 +180,11 @@ public class Game {
         moneyPerSec = sum;
 
         if (moneyChangedListener != null) {
-            moneyChangedListener.onTotalMoneyChanged();
+            moneyChangedListener.onMoneyChanged();
         }
+    }
+
+    public void cheat() {
+        moneyPerSec *= 10;
     }
 }

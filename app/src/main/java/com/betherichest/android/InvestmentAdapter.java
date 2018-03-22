@@ -58,12 +58,7 @@ public class InvestmentAdapter extends BaseAdapter{
             listItemView = view;
         }
 
-        nameTextView = listItemView.findViewById(R.id.name);
-        priceTextView = listItemView.findViewById(R.id.price);
-        dpsPerRankTextView = listItemView.findViewById(R.id.dpsPerRank);
-        rankTextView = listItemView.findViewById(R.id.rank);
-        totalDPSTextView = listItemView.findViewById(R.id.total);
-        imageView = listItemView.findViewById(R.id.upgradeIcon);
+        initializeListUIElements(listItemView);
 
         Investment investment = items.get(position);
         Glide
@@ -74,23 +69,32 @@ public class InvestmentAdapter extends BaseAdapter{
                 .dontTransform()
                 .into(imageView);
 
+        setUIElementValues(investment);
 
+        return listItemView;
+    }
+
+    private void setUIElementValues(Investment investment) {
         nameTextView.setText(investment.getName());
-
-        if (investment.isBuyable()) {
-            nameTextView.setTextColor(Color.parseColor("#0c6f04"));
-        } else {
-            nameTextView.setTextColor(Color.parseColor("#760c07"));
-        }
-
-
         priceTextView.setText(nf.format(investment.getPrice()));
         rankTextView.setText(String.valueOf(investment.getRank()));
         dpsPerRankTextView.setText("DPS: " + String.valueOf(nf.format(investment.getMoneyPerSecPerRank())));
         totalDPSTextView.setText("Total: " + String.valueOf(nf.format((investment.getMoneyPerSec())))); //+ " (" + String.format("%.2f", investment.getDPSPercentage()) + "%)"));
         imageView.setBackgroundResource(investment.getImageResource());
+        if (investment.isBuyable()) {
+            nameTextView.setTextColor(Color.parseColor("#0c6f04"));
+        } else {
+            nameTextView.setTextColor(Color.parseColor("#760c07"));
+        }
+    }
 
-        return listItemView;
+    private void initializeListUIElements(View listItemView) {
+        nameTextView = listItemView.findViewById(R.id.name);
+        priceTextView = listItemView.findViewById(R.id.price);
+        dpsPerRankTextView = listItemView.findViewById(R.id.dpsPerRank);
+        rankTextView = listItemView.findViewById(R.id.rank);
+        totalDPSTextView = listItemView.findViewById(R.id.total);
+        imageView = listItemView.findViewById(R.id.upgradeIcon);
     }
 
     public void notifyDataSetChanged() {
