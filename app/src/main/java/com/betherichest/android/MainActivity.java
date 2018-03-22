@@ -9,6 +9,11 @@ import android.view.View;
 public class MainActivity extends AppCompatActivity {
     Game game = Game.getInstance();
     GUIManager guiManager;
+    Communicator comm;
+
+    public MainActivity() {
+        comm = new Communicator("krisz094.asuscomm.com");
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,5 +39,17 @@ public class MainActivity extends AppCompatActivity {
         guiManager.openFragment(manager);
 
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        comm.GETEndpoint("lognew");
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        comm.GETEndpoint("lognew");
     }
 }

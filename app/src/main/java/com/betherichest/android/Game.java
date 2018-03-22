@@ -4,7 +4,6 @@ import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.annotation.RequiresApi;
-
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -128,7 +127,6 @@ public class Game {
             @Override
             public void onMoneyChanged() {
                 GUIManager.getInstance().setMainUITexts();
-
             }
         };
     }
