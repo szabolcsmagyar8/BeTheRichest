@@ -1,31 +1,42 @@
 package com.betherichest.android;
 
-
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ListView;
+import android.widget.GridView;
 import android.widget.Toast;
 
 import java.util.List;
+import java.util.Timer;
 
 /**
- * Created by Szabi on 2018. 03. 14..
+ * Created by Szabi on 2018.03.27..
  */
 
-
-public class InvestmentListFragment extends android.support.v4.app.Fragment {
+public class UpgradeListFragment extends Fragment {
     View rootView;
+    Game game;
+
     Toast noMoneyToast = null;
 
-    Game game;
+    List<Upgrade> items;
+
+    public static InvestmentListFragment newInstance() {
+
+        Bundle args = new Bundle();
+
+        InvestmentListFragment fragment = new InvestmentListFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        rootView = inflater.inflate(R.layout.investment_listview, container, false);
+        rootView = inflater.inflate(R.layout.upgrade_listview, container, false);
         return rootView;
     }
 
@@ -44,10 +55,10 @@ public class InvestmentListFragment extends android.support.v4.app.Fragment {
         super.onActivityCreated(savedInstanceState);
 
         game = Game.getInstance();
-        List<Investment> items = game.getInvestments();
 
-        final InvestmentAdapter adapter = new InvestmentAdapter(items);
-        final ListView listView = rootView.findViewById(R.id.investment_listview);
+        items = game.getUpgrades();
+        final UpgradeAdapter adapter = new UpgradeAdapter(items);
+        final GridView listView = rootView.findViewById(R.id.upgrade_listview);
         listView.setAdapter(adapter);
 
         game.adapterRefreshListener = new AdapterRefreshListener() {
@@ -61,9 +72,9 @@ public class InvestmentListFragment extends android.support.v4.app.Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                Investment selectedInvestment = (Investment) adapter.getItem(position);
-                if (selectedInvestment.isBuyable()) {
-                    game.buyInvestment(selectedInvestment);
+                Upgrade selectedUpgrade = adapter.getItem(position);
+                if (selectedUpgrade.isBuyable()) {
+                    game.buyUpgrade(selectedUpgrade);
                     adapter.notifyDataSetChanged();
                 } else {
                     if (noMoneyToast != null) {
@@ -77,7 +88,6 @@ public class InvestmentListFragment extends android.support.v4.app.Fragment {
                             );
                     noMoneyToast.show();
                 }
-
             }
         });
     }

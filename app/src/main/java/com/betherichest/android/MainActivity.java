@@ -10,6 +10,7 @@ public class MainActivity extends AppCompatActivity {
     Game game = Game.getInstance();
     GUIManager guiManager;
     Communicator comm;
+    FragmentManager manager = getSupportFragmentManager();
 
     public MainActivity() {
         comm = new Communicator("krisz094.asuscomm.com");
@@ -30,15 +31,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void investmentsClick(View view) {
-        game.investmentsClick();
-        openInvestmentList();
+        guiManager.openFragment(manager, InvestmentListFragment.class.getName(), R.id.investment_list_container, new InvestmentListFragment());
     }
 
-    private void openInvestmentList() {
-        FragmentManager manager = getSupportFragmentManager();
-        guiManager.openFragment(manager);
-
-
+    public void upgradesClick(View view) {
+        guiManager.openFragment(manager, UpgradeListFragment.class.getName(), R.id.upgrade_list_container, new UpgradeListFragment());
     }
 
     @Override

@@ -13,9 +13,11 @@ public class Investment {
     private double basePrice;
     private double baseDpS;
     private String description;
-    private final double coeff = 1.15;
+    private final double coefficient = 1.15;
     private int rank = 0;
     private int imageResource;
+
+
     public Investment(String name, double basePrice, double baseDpS, String description, int imageResource) {
         this.id = currentId++;
         this.name = name;
@@ -50,7 +52,7 @@ public class Investment {
     }
 
     public double getPrice() {
-        return (double) Math.round(basePrice * Math.pow(coeff, getRank()));
+        return (double) Math.round(basePrice * Math.pow(coefficient, getRank()));
     }
 
     public double getMoneyPerSec() {

@@ -116,6 +116,7 @@
                 android:layout_width="70dp"
                 android:layout_height="70dp"
                 android:layout_centerHorizontal="true"
+                android:onClick="upgradesClick"
                 app:srcCompat="@drawable/upgrade" />
 
             <TextView
@@ -179,30 +180,11 @@
         android:layout_below="@+id/dollar" />
 
     <FrameLayout
-        android:id="@+id/gambling_container"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true" />
-
-    <FrameLayout
-        android:id="@+id/leaderboard_list_container"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentBottom="true" />
-
-    <FrameLayout
-        android:id="@+id/upgrade_container"
+        android:id="@+id/upgrade_list_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentBottom="true"
-
         android:layout_below="@+id/dollar" />
 
-    <FrameLayout
-        android:id="@+id/help_container"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        />
 
 </RelativeLayout>

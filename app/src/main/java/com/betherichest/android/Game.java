@@ -34,6 +34,7 @@ public class Game {
     Timer T = new Timer();
 
     private HashMap<Integer, Investment> investments;
+    private HashMap<Integer, Upgrade> upgrades;
 
     private NumberFormat nf = NumberFormat.getNumberInstance(Locale.FRANCE);
 
@@ -53,6 +54,7 @@ public class Game {
 
     public Game() {
         investments = InvestmentFactory.createInvestments();
+        upgrades = UpgradeFactory.createUpgrades();
 
         handler = new Handler(Looper.getMainLooper());
         InitializeEventListeners();
@@ -85,14 +87,36 @@ public class Game {
         nf.setMaximumFractionDigits(1);
         return nf.format(moneyPerSec) + " $ per sec";
     }
+
+    public List<Investment> getInvestments() {
+        ArrayList<Investment> list = new ArrayList<>(investments.values());
+        Collections.sort(list, new Comparator<Investment>() {
+
+            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+            @Override
+            public int compare(Investment o1, Investment o2) {
+                return Integer.compare(o1.getId(), o2.getId());
+            }
+        });
+        return list;
+    }
+
+    public List<Upgrade> getUpgrades() {
+        ArrayList<Upgrade> list = new ArrayList<>(upgrades.values());
+        Collections.sort(list, new Comparator<Upgrade>() {
+            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+            @Override
+            public int compare(Upgrade o1, Upgrade o2) {
+                return Double.compare(o1.getPrice(), o2.getPrice());
+            }
+        });
+        return list;
+    }
+
     //endregion
 
     public void dollarClick() {
         currentMoney += moneyPerTap;
-    }
-
-    public void investmentsClick() {
-
     }
 
     private void StartTimer() {
@@ -151,22 +175,14 @@ public class Game {
         currentMoney -= price;
     }
 
-    public List<Investment> getInvestments() {
-        ArrayList<Investment> list = new ArrayList<>(investments.values());
-        Collections.sort(list, new Comparator<Investment>() {
-
-            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-            @Override
-            public int compare(Investment o1, Investment o2) {
-                return Integer.compare(o1.getId(), o2.getId());
-            }
-        });
-        return list;
-    }
-
     public void buyInvestment(Investment selectedInvestment) {
         deduceMoney(selectedInvestment.getPrice());
         selectedInvestment.increaseRank();
+        recalculateAcquirableMoney();
+    }
+
+    public void buyUpgrade(Upgrade selectedUpgrade) {
+        deduceMoney(selectedUpgrade.getPrice());
         recalculateAcquirableMoney();
     }
 

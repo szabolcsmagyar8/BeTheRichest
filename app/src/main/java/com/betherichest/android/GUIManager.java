@@ -1,5 +1,6 @@
 package com.betherichest.android;
 
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
@@ -63,10 +64,10 @@ public class GUIManager {
         return instance;
     }
 
-    public void openFragment(FragmentManager manager) {
+    public void openFragment(FragmentManager manager, String className, int containerId, Fragment newFragment) {
         FragmentTransaction ft = manager.beginTransaction();
-        ft.addToBackStack(InvestmentListFragment.class.getName());
-        ft.replace(R.id.investment_list_container, new InvestmentListFragment());
+        ft.addToBackStack(className);
+        ft.replace(containerId, newFragment);
         ft.commit();
     }
 }
