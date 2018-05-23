@@ -54,7 +54,7 @@ public class Game {
 
     public Game() {
         investments = InvestmentFactory.createInvestments();
-        upgrades = UpgradeFactory.createUpgrades();
+        upgrades = UpgradeFactory.createUpgrades(getInvestments());
 
         handler = new Handler(Looper.getMainLooper());
         InitializeEventListeners();

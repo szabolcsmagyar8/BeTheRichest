@@ -16,15 +16,16 @@ public class Investment {
     private final double coefficient = 1.15;
     private int rank = 0;
     private int imageResource;
+    private int[] upgradeEffectMultipliers;
 
-
-    public Investment(String name, double basePrice, double baseDpS, String description, int imageResource) {
+    public Investment(String name, double basePrice, double baseDpS, String description, int imageResource, int[] upgradeEffectMultipliers) {
         this.id = currentId++;
         this.name = name;
         this.basePrice = basePrice;
         this.baseDpS = baseDpS;
         this.description = description;
         this.imageResource = imageResource;
+        this.upgradeEffectMultipliers = upgradeEffectMultipliers;
     }
 
     public int getId() {
@@ -61,6 +62,10 @@ public class Investment {
 
     public int getImageResource() {
         return imageResource;
+    }
+
+    public int[] getUpgradeEffectMultipliers() {
+        return upgradeEffectMultipliers;
     }
 
     public boolean isBuyable() {

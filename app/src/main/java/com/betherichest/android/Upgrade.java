@@ -9,17 +9,19 @@ public class Upgrade {
 
     private int id;
     private double price;
+    private int multiplierEffect;
     private int imageResource;
     private int color;
     private boolean isDisplayable;
     private String description;
 
-    public Upgrade(String description, double price, int imageResource, int color) {
+    public Upgrade(String description, double price, int multiplierEffect, int imageResource, int color) {
         this.id = currentId++;
         this.description = description;
         this.price = price;
-        this.imageResource = imageResource;
+        this.multiplierEffect = multiplierEffect;
         this.color = color;
+        this.imageResource = imageResource;
     }
 
     public int getColor() {
