@@ -83,16 +83,30 @@ public class UpgradeAdapter extends BaseAdapter {
         } else {
             labelTextView.setTextSize(TypedValue.COMPLEX_UNIT_DIP,25);
         }
-        SetTextColorByAvailability(upgrade);
+        setTextColorByAvailability(upgrade);
+        convertThousandsToSIUnit(upgrade);
 
         return listItemView;
     }
 
-    private void SetTextColorByAvailability(Upgrade upgrade) {
+    private void setTextColorByAvailability(Upgrade upgrade) {
         if (upgrade.isBuyable()) {
             priceTextView.setTextColor(Color.parseColor("#90EE90"));
         } else {
             priceTextView.setTextColor(Color.parseColor("#F2003C"));
+        }
+    }
+
+    private void convertThousandsToSIUnit(Upgrade upgrade) {
+        double price = upgrade.getPrice();
+        if (price < 10000) {
+            priceTextView.setText(nf.format(price));
+        } else if (price >= 10000 && price < 1000000) {
+            priceTextView.setText(nf.format(price / 1000d) + "K");
+        } else if (price >= 1000000 && price < 1000000000) {
+            priceTextView.setText(nf.format(price / 1000000d) + "M");
+        } else if (price >= 1000000000) {
+            priceTextView.setText(nf.format(price / 1000000000d) + "B");
         }
     }
 
