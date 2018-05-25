@@ -1,7 +1,6 @@
 package com.betherichest.android;
 
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -21,7 +20,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        guiManager = new GUIManager(this.findViewById(android.R.id.content));
+        guiManager = new GUIManager(this.findViewById(android.R.id.content),getApplicationContext());
         guiManager.setMainUITexts();
     }
 
@@ -30,12 +29,16 @@ public class MainActivity extends AppCompatActivity {
         guiManager.changeCurrentMoneyText();
     }
 
-    public void investmentsClick(View view) {
+    public void investmentsIconClick(View view) {
         guiManager.openFragment(manager, InvestmentListFragment.class.getName(), R.id.investment_list_container, new InvestmentListFragment());
     }
 
-    public void upgradesClick(View view) {
-        guiManager.openFragment(manager, UpgradeListFragment.class.getName(), R.id.upgrade_list_container, new UpgradeListFragment());
+    public void upgradesIconClick(View view) {
+        if (game.getDisplayableUpgrades().size() == 0) {
+            guiManager.showNoUpgradeToast();
+        } else {
+            guiManager.openFragment(manager, UpgradeListFragment.class.getName(), R.id.upgrade_list_container, new UpgradeListFragment());
+        }
     }
 
     @Override

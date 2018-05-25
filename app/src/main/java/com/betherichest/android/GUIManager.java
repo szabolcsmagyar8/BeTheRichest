@@ -1,28 +1,34 @@
 package com.betherichest.android;
 
+import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 /**
  * Created by Szabi on 2018.03.04..
  */
 
 public class GUIManager {
-    View view;
-    Game game;
+    private View view;
+    private Game game;
     private static GUIManager instance;
+    private Context context;
 
-    TextView currentMoneyText;
-    TextView moneyPerSecText;
-    TextView moneyPerTapText;
-    ImageView dollarImage;
-    ImageView smallDollar;
+    private TextView currentMoneyText;
+    private TextView moneyPerSecText;
+    private TextView moneyPerTapText;
+    private ImageView dollarImage;
+    private ImageView smallDollar;
 
-    public GUIManager(View view) {
+    private Toast noAvailableUpgradesToast = null;
+
+    public GUIManager(View view, Context context) {
+        this.context = context;
         if (instance == null) {
             instance = this;
         }
@@ -43,7 +49,6 @@ public class GUIManager {
                 return true;
             }
         });
-
     }
 
     public void changeCurrentMoneyText() {
@@ -69,5 +74,18 @@ public class GUIManager {
         ft.addToBackStack(className);
         ft.replace(containerId, newFragment);
         ft.commit();
+    }
+
+    public void showNoUpgradeToast() {
+        if (noAvailableUpgradesToast != null) {
+            noAvailableUpgradesToast.cancel();
+        }
+        noAvailableUpgradesToast =
+                Toast.makeText(
+                        context,
+                        R.string.no_upgrades_available,
+                        Toast.LENGTH_SHORT
+                );
+        noAvailableUpgradesToast.show();
     }
 }

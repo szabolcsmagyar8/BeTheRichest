@@ -16,7 +16,6 @@ public class InvestmentFactory {
     }
 
     public static List<Investment> getCreatedInvestments() {
-        createInvestments();
         return investments;
     }
 

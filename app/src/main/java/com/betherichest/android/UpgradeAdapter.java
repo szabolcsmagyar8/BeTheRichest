@@ -83,9 +83,9 @@ public class UpgradeAdapter extends BaseAdapter {
         priceTextView.setText(nf.format(upgrade.getPrice()));
         labelTextView.setTextColor(upgrade.getColor());
         if (labelTextView.getText().length() > 3) {
-            labelTextView.setTextSize(TypedValue.COMPLEX_UNIT_DIP,23);
+            labelTextView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 23);
         } else {
-            labelTextView.setTextSize(TypedValue.COMPLEX_UNIT_DIP,25);
+            labelTextView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 25);
         }
         setTextColorByAvailability(upgrade);
         convertThousandsToSIUnit(upgrade);

@@ -22,9 +22,8 @@ public class UpgradeListFragment extends Fragment {
     View rootView;
     Game game;
 
-    Toast noMoneyToast = null;
-
     List<Upgrade> items;
+    Toast noMoneyToast = null;
 
     public static InvestmentListFragment newInstance() {
 
@@ -58,6 +57,7 @@ public class UpgradeListFragment extends Fragment {
         game = Game.getInstance();
 
         items = game.getDisplayableUpgrades();
+
         final UpgradeAdapter adapter = new UpgradeAdapter(items);
         final GridView listView = rootView.findViewById(R.id.upgrade_listview);
         listView.setAdapter(adapter);

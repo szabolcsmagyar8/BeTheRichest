@@ -9,7 +9,6 @@ import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Timer;
@@ -197,11 +196,11 @@ public class Game {
         selectedUpgrade.getRelevantInvestment().addPurchaseRelevantUpgrade(selectedUpgrade); // to store the purchased upgrades in a separate list for every investment instance
         deduceMoney(selectedUpgrade.getPrice());
 
-        if(selectedUpgrade.getCategory() == UpgradeCategory.InvestmentUpgrade){
+        if (selectedUpgrade.getCategory() == UpgradeCategory.InvestmentUpgrade) {
             recalculateMoneyPerSecond();
         }
-        if(selectedUpgrade.getCategory() == UpgradeCategory.TapUpgrade){
-           // recalculateMoneyPerTap();
+        if (selectedUpgrade.getCategory() == UpgradeCategory.TapUpgrade) {
+            // recalculateMoneyPerTap();
         }
     }
 
