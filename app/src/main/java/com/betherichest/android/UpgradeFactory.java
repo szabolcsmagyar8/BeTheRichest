@@ -1,5 +1,6 @@
 package com.betherichest.android;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -8,16 +9,21 @@ import java.util.List;
  */
 
 public class UpgradeFactory {
-    static int currentId = 0;
-    static int[] priceMultipliers = new int[]{10, 50, 500, 5000, 10000, 50000, 100000, 500000};
+    private static int currentId = 0;
+    private static int[] priceMultipliers = new int[]{10, 50, 500, 5000, 10000, 50000, 100000, 500000};
+    private static int[] requiredRanks = new int[]{1, 5, 10, 20, 30, 50, 70, 100};
 
-    private static void AddToMap(Upgrade upgrade, HashMap<Integer, Upgrade> map) {
-        map.put(upgrade.getId(), upgrade);
+    private static List<Upgrade> upgrades = new ArrayList<>();
+
+    public static List<Upgrade> getCreatedUpgrades() {
+        return upgrades;
     }
 
-    public static HashMap<Integer, Upgrade> createUpgrades(List<Investment> investments) {
-        HashMap<Integer, Upgrade> map = new HashMap<>();
+    private static void addUpgrade(Upgrade upgrade) {
+        upgrades.add(upgrade);
+    }
 
+    public static void createUpgrades(List<Investment> investments) {
         for (Investment investment : investments) {
             long basePrice = investment.getBasePrice();
             int[] upgradeEffectMultipliers = investment.getUpgradeEffectMultipliers();
@@ -26,14 +32,14 @@ public class UpgradeFactory {
                         "",
                         basePrice * priceMultipliers[i],
                         upgradeEffectMultipliers[i],
+                        requiredRanks[i],
                         investment.getImageResource(),
                         10,
                         UpgradeCategory.InvestmentUpgrade,
                         investment);
-                AddToMap(upgrade, map);
+                addUpgrade(upgrade);
                 investment.addRelevantUpgrade(upgrade);
+            }
         }
-        }
-        return map;
     }
 }

@@ -65,7 +65,6 @@ public class UpgradeListFragment extends Fragment {
         game.adapterRefreshListener = new AdapterRefreshListener() {
             @Override
             public void refreshAdapter() {
-                adapter.setItems(game.getDisplayableUpgrades());    //refreshing adapter when an upgrade is bought
                 adapter.notifyDataSetChanged();
             }
         };
@@ -77,6 +76,7 @@ public class UpgradeListFragment extends Fragment {
                 Upgrade selectedUpgrade = adapter.getItem(position);
                 if (selectedUpgrade.isBuyable()) {
                     game.buyUpgrade(selectedUpgrade);
+                    adapter.setItems(game.getDisplayableUpgrades());    //refreshing adapter when an upgrade is bought
                     adapter.notifyDataSetChanged();
                 } else {
                     if (noMoneyToast != null) {

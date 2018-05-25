@@ -34,8 +34,8 @@ public class Game {
 
     private Timer T = new Timer();
 
-    private HashMap<Integer, Investment> investments;
-    private HashMap<Integer, Upgrade> upgrades;
+    private List<Investment> investments;
+    private List<Upgrade> upgrades;
 
     private NumberFormat nf = NumberFormat.getNumberInstance(Locale.FRANCE);
 
@@ -54,8 +54,9 @@ public class Game {
     }
 
     public Game() {
-        investments = InvestmentFactory.createInvestments();
-        upgrades = UpgradeFactory.createUpgrades(getInvestments());
+        investments = InvestmentFactory.getCreatedInvestments();
+        UpgradeFactory.createUpgrades(investments);
+        upgrades = UpgradeFactory.getCreatedUpgrades();
 
         handler = new Handler(Looper.getMainLooper());
         InitializeEventListeners();
@@ -90,28 +91,25 @@ public class Game {
     }
 
     public List<Investment> getInvestments() {
-        ArrayList<Investment> list = new ArrayList<>(investments.values());
-        Collections.sort(list, new Comparator<Investment>() {
-
+        Collections.sort(investments, new Comparator<Investment>() {
             @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
             public int compare(Investment o1, Investment o2) {
                 return Integer.compare(o1.getId(), o2.getId());
             }
         });
-        return list;
+        return investments;
     }
 
     public List<Upgrade> getUpgrades() {
-        ArrayList<Upgrade> list = new ArrayList<>(upgrades.values());
-        Collections.sort(list, new Comparator<Upgrade>() {
+        Collections.sort(upgrades, new Comparator<Upgrade>() {
             @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
             public int compare(Upgrade o1, Upgrade o2) {
                 return Double.compare(o1.getPrice(), o2.getPrice());
             }
         });
-        return list;
+        return upgrades;
     }
 
     public List<Upgrade> getDisplayableUpgrades() {
@@ -123,7 +121,6 @@ public class Game {
         }
         return displayableUpgrades;
     }
-
     //endregion
 
     public void dollarClick() {
@@ -146,6 +143,12 @@ public class Game {
         }, 0, 300);
     }
 
+
+    private void deduceMoney(double price) {
+        currentMoney -= price;
+    }
+
+    //region EVENTHANDLERS
     private void InitializeEventListeners() {
         moneyChangedListener = new MoneyChangedListener() {
             @Override
@@ -176,14 +179,11 @@ public class Game {
             }
         });
     }
+    //endregion
 
     private void earnMoney(double money) {
         currentMoney += money;
         postMoneyChanged();
-    }
-
-    private void deduceMoney(double price) {
-        currentMoney -= price;
     }
 
     public void buyInvestment(Investment selectedInvestment) {
@@ -207,7 +207,7 @@ public class Game {
 
     private void recalculateMoneyPerSecond() {
         double sum = START_MONEY_PER_SEC;
-        for (Investment investment : investments.values()) {
+        for (Investment investment : investments) {
             sum += investment.getMoneyPerSec();
         }
 

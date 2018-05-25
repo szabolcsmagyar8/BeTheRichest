@@ -7,6 +7,7 @@ enum UpgradeCategory {
 public class Upgrade extends GameElement{
     static int currentId = 0;
     private int multiplierEffect;
+    private int requiredRank;
     private int color;
     private boolean displayable;
     private boolean purchased = false;
@@ -15,11 +16,12 @@ public class Upgrade extends GameElement{
 
     private UpgradeCategory category;
 
-    public Upgrade(String description, double price, int multiplierEffect, int imageResource, int color, UpgradeCategory category, Investment relevantInvestment) {
+    public Upgrade(String description, double price, int multiplierEffect, int requiredRank, int imageResource, int color, UpgradeCategory category, Investment relevantInvestment) {
         this.id = currentId++;
         this.description = description;
         this.price = price;
         this.multiplierEffect = multiplierEffect;
+        this.requiredRank = requiredRank;
         this.color = color;
         this.imageResource = imageResource;
         this.category = category;
@@ -39,7 +41,7 @@ public class Upgrade extends GameElement{
     }
 
     public boolean isDisplayable() {
-        return !purchased;
+        return !purchased && relevantInvestment.getRank() >= requiredRank;
     }
 
     public boolean isPurchased() {
