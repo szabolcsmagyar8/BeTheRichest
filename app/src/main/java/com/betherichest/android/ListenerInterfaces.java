@@ -12,3 +12,5 @@ interface MoneyChangedListener {
 interface AdapterRefreshListener {
     void refreshAdapter();
 }
+
+

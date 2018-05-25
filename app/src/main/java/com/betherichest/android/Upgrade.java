@@ -1,44 +1,41 @@
 package com.betherichest.android;
 
-/**
- * Created by Szabi on 2018.03.22..
- */
+enum UpgradeCategory {
+    InvestmentUpgrade, TapUpgrade, GamblingUpgrade,
+}
 
-public class Upgrade {
+public class Upgrade extends GameElement{
     static int currentId = 0;
-    private int id;
-
-    private double price;
     private int multiplierEffect;
-    private int imageResource;
     private int color;
     private boolean displayable;
     private boolean purchased = false;
-    private String description;
 
-    public Upgrade(String description, double price, int multiplierEffect, int imageResource, int color) {
+    private Investment relevantInvestment;
+
+    private UpgradeCategory category;
+
+    public Upgrade(String description, double price, int multiplierEffect, int imageResource, int color, UpgradeCategory category, Investment relevantInvestment) {
         this.id = currentId++;
         this.description = description;
         this.price = price;
         this.multiplierEffect = multiplierEffect;
         this.color = color;
         this.imageResource = imageResource;
+        this.category = category;
+        this.relevantInvestment = relevantInvestment;
     }
 
     public int getColor() {
         return color;
     }
 
-    public int getId() {
-        return id;
+    public int getMultiplierEffect() {
+        return multiplierEffect;
     }
 
-    public double getPrice() {
-        return price;
-    }
-
-    public int getImageResource() {
-        return imageResource;
+    public UpgradeCategory getCategory() {
+        return category;
     }
 
     public boolean isDisplayable() {
@@ -53,7 +50,7 @@ public class Upgrade {
         this.purchased = purchased;
     }
 
-    public boolean isBuyable() {
-        return Game.getInstance().getCurrentMoney() >= getPrice();
+    public Investment getRelevantInvestment() {
+        return relevantInvestment;
     }
 }

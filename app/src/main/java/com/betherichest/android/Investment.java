@@ -7,21 +7,18 @@ import java.util.List;
  * Created by Szabi on 2018. 03. 14..
  */
 
-public class Investment {
+public class Investment extends GameElement {
     static int currentId = 0;
 
-    private int id;
-
-    private String name;
     private double basePrice;
     private double baseDpS;
-    private String description;
+
     private final double coefficient = 1.15;
     private int rank = 0;
-    private int imageResource;
 
     private int[] upgradeEffectMultipliers;
-    private List<Integer> relevantUpgradeIds = new ArrayList<>();
+    private List<Upgrade> relevantUpgrades = new ArrayList<>();
+    private List<Upgrade> purchasedRelevantUpgrades = new ArrayList<>();
 
     public Investment(String name, double basePrice, double baseDpS, String description, int imageResource, int[] upgradeEffectMultipliers) {
         this.id = currentId++;
@@ -57,17 +54,19 @@ public class Investment {
         return Math.round(basePrice);
     }
 
+    @Override
     public double getPrice() {
-        return (double) Math.round(basePrice * Math.pow(coefficient, getRank()));
+        return (double) Math.round(basePrice * Math.pow(coefficient, rank));
     }
 
     public double getMoneyPerSec() {
-
-        double moneyPerSec = getRank() * baseDpS;
-        for (int id: relevantUpgradeIds){
-           // moneyPerSec*=
+        double moneyPerSec = rank * baseDpS;
+        for (Upgrade upgrade : purchasedRelevantUpgrades) {
+            if (upgrade.isPurchased()) {
+                moneyPerSec *= upgrade.getMultiplierEffect();
+            }
         }
-        return getRank() * baseDpS;
+        return moneyPerSec;
     }
 
     public int getImageResource() {
@@ -78,15 +77,24 @@ public class Investment {
         return upgradeEffectMultipliers;
     }
 
+    public double getMoneyPerSecPerRank() {
+        return rank == 0 ? baseDpS : getMoneyPerSec() / rank;
+    }
+
+    @Override
     public boolean isBuyable() {
         return Game.getInstance().getCurrentMoney() >= getPrice();
     }
 
-    public double getMoneyPerSecPerRank() {
-        return baseDpS;
+    public List<Upgrade> getPurchasedRelevantUpgrades() {
+        return purchasedRelevantUpgrades;
     }
 
-    public void addRelevantUpgradeId(int id) {
-        relevantUpgradeIds.add(id);
+    public void addRelevantUpgrade(Upgrade upgrade) {
+        relevantUpgrades.add(upgrade);
+    }
+
+    public void addPurchaseRelevantUpgrade(Upgrade upgrade) {
+        purchasedRelevantUpgrades.add(upgrade);
     }
 }

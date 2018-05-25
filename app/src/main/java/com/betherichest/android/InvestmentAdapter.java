@@ -81,6 +81,10 @@ public class InvestmentAdapter extends BaseAdapter{
         dpsPerRankTextView.setText("DPS: " + String.valueOf(nf.format(investment.getMoneyPerSecPerRank())));
         totalDPSTextView.setText("Total: " + String.valueOf(nf.format((investment.getMoneyPerSec())))); //+ " (" + String.format("%.2f", investment.getDPSPercentage()) + "%)"));
         imageView.setBackgroundResource(investment.getImageResource());
+        setTextColorByAvailability(investment);
+    }
+
+    private void setTextColorByAvailability(Investment investment) {
         if (investment.isBuyable()) {
             nameTextView.setTextColor(Color.parseColor("#0c6f04"));
         } else {

@@ -27,10 +27,12 @@ public class UpgradeFactory {
                         basePrice * priceMultipliers[i],
                         upgradeEffectMultipliers[i],
                         investment.getImageResource(),
-                        10);
+                        10,
+                        UpgradeCategory.InvestmentUpgrade,
+                        investment);
                 AddToMap(upgrade, map);
-                investment.addRelevantUpgradeId(upgrade.getId());
-            }
+                investment.addRelevantUpgrade(upgrade);
+        }
         }
         return map;
     }

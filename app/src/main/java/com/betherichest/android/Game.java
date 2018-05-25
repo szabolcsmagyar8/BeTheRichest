@@ -189,20 +189,28 @@ public class Game {
     public void buyInvestment(Investment selectedInvestment) {
         deduceMoney(selectedInvestment.getPrice());
         selectedInvestment.increaseRank();
-        recalculateAcquirableMoney();
+        recalculateMoneyPerSecond();
     }
 
     public void buyUpgrade(Upgrade selectedUpgrade) {
         selectedUpgrade.setPurchased(true);
+        selectedUpgrade.getRelevantInvestment().addPurchaseRelevantUpgrade(selectedUpgrade); // to store the purchased upgrades in a separate list for every investment instance
         deduceMoney(selectedUpgrade.getPrice());
-        recalculateAcquirableMoney();
+
+        if(selectedUpgrade.getCategory() == UpgradeCategory.InvestmentUpgrade){
+            recalculateMoneyPerSecond();
+        }
+        if(selectedUpgrade.getCategory() == UpgradeCategory.TapUpgrade){
+           // recalculateMoneyPerTap();
+        }
     }
 
-    private void recalculateAcquirableMoney() {
+    private void recalculateMoneyPerSecond() {
         double sum = START_MONEY_PER_SEC;
         for (Investment investment : investments.values()) {
             sum += investment.getMoneyPerSec();
         }
+
         moneyPerSec = sum;
 
         if (moneyChangedListener != null) {
