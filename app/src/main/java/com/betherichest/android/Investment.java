@@ -1,5 +1,8 @@
 package com.betherichest.android;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by Szabi on 2018. 03. 14..
  */
@@ -16,7 +19,9 @@ public class Investment {
     private final double coefficient = 1.15;
     private int rank = 0;
     private int imageResource;
+
     private int[] upgradeEffectMultipliers;
+    private List<Integer> relevantUpgradeIds = new ArrayList<>();
 
     public Investment(String name, double basePrice, double baseDpS, String description, int imageResource, int[] upgradeEffectMultipliers) {
         this.id = currentId++;
@@ -57,6 +62,11 @@ public class Investment {
     }
 
     public double getMoneyPerSec() {
+
+        double moneyPerSec = getRank() * baseDpS;
+        for (int id: relevantUpgradeIds){
+           // moneyPerSec*=
+        }
         return getRank() * baseDpS;
     }
 
@@ -74,5 +84,9 @@ public class Investment {
 
     public double getMoneyPerSecPerRank() {
         return baseDpS;
+    }
+
+    public void addRelevantUpgradeId(int id) {
+        relevantUpgradeIds.add(id);
     }
 }

@@ -6,13 +6,14 @@ package com.betherichest.android;
 
 public class Upgrade {
     static int currentId = 0;
-
     private int id;
+
     private double price;
     private int multiplierEffect;
     private int imageResource;
     private int color;
-    private boolean isDisplayable;
+    private boolean displayable;
+    private boolean purchased = false;
     private String description;
 
     public Upgrade(String description, double price, int multiplierEffect, int imageResource, int color) {
@@ -38,6 +39,18 @@ public class Upgrade {
 
     public int getImageResource() {
         return imageResource;
+    }
+
+    public boolean isDisplayable() {
+        return !purchased;
+    }
+
+    public boolean isPurchased() {
+        return purchased;
+    }
+
+    public void setPurchased(boolean purchased) {
+        this.purchased = purchased;
     }
 
     public boolean isBuyable() {

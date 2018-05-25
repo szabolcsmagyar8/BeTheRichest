@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import java.util.List;
 import java.util.Timer;
+import java.util.stream.Collectors;
 
 /**
  * Created by Szabi on 2018.03.27..
@@ -56,7 +57,7 @@ public class UpgradeListFragment extends Fragment {
 
         game = Game.getInstance();
 
-        items = game.getUpgrades();
+        items = game.getDisplayableUpgrades();
         final UpgradeAdapter adapter = new UpgradeAdapter(items);
         final GridView listView = rootView.findViewById(R.id.upgrade_listview);
         listView.setAdapter(adapter);
@@ -64,6 +65,7 @@ public class UpgradeListFragment extends Fragment {
         game.adapterRefreshListener = new AdapterRefreshListener() {
             @Override
             public void refreshAdapter() {
+                adapter.setItems(game.getDisplayableUpgrades());    //refreshing adapter when an upgrade is bought
                 adapter.notifyDataSetChanged();
             }
         };

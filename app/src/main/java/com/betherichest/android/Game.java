@@ -4,6 +4,7 @@ import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.annotation.RequiresApi;
+
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -31,7 +32,7 @@ public class Game {
 
     public static Integer FPS = 24;
 
-    Timer T = new Timer();
+    private Timer T = new Timer();
 
     private HashMap<Integer, Investment> investments;
     private HashMap<Integer, Upgrade> upgrades;
@@ -113,6 +114,16 @@ public class Game {
         return list;
     }
 
+    public List<Upgrade> getDisplayableUpgrades() {
+        ArrayList<Upgrade> displayableUpgrades = new ArrayList<>();
+        for (Upgrade upgrade : getUpgrades()) {
+            if (upgrade.isDisplayable()) {
+                displayableUpgrades.add(upgrade);
+            }
+        }
+        return displayableUpgrades;
+    }
+
     //endregion
 
     public void dollarClick() {
@@ -130,9 +141,18 @@ public class Game {
         T.schedule(new TimerTask() {
             @Override
             public void run() {
-                postAdapterRefreshRequest();
+                postAdapterRefreshRequest();    // the adapter need to be refreshed continously, providing a constant update in availability colors and displayable elements in the list
             }
         }, 0, 300);
+    }
+
+    private void InitializeEventListeners() {
+        moneyChangedListener = new MoneyChangedListener() {
+            @Override
+            public void onMoneyChanged() {
+                GUIManager.getInstance().setMainUITexts();
+            }
+        };
     }
 
     private void postAdapterRefreshRequest() {
@@ -144,15 +164,6 @@ public class Game {
                 }
             }
         });
-    }
-
-    private void InitializeEventListeners() {
-        moneyChangedListener = new MoneyChangedListener() {
-            @Override
-            public void onMoneyChanged() {
-                GUIManager.getInstance().setMainUITexts();
-            }
-        };
     }
 
     private void postMoneyChanged() {
@@ -182,6 +193,7 @@ public class Game {
     }
 
     public void buyUpgrade(Upgrade selectedUpgrade) {
+        selectedUpgrade.setPurchased(true);
         deduceMoney(selectedUpgrade.getPrice());
         recalculateAcquirableMoney();
     }
@@ -199,6 +211,7 @@ public class Game {
     }
 
     public void cheat() {
+        moneyPerSec += 10;
         moneyPerSec *= 10;
     }
 }

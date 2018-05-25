@@ -26,14 +26,14 @@ import java.util.Locale;
 
 public class UpgradeAdapter extends BaseAdapter {
     private List<Upgrade> items;
-    TextView priceTextView;
-    ImageView imageView;
-    TextView labelTextView;
-    RelativeLayout relativeLayout;
+    private TextView priceTextView;
+    private ImageView imageView;
+    private TextView labelTextView;
+    private RelativeLayout relativeLayout;
 
-    NumberFormat nf = NumberFormat.getNumberInstance(Locale.FRANCE);
+    private NumberFormat nf = NumberFormat.getNumberInstance(Locale.FRANCE);
 
-    public UpgradeAdapter(List<Upgrade> items) {
+    protected UpgradeAdapter(List<Upgrade> items) {
         this.items = items;
     }
 
@@ -50,6 +50,10 @@ public class UpgradeAdapter extends BaseAdapter {
     @Override
     public long getItemId(int position) {
         return position;
+    }
+
+    public void setItems(List<Upgrade> items) {
+        this.items = items;
     }
 
     @Override

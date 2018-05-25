@@ -22,13 +22,14 @@ public class UpgradeFactory {
             long basePrice = investment.getBasePrice();
             int[] upgradeEffectMultipliers = investment.getUpgradeEffectMultipliers();
             for (int i = 0; i < upgradeEffectMultipliers.length; i++) {
-                AddToMap(new Upgrade(
+                Upgrade upgrade = new Upgrade(
                         "",
                         basePrice * priceMultipliers[i],
                         upgradeEffectMultipliers[i],
                         investment.getImageResource(),
-                        10
-                ), map);
+                        10);
+                AddToMap(upgrade, map);
+                investment.addRelevantUpgradeId(upgrade.getId());
             }
         }
         return map;
