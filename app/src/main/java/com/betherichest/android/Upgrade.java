@@ -1,31 +1,20 @@
 package com.betherichest.android;
 
-enum UpgradeCategory {
-    InvestmentUpgrade, TapUpgrade, GamblingUpgrade,
-}
-
-public class Upgrade extends GameElement{
+public abstract class Upgrade extends GameElement{
     static int currentId = 0;
     private int multiplierEffect;
-    private int requiredRank;
     private int color;
     private boolean displayable;
-    private boolean purchased = false;
+    protected boolean purchased = false;
 
-    private Investment relevantInvestment;
 
-    private UpgradeCategory category;
-
-    public Upgrade(String description, double price, int multiplierEffect, int requiredRank, int imageResource, int color, UpgradeCategory category, Investment relevantInvestment) {
+    public Upgrade(String description, double price, int multiplierEffect, int imageResource, int color) {
         this.id = currentId++;
         this.description = description;
         this.price = price;
         this.multiplierEffect = multiplierEffect;
-        this.requiredRank = requiredRank;
         this.color = color;
         this.imageResource = imageResource;
-        this.category = category;
-        this.relevantInvestment = relevantInvestment;
     }
 
     public int getColor() {
@@ -36,13 +25,7 @@ public class Upgrade extends GameElement{
         return multiplierEffect;
     }
 
-    public UpgradeCategory getCategory() {
-        return category;
-    }
-
-    public boolean isDisplayable() {
-        return !purchased && relevantInvestment.getRank() >= requiredRank;
-    }
+    public abstract boolean isDisplayable();
 
     public boolean isPurchased() {
         return purchased;
@@ -50,9 +33,5 @@ public class Upgrade extends GameElement{
 
     public void setPurchased(boolean purchased) {
         this.purchased = purchased;
-    }
-
-    public Investment getRelevantInvestment() {
-        return relevantInvestment;
     }
 }

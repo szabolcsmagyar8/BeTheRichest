@@ -193,15 +193,18 @@ public class Game {
 
     public void buyUpgrade(Upgrade selectedUpgrade) {
         selectedUpgrade.setPurchased(true);
-        selectedUpgrade.getRelevantInvestment().addPurchaseRelevantUpgrade(selectedUpgrade); // to store the purchased upgrades in a separate list for every investment instance
+        if (selectedUpgrade instanceof InvestmentUpgrade) {
+            ((InvestmentUpgrade) selectedUpgrade).getRelevantInvestment().addPurchaseRelevantUpgrade(selectedUpgrade); // to store the purchased upgrades in a separate list for every investment instance
+        }
+
         deduceMoney(selectedUpgrade.getPrice());
 
-        if (selectedUpgrade.getCategory() == UpgradeCategory.InvestmentUpgrade) {
-            recalculateMoneyPerSecond();
-        }
-        if (selectedUpgrade.getCategory() == UpgradeCategory.TapUpgrade) {
-            // recalculateMoneyPerTap();
-        }
+//        if (selectedUpgrade.getCategory() == UpgradeCategory.InvestmentUpgrade) {
+        recalculateMoneyPerSecond();
+//        }
+//        if (selectedUpgrade.getCategory() == UpgradeCategory.TapUpgrade) {
+//            // recalculateMoneyPerTap();
+//        }
     }
 
     private void recalculateMoneyPerSecond() {

@@ -30,7 +30,7 @@ public class InvestmentFactory {
                 0.1,                //BASE MONEY PER SECOND
                 "Home made lemonade with fresh lemon is the best refreshing drink in the summer.", //DESCRIPTION
                 R.drawable.lemonadestand,     //ICON,
-                new int[]{2, 2, 2, 3, 3, 5, 8, 10}
+                new int[]{2, 2, 2, 3, 3, 5, 8, 10}    //UPGRADE EFFECT MULTIPLIERS
         ));
         addInvestment(new Investment(
                 "Trampoline",
