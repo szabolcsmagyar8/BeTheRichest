@@ -11,6 +11,6 @@ class TapUpgrade extends Upgrade {
 
     @Override
     public boolean isDisplayable() {
-        return true;
+        return !purchased;
     }
 }

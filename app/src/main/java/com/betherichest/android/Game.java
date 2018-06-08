@@ -42,6 +42,8 @@ public class Game {
     public MoneyChangedListener moneyChangedListener;
     public AdapterRefreshListener adapterRefreshListener;
 
+    ArrayList<Upgrade> purchasedTapUpgrades = new ArrayList<>();
+
     //endregion
 
     //region CONSTRUCTORS
@@ -193,27 +195,39 @@ public class Game {
 
     public void buyUpgrade(Upgrade selectedUpgrade) {
         selectedUpgrade.setPurchased(true);
-        if (selectedUpgrade instanceof InvestmentUpgrade) {
-            ((InvestmentUpgrade) selectedUpgrade).getRelevantInvestment().addPurchaseRelevantUpgrade(selectedUpgrade); // to store the purchased upgrades in a separate list for every investment instance
-        }
-
         deduceMoney(selectedUpgrade.getPrice());
 
-//        if (selectedUpgrade.getCategory() == UpgradeCategory.InvestmentUpgrade) {
-        recalculateMoneyPerSecond();
-//        }
-//        if (selectedUpgrade.getCategory() == UpgradeCategory.TapUpgrade) {
-//            // recalculateMoneyPerTap();
-//        }
+        if (selectedUpgrade instanceof InvestmentUpgrade) {
+            ((InvestmentUpgrade) selectedUpgrade).getRelevantInvestment().addPurchaseRelevantUpgrade(selectedUpgrade); // to store the purchased upgrades in a separate list for every investment instance
+            recalculateMoneyPerSecond();
+        }
+        if (selectedUpgrade instanceof TapUpgrade) {
+            purchasedTapUpgrades.add(selectedUpgrade);
+            recalculateMoneyPerTap();
+        }
+
     }
 
     private void recalculateMoneyPerSecond() {
         double sum = START_MONEY_PER_SEC;
         for (Investment investment : investments) {
-            sum += investment.getMoneyPerSec();
+            sum += investment.getMoneyPerSec(); // upgrades are calculated into
         }
 
         moneyPerSec = sum;
+
+        if (moneyChangedListener != null) {
+            moneyChangedListener.onMoneyChanged();
+        }
+    }
+
+    private void recalculateMoneyPerTap() {
+        double sum = START_MONEY_PER_TAP;
+        for (Upgrade tapUpgrade: purchasedTapUpgrades) {
+            sum *= tapUpgrade.getMultiplierEffect();
+        }
+
+        moneyPerTap = sum;
 
         if (moneyChangedListener != null) {
             moneyChangedListener.onMoneyChanged();
