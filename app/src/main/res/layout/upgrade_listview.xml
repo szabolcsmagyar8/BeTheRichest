@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:clickable="true"
     tools:context=".MainActivity"
-    android:background="@drawable/redwall"
+    android:background="@drawable/blackwood"
     >
 
     <GridView

@@ -58,7 +58,7 @@ public class UpgradeListFragment extends Fragment {
 
         items = game.getDisplayableUpgrades();
 
-        final UpgradeAdapter adapter = new UpgradeAdapter(items);
+        final UpgradeAdapter adapter = new UpgradeAdapter(items, getContext());
         final GridView listView = rootView.findViewById(R.id.upgrade_listview);
         listView.setAdapter(adapter);
 

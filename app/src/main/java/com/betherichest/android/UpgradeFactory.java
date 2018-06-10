@@ -1,5 +1,7 @@
 package com.betherichest.android;
 
+import android.graphics.Color;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,8 +31,16 @@ public class UpgradeFactory {
             new TapUpgradeConfig(20000000, 8),
     };
 
-    private static int[] colors = new int[]{10, 20, 30, 40, 50, 60, 70, 80};
-
+    private static int[] colors = new int[]{
+            Color.parseColor("#ffffff"),   // Simple White
+            Color.parseColor("#32ff00"),   // Common Green
+            Color.parseColor("#fff700"),   // Uncommon Yellow
+            Color.parseColor("#3daaff"),   // Rare Lightblue
+            Color.parseColor("#ff8b00"),   // Special Orange
+            Color.parseColor("#a20000"),   // Legendary Red
+            Color.parseColor("#1300b4"),   // Epic Blue
+            Color.parseColor("#380064"),   // Mysterious Purple
+    };
 
     private static List<Upgrade> upgrades = new ArrayList<>();
 
