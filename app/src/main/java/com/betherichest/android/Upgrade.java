@@ -8,13 +8,11 @@ public abstract class Upgrade extends GameElement{
     protected boolean purchased = false;
 
 
-    public Upgrade(String description, double price, int multiplierEffect, int imageResource, int color) {
+    public Upgrade(double price, int multiplierEffect, int color) {
         this.id = currentId++;
-        this.description = description;
         this.price = price;
         this.multiplierEffect = multiplierEffect;
         this.color = color;
-        this.imageResource = imageResource;
     }
 
     public int getColor() {
