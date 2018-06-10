@@ -224,7 +224,7 @@ public class Game {
     private void recalculateMoneyPerTap() {
         double sum = START_MONEY_PER_TAP;
         for (Upgrade tapUpgrade: purchasedTapUpgrades) {
-            sum *= tapUpgrade.getMultiplierEffect();
+            sum *= tapUpgrade.getMultiplier();
         }
 
         moneyPerTap = sum;

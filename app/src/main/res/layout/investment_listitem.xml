@@ -10,10 +10,10 @@
         android:layout_width="55dp"
         android:layout_height="55dp"
         android:layout_alignBottom="@+id/linearLayout"
+        android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_centerInParent="true"
-        android:scaleType="centerCrop"
-        android:layout_alignParentLeft="true" />
+        android:scaleType="centerCrop" />
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -22,8 +22,8 @@
         android:layout_centerInParent="true"
         android:layout_marginLeft="8dp"
         android:layout_toEndOf="@+id/upgradeIcon"
-        android:orientation="vertical"
-        android:layout_toRightOf="@+id/upgradeIcon">
+        android:layout_toRightOf="@+id/upgradeIcon"
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/name"
@@ -55,33 +55,49 @@
                 android:layout_marginLeft="5dp"
                 android:layout_marginTop="6dp"
                 android:layout_toEndOf="@+id/price"
+                android:layout_toRightOf="@+id/price"
                 android:adjustViewBounds="true"
-                app:srcCompat="@drawable/dollarsmall"
-                android:layout_toRightOf="@+id/price" />
+                app:srcCompat="@drawable/dollarsmall" />
 
             <TextView
                 android:id="@+id/dpsPerRank"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
                 android:layout_marginEnd="5dp"
+                android:layout_marginRight="5dp"
                 android:layout_marginTop="4dp"
                 android:text="DPS: +500"
                 android:textSize="13sp"
-                android:textStyle="bold"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="5dp" />
+                android:textStyle="bold" />
 
         </RelativeLayout>
 
-        <TextView
-            android:id="@+id/total"
+        <RelativeLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Total"
-            android:textSize="13sp"
-            android:textStyle="bold" />
+            android:layout_height="wrap_content">
 
+            <TextView
+                android:id="@+id/total"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Total"
+                android:textSize="13sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/upg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginEnd="5dp"
+                android:layout_marginRight="5dp"
+                android:text="Upgrade"
+                android:textSize="13sp"
+                android:textStyle="bold" />
+        </RelativeLayout>
     </LinearLayout>
 
     <TextView
@@ -89,11 +105,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
         android:layout_marginEnd="10dp"
+        android:layout_marginRight="10dp"
         android:text="12"
         android:textSize="28sp"
-        android:textStyle="bold"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="10dp" />
+        android:textStyle="bold" />
 
 </RelativeLayout>

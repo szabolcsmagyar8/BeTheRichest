@@ -2,16 +2,16 @@ package com.betherichest.android;
 
 public abstract class Upgrade extends GameElement{
     static int currentId = 0;
-    private int multiplierEffect;
+    private int multiplier;
     private int color;
     private boolean displayable;
     protected boolean purchased = false;
 
 
-    public Upgrade(double price, int multiplierEffect, int color) {
+    public Upgrade(double price, int multiplier, int color) {
         this.id = currentId++;
         this.price = price;
-        this.multiplierEffect = multiplierEffect;
+        this.multiplier = multiplier;
         this.color = color;
     }
 
@@ -19,8 +19,8 @@ public abstract class Upgrade extends GameElement{
         return color;
     }
 
-    public int getMultiplierEffect() {
-        return multiplierEffect;
+    public int getMultiplier() {
+        return multiplier;
     }
 
     public abstract boolean isDisplayable();

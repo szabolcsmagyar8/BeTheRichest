@@ -69,7 +69,7 @@ public class UpgradeFactory {
                         upgradeEffectMultipliersForActualInvestment[i],
                         investmentUpgradeConfigs[i].getRequiredRank(),
                         investment.getImageResource(),
-                        10,
+                        colors[i],
                         investment);
 
                 addUpgrade(upgrade);

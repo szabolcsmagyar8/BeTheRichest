@@ -1,14 +1,10 @@
 package com.betherichest.android;
 
-import android.content.Context;
+import android.content.res.ColorStateList;
 import android.graphics.Color;
-import android.graphics.Point;
-import android.graphics.drawable.GradientDrawable;
 import android.util.TypedValue;
-import android.view.Display;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -28,7 +24,7 @@ public class UpgradeAdapter extends BaseAdapter {
     private List<Upgrade> items;
     private TextView priceTextView;
     private ImageView imageView;
-    private TextView labelTextView;
+    private TextView effectTextView;
     private RelativeLayout relativeLayout;
 
     private NumberFormat nf = NumberFormat.getNumberInstance(Locale.FRANCE);
@@ -68,7 +64,7 @@ public class UpgradeAdapter extends BaseAdapter {
 
         priceTextView = listItemView.findViewById(R.id.price);
         imageView = listItemView.findViewById(R.id.upgradeIcon);
-        labelTextView = listItemView.findViewById(R.id.multiplier);
+        effectTextView = listItemView.findViewById(R.id.multiplier);
         relativeLayout = listItemView.findViewById(R.id.layout);
 
         Upgrade upgrade = items.get(position);
@@ -81,11 +77,14 @@ public class UpgradeAdapter extends BaseAdapter {
                 .into(imageView);
 
         priceTextView.setText(nf.format(upgrade.getPrice()));
-        labelTextView.setTextColor(upgrade.getColor());
-        if (labelTextView.getText().length() > 3) {
-            labelTextView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 23);
+
+        effectTextView.setText("X" + String.valueOf(upgrade.getMultiplier()));
+        effectTextView.setTextColor(Color.parseColor("#ffffff"));
+
+        if (effectTextView.getText().length() > 3) {
+            effectTextView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 24);
         } else {
-            labelTextView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 25);
+            effectTextView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 28);
         }
         setTextColorByAvailability(upgrade);
         convertThousandsToSIUnit(upgrade);
