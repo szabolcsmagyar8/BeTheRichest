@@ -20,14 +20,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        guiManager = new GUIManager(this.findViewById(android.R.id.content),getApplicationContext());
+        guiManager = new GUIManager(this.findViewById(android.R.id.content), getApplicationContext(), getWindowManager(), getSupportActionBar());
         guiManager.setMainUITexts();
     }
-
-//    public void dollarClick(View view) {
-//        game.dollarClick();
-//        guiManager.changeCurrentMoneyText();
-//    }
 
     public void investmentsIconClick(View view) {
         guiManager.openFragment(manager, InvestmentListFragment.class.getName(), R.id.investment_list_container, new InvestmentListFragment());
