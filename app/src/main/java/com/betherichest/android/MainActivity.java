@@ -24,10 +24,10 @@ public class MainActivity extends AppCompatActivity {
         guiManager.setMainUITexts();
     }
 
-    public void dollarClick(View view) {
-        game.dollarClick();
-        guiManager.changeCurrentMoneyText();
-    }
+//    public void dollarClick(View view) {
+//        game.dollarClick();
+//        guiManager.changeCurrentMoneyText();
+//    }
 
     public void investmentsIconClick(View view) {
         guiManager.openFragment(manager, InvestmentListFragment.class.getName(), R.id.investment_list_container, new InvestmentListFragment());

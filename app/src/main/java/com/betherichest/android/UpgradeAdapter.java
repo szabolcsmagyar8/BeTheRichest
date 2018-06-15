@@ -34,6 +34,8 @@ public class UpgradeAdapter extends BaseAdapter {
     private RelativeLayout relativeLayout;
     Context context;
 
+    Upgrade upgrade;
+
     private NumberFormat nf = NumberFormat.getNumberInstance(Locale.FRANCE);
 
     protected UpgradeAdapter(List<Upgrade> items, Context context) {
@@ -75,7 +77,7 @@ public class UpgradeAdapter extends BaseAdapter {
         effectTextView = listItemView.findViewById(R.id.multiplier);
         relativeLayout = listItemView.findViewById(R.id.layout);
 
-        Upgrade upgrade = items.get(position);
+        upgrade = items.get(position);
         Glide
                 .with(parent.getContext())
                 .load(upgrade.getImageResource())
@@ -85,10 +87,10 @@ public class UpgradeAdapter extends BaseAdapter {
                 .into(imageView);
 
         setLayoutParamsByScreenSize();
-        setLabelTexts(upgrade);
-        setTextColorByAvailability(upgrade);
-        CreateColorfulBorder(upgrade);
-        convertThousandsToSIUnit(upgrade);
+        setLabelTexts();
+        setTextColorByAvailability();
+        CreateColorfulBorder();
+        convertThousandsToSIUnit();
 
         return listItemView;
     }
@@ -100,10 +102,11 @@ public class UpgradeAdapter extends BaseAdapter {
         display.getSize(size);
 
         RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(size.x / 5, size.x / 5);
+        relativeLayout.setBackgroundColor(upgrade.getColor());
         relativeLayout.setLayoutParams(layoutParams);
     }
 
-    private void setLabelTexts(Upgrade upgrade) {
+    private void setLabelTexts() {
         priceTextView.setText(nf.format(upgrade.getPrice()));
 
         effectTextView.setText("X" + String.valueOf(upgrade.getMultiplier()));
@@ -116,7 +119,7 @@ public class UpgradeAdapter extends BaseAdapter {
         }
     }
 
-    private void CreateColorfulBorder(Upgrade upgrade) {  // makes a dynamic border around the relative layout which contains the image and the effect text
+    private void CreateColorfulBorder() {  // makes a dynamic border around the relative layout which contains the image and the effect text
         GradientDrawable gd = new GradientDrawable();
 
         gd.setStroke((int) getPixelFromDP(3), upgrade.getColor());      // different borderSize in pixels for different density displays
@@ -128,7 +131,7 @@ public class UpgradeAdapter extends BaseAdapter {
         return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, context.getResources().getDisplayMetrics());
     }
 
-    private void setTextColorByAvailability(Upgrade upgrade) {
+    private void setTextColorByAvailability() {
         if (upgrade.isBuyable()) {
             priceTextView.setTextColor(Color.parseColor("#90EE90"));
         } else {
@@ -136,7 +139,7 @@ public class UpgradeAdapter extends BaseAdapter {
         }
     }
 
-    private void convertThousandsToSIUnit(Upgrade upgrade) {
+    private void convertThousandsToSIUnit() {
         double price = upgrade.getPrice();
         if (price < 10000) {
             priceTextView.setText(nf.format(price));

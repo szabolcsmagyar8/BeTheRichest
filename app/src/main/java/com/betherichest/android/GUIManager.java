@@ -4,7 +4,9 @@ import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -42,11 +44,20 @@ public class GUIManager {
         moneyPerTapText = view.findViewById(R.id.moneyPerTapText);
         dollarImage = view.findViewById(R.id.dollar);
         smallDollar = view.findViewById(R.id.smallDollar);
+
         smallDollar.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
                 game.cheat();
                 return true;
+            }
+        });
+
+        dollarImage.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                animateDollarClick(event);
+                return false;
             }
         });
     }
@@ -55,14 +66,18 @@ public class GUIManager {
         currentMoneyText.setText(game.getCurrentMoneyAsString());
     }
 
+    public void animateDollarClick(MotionEvent event) {
+        if (event.getAction() == MotionEvent.ACTION_DOWN) {
+            game.dollarClick();
+            changeCurrentMoneyText();
+            dollarImage.startAnimation(AnimationUtils.loadAnimation(context, R.anim.shrink));
+        }
+    }
+
     public void setMainUITexts() {
         currentMoneyText.setText(game.getCurrentMoneyAsString());
         moneyPerSecText.setText(game.getMoneyPerSecAsString());
         moneyPerTapText.setText(game.getMoneyPerTapAsString());
-    }
-
-    public void onTotalMoneyChanged(String currentMoneyAsString) {
-        currentMoneyText.setText(currentMoneyAsString);
     }
 
     public static GUIManager getInstance() {

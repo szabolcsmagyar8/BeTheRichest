@@ -72,7 +72,6 @@
         android:layout_below="@+id/moneyPerTapText"
         android:layout_marginTop="50dp"
         android:adjustViewBounds="true"
-        android:onClick="dollarClick"
         app:srcCompat="@drawable/dollar" />
 
     <LinearLayout

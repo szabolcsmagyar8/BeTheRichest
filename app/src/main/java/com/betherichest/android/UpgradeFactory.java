@@ -33,8 +33,8 @@ public class UpgradeFactory {
 
     private static int[] colors = new int[]{
             Color.parseColor("#ffffff"),   // Simple White
-            Color.parseColor("#32ff00"),   // Common Green
             Color.parseColor("#fff700"),   // Uncommon Yellow
+            Color.parseColor("#32ff00"),   // Common Green
             Color.parseColor("#3daaff"),   // Rare Lightblue
             Color.parseColor("#ff8b00"),   // Special Orange
             Color.parseColor("#a20000"),   // Legendary Red
