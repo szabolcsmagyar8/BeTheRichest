@@ -19,13 +19,12 @@ import com.bumptech.glide.Glide;
 
 public class InvestmentAdapter extends BaseAdapter{
     private List<Investment> items;
-    TextView nameTextView;
-    TextView priceTextView;
-    TextView dpsPerRankTextView;
-    TextView rankTextView;
-    TextView totalDPSTextView;
-    ImageView imageView;
-
+    private TextView nameTextView;
+    private TextView priceTextView;
+    private TextView dpsPerRankTextView;
+    private TextView rankTextView;
+    private TextView totalDPSTextView;
+    private ImageView imageView;
 
     NumberFormat nf = NumberFormat.getNumberInstance(Locale.FRANCE);
 

@@ -7,8 +7,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
+
 
 import java.util.List;
 
@@ -38,6 +40,7 @@ public class InvestmentListFragment extends android.support.v4.app.Fragment {
     public void onStop() {
         super.onStop();
     }
+
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
@@ -81,4 +84,6 @@ public class InvestmentListFragment extends android.support.v4.app.Fragment {
             }
         });
     }
+
+
 }
