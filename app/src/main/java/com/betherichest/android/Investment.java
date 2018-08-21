@@ -1,5 +1,10 @@
 package com.betherichest.android;
 
+import android.arch.persistence.room.ColumnInfo;
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Ignore;
+import android.arch.persistence.room.PrimaryKey;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,17 +12,30 @@ import java.util.List;
  * Created by Szabi on 2018. 03. 14..
  */
 
+@Entity
 public class Investment extends GameElement {
+    @PrimaryKey
     static int currentId = 0;
 
-    private double basePrice;
-    private double baseDpS;
-
-    private final double coefficient = 1.15;
+    @ColumnInfo(name = "rank")
     private int rank = 0;
 
+    @Ignore
+    private double basePrice;
+
+    @Ignore
+    private double baseDpS;
+
+    @Ignore
+    private final double coefficient = 1.15;
+
+    @Ignore
     private int[] upgradeEffectMultipliers;
+
+    @Ignore
     private List<Upgrade> relevantUpgrades = new ArrayList<>();
+
+    @Ignore
     private List<Upgrade> purchasedRelevantUpgrades = new ArrayList<>();
 
     public Investment(String name, double basePrice, double baseDpS, String description, int imageResource, int[] upgradeEffectMultipliers) {
@@ -44,6 +62,10 @@ public class Investment extends GameElement {
 
     public int getRank() {
         return rank;
+    }
+
+    public void setRank(int rank) {
+        this.rank = rank;
     }
 
     public void increaseRank() {
@@ -86,6 +108,10 @@ public class Investment extends GameElement {
         return Game.getInstance().getCurrentMoney() >= getPrice();
     }
 
+    public List<Upgrade> getRelevantUpgrades() {
+        return relevantUpgrades;
+    }
+
     public List<Upgrade> getPurchasedRelevantUpgrades() {
         return purchasedRelevantUpgrades;
     }
@@ -94,7 +120,7 @@ public class Investment extends GameElement {
         relevantUpgrades.add(upgrade);
     }
 
-    public void addPurchaseRelevantUpgrade(Upgrade upgrade) {
+    public void addPurchasedRelevantUpgrade(Upgrade upgrade) {
         purchasedRelevantUpgrades.add(upgrade);
     }
 }

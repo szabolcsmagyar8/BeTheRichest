@@ -26,48 +26,66 @@ public class Game {
     private double START_MONEY_PER_SEC = 0d;
 
     private double currentMoney = 0d;
+
     private double moneyPerTap = 1d;
     private double moneyPerSec = 0d;
-
     public static Integer FPS = 24;
 
     private Timer T = new Timer();
 
     private List<Investment> investments;
-    private List<Upgrade> upgrades;
 
+    private List<Upgrade> upgrades;
     private NumberFormat nf = NumberFormat.getNumberInstance(Locale.FRANCE);
+    private static GameState gameState;
 
     public Handler handler;
+
     public MoneyChangedListener moneyChangedListener;
     public AdapterRefreshListener adapterRefreshListener;
-
     ArrayList<Upgrade> purchasedTapUpgrades = new ArrayList<>();
 
-    //endregion
 
+    //endregion
     //region CONSTRUCTORS
+
     public static Game getInstance() {
         if (instance == null) {
             instance = new Game();
         }
         return instance;
     }
-
     public Game() {
         investments = InvestmentFactory.getCreatedInvestments();
         UpgradeFactory.createUpgrades(investments);
         upgrades = UpgradeFactory.getCreatedUpgrades();
-
+        gameState = new GameState();
         handler = new Handler(Looper.getMainLooper());
         InitializeEventListeners();
         StartTimer();
     }
-    //endregion
 
+    public GameState getGameState() {
+        return gameState;
+    }
+
+    //endregion
     //region PROPERTIES
+
     public double getCurrentMoney() {
         return currentMoney;
+    }
+
+    public void setMoneyPerTap(double moneyPerTap) {
+        this.moneyPerTap = moneyPerTap;
+    }
+
+    public void setMoneyPerSec(double moneyPerSec) {
+        this.moneyPerSec = moneyPerSec;
+    }
+
+    public void setCurrentMoney(double currentMoney) {
+        this.currentMoney = currentMoney;
     }
 
     public String getCurrentMoneyAsString() {
@@ -198,7 +216,7 @@ public class Game {
         deduceMoney(selectedUpgrade.getPrice());
 
         if (selectedUpgrade instanceof InvestmentUpgrade) {
-            ((InvestmentUpgrade) selectedUpgrade).getRelevantInvestment().addPurchaseRelevantUpgrade(selectedUpgrade); // to store the purchased upgrades in a separate list for every investment instance
+            ((InvestmentUpgrade) selectedUpgrade).getRelevantInvestment().addPurchasedRelevantUpgrade(selectedUpgrade); // to store the purchased upgrades in a separate list for every investment instance
             recalculateMoneyPerSecond();
         }
         if (selectedUpgrade instanceof TapUpgrade) {
@@ -237,5 +255,13 @@ public class Game {
     public void cheat() {
         moneyPerSec += 10;
         moneyPerSec *= 10;
+    }
+
+    public void saveState() {
+        gameState.setCurrentMoney(currentMoney);
+    }
+
+    public void loadInvestments(List<Investment> investments) {
+        this.investments = investments;
     }
 }

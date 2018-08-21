@@ -1,10 +1,13 @@
 package com.betherichest.android;
 
 import android.graphics.Color;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.text.NumberFormat;
@@ -17,14 +20,16 @@ import com.bumptech.glide.Glide;
  * Created by Szabi on 2018. 03. 14..
  */
 
-public class InvestmentAdapter extends BaseAdapter{
+public class InvestmentAdapter extends BaseAdapter {
     private List<Investment> items;
-    private TextView nameTextView;
-    private TextView priceTextView;
-    private TextView dpsPerRankTextView;
-    private TextView rankTextView;
-    private TextView totalDPSTextView;
-    private ImageView imageView;
+    TextView nameTextView;
+    TextView priceTextView;
+    TextView dpsPerRankTextView;
+    TextView rankTextView;
+    TextView totalDPSTextView;
+    ImageView upgradeImageView;
+    ImageView purchasedUpgradeImageView;
+    RelativeLayout upgradeIconContainer;
 
     NumberFormat nf = NumberFormat.getNumberInstance(Locale.FRANCE);
 
@@ -40,7 +45,6 @@ public class InvestmentAdapter extends BaseAdapter{
     @Override
     public Object getItem(int position) {
         return items == null ? null : items.get(position);
-
     }
 
     @Override
@@ -48,6 +52,7 @@ public class InvestmentAdapter extends BaseAdapter{
         return position;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     @Override
     public View getView(int position, View view, ViewGroup parent) {
         View listItemView = view;
@@ -67,11 +72,40 @@ public class InvestmentAdapter extends BaseAdapter{
                 .asBitmap()
                 .dontAnimate()
                 .dontTransform()
-                .into(imageView);
+                .into(upgradeImageView);
 
         setUIElementValues(investment);
 
+//        List<Upgrade> relevantUpgrades = investment.getRelevantUpgrades();
+//        for (int i = 0; i < relevantUpgrades.size(); i++) {
+//            purchasedUpgradeImageView.setImageResource(investment.getImageResource());
+//            purchasedUpgradeImageView.setId(i);
+//
+//            RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) purchasedUpgradeImageView.getLayoutParams();
+//            if (i != 0) {
+//                lp.addRule(RelativeLayout.LEFT_OF, i - 1);
+//            }
+//            purchasedUpgradeImageView.setLayoutParams(lp);
+////            lp.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+////            lp.setMarginEnd(10);
+//            //  lp.addRule(RelativeLayout.LEFT_OF, imageView.getId());
+//            //imageView.setLayoutParams(lp);
+//            //upgradeIconContainer.addView(imageView);
+//            //  }
+//            upgradeIconContainer.addView(purchasedUpgradeImageView);
+//        }
         return listItemView;
+    }
+
+    private void initializeListUIElements(View listItemView) {
+        nameTextView = listItemView.findViewById(R.id.name);
+        priceTextView = listItemView.findViewById(R.id.price);
+        dpsPerRankTextView = listItemView.findViewById(R.id.dpsPerRank);
+        rankTextView = listItemView.findViewById(R.id.rank);
+        totalDPSTextView = listItemView.findViewById(R.id.total);
+        upgradeImageView = listItemView.findViewById(R.id.upgradeIcon);
+        purchasedUpgradeImageView = listItemView.findViewById(R.id.purchasedUpgrade);
+        upgradeIconContainer = listItemView.findViewById(R.id.upgradeIconContainer);
     }
 
     private void setUIElementValues(Investment investment) {
@@ -80,7 +114,7 @@ public class InvestmentAdapter extends BaseAdapter{
         rankTextView.setText(String.valueOf(investment.getRank()));
         dpsPerRankTextView.setText("DPS: " + String.valueOf(nf.format(investment.getMoneyPerSecPerRank())));
         totalDPSTextView.setText("Total: " + String.valueOf(nf.format((investment.getMoneyPerSec())))); //+ " (" + String.format("%.2f", investment.getDPSPercentage()) + "%)"));
-        imageView.setBackgroundResource(investment.getImageResource());
+        upgradeImageView.setImageResource(investment.getImageResource());
         setTextColorByAvailability(investment);
     }
 
@@ -90,15 +124,6 @@ public class InvestmentAdapter extends BaseAdapter{
         } else {
             nameTextView.setTextColor(Color.parseColor("#760c07"));
         }
-    }
-
-    private void initializeListUIElements(View listItemView) {
-        nameTextView = listItemView.findViewById(R.id.name);
-        priceTextView = listItemView.findViewById(R.id.price);
-        dpsPerRankTextView = listItemView.findViewById(R.id.dpsPerRank);
-        rankTextView = listItemView.findViewById(R.id.rank);
-        totalDPSTextView = listItemView.findViewById(R.id.total);
-        imageView = listItemView.findViewById(R.id.upgradeIcon);
     }
 
     public void notifyDataSetChanged() {

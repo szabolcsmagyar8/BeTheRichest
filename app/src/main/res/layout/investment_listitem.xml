@@ -86,17 +86,47 @@
                 android:textSize="13sp"
                 android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/upgrades"
+
+            <!--<TextView-->
+            <!--android:id="@+id/upgrades"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_alignParentEnd="true"-->
+            <!--android:layout_alignParentRight="true"-->
+            <!--android:layout_marginEnd="5dp"-->
+            <!--android:layout_marginRight="5dp"-->
+            <!--android:text="Upgrade"-->
+            <!--android:textSize="13sp"-->
+            <!--android:textStyle="bold" />-->
+
+            <RelativeLayout
+                android:id="@+id/upgradeIconContainer"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
-                android:layout_marginEnd="5dp"
-                android:layout_marginRight="5dp"
-                android:text="Upgrade"
-                android:textSize="13sp"
-                android:textStyle="bold" />
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/purchasedUpgrade"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginRight="5dp" />
+
+                <!--<ImageView-->
+                <!--android:id="@+id/imageView2"-->
+                <!--android:layout_width="20dp"-->
+                <!--android:layout_height="20dp"-->
+                <!--android:layout_toLeftOf="@+id/imageView"-->
+                <!--app:srcCompat="@drawable/apartment" />-->
+
+                <!--<ImageView-->
+                <!--android:id="@+id/imageView3"-->
+                <!--android:layout_width="20dp"-->
+                <!--android:layout_height="20dp"-->
+                <!--android:layout_toLeftOf="@+id/imageView2"-->
+                <!--app:srcCompat="@drawable/hotdogtruck" />-->
+            </RelativeLayout>
         </RelativeLayout>
     </LinearLayout>
 

@@ -48,7 +48,7 @@ public class GUIManager {
     private Toast noAvailableUpgradesToast = null;
 
     static Random rnd = new Random();
-    
+
     public GUIManager(View view, Context context, WindowManager windowManager, ActionBar supportActionBar) {
         this.context = context;
         this.windowManager = windowManager;
