@@ -223,13 +223,12 @@ public class Game {
             purchasedTapUpgrades.add(selectedUpgrade);
             recalculateMoneyPerTap();
         }
-
     }
 
     private void recalculateMoneyPerSecond() {
         double sum = START_MONEY_PER_SEC;
         for (Investment investment : investments) {
-            sum += investment.getMoneyPerSec(); // upgrades are calculated into
+            sum += investment.getMoneyPerSec();
         }
 
         moneyPerSec = sum;
@@ -257,11 +256,13 @@ public class Game {
         moneyPerSec *= 10;
     }
 
-    public void saveState() {
-        gameState.setCurrentMoney(currentMoney);
-    }
-
-    public void loadInvestments(List<Investment> investments) {
-        this.investments = investments;
+    public void loadInvestments(List<Investment> savedInvestments) {
+        for (Investment investment : investments) {
+            for (Investment savedInvestment : savedInvestments) {
+                if (investment.getId() == savedInvestment.getId()) {
+                    investment.setRank(savedInvestment.getRank());
+                }
+            }
+        }
     }
 }

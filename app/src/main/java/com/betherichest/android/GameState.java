@@ -21,10 +21,6 @@ public class GameState {
     @ColumnInfo(name = "money_per_sec")
     private double moneyPerSec = 0d;
 
-//    @ColumnInfo(name = "investments")
-//    private HashMap<Integer, Integer> investments;
-    ///////////////////////  Investmentek tárolása
-
     public int getUid() {
         return uid;
     }

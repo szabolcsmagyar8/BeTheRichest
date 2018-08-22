@@ -1,11 +1,9 @@
 package com.betherichest.android;
 
 import android.content.Context;
-import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.drawable.GradientDrawable;
-import android.support.annotation.NonNull;
 import android.util.TypedValue;
 import android.view.Display;
 import android.view.View;

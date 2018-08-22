@@ -5,6 +5,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity {
     private Game game = Game.getInstance();
     private GUIManager guiManager;
@@ -22,10 +24,17 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         appDatabase = AppDatabase.getAppDatabase(getApplicationContext());
-        game.setCurrentMoney(appDatabase.gameStateDAO().getCurrentMoney());
-        game.setMoneyPerSec(appDatabase.gameStateDAO().getMoneyPerSec());
-        //    game.setMoneyPerTap(appDatabase.gameStateDAO().getMoneyPerTap());
-        //  game.loadInvestments(appDatabase.gameStateDAO().getInvestments());
+        List<GameState> states = appDatabase.gameStateDAO().getGameState();
+        if (states.size() == 0) {
+            appDatabase.gameStateDAO().insertAll(new GameState());
+        }
+        if (appDatabase.investmentDao().getInvestments().size() != 0) {
+            game.loadInvestments(appDatabase.investmentDao().getInvestments());
+        }
+        game.setCurrentMoney(appDatabase.gameStateDAO().getGameState().get(0).getCurrentMoney());
+        game.setMoneyPerSec(appDatabase.gameStateDAO().getGameState().get(0).getMoneyPerSec());
+        game.setMoneyPerTap(appDatabase.gameStateDAO().getGameState().get(0).getMoneyPerTap());
+        //game.loadInvestments(appDatabase.investmentDao().getInvestments());
 
         guiManager = new GUIManager(this.findViewById(android.R.id.content), getApplicationContext(), getWindowManager(), getSupportActionBar());
         guiManager.setMainUITexts();
@@ -44,22 +53,21 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onPause() {
+        super.onPause();
+        comm.GETEndpoint("lognew");
+    }
+
+    @Override
     protected void onResume() {
         super.onResume();
         comm.GETEndpoint("lognew");
     }
 
     @Override
-    protected void onPause() {
-        saveState();
-        super.onPause();
-        comm.GETEndpoint("lognew");
-    }
-
-    @Override
     protected void onStop() {
-        saveState();
         super.onStop();
+        saveState();
     }
 
     private void saveState() {
@@ -67,14 +75,10 @@ public class MainActivity extends AppCompatActivity {
         state.setCurrentMoney(game.getCurrentMoney());
         state.setMoneyPerSec(game.getMoneyPerSec());
         state.setMoneyPerTap(game.getMoneyPerTap());
-        //   state.setInvestments(game.getInvestments());
 
         appDatabase.gameStateDAO().insertAll(state);
-    }
-
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        saveState();
+        for (Investment inv : game.getInvestments()) {
+            appDatabase.investmentDao().insertAll(new Investment(inv.getId(), inv.getRank()));
+        }
     }
 }

@@ -171,6 +171,7 @@ public class GUIManager {
         currentMoneyText.setText(game.getCurrentMoneyAsString());
         moneyPerSecText.setText(game.getMoneyPerSecAsString());
         moneyPerTapText.setText(game.getMoneyPerTapAsString());
+        view.invalidate();
     }
 
     public static GUIManager getInstance() {

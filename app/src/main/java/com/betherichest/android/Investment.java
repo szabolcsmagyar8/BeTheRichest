@@ -14,6 +14,7 @@ import java.util.List;
 
 @Entity
 public class Investment extends GameElement {
+
     @PrimaryKey
     static int currentId = 0;
 
@@ -46,6 +47,11 @@ public class Investment extends GameElement {
         this.description = description;
         this.imageResource = imageResource;
         this.upgradeEffectMultipliers = upgradeEffectMultipliers;
+    }
+
+    public Investment(int id, int rank) {
+        this.id = id;
+        this.rank = rank;
     }
 
     public int getId() {

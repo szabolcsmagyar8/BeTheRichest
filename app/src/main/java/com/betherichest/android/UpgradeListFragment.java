@@ -11,8 +11,6 @@ import android.widget.GridView;
 import android.widget.Toast;
 
 import java.util.List;
-import java.util.Timer;
-import java.util.stream.Collectors;
 
 /**
  * Created by Szabi on 2018.03.27..

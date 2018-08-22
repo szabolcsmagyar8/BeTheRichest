@@ -1,7 +1,5 @@
 package com.betherichest.android;
 
-import java.util.Map;
-
 /**
  * Created by Szabi on 2018. 06. 08..
  */
@@ -24,7 +22,7 @@ class TapUpgradeConfig {
     }
 }
 
-class TapUpgrade extends Upgrade {
+public class TapUpgrade extends Upgrade {
     public TapUpgrade(double price, int multiplier, int color) {
         super(price, multiplier, color);
         this.imageResource = R.drawable.click;

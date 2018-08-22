@@ -1,6 +1,8 @@
 package com.betherichest.android;
 
-public abstract class Upgrade extends GameElement{
+import com.betherichest.android.GameElement;
+
+public abstract class Upgrade extends GameElement {
     static int currentId = 0;
     private int multiplier;
     private int color;
