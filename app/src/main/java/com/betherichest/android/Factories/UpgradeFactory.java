@@ -1,6 +1,13 @@
-package com.betherichest.android;
+package com.betherichest.android.Factories;
 
 import android.graphics.Color;
+
+import com.betherichest.android.GameElements.Investment;
+import com.betherichest.android.GameElements.InvestmentUpgrade;
+import com.betherichest.android.GameElements.InvestmentUpgradeConfig;
+import com.betherichest.android.GameElements.TapUpgrade;
+import com.betherichest.android.GameElements.TapUpgradeConfig;
+import com.betherichest.android.GameElements.Upgrade;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -14,6 +14,7 @@ import java.text.NumberFormat;
 import java.util.List;
 import java.util.Locale;
 
+import com.betherichest.android.GameElements.Investment;
 import com.bumptech.glide.Glide;
 
 /**

@@ -5,14 +5,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
-import java.util.List;
+import com.betherichest.android.Database.DatabaseManager;
+import com.betherichest.android.Services.Communicator;
 
 public class MainActivity extends AppCompatActivity {
     private Game game = Game.getInstance();
     private GUIManager guiManager;
     private Communicator comm;
-    private FragmentManager manager = getSupportFragmentManager();
-    private AppDatabase appDatabase;
+    private FragmentManager fragmentManager = getSupportFragmentManager();
+    private DatabaseManager dbManager;
 
     public MainActivity() {
         comm = new Communicator("krisz094.asuscomm.com");
@@ -22,33 +23,22 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        appDatabase = AppDatabase.getAppDatabase(getApplicationContext());
-        List<GameState> states = appDatabase.gameStateDAO().getGameState();
-        if (states.size() == 0) {
-            appDatabase.gameStateDAO().insertAll(new GameState());
-        }
-        if (appDatabase.investmentDao().getInvestments().size() != 0) {
-            game.loadInvestments(appDatabase.investmentDao().getInvestments());
-        }
-        game.setCurrentMoney(appDatabase.gameStateDAO().getGameState().get(0).getCurrentMoney());
-        game.setMoneyPerSec(appDatabase.gameStateDAO().getGameState().get(0).getMoneyPerSec());
-        game.setMoneyPerTap(appDatabase.gameStateDAO().getGameState().get(0).getMoneyPerTap());
-        //game.loadInvestments(appDatabase.investmentDao().getInvestments());
+        dbManager = new DatabaseManager(getApplicationContext());
+        dbManager.loadStateFromDb();
 
         guiManager = new GUIManager(this.findViewById(android.R.id.content), getApplicationContext(), getWindowManager(), getSupportActionBar());
         guiManager.setMainUITexts();
     }
 
     public void investmentsIconClick(View view) {
-        guiManager.openFragment(manager, InvestmentListFragment.class.getName(), R.id.investment_list_container, new InvestmentListFragment());
+        guiManager.openFragment(fragmentManager, InvestmentListFragment.class.getName(), R.id.investment_list_container, new InvestmentListFragment());
     }
 
     public void upgradesIconClick(View view) {
         if (game.getDisplayableUpgrades().size() == 0) {
             guiManager.showNoUpgradeToast();
         } else {
-            guiManager.openFragment(manager, UpgradeListFragment.class.getName(), R.id.upgrade_list_container, new UpgradeListFragment());
+            guiManager.openFragment(fragmentManager, UpgradeListFragment.class.getName(), R.id.upgrade_list_container, new UpgradeListFragment());
         }
     }
 
@@ -67,18 +57,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
-        saveState();
-    }
-
-    private void saveState() {
-        GameState state = game.getGameState();
-        state.setCurrentMoney(game.getCurrentMoney());
-        state.setMoneyPerSec(game.getMoneyPerSec());
-        state.setMoneyPerTap(game.getMoneyPerTap());
-
-        appDatabase.gameStateDAO().insertAll(state);
-        for (Investment inv : game.getInvestments()) {
-            appDatabase.investmentDao().insertAll(new Investment(inv.getId(), inv.getRank()));
-        }
+        dbManager.saveStateToDb();
     }
 }

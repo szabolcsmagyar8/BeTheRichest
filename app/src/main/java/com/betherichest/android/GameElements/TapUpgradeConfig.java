@@ -1,10 +1,10 @@
-package com.betherichest.android;
+package com.betherichest.android.GameElements;
 
 /**
  * Created by Szabi on 2018. 06. 08..
  */
 
-class TapUpgradeConfig {
+public class TapUpgradeConfig {
     private int price;
     private int moneyPerTapMultiplier;
 
@@ -19,17 +19,5 @@ class TapUpgradeConfig {
     public TapUpgradeConfig(int price, int moneyPerTapMultiplier) {
         this.price = price;
         this.moneyPerTapMultiplier = moneyPerTapMultiplier;
-    }
-}
-
-public class TapUpgrade extends Upgrade {
-    public TapUpgrade(double price, int multiplier, int color) {
-        super(price, multiplier, color);
-        this.imageResource = R.drawable.click;
-    }
-
-    @Override
-    public boolean isDisplayable() {
-        return !purchased;
     }
 }

@@ -1,4 +1,4 @@
-package com.betherichest.android;
+package com.betherichest.android.Services;
 
 import com.google.firebase.iid.FirebaseInstanceIdService;
 

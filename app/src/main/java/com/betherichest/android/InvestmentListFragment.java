@@ -11,6 +11,8 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 
+import com.betherichest.android.GameElements.Investment;
+
 import java.util.List;
 
 /**

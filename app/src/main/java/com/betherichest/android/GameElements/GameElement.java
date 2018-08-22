@@ -1,7 +1,9 @@
-package com.betherichest.android;
+package com.betherichest.android.GameElements;
 
 import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
+
+import com.betherichest.android.Game;
 
 public abstract class GameElement {
 

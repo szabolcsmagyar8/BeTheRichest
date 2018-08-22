@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.betherichest.android.GameElements.Upgrade;
 import com.bumptech.glide.Glide;
 
 import java.text.NumberFormat;

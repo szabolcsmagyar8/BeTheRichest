@@ -1,6 +1,4 @@
-package com.betherichest.android;
-
-import com.betherichest.android.GameElement;
+package com.betherichest.android.GameElements;
 
 public abstract class Upgrade extends GameElement {
     static int currentId = 0;

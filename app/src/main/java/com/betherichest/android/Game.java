@@ -5,6 +5,13 @@ import android.os.Handler;
 import android.os.Looper;
 import android.support.annotation.RequiresApi;
 
+import com.betherichest.android.Factories.InvestmentFactory;
+import com.betherichest.android.Factories.UpgradeFactory;
+import com.betherichest.android.GameElements.Investment;
+import com.betherichest.android.GameElements.InvestmentUpgrade;
+import com.betherichest.android.GameElements.TapUpgrade;
+import com.betherichest.android.GameElements.Upgrade;
+
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Collections;

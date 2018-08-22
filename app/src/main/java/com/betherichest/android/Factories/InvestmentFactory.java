@@ -1,4 +1,7 @@
-package com.betherichest.android;
+package com.betherichest.android.Factories;
+
+import com.betherichest.android.GameElements.Investment;
+import com.betherichest.android.R;
 
 import java.util.ArrayList;
 import java.util.List;
