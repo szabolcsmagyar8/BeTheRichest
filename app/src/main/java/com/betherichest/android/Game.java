@@ -278,6 +278,9 @@ public class Game {
             for (Upgrade savedUpgrade : savedUpgrades) {
                 if (upgrade.getId() == savedUpgrade.getId()) {
                     upgrade.setPurchased(true);
+                    if (upgrade instanceof InvestmentUpgrade) {
+                        ((InvestmentUpgrade) upgrade).getRelevantInvestment().addPurchasedRelevantUpgrade(upgrade);
+                    }
                 }
             }
         }

@@ -108,6 +108,7 @@ public class Investment extends GameElement {
     }
 
     public double getMoneyPerSecPerRank() {
+
         return rank == 0 ? baseDpS : getMoneyPerSec() / rank;
     }
 
