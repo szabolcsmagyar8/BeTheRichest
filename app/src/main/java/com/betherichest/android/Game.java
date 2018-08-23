@@ -272,4 +272,14 @@ public class Game {
             }
         }
     }
+
+    public void loadUpgrades(List<Upgrade> savedUpgrades) {
+        for (Upgrade upgrade : upgrades) {
+            for (Upgrade savedUpgrade : savedUpgrades) {
+                if (upgrade.getId() == savedUpgrade.getId()) {
+                    upgrade.setPurchased(true);
+                }
+            }
+        }
+    }
 }

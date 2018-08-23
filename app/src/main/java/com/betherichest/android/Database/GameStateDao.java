@@ -11,7 +11,7 @@ import com.betherichest.android.GameState;
 import java.util.List;
 
 @Dao
-public interface GameStateDAO {
+public interface GameStateDao {
     @Query("SELECT * FROM gamestate")
     List<GameState> getGameState();
 

@@ -1,10 +1,22 @@
 package com.betherichest.android.GameElements;
 
-public abstract class Upgrade extends GameElement {
+import android.arch.persistence.room.ColumnInfo;
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Ignore;
+import android.arch.persistence.room.PrimaryKey;
+
+@Entity
+public class Upgrade extends GameElement {
+    @PrimaryKey
     static int currentId = 0;
+
+    @Ignore
     private int multiplier;
+
+    @Ignore
     private int color;
-    private boolean displayable;
+
+    @ColumnInfo(name = "rank")
     protected boolean purchased = false;
 
 
@@ -15,6 +27,10 @@ public abstract class Upgrade extends GameElement {
         this.color = color;
     }
 
+    public Upgrade(int id) {
+        this.id = id;
+    }
+
     public int getColor() {
         return color;
     }
@@ -23,7 +39,9 @@ public abstract class Upgrade extends GameElement {
         return multiplier;
     }
 
-    public abstract boolean isDisplayable();
+    public boolean isDisplayable() {
+        return purchased;
+    }
 
     public boolean isPurchased() {
         return purchased;

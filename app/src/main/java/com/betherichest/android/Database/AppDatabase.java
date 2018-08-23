@@ -6,16 +6,19 @@ import android.arch.persistence.room.RoomDatabase;
 import android.content.Context;
 
 import com.betherichest.android.GameElements.Investment;
+import com.betherichest.android.GameElements.Upgrade;
 import com.betherichest.android.GameState;
 
-@Database(entities = {GameState.class, Investment.class}, version = 1)
+@Database(entities = {GameState.class, Investment.class, Upgrade.class}, version = 1)
 public abstract class AppDatabase extends RoomDatabase {
 
     private static AppDatabase INSTANCE;
 
-    public abstract GameStateDAO gameStateDAO();
+    public abstract GameStateDao gameStateDAO();
 
     public abstract InvestmentDao investmentDao();
+
+    public abstract UpgradeDao upgradeDao();
 
     public static AppDatabase getAppDatabase(Context context) {
         if (INSTANCE == null) {
