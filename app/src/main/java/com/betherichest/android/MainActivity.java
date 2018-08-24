@@ -15,14 +15,15 @@ public class MainActivity extends AppCompatActivity {
     private FragmentManager fragmentManager = getSupportFragmentManager();
     private DatabaseManager dbManager;
 
-    public MainActivity() {
-        comm = new Communicator("krisz094.asuscomm.com");
-    }
+//    public MainActivity() {
+//        comm = new Communicator("krisz094.asuscomm.com");
+//    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         dbManager = new DatabaseManager(getApplicationContext());
         dbManager.loadStateFromDb();
 
@@ -42,17 +43,17 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-        comm.GETEndpoint("lognew");
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        comm.GETEndpoint("lognew");
-    }
+//    @Override
+//    protected void onPause() {
+//        super.onPause();
+//        comm.GETEndpoint("lognew");
+//    }
+//
+//    @Override
+//    protected void onResume() {
+//        super.onResume();
+//        comm.GETEndpoint("lognew");
+//    }
 
     @Override
     protected void onStop() {

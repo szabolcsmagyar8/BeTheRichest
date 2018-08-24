@@ -1,7 +1,9 @@
 package com.betherichest.android;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Point;
+import android.os.SystemClock;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -68,6 +70,7 @@ public class GUIManager {
         initializeIconEventListeners();
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     private void initializeIconEventListeners() {
         smallDollar.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
@@ -105,7 +108,6 @@ public class GUIManager {
         createAndAnimateTapTextOnDollarImage();
     }
 
-    @NonNull
     private void createAndAnimateTapTextOnDollarImage() { // creates a TextView which appears above the dollar icon in a random position, and starts animation
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
 
@@ -169,18 +171,24 @@ public class GUIManager {
         currentMoneyText.setText(game.getCurrentMoneyAsString());
         moneyPerSecText.setText(game.getMoneyPerSecAsString());
         moneyPerTapText.setText(game.getMoneyPerTapAsString());
-        view.invalidate();
     }
 
     public static GUIManager getInstance() {
         return instance;
     }
 
+    private long mLastClickTime = 0;
+
     public void openFragment(FragmentManager manager, String className, int containerId, Fragment newFragment) {
+        if (SystemClock.elapsedRealtime() - mLastClickTime < 500) {
+            return;
+        }
+        mLastClickTime = SystemClock.elapsedRealtime();
         FragmentTransaction ft = manager.beginTransaction();
         ft.addToBackStack(className);
         ft.replace(containerId, newFragment);
         ft.commit();
+
     }
 
     public void showNoUpgradeToast() {

@@ -33,6 +33,10 @@ public class DatabaseManager {
 
         if (states.size() == 0) {
             appDatabase.gameStateDAO().insertAll(new GameState());
+        } else {
+            game.setCurrentMoney(states.get(0).getCurrentMoney());
+            game.setMoneyPerSec(states.get(0).getMoneyPerSec());
+            game.setMoneyPerTap(states.get(0).getMoneyPerTap());
         }
         if (appDatabase.investmentDao().getInvestments().size() != 0) {
             game.loadInvestments(appDatabase.investmentDao().getInvestments());
@@ -41,9 +45,6 @@ public class DatabaseManager {
             game.loadUpgrades(appDatabase.upgradeDao().getUpgrades());
         }
 
-        game.setCurrentMoney(states.get(0).getCurrentMoney());
-        game.setMoneyPerSec(states.get(0).getMoneyPerSec());
-        game.setMoneyPerTap(states.get(0).getMoneyPerTap());
     }
 
     public void saveStateToDb() {

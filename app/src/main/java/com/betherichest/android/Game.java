@@ -26,6 +26,7 @@ import java.util.TimerTask;
  */
 
 public class Game {
+
     //region VARIABLES
     private static Game instance;
 
@@ -51,11 +52,9 @@ public class Game {
     public MoneyChangedListener moneyChangedListener;
     public AdapterRefreshListener adapterRefreshListener;
     ArrayList<Upgrade> purchasedTapUpgrades = new ArrayList<>();
-
-
     //endregion
-    //region CONSTRUCTORS
 
+    //region CONSTRUCTORS
     public static Game getInstance() {
         if (instance == null) {
             instance = new Game();
@@ -75,10 +74,9 @@ public class Game {
     public GameState getGameState() {
         return gameState;
     }
-
     //endregion
-    //region PROPERTIES
 
+    //region PROPERTIES
     public double getCurrentMoney() {
         return currentMoney;
     }
@@ -164,7 +162,7 @@ public class Game {
         T.schedule(new TimerTask() {
             @Override
             public void run() {
-                postAdapterRefreshRequest();    // the adapter need to be refreshed continously, providing a constant update in availability colors and displayable elements in the list
+                postAdapterRefreshRequest();    // the adapter need to be refreshed continuously, providing a constant update in availability colors and displayable elements in the list
             }
         }, 0, 300);
     }
