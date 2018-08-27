@@ -52,6 +52,8 @@ public class Game {
     public MoneyChangedListener moneyChangedListener;
     public AdapterRefreshListener adapterRefreshListener;
     ArrayList<Upgrade> purchasedTapUpgrades = new ArrayList<>();
+
+    private boolean isTimerPaused;
     //endregion
 
     //region CONSTRUCTORS
@@ -61,13 +63,14 @@ public class Game {
         }
         return instance;
     }
+
     public Game() {
         investments = InvestmentFactory.getCreatedInvestments();
         UpgradeFactory.createUpgrades(investments);
         upgrades = UpgradeFactory.getCreatedUpgrades();
         gameState = new GameState();
         handler = new Handler(Looper.getMainLooper());
-        StartTimer();
+        startTimer();
     }
 
     public GameState getGameState() {
@@ -144,26 +147,38 @@ public class Game {
         }
         return displayableUpgrades;
     }
+
+    public void setTimerPaused(boolean timerPaused) {
+        isTimerPaused = timerPaused;
+    }
     //endregion
 
     public void dollarClick() {
         currentMoney += moneyPerTap;
     }
 
-    private void StartTimer() {
+    public void startTimer() {
         T.schedule(new TimerTask() {
             @Override
             public void run() {
-                earnMoney(getMoneyPerSec() / FPS);
+                if (!isTimerPaused) {
+                    earnMoney(getMoneyPerSec() / FPS);
+                }
             }
         }, 0, 1000 / FPS);
 
         T.schedule(new TimerTask() {
             @Override
             public void run() {
-                postAdapterRefreshRequest();    // the adapter need to be refreshed continuously, providing a constant update in availability colors and displayable elements in the list
+                if (!isTimerPaused) {
+                    postAdapterRefreshRequest();    // the adapter need to be refreshed continuously, providing a constant update in availability colors and displayable elements in the list
+                }
             }
         }, 0, 300);
+    }
+
+    public void stopTimer() {
+        T.cancel();
     }
 
 
@@ -235,7 +250,7 @@ public class Game {
 
     private void recalculateMoneyPerTap() {
         double sum = START_MONEY_PER_TAP;
-        for (Upgrade tapUpgrade: purchasedTapUpgrades) {
+        for (Upgrade tapUpgrade : purchasedTapUpgrades) {
             sum *= tapUpgrade.getMultiplier();
         }
 

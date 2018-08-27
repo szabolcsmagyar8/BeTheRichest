@@ -41,8 +41,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        game.setTimerPaused(false);
+    }
+
+    @Override
     protected void onPause() {
         super.onPause();
+        game.setTimerPaused(true);
     }
 
     @Override
