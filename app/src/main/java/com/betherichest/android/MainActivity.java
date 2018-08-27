@@ -4,6 +4,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 
 import com.betherichest.android.Database.DatabaseManager;
 import com.betherichest.android.Services.Communicator;
@@ -14,10 +15,6 @@ public class MainActivity extends AppCompatActivity {
     private Communicator comm;
     private FragmentManager fragmentManager = getSupportFragmentManager();
     private DatabaseManager dbManager;
-
-//    public MainActivity() {
-//        comm = new Communicator("krisz094.asuscomm.com");
-//    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,17 +40,10 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-//    @Override
-//    protected void onPause() {
-//        super.onPause();
-//        comm.GETEndpoint("lognew");
-//    }
-//
-//    @Override
-//    protected void onResume() {
-//        super.onResume();
-//        comm.GETEndpoint("lognew");
-//    }
+    @Override
+    protected void onPause() {
+        super.onPause();
+    }
 
     @Override
     protected void onStop() {

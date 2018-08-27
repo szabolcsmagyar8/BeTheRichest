@@ -67,7 +67,6 @@ public class Game {
         upgrades = UpgradeFactory.getCreatedUpgrades();
         gameState = new GameState();
         handler = new Handler(Looper.getMainLooper());
-        InitializeEventListeners();
         StartTimer();
     }
 
@@ -173,15 +172,6 @@ public class Game {
     }
 
     //region EVENTHANDLERS
-    private void InitializeEventListeners() {
-        moneyChangedListener = new MoneyChangedListener() {
-            @Override
-            public void onMoneyChanged() {
-                GUIManager.getInstance().setMainUITexts();
-            }
-        };
-    }
-
     private void postAdapterRefreshRequest() {
         handler.post(new Runnable() {
             @Override
@@ -266,6 +256,7 @@ public class Game {
             for (Investment savedInvestment : savedInvestments) {
                 if (investment.getId() == savedInvestment.getId()) {
                     investment.setRank(savedInvestment.getRank());
+                    break;
                 }
             }
         }
@@ -277,8 +268,12 @@ public class Game {
                 if (upgrade.getId() == savedUpgrade.getId()) {
                     upgrade.setPurchased(true);
                     if (upgrade instanceof InvestmentUpgrade) {
-                        ((InvestmentUpgrade) upgrade).getRelevantInvestment().addPurchasedRelevantUpgrade(upgrade);
+                        Investment inv = ((InvestmentUpgrade) upgrade).getRelevantInvestment();
+                        if (!inv.getPurchasedRelevantUpgrades().contains(upgrade)) {
+                            inv.addPurchasedRelevantUpgrade(upgrade);
+                        }
                     }
+                    break;
                 }
             }
         }

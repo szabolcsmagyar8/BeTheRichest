@@ -92,9 +92,7 @@ public class Investment extends GameElement {
     public double getMoneyPerSec() {
         double moneyPerSec = rank * baseDpS;
         for (Upgrade upgrade : purchasedRelevantUpgrades) {
-            if (upgrade.isPurchased()) {
-                moneyPerSec *= upgrade.getMultiplier();
-            }
+            moneyPerSec *= upgrade.getMultiplier();
         }
         return moneyPerSec;
     }
@@ -108,7 +106,6 @@ public class Investment extends GameElement {
     }
 
     public double getMoneyPerSecPerRank() {
-
         return rank == 0 ? baseDpS : getMoneyPerSec() / rank;
     }
 

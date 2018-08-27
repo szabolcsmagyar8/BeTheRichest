@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Point;
 import android.os.SystemClock;
-import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -31,7 +30,6 @@ import java.util.Random;
 public class GUIManager {
     private View view;
     private Game game;
-    private static GUIManager instance;
 
     private Context context;
     private WindowManager windowManager;
@@ -41,7 +39,7 @@ public class GUIManager {
     private TextView moneyPerTapText;
     private ImageView dollarImage;
     private ImageView smallDollar;
-    RelativeLayout mainRelativeLayout;
+    private RelativeLayout mainRelativeLayout;
     private ActionBar actionBar;
 
     private Toast noAvailableUpgradesToast = null;
@@ -53,10 +51,6 @@ public class GUIManager {
         this.windowManager = windowManager;
         this.actionBar = supportActionBar;
 
-        if (instance == null) {
-            instance = this;
-        }
-
         game = Game.getInstance();
 
         this.view = view;
@@ -67,11 +61,11 @@ public class GUIManager {
         dollarImage = view.findViewById(R.id.dollar);
         smallDollar = view.findViewById(R.id.smallDollar);
 
-        initializeIconEventListeners();
+        initializeEventListeners();
     }
 
     @SuppressLint("ClickableViewAccessibility")
-    private void initializeIconEventListeners() {
+    private void initializeEventListeners() {
         smallDollar.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
@@ -87,6 +81,13 @@ public class GUIManager {
                 return false;
             }
         });
+
+        game.moneyChangedListener = new MoneyChangedListener() {
+            @Override
+            public void onMoneyChanged() {
+                setMainUITexts();
+            }
+        };
     }
 
     public void changeCurrentMoneyText() {
@@ -96,6 +97,7 @@ public class GUIManager {
     public void onDollarClick(MotionEvent event) {
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
             game.dollarClick();
+
             changeCurrentMoneyText();
 
             animateDollarTap();
@@ -173,10 +175,6 @@ public class GUIManager {
         moneyPerTapText.setText(game.getMoneyPerTapAsString());
     }
 
-    public static GUIManager getInstance() {
-        return instance;
-    }
-
     private long mLastClickTime = 0;
 
     public void openFragment(FragmentManager manager, String className, int containerId, Fragment newFragment) {
@@ -185,10 +183,9 @@ public class GUIManager {
         }
         mLastClickTime = SystemClock.elapsedRealtime();
         FragmentTransaction ft = manager.beginTransaction();
-        ft.addToBackStack(className);
+        ft.addToBackStack(null);
         ft.replace(containerId, newFragment);
         ft.commit();
-
     }
 
     public void showNoUpgradeToast() {
