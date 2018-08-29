@@ -1,8 +1,13 @@
 package com.betherichest.android.Factories;
 
+import android.content.Context;
+
 import com.betherichest.android.GameElements.Investment;
+import com.betherichest.android.MainActivity;
 import com.betherichest.android.R;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,9 +21,28 @@ public class InvestmentFactory {
 
     static {    // initializer
         createInvestments();
+        //parseJSONtoInvestments();
     }
 
+//    private static String parseJSONtoInvestments() {
+//        String json = null;
+//        try {
+//            InputStream stream = getResources().openRawResource(R.raw.json_file);("com/betherichest/android/investments.json");
+//            int size = stream.available();
+//            byte[] buffer = new byte[size];
+//            stream.read(buffer);
+//            stream.close();
+//            json = new String(buffer, "UTF-8");
+//        } catch (IOException ex) {
+//            ex.printStackTrace();
+//            return null;
+//        }
+//        return json;
+//    }
+
     public static List<Investment> getCreatedInvestments() {
+       // String investmentsJson = parseJSONtoInvestments();
+
         return investments;
     }
 
@@ -47,7 +71,7 @@ public class InvestmentFactory {
                 "Pedalo",
                 400,
                 1,
-                "getInstance a used pedalo and rent it out on the beach, it's a lot of fun.",
+                "Get a used pedalo and rent it out on the beach, it's a lot of fun.",
                 R.drawable.pedalo,
                 new int[]{2, 2, 2, 3, 3, 5, 8}
         ));
@@ -93,4 +117,6 @@ public class InvestmentFactory {
         ));
         return investments;
     }
+
+
 }

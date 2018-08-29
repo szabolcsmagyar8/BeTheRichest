@@ -1,15 +1,17 @@
 package com.betherichest.android;
 
+import android.content.Context;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.TextView;
 
 import com.betherichest.android.Database.DatabaseManager;
 import com.betherichest.android.Services.Communicator;
 
 public class MainActivity extends AppCompatActivity {
+    private static Context context;
+
     private Game game = Game.getInstance();
     private GUIManager guiManager;
     private Communicator comm;
@@ -21,11 +23,16 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        dbManager = new DatabaseManager(getApplicationContext());
+        MainActivity.context = getApplicationContext();
+        dbManager = new DatabaseManager();
         dbManager.loadStateFromDb();
 
-        guiManager = new GUIManager(this.findViewById(android.R.id.content), getApplicationContext(), getWindowManager(), getSupportActionBar());
+        guiManager = new GUIManager(this.findViewById(android.R.id.content), getWindowManager(), getSupportActionBar());
         guiManager.setMainUITexts();
+    }
+
+    public static Context getContext() {
+        return context;
     }
 
     public void investmentsIconClick(View view) {

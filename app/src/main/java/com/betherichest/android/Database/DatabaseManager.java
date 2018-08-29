@@ -9,6 +9,7 @@ import com.betherichest.android.GameElements.Investment;
 import com.betherichest.android.GameElements.TapUpgrade;
 import com.betherichest.android.GameElements.Upgrade;
 import com.betherichest.android.GameState;
+import com.betherichest.android.MainActivity;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -16,16 +17,15 @@ import java.util.stream.Collectors;
 public class DatabaseManager {
     private static DatabaseManager instance;
     private Game game;
-    private Context context;
+
     private AppDatabase appDatabase;
 
-    public DatabaseManager(Context context) {
-        this.context = context;
+    public DatabaseManager() {
         game = Game.getInstance();
         if (instance == null) {
             instance = this;
         }
-        appDatabase = AppDatabase.getAppDatabase(context);
+        appDatabase = AppDatabase.getAppDatabase(MainActivity.getContext());
     }
 
     public void loadStateFromDb() {

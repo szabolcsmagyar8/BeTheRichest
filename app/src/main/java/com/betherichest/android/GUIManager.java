@@ -31,7 +31,6 @@ public class GUIManager {
     private View view;
     private Game game;
 
-    private Context context;
     private WindowManager windowManager;
 
     private TextView currentMoneyText;
@@ -46,8 +45,7 @@ public class GUIManager {
 
     static Random rnd = new Random();
 
-    public GUIManager(View view, Context context, WindowManager windowManager, ActionBar supportActionBar) {
-        this.context = context;
+    public GUIManager(View view, WindowManager windowManager, ActionBar supportActionBar) {
         this.windowManager = windowManager;
         this.actionBar = supportActionBar;
 
@@ -105,7 +103,7 @@ public class GUIManager {
     }
 
     private void animateDollarTap() {
-        dollarImage.startAnimation(AnimationUtils.loadAnimation(context, R.anim.shrink));   // shrink animation
+        dollarImage.startAnimation(AnimationUtils.loadAnimation(MainActivity.getContext(), R.anim.shrink));   // shrink animation
 
         createAndAnimateTapTextOnDollarImage();
     }
@@ -113,7 +111,7 @@ public class GUIManager {
     private void createAndAnimateTapTextOnDollarImage() { // creates a TextView which appears above the dollar icon in a random position, and starts animation
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
 
-        final TextView tapText = (TextView) View.inflate(context, R.layout.dollar_tap_popup_text, null);
+        final TextView tapText = (TextView) View.inflate(MainActivity.getContext(), R.layout.dollar_tap_popup_text, null);
         tapText.setText("+" + String.valueOf(NumberFormat.getNumberInstance(Locale.FRANCE).format((int) game.getMoneyPerTap()) + "$"));
 
         tapText.measure(0, 0);
@@ -123,7 +121,7 @@ public class GUIManager {
         mainRelativeLayout = view.findViewById(R.id.mainRelativeLayout);
         mainRelativeLayout.addView(tapText);
 
-        Animation growAndFade = AnimationUtils.loadAnimation(context, R.anim.grow_and_fade);
+        Animation growAndFade = AnimationUtils.loadAnimation(MainActivity.getContext(), R.anim.grow_and_fade);
         growAndFade.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
@@ -194,7 +192,7 @@ public class GUIManager {
         }
         noAvailableUpgradesToast =
                 Toast.makeText(
-                        context,
+                        MainActivity.getContext(),
                         R.string.no_upgrades_available,
                         Toast.LENGTH_SHORT
                 );
