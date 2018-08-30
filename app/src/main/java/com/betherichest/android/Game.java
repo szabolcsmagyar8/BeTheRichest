@@ -5,8 +5,10 @@ import android.os.Handler;
 import android.os.Looper;
 import android.support.annotation.RequiresApi;
 
+import com.betherichest.android.Factories.GamblingFactory;
 import com.betherichest.android.Factories.InvestmentFactory;
 import com.betherichest.android.Factories.UpgradeFactory;
+import com.betherichest.android.GameElements.Gambling;
 import com.betherichest.android.GameElements.Investment;
 import com.betherichest.android.GameElements.InvestmentUpgrade;
 import com.betherichest.android.GameElements.TapUpgrade;
@@ -42,8 +44,9 @@ public class Game {
     private Timer T = new Timer();
 
     private List<Investment> investments;
-
     private List<Upgrade> upgrades;
+    private List<Gambling> gamblings;
+
     private NumberFormat nf = NumberFormat.getNumberInstance(Locale.FRANCE);
     private static GameState gameState;
 
@@ -68,6 +71,7 @@ public class Game {
         investments = InvestmentFactory.getCreatedInvestments();
         UpgradeFactory.createUpgrades(investments);
         upgrades = UpgradeFactory.getCreatedUpgrades();
+        gamblings = GamblingFactory.getCreateGamblings();
         gameState = new GameState();
         handler = new Handler(Looper.getMainLooper());
         startTimer();
@@ -235,6 +239,10 @@ public class Game {
         }
     }
 
+    public void buyGambling(Gambling selectedGambling) {
+        deduceMoney(selectedGambling.getPrice());
+    }
+
     private void recalculateMoneyPerSecond() {
         double sum = START_MONEY_PER_SEC;
         for (Investment investment : investments) {
@@ -278,8 +286,8 @@ public class Game {
     }
 
     public void loadUpgrades(List<Upgrade> savedUpgrades) {
-        for (Upgrade upgrade : upgrades) {
-            for (Upgrade savedUpgrade : savedUpgrades) {
+        for (Upgrade savedUpgrade : savedUpgrades) {
+            for (Upgrade upgrade : upgrades) {
                 if (upgrade.getId() == savedUpgrade.getId()) {
                     upgrade.setPurchased(true);
                     if (upgrade instanceof InvestmentUpgrade) {
@@ -292,5 +300,9 @@ public class Game {
                 }
             }
         }
+    }
+
+    public List<Gambling> getGamblings() {
+        return gamblings;
     }
 }

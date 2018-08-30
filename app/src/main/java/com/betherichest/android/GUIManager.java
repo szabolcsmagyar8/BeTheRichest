@@ -32,6 +32,7 @@ public class GUIManager {
     private Game game;
 
     private WindowManager windowManager;
+    private FragmentManager fragmentManager;
 
     private TextView currentMoneyText;
     private TextView moneyPerSecText;
@@ -41,12 +42,15 @@ public class GUIManager {
     private RelativeLayout mainRelativeLayout;
     private ActionBar actionBar;
 
+    private ImageView investmentsImageView;
+
     private Toast noAvailableUpgradesToast = null;
 
     static Random rnd = new Random();
 
-    public GUIManager(View view, WindowManager windowManager, ActionBar supportActionBar) {
+    public GUIManager(View view, WindowManager windowManager, ActionBar supportActionBar, FragmentManager fragmentManager) {
         this.windowManager = windowManager;
+        this.fragmentManager = fragmentManager;
         this.actionBar = supportActionBar;
 
         game = Game.getInstance();
@@ -58,6 +62,7 @@ public class GUIManager {
         moneyPerTapText = view.findViewById(R.id.moneyPerTapText);
         dollarImage = view.findViewById(R.id.dollar);
         smallDollar = view.findViewById(R.id.smallDollar);
+        investmentsImageView = view.findViewById(R.id.investments);
 
         initializeEventListeners();
     }
@@ -76,6 +81,16 @@ public class GUIManager {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 onDollarClick(event);
+                return false;
+            }
+        });
+
+        investmentsImageView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
+                  //  animateIconPress(view);
+                }
                 return false;
             }
         });
@@ -175,12 +190,12 @@ public class GUIManager {
 
     private long mLastClickTime = 0;
 
-    public void openFragment(FragmentManager manager, String className, int containerId, Fragment newFragment) {
+    public void openFragment(int containerId, Fragment newFragment) {
         if (SystemClock.elapsedRealtime() - mLastClickTime < 500) {
             return;
         }
         mLastClickTime = SystemClock.elapsedRealtime();
-        FragmentTransaction ft = manager.beginTransaction();
+        FragmentTransaction ft = fragmentManager.beginTransaction();
         ft.addToBackStack(null);
         ft.replace(containerId, newFragment);
         ft.commit();
@@ -197,5 +212,10 @@ public class GUIManager {
                         Toast.LENGTH_SHORT
                 );
         noAvailableUpgradesToast.show();
+    }
+
+    public void animateIconPress(View view) {
+        final Animation anim = AnimationUtils.loadAnimation(MainActivity.getContext(), R.anim.grow);
+        view.startAnimation(anim);
     }
 }

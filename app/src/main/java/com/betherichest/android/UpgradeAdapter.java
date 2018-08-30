@@ -88,7 +88,7 @@ public class UpgradeAdapter extends BaseAdapter {
         setLayoutParamsByScreenSize();
         setLabelTexts();
         setTextColorByAvailability();
-        CreateColorfulBorder();
+        createColorfulBorder();
         convertThousandsToSIUnit();
 
         return listItemView;
@@ -118,7 +118,7 @@ public class UpgradeAdapter extends BaseAdapter {
         }
     }
 
-    private void CreateColorfulBorder() {  // makes a dynamic border around the relative layout which contains the image and the effect text
+    private void createColorfulBorder() {  // makes a dynamic border around the relative layout which contains the image and the effect text
         GradientDrawable gd = new GradientDrawable();
 
         gd.setStroke((int) getPixelFromDP(3), upgrade.getColor());      // different borderSize in pixels for different density displays

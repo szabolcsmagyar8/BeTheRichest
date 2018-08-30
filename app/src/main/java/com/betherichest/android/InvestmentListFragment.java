@@ -2,7 +2,7 @@ package com.betherichest.android;
 
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,17 +10,11 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
-
 import com.betherichest.android.GameElements.Investment;
 
 import java.util.List;
 
-/**
- * Created by Szabi on 2018. 03. 14..
- */
-
-
-public class InvestmentListFragment extends android.support.v4.app.Fragment {
+public class InvestmentListFragment extends Fragment {
     View rootView;
     Toast noMoneyToast = null;
 
@@ -33,13 +27,7 @@ public class InvestmentListFragment extends android.support.v4.app.Fragment {
     }
 
     @Override
-    public void onStop() {
-        super.onStop();
-    }
-
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+    public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
         game = Game.getInstance();

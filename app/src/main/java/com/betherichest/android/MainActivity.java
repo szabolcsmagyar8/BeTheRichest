@@ -14,7 +14,6 @@ public class MainActivity extends AppCompatActivity {
 
     private Game game = Game.getInstance();
     private GUIManager guiManager;
-    private Communicator comm;
     private FragmentManager fragmentManager = getSupportFragmentManager();
     private DatabaseManager dbManager;
 
@@ -27,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
         dbManager = new DatabaseManager();
         dbManager.loadStateFromDb();
 
-        guiManager = new GUIManager(this.findViewById(android.R.id.content), getWindowManager(), getSupportActionBar());
+        guiManager = new GUIManager(this.findViewById(android.R.id.content), getWindowManager(), getSupportActionBar(), fragmentManager);
         guiManager.setMainUITexts();
     }
 
@@ -36,15 +35,19 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void investmentsIconClick(View view) {
-        guiManager.openFragment(fragmentManager, InvestmentListFragment.class.getName(), R.id.investment_list_container, new InvestmentListFragment());
+        guiManager.openFragment(R.id.investment_list_container, new InvestmentListFragment());
     }
 
     public void upgradesIconClick(View view) {
         if (game.getDisplayableUpgrades().size() == 0) {
             guiManager.showNoUpgradeToast();
         } else {
-            guiManager.openFragment(fragmentManager, UpgradeListFragment.class.getName(), R.id.upgrade_list_container, new UpgradeListFragment());
+            guiManager.openFragment(R.id.upgrade_list_container, new UpgradeListFragment());
         }
+    }
+
+    public void gamblingIconClick(View view) {
+        guiManager.openFragment(R.id.gambling_list_container, new GamblingListFragment());
     }
 
     @Override

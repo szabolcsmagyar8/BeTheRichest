@@ -1,18 +1,14 @@
 package com.betherichest.android.Database;
 
-import android.content.Context;
-import android.os.Build;
-import android.support.annotation.RequiresApi;
-
 import com.betherichest.android.Game;
 import com.betherichest.android.GameElements.Investment;
-import com.betherichest.android.GameElements.TapUpgrade;
+
 import com.betherichest.android.GameElements.Upgrade;
 import com.betherichest.android.GameState;
 import com.betherichest.android.MainActivity;
 
+
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class DatabaseManager {
     private static DatabaseManager instance;
@@ -44,7 +40,6 @@ public class DatabaseManager {
         if (appDatabase.upgradeDao().getUpgrades().size() != 0) {
             game.loadUpgrades(appDatabase.upgradeDao().getUpgrades());
         }
-
     }
 
     public void saveStateToDb() {

@@ -37,7 +37,7 @@
             android:shadowRadius="10"
             android:text="X2"
             android:textAlignment="center"
-            android:textSize="25dp"
+            android:textSize="30dp"
             android:textStyle="bold" />
     </RelativeLayout>
 
