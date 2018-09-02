@@ -1,4 +1,4 @@
-package com.betherichest.android;
+package com.betherichest.android.Fragments;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -15,15 +15,12 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.betherichest.android.GameElements.Upgrade;
+import com.betherichest.android.R;
 import com.bumptech.glide.Glide;
 
 import java.text.NumberFormat;
 import java.util.List;
 import java.util.Locale;
-
-/**
- * Created by Szabi on 2018.03.27..
- */
 
 public class UpgradeAdapter extends BaseAdapter {
     private List<Upgrade> items;

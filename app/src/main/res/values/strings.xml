@@ -2,8 +2,6 @@
     <string name="app_name">Be The Richest</string>
     <string name="not_enough_money">You don\'t have enough money</string>
     <string name="no_upgrades_available">No upgrades available</string>
-    <string name="name">Name</string>
-    <string name="price">Price</string>
     <string name="win_amount">Win amount</string>
     <string name="chance">Chance</string>
     <string name="total">Total</string>
@@ -11,4 +9,5 @@
     <string name="upgrades">Upgrades</string>
     <string name="gambling">Gambling</string>
     <string name="leaderboard">Leaderboard</string>
+    <string name="gambling_no_win">You won nothing</string>
 </resources>

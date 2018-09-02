@@ -1,7 +1,6 @@
 package com.betherichest.android;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.graphics.Point;
 import android.os.SystemClock;
 import android.support.v4.app.Fragment;
@@ -19,13 +18,11 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.betherichest.android.ListenerInterfaces.MoneyChangedListener;
+
 import java.text.NumberFormat;
 import java.util.Locale;
 import java.util.Random;
-
-/**
- * Created by Szabi on 2018.03.04..
- */
 
 public class GUIManager {
     private View view;
@@ -215,7 +212,7 @@ public class GUIManager {
     }
 
     public void animateIconPress(View view) {
-        final Animation anim = AnimationUtils.loadAnimation(MainActivity.getContext(), R.anim.grow);
+        final Animation anim = AnimationUtils.loadAnimation(MainActivity.getContext(), R.anim.grow_dollar_taptext);
         view.startAnimation(anim);
     }
 }

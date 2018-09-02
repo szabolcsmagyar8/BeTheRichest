@@ -1,37 +1,59 @@
-package com.betherichest.android;
+package com.betherichest.android.Fragments;
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ListView;
+import android.widget.GridView;
 import android.widget.Toast;
 
-import com.betherichest.android.GameElements.Gambling;
+import com.betherichest.android.ListenerInterfaces.AdapterRefreshListener;
+import com.betherichest.android.Game;
+import com.betherichest.android.GameElements.Upgrade;
+import com.betherichest.android.R;
 
 import java.util.List;
 
-public class GamblingListFragment extends Fragment {
+/**
+ * Created by Szabi on 2018.03.27..
+ */
+
+public class UpgradeListFragment extends Fragment {
     View rootView;
+    Game game;
+
+    List<Upgrade> items;
     Toast noMoneyToast = null;
-    Game game = Game.getInstance();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        rootView = inflater.inflate(R.layout.gambling_listview, container, false);
+        rootView = inflater.inflate(R.layout.upgrade_listview, container, false);
         return rootView;
     }
 
     @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        List<Gambling> items = game.getGamblings();
+        game = Game.getInstance();
 
-        final GamblingAdapter adapter = new GamblingAdapter(items);
-        final ListView listView = rootView.findViewById(R.id.gambling_listview);
+        items = game.getDisplayableUpgrades();
+
+        final UpgradeAdapter adapter = new UpgradeAdapter(items, getContext());
+        final GridView listView = rootView.findViewById(R.id.upgrade_listview);
         listView.setAdapter(adapter);
 
         game.adapterRefreshListener = new AdapterRefreshListener() {
@@ -45,9 +67,10 @@ public class GamblingListFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                Gambling selectedGambling = adapter.getItem(position);
-                if (selectedGambling.isBuyable()) {
-                    game.buyGambling(selectedGambling);
+                Upgrade selectedUpgrade = adapter.getItem(position);
+                if (selectedUpgrade.isBuyable()) {
+                    game.buyUpgrade(selectedUpgrade);
+                    adapter.setItems(game.getDisplayableUpgrades());    //refreshing adapter when an upgrade is bought
                     adapter.notifyDataSetChanged();
                 } else {
                     if (noMoneyToast != null) {
@@ -61,9 +84,7 @@ public class GamblingListFragment extends Fragment {
                             );
                     noMoneyToast.show();
                 }
-
             }
         });
     }
-
 }

@@ -7,7 +7,9 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.betherichest.android.Database.DatabaseManager;
-import com.betherichest.android.Services.Communicator;
+import com.betherichest.android.Fragments.GamblingListFragment;
+import com.betherichest.android.Fragments.InvestmentListFragment;
+import com.betherichest.android.Fragments.UpgradeListFragment;
 
 public class MainActivity extends AppCompatActivity {
     private static Context context;

@@ -4,9 +4,6 @@ import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
 
-import java.util.HashMap;
-import java.util.List;
-
 @Entity
 public class GameState {
     @PrimaryKey

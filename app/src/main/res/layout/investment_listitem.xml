@@ -29,7 +29,6 @@
             android:id="@+id/name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/name"
             android:textSize="19sp"
             android:textStyle="bold" />
 
@@ -44,7 +43,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:text="@string/price"
                 android:textSize="13sp"
                 android:textStyle="bold" />
 
@@ -57,7 +55,7 @@
                 android:layout_toEndOf="@+id/price"
                 android:layout_toRightOf="@+id/price"
                 android:adjustViewBounds="true"
-                app:srcCompat="@drawable/dollarsmall" />
+                app:srcCompat="@drawable/dollarextrasmall" />
 
             <TextView
                 android:id="@+id/dpsPerRank"

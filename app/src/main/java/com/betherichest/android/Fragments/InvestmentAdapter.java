@@ -1,4 +1,4 @@
-package com.betherichest.android;
+package com.betherichest.android.Fragments;
 
 import android.graphics.Color;
 import android.os.Build;
@@ -16,6 +16,7 @@ import java.util.Locale;
 
 import com.betherichest.android.GameElements.Investment;
 import com.betherichest.android.GameElements.Upgrade;
+import com.betherichest.android.R;
 import com.bumptech.glide.Glide;
 
 /**

@@ -1,4 +1,4 @@
-package com.betherichest.android;
+package com.betherichest.android.Fragments;
 
 import android.view.View;
 import android.view.ViewGroup;
@@ -7,6 +7,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.betherichest.android.GameElements.Gambling;
+import com.betherichest.android.R;
 import com.bumptech.glide.Glide;
 
 import java.text.NumberFormat;
@@ -71,7 +72,7 @@ public class GamblingAdapter extends BaseAdapter {
 
 
         nameTextView.setText(gambling.getName());
-        priceTextView.setText(String.valueOf((int) gambling.getPrice()));
+        priceTextView.setText("Price: " + String.valueOf((int) gambling.getPrice()));
         winAmountTextView.setText("Win amount: " + nf.format(gambling.getMinWinAmount()) + " - " + nf.format(gambling.getMaxWinAmount()) + "$");
         chanceTextView.setText("Chance: " + String.valueOf((int) gambling.getChance()) + "%");
         imageView.setBackgroundResource(gambling.getImageResource());

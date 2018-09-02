@@ -13,6 +13,8 @@ import com.betherichest.android.GameElements.Investment;
 import com.betherichest.android.GameElements.InvestmentUpgrade;
 import com.betherichest.android.GameElements.TapUpgrade;
 import com.betherichest.android.GameElements.Upgrade;
+import com.betherichest.android.ListenerInterfaces.AdapterRefreshListener;
+import com.betherichest.android.ListenerInterfaces.MoneyChangedListener;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -22,10 +24,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
-
-/**
- * Created by Szabi on 2018.03.04..
- */
 
 public class Game {
 
@@ -214,7 +212,7 @@ public class Game {
     }
     //endregion
 
-    private void earnMoney(double money) {
+    public void earnMoney(double money) {
         currentMoney += money;
         postMoneyChanged();
     }
