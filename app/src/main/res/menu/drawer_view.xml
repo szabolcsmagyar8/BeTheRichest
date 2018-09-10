@@ -1,18 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <group android:checkableBehavior="single">
+    <group
+        android:id="@+id/menu_top"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_boosters"
+            android:icon="@drawable/ic_boosters"
+            android:title="@string/boosters" />
         <item
             android:id="@+id/nav_stats"
-            android:icon="@drawable/ic_equalizer"
+            android:icon="@drawable/ic_stats"
             android:title="@string/statistics" />
-        <item
-            android:id="@+id/nav_settings"
-            android:icon="@drawable/ic_settings"
-            android:title="@string/settings" />
         <item
             android:id="@+id/nav_help"
             android:icon="@drawable/ic_help"
             android:title="@string/help" />
+        <item
+            android:id="@+id/nav_ads"
+            android:icon="@drawable/ic_movies"
+            android:title="@string/ads" />
+    </group>
+    <group
+        android:id="@+id/menu_second"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_settings"
+            android:icon="@drawable/ic_settings"
+            android:title="@string/settings" />
         <item
             android:id="@+id/nav_support"
             android:icon="@drawable/ic_payment"
