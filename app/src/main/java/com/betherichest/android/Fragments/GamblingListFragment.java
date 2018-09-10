@@ -32,6 +32,7 @@ public class GamblingListFragment extends Fragment {
     private GamblingAdapter adapter;
     private ListView listView;
     private Game game = Game.getInstance();
+    private boolean isAnimationRunning = false;
 
     private NumberFormat nf = NumberFormat.getNumberInstance(Locale.FRANCE);
 
@@ -79,26 +80,29 @@ public class GamblingListFragment extends Fragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if (!isAnimationRunning) {
+                    Gambling selectedGambling = adapter.getItem(position);
+                    if (selectedGambling.isBuyable()) {
+                        game.buyGambling(selectedGambling);
 
-                Gambling selectedGambling = adapter.getItem(position);
-                if (selectedGambling.isBuyable()) {
-                    game.buyGambling(selectedGambling);
+                        rotatingImage.setBackgroundResource(selectedGambling.getImageResource());
+                        rotatingImage.startAnimation(growAndRotate);
+                        setAnimationListeners(position);
 
-                    rotatingImage.setBackgroundResource(selectedGambling.getImageResource());
-                    rotatingImage.startAnimation(growAndRotate);
-                    setAnimationListeners(position);
-
-                } else {
-                    if (noMoneyToast != null) {
-                        noMoneyToast.cancel();
+                    } else {
+                        if (noMoneyToast != null) {
+                            noMoneyToast.cancel();
+                        }
+                        noMoneyToast =
+                                Toast.makeText(
+                                        getContext(),
+                                        R.string.not_enough_money,
+                                        Toast.LENGTH_SHORT
+                                );
+                        noMoneyToast.show();
                     }
-                    noMoneyToast =
-                            Toast.makeText(
-                                    getContext(),
-                                    R.string.not_enough_money,
-                                    Toast.LENGTH_SHORT
-                            );
-                    noMoneyToast.show();
+                } else {
+                    return;
                 }
             }
         });
@@ -109,6 +113,7 @@ public class GamblingListFragment extends Fragment {
             @Override
             public void onAnimationStart(Animation animation) {
                 rotatingImage.setVisibility(View.VISIBLE);
+                isAnimationRunning = true;
             }
 
             @Override
@@ -160,6 +165,7 @@ public class GamblingListFragment extends Fragment {
             public void onAnimationEnd(Animation animation) {
                 rotatingImage.setVisibility(View.GONE);
                 wonMoneyText.setVisibility(View.GONE);
+                isAnimationRunning = false;
             }
 
             @Override

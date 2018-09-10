@@ -3,11 +3,14 @@ package com.betherichest.android;
 import android.annotation.SuppressLint;
 import android.graphics.Point;
 import android.os.SystemClock;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.view.Display;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
@@ -30,6 +33,7 @@ public class GUIManager {
 
     private WindowManager windowManager;
     private FragmentManager fragmentManager;
+    private DrawerLayout mDrawerLayout;
 
     private TextView currentMoneyText;
     private TextView moneyPerSecText;
@@ -214,5 +218,25 @@ public class GUIManager {
     public void animateIconPress(View view) {
         final Animation anim = AnimationUtils.loadAnimation(MainActivity.getContext(), R.anim.grow_dollar_taptext);
         view.startAnimation(anim);
+    }
+
+    public void initializeActionBar(ActionBar actionbar) {
+        if (actionbar != null) {
+            actionbar.setDisplayHomeAsUpEnabled(true);
+            actionbar.setHomeAsUpIndicator(R.drawable.ic_menu);
+        }
+        mDrawerLayout = view.findViewById(R.id.drawer_layout);
+
+        NavigationView navigationView = view.findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(
+                new NavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(MenuItem menuItem) {
+                        menuItem.setChecked(true);
+                        mDrawerLayout.closeDrawers();
+
+                        return true;
+                    }
+                });
     }
 }

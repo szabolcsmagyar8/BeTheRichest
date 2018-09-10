@@ -8,4 +8,5 @@
     <color name="leaderBoardColor">#e1e1e1</color>
     <color name="darkRed">#760c07</color>
     <color name="darkGray">#878787</color>
+    <color name="white">#ffffffff</color>
 </resources>
