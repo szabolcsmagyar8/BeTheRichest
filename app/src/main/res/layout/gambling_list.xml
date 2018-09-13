@@ -7,8 +7,19 @@
         android:id="@+id/gambling_listview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="28dp"
         android:background="@drawable/greentexture"
         android:dividerHeight="8dp" />
+
+    <ImageView
+        android:id="@+id/scroll"
+        android:layout_width="48dp"
+        android:layout_height="28dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:onClick="closeClick"
+        android:scaleType="centerCrop"
+        android:src="@drawable/close" />
 
     <ImageView
         android:id="@+id/rotatingImage"
@@ -27,5 +38,5 @@
         android:textColor="@android:color/holo_orange_light"
         android:textSize="50sp"
         android:textStyle="bold"
-        android:visibility="invisible"/>
+        android:visibility="invisible" />
 </RelativeLayout>

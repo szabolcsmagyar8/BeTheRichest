@@ -1,7 +1,6 @@
 package com.betherichest.android;
 
 import android.content.Context;
-import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -26,7 +25,6 @@ public class MainActivity extends AppCompatActivity {
     private FragmentManager fragmentManager = getSupportFragmentManager();
     private DatabaseManager dbManager;
     private DrawerLayout mDrawerLayout;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,21 +55,17 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-
     public static Context getContext() {
         return context;
     }
 
     public void investmentsIconClick(View view) {
         guiManager.openFragment(R.id.investment_list_container, new InvestmentListFragment());
+        guiManager.setDollarMargin(0);
     }
 
     public void upgradesIconClick(View view) {
-        if (game.getDisplayableUpgrades().size() == 0) {
-            guiManager.showNoUpgradeToast();
-        } else {
-            guiManager.openFragment(R.id.upgrade_list_container, new UpgradeListFragment());
-        }
+        guiManager.openFragment(R.id.upgrade_list_container, new UpgradeListFragment());
     }
 
     public void gamblingIconClick(View view) {
@@ -108,5 +102,11 @@ public class MainActivity extends AppCompatActivity {
         } else {
             super.onBackPressed();
         }
+
+        guiManager.setDollarMargin(50);
+    }
+
+    public void closeClick(View view) {
+        onBackPressed();
     }
 }

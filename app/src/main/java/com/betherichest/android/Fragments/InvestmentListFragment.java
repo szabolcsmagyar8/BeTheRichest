@@ -2,6 +2,7 @@ package com.betherichest.android.Fragments;
 
 
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,13 +20,15 @@ import java.util.List;
 
 public class InvestmentListFragment extends Fragment {
     View rootView;
+    ListView listView;
     Toast noMoneyToast = null;
+    Parcelable state;
 
     Game game;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        rootView = inflater.inflate(R.layout.investment_listview, container, false);
+        rootView = inflater.inflate(R.layout.investment_list, container, false);
         return rootView;
     }
 
@@ -37,8 +40,13 @@ public class InvestmentListFragment extends Fragment {
         List<Investment> items = game.getInvestments();
 
         final InvestmentAdapter adapter = new InvestmentAdapter(items);
-        final ListView listView = rootView.findViewById(R.id.investment_listview);
+        listView = rootView.findViewById(R.id.investment_listview);
+
         listView.setAdapter(adapter);
+
+        if (state != null) {
+            listView.onRestoreInstanceState(state);
+        }
 
         game.adapterRefreshListener = new AdapterRefreshListener() {
             @Override
@@ -67,10 +75,13 @@ public class InvestmentListFragment extends Fragment {
                             );
                     noMoneyToast.show();
                 }
-
             }
         });
     }
 
-
+    @Override
+    public void onPause() {
+        state = listView.onSaveInstanceState();
+        super.onPause();
+    }
 }

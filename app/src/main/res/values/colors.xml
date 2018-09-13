@@ -10,6 +10,6 @@
     <color name="darkGray">#878787</color>
     <color name="white">#ffffffff</color>
     <color name="investmentHighlightColor">#5affd500</color>
-    <color name="investmentDividerColor">#e9e9e9</color>
+    <color name="investmentDividerColor">#e1e1e1</color>
 
 </resources>

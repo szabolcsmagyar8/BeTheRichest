@@ -30,7 +30,7 @@ public class UpgradeListFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        rootView = inflater.inflate(R.layout.upgrade_listview, container, false);
+        rootView = inflater.inflate(R.layout.upgrade_list, container, false);
         return rootView;
     }
 

@@ -12,6 +12,10 @@
             android:icon="@drawable/ic_stats"
             android:title="@string/statistics" />
         <item
+            android:id="@+id/nav_achievements"
+            android:icon="@drawable/ic_stars"
+            android:title="@string/achievements" />
+        <item
             android:id="@+id/nav_help"
             android:icon="@drawable/ic_help"
             android:title="@string/help" />

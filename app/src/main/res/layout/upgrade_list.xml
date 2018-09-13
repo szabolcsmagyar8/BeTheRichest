@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:background="@drawable/blackwood"
+
     android:clickable="true"
     android:focusable="true"
     tools:context=".MainActivity">
@@ -12,8 +12,19 @@
         android:id="@+id/upgrade_listview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="28dp"
         android:layout_centerHorizontal="true"
+        android:background="@drawable/blackwood"
         android:numColumns="4"
         android:textAlignment="center" />
 
+    <ImageView
+        android:id="@+id/scroll"
+        android:layout_width="48dp"
+        android:layout_height="28dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:onClick="closeClick"
+        android:scaleType="centerCrop"
+        android:src="@drawable/close" />
 </RelativeLayout>

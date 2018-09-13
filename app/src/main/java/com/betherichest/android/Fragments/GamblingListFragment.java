@@ -49,7 +49,7 @@ public class GamblingListFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        rootView = inflater.inflate(R.layout.gambling_listview, container, false);
+        rootView = inflater.inflate(R.layout.gambling_list, container, false);
         return rootView;
     }
 

@@ -9,6 +9,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
+import android.util.TypedValue;
 import android.view.Display;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -21,6 +22,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.betherichest.android.Fragments.UpgradeListFragment;
 import com.betherichest.android.ListenerInterfaces.MoneyChangedListener;
 
 import java.text.NumberFormat;
@@ -90,7 +92,7 @@ public class GUIManager {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
-                  //  animateIconPress(view);
+                    //  animateIconPress(view);
                 }
                 return false;
             }
@@ -195,11 +197,21 @@ public class GUIManager {
         if (SystemClock.elapsedRealtime() - mLastClickTime < 500) {
             return;
         }
+
+        if (newFragment instanceof UpgradeListFragment && game.getDisplayableUpgrades().size() == 0) {
+            showNoUpgradeToast();
+            return;
+        }
+
         mLastClickTime = SystemClock.elapsedRealtime();
         FragmentTransaction ft = fragmentManager.beginTransaction();
         ft.addToBackStack(null);
+
+        ft.setCustomAnimations(R.anim.slide_in, R.anim.slide_out, R.anim.slide_in, R.anim.slide_out);
         ft.replace(containerId, newFragment);
         ft.commit();
+
+        setDollarMargin(0);
     }
 
     public void showNoUpgradeToast() {
@@ -213,11 +225,6 @@ public class GUIManager {
                         Toast.LENGTH_SHORT
                 );
         noAvailableUpgradesToast.show();
-    }
-
-    public void animateIconPress(View view) {
-        final Animation anim = AnimationUtils.loadAnimation(MainActivity.getContext(), R.anim.grow_dollar_taptext);
-        view.startAnimation(anim);
     }
 
     public void initializeActionBar(ActionBar actionbar) {
@@ -238,5 +245,17 @@ public class GUIManager {
                         return true;
                     }
                 });
+    }
+
+    protected void setDollarMargin(int marginTop) {
+
+        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+        params.addRule(RelativeLayout.BELOW, R.id.moneyPerTapText);
+        params.setMargins(0, convertPixelToDp(marginTop), 0, 0);
+        dollarImage.setLayoutParams(params);
+    }
+
+    private int convertPixelToDp(int marginTop) {
+        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, marginTop, MainActivity.getContext().getResources().getDisplayMetrics());
     }
 }
