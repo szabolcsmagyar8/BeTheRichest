@@ -69,7 +69,7 @@ public class UpgradeAdapter extends BaseAdapter {
         }
 
         priceTextView = listItemView.findViewById(R.id.price);
-        imageView = listItemView.findViewById(R.id.upgradeIcon);
+        imageView = listItemView.findViewById(R.id.investmentIcon);
         effectTextView = listItemView.findViewById(R.id.multiplier);
         relativeLayout = listItemView.findViewById(R.id.layout);
 

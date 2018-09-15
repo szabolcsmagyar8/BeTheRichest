@@ -6,18 +6,18 @@ package com.betherichest.android.GameElements;
 
 public class InvestmentUpgradeConfig {
     private int basePriceMultiplier;
-    private int requiredRank;
+    private int requiredLevel;
 
     public int getBasePriceMultiplier() {
         return basePriceMultiplier;
     }
 
-    public int getRequiredRank() {
-        return requiredRank;
+    public InvestmentUpgradeConfig(int basePriceMultiplier, int requiredLevel) {
+        this.basePriceMultiplier = basePriceMultiplier;
+        this.requiredLevel = requiredLevel;
     }
 
-    public InvestmentUpgradeConfig(int basePriceMultiplier, int requiredRank) {
-        this.basePriceMultiplier = basePriceMultiplier;
-        this.requiredRank = requiredRank;
+    public int getRequiredLevel() {
+        return requiredLevel;
     }
 }

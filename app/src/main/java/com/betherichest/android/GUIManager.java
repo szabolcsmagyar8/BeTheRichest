@@ -1,12 +1,14 @@
 package com.betherichest.android;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.graphics.Point;
 import android.os.SystemClock;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.util.TypedValue;
@@ -28,6 +30,7 @@ import com.betherichest.android.ListenerInterfaces.MoneyChangedListener;
 import java.text.NumberFormat;
 import java.util.Locale;
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
 public class GUIManager {
     private View view;
@@ -44,6 +47,7 @@ public class GUIManager {
     private ImageView smallDollar;
     private RelativeLayout mainRelativeLayout;
     private ActionBar actionBar;
+    private NavigationView navigationView;
 
     private ImageView investmentsImageView;
 
@@ -52,23 +56,29 @@ public class GUIManager {
     static Random rnd = new Random();
 
     public GUIManager(View view, WindowManager windowManager, ActionBar supportActionBar, FragmentManager fragmentManager) {
+        this.view = view;
         this.windowManager = windowManager;
-        this.fragmentManager = fragmentManager;
         this.actionBar = supportActionBar;
+        this.fragmentManager = fragmentManager;
 
         game = Game.getInstance();
 
-        this.view = view;
+        initializeViews();
+        initializeEventListeners();
+        initializeActionBar(supportActionBar);
+    }
 
+    private void initializeViews() {
         currentMoneyText = view.findViewById(R.id.currentMoneyText);
         moneyPerSecText = view.findViewById(R.id.moneyPerSecText);
         moneyPerTapText = view.findViewById(R.id.moneyPerTapText);
         dollarImage = view.findViewById(R.id.dollar);
         smallDollar = view.findViewById(R.id.smallDollar);
         investmentsImageView = view.findViewById(R.id.investments);
-
-        initializeEventListeners();
+        mDrawerLayout = view.findViewById(R.id.drawer_layout);
+        navigationView = view.findViewById(R.id.nav_view);
     }
+
 
     @SuppressLint("ClickableViewAccessibility")
     private void initializeEventListeners() {
@@ -104,10 +114,30 @@ public class GUIManager {
                 setMainUITexts();
             }
         };
+
+        navigationView.setNavigationItemSelectedListener(
+                new NavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(MenuItem menuItem) {
+                        switch (menuItem.getItemId()) {
+                            case R.id.nav_stats:
+                                mDrawerLayout.closeDrawers();
+                                Intent intent = new Intent(MainActivity.getContext(), StatisticsActivity.class);
+                                MainActivity.getContext().startActivity(intent);
+                        }
+                        return true;
+                    }
+                });
     }
 
     public void changeCurrentMoneyText() {
         currentMoneyText.setText(game.getCurrentMoneyAsString());
+    }
+
+    public void setMainUITexts() {
+        currentMoneyText.setText(game.getCurrentMoneyAsString());
+        moneyPerSecText.setText(game.getMoneyPerSecAsString());
+        moneyPerTapText.setText(game.getMoneyPerTapAsString());
     }
 
     public void onDollarClick(MotionEvent event) {
@@ -122,7 +152,6 @@ public class GUIManager {
 
     private void animateDollarTap() {
         dollarImage.startAnimation(AnimationUtils.loadAnimation(MainActivity.getContext(), R.anim.shrink));   // shrink animation
-
         createAndAnimateTapTextOnDollarImage();
     }
 
@@ -185,12 +214,6 @@ public class GUIManager {
         return marginLeft;
     }
 
-    public void setMainUITexts() {
-        currentMoneyText.setText(game.getCurrentMoneyAsString());
-        moneyPerSecText.setText(game.getMoneyPerSecAsString());
-        moneyPerTapText.setText(game.getMoneyPerTapAsString());
-    }
-
     private long mLastClickTime = 0;
 
     public void openFragment(int containerId, Fragment newFragment) {
@@ -232,23 +255,9 @@ public class GUIManager {
             actionbar.setDisplayHomeAsUpEnabled(true);
             actionbar.setHomeAsUpIndicator(R.drawable.ic_menu);
         }
-        mDrawerLayout = view.findViewById(R.id.drawer_layout);
-
-        NavigationView navigationView = view.findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(
-                new NavigationView.OnNavigationItemSelectedListener() {
-                    @Override
-                    public boolean onNavigationItemSelected(MenuItem menuItem) {
-                        menuItem.setChecked(true);
-                        mDrawerLayout.closeDrawers();
-
-                        return true;
-                    }
-                });
     }
 
     protected void setDollarMargin(int marginTop) {
-
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
         params.addRule(RelativeLayout.BELOW, R.id.moneyPerTapText);
         params.setMargins(0, convertPixelToDp(marginTop), 0, 0);

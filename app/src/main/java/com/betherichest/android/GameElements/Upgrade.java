@@ -16,7 +16,7 @@ public class Upgrade extends GameElement {
     @Ignore
     private int color;
 
-    @ColumnInfo(name = "rank")
+    @ColumnInfo(name = "purchased")
     protected boolean purchased = false;
 
     public Upgrade(double price, int multiplier, int color) {
@@ -26,7 +26,7 @@ public class Upgrade extends GameElement {
         this.color = color;
     }
 
-    public Upgrade(int id) {
+    public Upgrade(int id) { // special constructor for database purposes
         this.id = id;
     }
 

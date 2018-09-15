@@ -3,7 +3,6 @@ package com.betherichest.android.GameElements;
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Ignore;
-import android.arch.persistence.room.PrimaryKey;
 
 import com.betherichest.android.Game;
 
@@ -16,12 +15,11 @@ import java.util.List;
 
 @Entity
 public class Investment extends GameElement {
-
-    @PrimaryKey
+    @Ignore
     static int currentId = 0;
 
-    @ColumnInfo(name = "rank")
-    private int rank = 0;
+    @ColumnInfo(name = "level")
+    private int level = 0;
 
     @Ignore
     private double basePrice;
@@ -51,9 +49,9 @@ public class Investment extends GameElement {
         this.upgradeEffectMultipliers = upgradeEffectMultipliers;
     }
 
-    public Investment(int id, int rank) {
+    public Investment(int id, int level) {
         this.id = id;
-        this.rank = rank;
+        this.level = level;
     }
 
     public int getId() {
@@ -68,16 +66,16 @@ public class Investment extends GameElement {
         return name;
     }
 
-    public int getRank() {
-        return rank;
+    public int getLevel() {
+        return level;
     }
 
-    public void setRank(int rank) {
-        this.rank = rank;
+    public void setLevel(int level) {
+        this.level = level;
     }
 
-    public void increaseRank() {
-        rank++;
+    public void increaseLevel() {
+        level++;
     }
 
     public long getBasePrice() {
@@ -86,11 +84,11 @@ public class Investment extends GameElement {
 
     @Override
     public double getPrice() {
-        return (double) Math.round(basePrice * Math.pow(coefficient, rank));
+        return (double) Math.round(basePrice * Math.pow(coefficient, level));
     }
 
     public double getMoneyPerSec() {
-        double moneyPerSec = rank * baseDpS;
+        double moneyPerSec = level * baseDpS;
         for (Upgrade upgrade : purchasedRelevantUpgrades) {
             moneyPerSec *= upgrade.getMultiplier();
         }
@@ -105,8 +103,8 @@ public class Investment extends GameElement {
         return upgradeEffectMultipliers;
     }
 
-    public double getMoneyPerSecPerRank() {
-        return rank == 0 ? baseDpS : getMoneyPerSec() / rank;
+    public double getMoneyPerSecPerLevel() {
+        return level == 0 ? baseDpS : getMoneyPerSec() / level;
     }
 
     @Override

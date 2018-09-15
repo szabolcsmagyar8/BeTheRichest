@@ -9,7 +9,5 @@
     <color name="darkRed">#760c07</color>
     <color name="darkGray">#878787</color>
     <color name="white">#ffffffff</color>
-    <color name="investmentHighlightColor">#5affd500</color>
-    <color name="investmentDividerColor">#e1e1e1</color>
-
+    <color name="investmentDividerColor">#f2ffd795</color>
 </resources>

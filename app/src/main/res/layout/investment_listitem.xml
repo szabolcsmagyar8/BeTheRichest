@@ -7,9 +7,10 @@
     android:padding="2dp">
 
     <ImageView
-        android:id="@+id/upgradeIcon"
+        android:id="@+id/investmentIcon"
         android:layout_width="55dp"
         android:layout_height="55dp"
+        android:layout_marginLeft="2dp"
         android:layout_alignBottom="@+id/linearLayout"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
@@ -22,8 +23,8 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:layout_marginLeft="8dp"
-        android:layout_toEndOf="@+id/upgradeIcon"
-        android:layout_toRightOf="@+id/upgradeIcon"
+        android:layout_toEndOf="@+id/investmentIcon"
+        android:layout_toRightOf="@+id/investmentIcon"
         android:orientation="vertical">
 
         <TextView
@@ -43,7 +44,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:textSize="13sp"
+                android:textSize="14sp"
                 android:textStyle="bold" />
 
             <ImageView
@@ -58,7 +59,7 @@
                 app:srcCompat="@drawable/dollarextrasmall" />
 
             <TextView
-                android:id="@+id/dpsPerRank"
+                android:id="@+id/dpsPerLevel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
@@ -66,21 +67,22 @@
                 android:layout_marginEnd="5dp"
                 android:layout_marginRight="5dp"
                 android:layout_marginTop="4dp"
-                android:textSize="13sp"
+                android:textSize="14sp"
                 android:textStyle="bold" />
 
         </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:paddingBottom="3dp">
 
             <TextView
                 android:id="@+id/total"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/total"
-                android:textSize="13sp"
+                android:textSize="14sp"
                 android:textStyle="bold" />
 
             <RelativeLayout
@@ -103,7 +105,7 @@
     </LinearLayout>
 
     <TextView
-        android:id="@+id/rank"
+        android:id="@+id/level"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"

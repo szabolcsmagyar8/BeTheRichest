@@ -50,7 +50,7 @@ public class DatabaseManager {
 
         appDatabase.gameStateDAO().insertAll(state);
         for (Investment inv : game.getInvestments()) {
-            appDatabase.investmentDao().insertAll(new Investment(inv.getId(), inv.getRank()));
+            appDatabase.investmentDao().insertAll(new Investment(inv.getId(), inv.getLevel()));
         }
         for (Upgrade upgrade : game.getUpgrades()) {
             if (upgrade.isPurchased()) {

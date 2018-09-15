@@ -24,9 +24,9 @@
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
+                android:background="@drawable/bluewood"
                 android:gravity="center"
                 android:minHeight="56dp"
-                android:background="@drawable/bluewood"
                 android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
         </FrameLayout>
 
@@ -54,7 +54,6 @@
                 android:layout_centerInParent="true"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="5dp"
-                android:layout_marginTop="5dp"
                 android:layout_toRightOf="@+id/currentMoneyText"
                 android:adjustViewBounds="true"
                 app:srcCompat="@drawable/dollarsmall" />

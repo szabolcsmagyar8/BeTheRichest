@@ -48,6 +48,8 @@ public class Game {
     private NumberFormat nf = NumberFormat.getNumberInstance(Locale.FRANCE);
     private static GameState gameState;
 
+    private static GameStatistics gameStatistics;
+
     public Handler handler;
 
     public MoneyChangedListener moneyChangedListener;
@@ -71,6 +73,7 @@ public class Game {
         upgrades = UpgradeFactory.getCreatedUpgrades();
         gamblings = GamblingFactory.getCreateGamblings();
         gameState = new GameState();
+        gameStatistics = new GameStatistics();
         handler = new Handler(Looper.getMainLooper());
         startTimer();
     }
@@ -150,6 +153,10 @@ public class Game {
         return displayableUpgrades;
     }
 
+    public static GameStatistics getGameStatistics() {
+        return gameStatistics;
+    }
+
     public void setTimerPaused(boolean timerPaused) {
         isTimerPaused = timerPaused;
     }
@@ -157,6 +164,7 @@ public class Game {
 
     public void dollarClick() {
         currentMoney += moneyPerTap;
+        gameStatistics.increaseTotalClicks(moneyPerTap);
     }
 
     public void startTimer() {
@@ -219,7 +227,7 @@ public class Game {
 
     public void buyInvestment(Investment selectedInvestment) {
         deduceMoney(selectedInvestment.getPrice());
-        selectedInvestment.increaseRank();
+        selectedInvestment.increaseLevel();
         recalculateMoneyPerSecond();
     }
 
@@ -276,7 +284,7 @@ public class Game {
         for (Investment investment : investments) {
             for (Investment savedInvestment : savedInvestments) {
                 if (investment.getId() == savedInvestment.getId()) {
-                    investment.setRank(savedInvestment.getRank());
+                    investment.setLevel(savedInvestment.getLevel());
                     break;
                 }
             }
@@ -302,5 +310,9 @@ public class Game {
 
     public List<Gambling> getGamblings() {
         return gamblings;
+    }
+
+    public double getDPSPercentage(Investment investment) {
+        return getMoneyPerSec() == 0 ? 0 : investment.getMoneyPerSec() / getMoneyPerSec() * 100;
     }
 }

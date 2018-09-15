@@ -41,7 +41,6 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         ActionBar actionbar = getSupportActionBar();
         guiManager = new GUIManager(this.findViewById(android.R.id.content), getWindowManager(), actionbar, fragmentManager);
-        guiManager.initializeActionBar(actionbar);
         guiManager.setMainUITexts();
     }
 
@@ -94,9 +93,6 @@ public class MainActivity extends AppCompatActivity {
     public void onBackPressed() {
         if (mDrawerLayout.isDrawerOpen(Gravity.START)) {
             mDrawerLayout.closeDrawer(Gravity.START);
-        }
-        if (mDrawerLayout.isDrawerOpen(Gravity.START)) {
-            mDrawerLayout.closeDrawer(Gravity.START);
         } else if (fragmentManager.getBackStackEntryCount() > 0) {
             fragmentManager.popBackStack();
         } else {
@@ -109,4 +105,5 @@ public class MainActivity extends AppCompatActivity {
     public void closeClick(View view) {
         onBackPressed();
     }
+
 }

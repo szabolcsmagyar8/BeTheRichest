@@ -14,8 +14,8 @@ import java.text.NumberFormat;
 import java.util.List;
 import java.util.Locale;
 
+import com.betherichest.android.Game;
 import com.betherichest.android.GameElements.Investment;
-import com.betherichest.android.GameElements.Upgrade;
 import com.betherichest.android.R;
 import com.bumptech.glide.Glide;
 
@@ -28,10 +28,10 @@ public class InvestmentAdapter extends BaseAdapter {
     private List<Investment> items;
     private TextView nameTextView;
     private TextView priceTextView;
-    private TextView dpsPerRankTextView;
-    private TextView rankTextView;
+    private TextView dpsPerLevelTextView;
+    private TextView levelTextView;
     private TextView totalDPSTextView;
-    private ImageView upgradeImageView;
+    private ImageView investmentImageView;
     private ImageView purchasedUpgradeImageView;
     private RelativeLayout upgradeIconContainer;
 
@@ -56,41 +56,36 @@ public class InvestmentAdapter extends BaseAdapter {
         return position;
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     @Override
     public View getView(int position, View view, ViewGroup parent) {
-
         listItemView = view;
-
         if (listItemView == null) {
             listItemView = View.inflate(parent.getContext(), R.layout.investment_listitem, null);
         } else {
             listItemView = view;
         }
-
         initializeListUIElements(listItemView);
-
         Investment investment = items.get(position);
+
         Glide
                 .with(parent.getContext())
                 .load(investment.getImageResource())
                 .asBitmap()
                 .dontAnimate()
                 .dontTransform()
-                .into(upgradeImageView);
+                .into(investmentImageView);
 
         setUIElementValues(investment);
-
         return listItemView;
     }
 
     private void initializeListUIElements(View listItemView) {
         nameTextView = listItemView.findViewById(R.id.name);
         priceTextView = listItemView.findViewById(R.id.price);
-        dpsPerRankTextView = listItemView.findViewById(R.id.dpsPerRank);
-        rankTextView = listItemView.findViewById(R.id.rank);
+        dpsPerLevelTextView = listItemView.findViewById(R.id.dpsPerLevel);
+        levelTextView = listItemView.findViewById(R.id.level);
         totalDPSTextView = listItemView.findViewById(R.id.total);
-        upgradeImageView = listItemView.findViewById(R.id.upgradeIcon);
+        investmentImageView = listItemView.findViewById(R.id.investmentIcon);
         //purchasedUpgradeImageView = listItemView.findViewById(R.id.purchasedUpgrade);
         upgradeIconContainer = listItemView.findViewById(R.id.upgradeIconContainer);
     }
@@ -137,11 +132,11 @@ public class InvestmentAdapter extends BaseAdapter {
 
     private void setUIElementValues(Investment investment) {
         nameTextView.setText(investment.getName());
-        priceTextView.setText(nf.format(investment.getPrice()));
-        rankTextView.setText(String.valueOf(investment.getRank()));
-        dpsPerRankTextView.setText("DPS: " + String.valueOf(nf.format(investment.getMoneyPerSecPerRank())));
-        totalDPSTextView.setText("Total: " + String.valueOf(nf.format((investment.getMoneyPerSec())))); //+ " (" + String.format("%.2f", investment.getDPSPercentage()) + "%)"));
-        upgradeImageView.setImageResource(investment.getImageResource());
+        priceTextView.setText("Price: " + nf.format(investment.getPrice()));
+        levelTextView.setText(String.valueOf(investment.getLevel()));
+        dpsPerLevelTextView.setText("DPS: " + String.valueOf(nf.format(investment.getMoneyPerSecPerLevel())));
+        totalDPSTextView.setText("Total: " + String.valueOf(nf.format((investment.getMoneyPerSec())) + " (" + String.format("%.2f", Game.getInstance().getDPSPercentage(investment)) + "%)"));
+        investmentImageView.setImageResource(investment.getImageResource());
 //        purchasedUpgradeImageView.setImageResource(investment.getImageResource());
         setTextColorByAvailability(investment);
         showPurchasedUpgrades(investment);

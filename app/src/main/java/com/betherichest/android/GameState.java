@@ -7,7 +7,7 @@ import android.arch.persistence.room.PrimaryKey;
 @Entity
 public class GameState {
     @PrimaryKey
-    private int uid;
+    private int id;
 
     @ColumnInfo(name = "current_money")
     private double currentMoney = 0d;
@@ -18,12 +18,12 @@ public class GameState {
     @ColumnInfo(name = "money_per_sec")
     private double moneyPerSec = 0d;
 
-    public int getUid() {
-        return uid;
+    public int getId() {
+        return id;
     }
 
-    public void setUid(int uid) {
-        this.uid = uid;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public double getCurrentMoney() {

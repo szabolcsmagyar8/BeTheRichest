@@ -84,7 +84,7 @@ public class UpgradeFactory {
                 Upgrade upgrade = new InvestmentUpgrade(
                         basePrice * investmentUpgradeConfigs[i].getBasePriceMultiplier(),
                         upgradeEffectMultipliersForActualInvestment[i],
-                        investmentUpgradeConfigs[i].getRequiredRank(),
+                        investmentUpgradeConfigs[i].getRequiredLevel(),
                         investment.getImageResource(),
                         colors[i],
                         investment);

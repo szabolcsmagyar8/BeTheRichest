@@ -1,6 +1,5 @@
 package com.betherichest.android.GameElements;
 
-import com.betherichest.android.GameElements.Upgrade;
 import com.betherichest.android.R;
 
 

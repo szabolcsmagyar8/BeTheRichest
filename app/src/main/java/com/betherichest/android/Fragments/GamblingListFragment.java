@@ -32,7 +32,7 @@ public class GamblingListFragment extends Fragment {
     private GamblingAdapter adapter;
     private ListView listView;
     private Game game = Game.getInstance();
-    private boolean isAnimationRunning = false;
+    private boolean animationRunning = false;
 
     private NumberFormat nf = NumberFormat.getNumberInstance(Locale.FRANCE);
 
@@ -80,7 +80,7 @@ public class GamblingListFragment extends Fragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if (!isAnimationRunning) {
+                if (!animationRunning) {
                     Gambling selectedGambling = adapter.getItem(position);
                     if (selectedGambling.isBuyable()) {
                         game.buyGambling(selectedGambling);
@@ -113,7 +113,7 @@ public class GamblingListFragment extends Fragment {
             @Override
             public void onAnimationStart(Animation animation) {
                 rotatingImage.setVisibility(View.VISIBLE);
-                isAnimationRunning = true;
+                animationRunning = true;
             }
 
             @Override
@@ -165,7 +165,7 @@ public class GamblingListFragment extends Fragment {
             public void onAnimationEnd(Animation animation) {
                 rotatingImage.setVisibility(View.GONE);
                 wonMoneyText.setVisibility(View.GONE);
-                isAnimationRunning = false;
+                animationRunning = false;
             }
 
             @Override
