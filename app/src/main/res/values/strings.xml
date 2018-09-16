@@ -19,4 +19,6 @@
     <string name="ads">Watch ads for extras</string>
     <string name="boosters">Boosters</string>
     <string name="achievements">Achievements</string>
+    <string name="total_clicks">Total Clicks</string>
+    <string name="total_money_from_clicks">Total Money From Clicks</string>
 </resources>

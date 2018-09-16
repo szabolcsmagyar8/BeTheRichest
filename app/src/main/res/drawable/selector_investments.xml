@@ -3,5 +3,5 @@
     <item android:drawable="@drawable/w1_highlight" android:state_focused="true" /> <!-- focused -->
     <item android:drawable="@drawable/w1_highlight" android:state_focused="true" android:state_pressed="true" /> <!-- focused and pressed-->
     <item android:drawable="@drawable/w1_highlight" android:state_pressed="true" /> <!-- pressed -->
-    <item android:drawable="@drawable/w1" /> <!-- default -->
+    <item android:drawable="@drawable/w1_0" /> <!-- default -->
 </selector>

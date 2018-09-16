@@ -14,9 +14,9 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.betherichest.android.ListenerInterfaces.AdapterRefreshListener;
 import com.betherichest.android.Game;
 import com.betherichest.android.GameElements.Gambling;
+import com.betherichest.android.ListenerInterfaces.AdapterRefreshListener;
 import com.betherichest.android.R;
 
 import java.text.NumberFormat;

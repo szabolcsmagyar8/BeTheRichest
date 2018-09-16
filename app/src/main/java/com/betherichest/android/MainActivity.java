@@ -1,12 +1,12 @@
 package com.betherichest.android;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.view.MenuItem;
@@ -60,7 +60,6 @@ public class MainActivity extends AppCompatActivity {
 
     public void investmentsIconClick(View view) {
         guiManager.openFragment(R.id.investment_list_container, new InvestmentListFragment());
-        guiManager.setDollarMargin(0);
     }
 
     public void upgradesIconClick(View view) {

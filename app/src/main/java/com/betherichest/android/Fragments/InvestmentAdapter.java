@@ -1,8 +1,6 @@
 package com.betherichest.android.Fragments;
 
 import android.graphics.Color;
-import android.os.Build;
-import android.support.annotation.RequiresApi;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -10,18 +8,14 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import java.text.NumberFormat;
-import java.util.List;
-import java.util.Locale;
-
 import com.betherichest.android.Game;
 import com.betherichest.android.GameElements.Investment;
 import com.betherichest.android.R;
 import com.bumptech.glide.Glide;
 
-/**
- * Created by Szabi on 2018. 03. 14..
- */
+import java.text.NumberFormat;
+import java.util.List;
+import java.util.Locale;
 
 public class InvestmentAdapter extends BaseAdapter {
     View listItemView;
@@ -37,13 +31,13 @@ public class InvestmentAdapter extends BaseAdapter {
 
     NumberFormat nf = NumberFormat.getNumberInstance(Locale.FRANCE);
 
+    public InvestmentAdapter(List<Investment> items) {
+        this.items = items;
+    }
+
     @Override
     public int getCount() {
         return items == null ? 0 : items.size();
-    }
-
-    public InvestmentAdapter(List<Investment> items) {
-        this.items = items;
     }
 
     @Override

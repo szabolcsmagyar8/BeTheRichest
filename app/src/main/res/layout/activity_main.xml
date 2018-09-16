@@ -86,7 +86,7 @@
             android:textStyle="normal|bold" />
 
         <ImageView
-            android:id="@+id/dollar"
+            android:id="@+id/dollarImage"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/moneyPerTapText"
@@ -195,21 +195,21 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_below="@+id/dollar" />
+            android:layout_below="@+id/dollarImage" />
 
         <FrameLayout
             android:id="@+id/upgrade_list_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_alignParentBottom="true"
-            android:layout_below="@+id/dollar" />
+            android:layout_below="@+id/dollarImage" />
 
         <FrameLayout
             android:id="@+id/gambling_list_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_alignParentBottom="true"
-            android:layout_below="@+id/dollar" />
+            android:layout_below="@+id/dollarImage" />
     </RelativeLayout>
 
     <android.support.design.widget.NavigationView

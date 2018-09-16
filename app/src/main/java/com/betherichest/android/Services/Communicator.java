@@ -1,16 +1,11 @@
 package com.betherichest.android.Services;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-import android.net.ConnectivityManager;
 import android.os.AsyncTask;
 import android.util.Log;
 
 import com.google.gson.Gson;
 
 import java.io.IOException;
-import java.util.Date;
 
 import okhttp3.Call;
 import okhttp3.Callback;

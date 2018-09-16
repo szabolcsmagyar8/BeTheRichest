@@ -34,27 +34,24 @@ public class Game {
     private double START_MONEY_PER_SEC = 0d;
 
     private double currentMoney = 0d;
-
     private double moneyPerTap = 1d;
     private double moneyPerSec = 0d;
     public static Integer FPS = 24;
+    private NumberFormat nf = NumberFormat.getNumberInstance(Locale.FRANCE);
 
     private Timer T = new Timer();
 
     private List<Investment> investments;
     private List<Upgrade> upgrades;
     private List<Gambling> gamblings;
+    private ArrayList<Upgrade> purchasedTapUpgrades = new ArrayList<>();
 
-    private NumberFormat nf = NumberFormat.getNumberInstance(Locale.FRANCE);
     private static GameState gameState;
-
     private static GameStatistics gameStatistics;
 
     public Handler handler;
-
     public MoneyChangedListener moneyChangedListener;
     public AdapterRefreshListener adapterRefreshListener;
-    ArrayList<Upgrade> purchasedTapUpgrades = new ArrayList<>();
 
     private boolean isTimerPaused;
     //endregion
@@ -78,12 +75,13 @@ public class Game {
         startTimer();
     }
 
+    //endregion
+    //region PROPERTIES
+
     public GameState getGameState() {
         return gameState;
     }
-    //endregion
 
-    //region PROPERTIES
     public double getCurrentMoney() {
         return currentMoney;
     }

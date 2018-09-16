@@ -10,9 +10,9 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.Toast;
 
-import com.betherichest.android.ListenerInterfaces.AdapterRefreshListener;
 import com.betherichest.android.Game;
 import com.betherichest.android.GameElements.Upgrade;
+import com.betherichest.android.ListenerInterfaces.AdapterRefreshListener;
 import com.betherichest.android.R;
 
 import java.util.List;

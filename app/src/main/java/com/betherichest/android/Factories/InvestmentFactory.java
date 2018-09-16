@@ -1,13 +1,8 @@
 package com.betherichest.android.Factories;
 
-import android.content.Context;
-
 import com.betherichest.android.GameElements.Investment;
-import com.betherichest.android.MainActivity;
 import com.betherichest.android.R;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 

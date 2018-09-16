@@ -4,7 +4,6 @@ import com.betherichest.android.GameElements.Gambling;
 import com.betherichest.android.R;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 public class GamblingFactory {

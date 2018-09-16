@@ -8,7 +8,6 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.util.TypedValue;
@@ -30,7 +29,6 @@ import com.betherichest.android.ListenerInterfaces.MoneyChangedListener;
 import java.text.NumberFormat;
 import java.util.Locale;
 import java.util.Random;
-import java.util.concurrent.TimeUnit;
 
 public class GUIManager {
     private View view;
@@ -72,7 +70,7 @@ public class GUIManager {
         currentMoneyText = view.findViewById(R.id.currentMoneyText);
         moneyPerSecText = view.findViewById(R.id.moneyPerSecText);
         moneyPerTapText = view.findViewById(R.id.moneyPerTapText);
-        dollarImage = view.findViewById(R.id.dollar);
+        dollarImage = view.findViewById(R.id.dollarImage);
         smallDollar = view.findViewById(R.id.smallDollar);
         investmentsImageView = view.findViewById(R.id.investments);
         mDrawerLayout = view.findViewById(R.id.drawer_layout);

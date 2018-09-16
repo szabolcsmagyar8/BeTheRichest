@@ -36,6 +36,7 @@
             android:name=".StatisticsActivity"
             android:label="@string/statistics"
             android:parentActivityName=".MainActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
     </application>
 
