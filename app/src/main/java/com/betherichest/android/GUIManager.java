@@ -1,6 +1,7 @@
 package com.betherichest.android;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Point;
 import android.os.SystemClock;
@@ -33,6 +34,7 @@ import java.util.Random;
 public class GUIManager {
     private View view;
     private Game game;
+    private Context context;
 
     private WindowManager windowManager;
     private FragmentManager fragmentManager;
@@ -53,11 +55,14 @@ public class GUIManager {
 
     static Random rnd = new Random();
 
+    private boolean activityOpened = false;
+
     public GUIManager(View view, WindowManager windowManager, ActionBar supportActionBar, FragmentManager fragmentManager) {
         this.view = view;
         this.windowManager = windowManager;
         this.actionBar = supportActionBar;
         this.fragmentManager = fragmentManager;
+        context = view.getContext();
 
         game = Game.getInstance();
 
@@ -120,10 +125,11 @@ public class GUIManager {
                         switch (menuItem.getItemId()) {
                             case R.id.nav_stats:
                                 mDrawerLayout.closeDrawers();
-                                Intent intent = new Intent(MainActivity.getContext(), StatisticsActivity.class);
-                                MainActivity.getContext().startActivity(intent);
+                                Intent intent = new Intent(context, StatisticsActivity.class);
+                                context.startActivity(intent);
                         }
-                        return true;
+                        activityOpened = true;
+                        return false;
                     }
                 });
     }
@@ -149,14 +155,14 @@ public class GUIManager {
     }
 
     private void animateDollarTap() {
-        dollarImage.startAnimation(AnimationUtils.loadAnimation(MainActivity.getContext(), R.anim.shrink));   // shrink animation
+        dollarImage.startAnimation(AnimationUtils.loadAnimation(context, R.anim.shrink));   // shrink animation
         createAndAnimateTapTextOnDollarImage();
     }
 
     private void createAndAnimateTapTextOnDollarImage() { // creates a TextView which appears above the dollar icon in a random position, and starts animation
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
 
-        final TextView tapText = (TextView) View.inflate(MainActivity.getContext(), R.layout.dollar_tap_popup_text, null);
+        final TextView tapText = (TextView) View.inflate(context, R.layout.dollar_tap_popup_text, null);
         tapText.setText("+" + String.valueOf(NumberFormat.getNumberInstance(Locale.FRANCE).format((int) game.getMoneyPerTap()) + "$"));
 
         tapText.measure(0, 0);
@@ -166,7 +172,7 @@ public class GUIManager {
         mainRelativeLayout = view.findViewById(R.id.mainRelativeLayout);
         mainRelativeLayout.addView(tapText);
 
-        Animation growAndFade = AnimationUtils.loadAnimation(MainActivity.getContext(), R.anim.grow_and_fade);
+        Animation growAndFade = AnimationUtils.loadAnimation(context, R.anim.grow_and_fade);
         growAndFade.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
@@ -189,6 +195,10 @@ public class GUIManager {
             }
         });
         tapText.startAnimation(growAndFade);
+    }
+
+    public boolean isActivityOpened() {
+        return activityOpened;
     }
 
     private int getNewRandomYPositionOnDollarImage() {
@@ -241,7 +251,7 @@ public class GUIManager {
         }
         noAvailableUpgradesToast =
                 Toast.makeText(
-                        MainActivity.getContext(),
+                        context,
                         R.string.no_upgrades_available,
                         Toast.LENGTH_SHORT
                 );
@@ -263,6 +273,6 @@ public class GUIManager {
     }
 
     private int convertPixelToDp(int marginTop) {
-        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, marginTop, MainActivity.getContext().getResources().getDisplayMetrics());
+        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, marginTop, context.getResources().getDisplayMetrics());
     }
 }

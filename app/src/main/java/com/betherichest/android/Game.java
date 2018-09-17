@@ -53,7 +53,7 @@ public class Game {
     public MoneyChangedListener moneyChangedListener;
     public AdapterRefreshListener adapterRefreshListener;
 
-    private boolean isTimerPaused;
+    private boolean timerPaused;
     //endregion
 
     //region CONSTRUCTORS
@@ -156,7 +156,7 @@ public class Game {
     }
 
     public void setTimerPaused(boolean timerPaused) {
-        isTimerPaused = timerPaused;
+        this.timerPaused = timerPaused;
     }
     //endregion
 
@@ -169,7 +169,7 @@ public class Game {
         T.schedule(new TimerTask() {
             @Override
             public void run() {
-                if (!isTimerPaused) {
+                if (!timerPaused) {
                     earnMoney(getMoneyPerSec() / FPS);
                 }
             }
@@ -178,17 +178,12 @@ public class Game {
         T.schedule(new TimerTask() {
             @Override
             public void run() {
-                if (!isTimerPaused) {
+                if (!timerPaused) {
                     postAdapterRefreshRequest();    // the adapter need to be refreshed continuously, providing a constant update in availability colors and displayable elements in the list
                 }
             }
         }, 0, 300);
     }
-
-    public void stopTimer() {
-        T.cancel();
-    }
-
 
     private void deduceMoney(double price) {
         currentMoney -= price;
@@ -220,6 +215,7 @@ public class Game {
 
     public void earnMoney(double money) {
         currentMoney += money;
+        gameStatistics.addMoney(money);
         postMoneyChanged();
     }
 

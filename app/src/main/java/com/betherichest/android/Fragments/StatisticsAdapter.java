@@ -3,6 +3,7 @@ package com.betherichest.android.Fragments;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.betherichest.android.GameStatistics;
@@ -15,6 +16,7 @@ public class StatisticsAdapter extends BaseAdapter {
     private View listItemView;
     private TextView statTextView;
     private TextView statValueTextView;
+    private ImageView iconImageView;
     private List<GameStatistics.StatisticsItem> items;
 
     public StatisticsAdapter(List<GameStatistics.StatisticsItem> items) {
@@ -47,8 +49,11 @@ public class StatisticsAdapter extends BaseAdapter {
 
         statTextView = listItemView.findViewById(R.id.statText);
         statValueTextView = listItemView.findViewById(R.id.statValueText);
+        iconImageView = listItemView.findViewById(R.id.iconImage);
+
         statTextView.setText(items.get(i).getName());
         statValueTextView.setText(items.get(i).getValueAsString());
+        iconImageView.setImageResource(items.get(i).getImageResource());
 
         return listItemView;
     }

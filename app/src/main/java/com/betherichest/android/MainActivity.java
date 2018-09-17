@@ -79,7 +79,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        game.setTimerPaused(true);
+        if (!guiManager.isActivityOpened()) {
+            game.setTimerPaused(true);
+        }
     }
 
     @Override
