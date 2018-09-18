@@ -46,8 +46,8 @@ public class Game {
     private List<Gambling> gamblings;
     private ArrayList<Upgrade> purchasedTapUpgrades = new ArrayList<>();
 
-    private static GameState gameState;
-    private static GameStatistics gameStatistics;
+    public static GameState gameState;
+    public static StatisticsManager statisticsManager;
 
     public Handler handler;
     public MoneyChangedListener moneyChangedListener;
@@ -68,20 +68,16 @@ public class Game {
         investments = InvestmentFactory.getCreatedInvestments();
         UpgradeFactory.createUpgrades(investments);
         upgrades = UpgradeFactory.getCreatedUpgrades();
-        gamblings = GamblingFactory.getCreateGamblings();
-        gameState = new GameState();
-        gameStatistics = new GameStatistics();
+        gamblings = GamblingFactory.getCreatedGamblings();
         handler = new Handler(Looper.getMainLooper());
+
+        statisticsManager = new StatisticsManager();
+        gameState = new GameState();
         startTimer();
     }
-
     //endregion
+
     //region PROPERTIES
-
-    public GameState getGameState() {
-        return gameState;
-    }
-
     public double getCurrentMoney() {
         return currentMoney;
     }
@@ -151,18 +147,23 @@ public class Game {
         return displayableUpgrades;
     }
 
-    public static GameStatistics getGameStatistics() {
-        return gameStatistics;
+    public double getDPSPercentage(Investment investment) {
+        return getMoneyPerSec() == 0 ? 0 : investment.getMoneyPerSec() / getMoneyPerSec() * 100;
     }
 
     public void setTimerPaused(boolean timerPaused) {
         this.timerPaused = timerPaused;
     }
+
+    public List<Gambling> getGamblings() {
+        return gamblings;
+    }
+
     //endregion
 
     public void dollarClick() {
         currentMoney += moneyPerTap;
-        gameStatistics.increaseTotalClicks(moneyPerTap);
+        statisticsManager.dollarClick(moneyPerTap);
     }
 
     public void startTimer() {
@@ -188,8 +189,8 @@ public class Game {
     private void deduceMoney(double price) {
         currentMoney -= price;
     }
-
     //region EVENTHANDLERS
+
     private void postAdapterRefreshRequest() {
         handler.post(new Runnable() {
             @Override
@@ -211,16 +212,18 @@ public class Game {
             }
         });
     }
+
     //endregion
 
     public void earnMoney(double money) {
         currentMoney += money;
-        gameStatistics.addMoney(money);
+        statisticsManager.earnMoney(money);
         postMoneyChanged();
     }
 
     public void buyInvestment(Investment selectedInvestment) {
         deduceMoney(selectedInvestment.getPrice());
+        statisticsManager.buyItem(selectedInvestment.getPrice());
         selectedInvestment.increaseLevel();
         recalculateMoneyPerSecond();
     }
@@ -228,6 +231,7 @@ public class Game {
     public void buyUpgrade(Upgrade selectedUpgrade) {
         selectedUpgrade.setPurchased(true);
         deduceMoney(selectedUpgrade.getPrice());
+        statisticsManager.buyItem(selectedUpgrade.getPrice());
 
         if (selectedUpgrade instanceof InvestmentUpgrade) {
             ((InvestmentUpgrade) selectedUpgrade).getRelevantInvestment().addPurchasedRelevantUpgrade(selectedUpgrade); // to store the purchased upgrades in a separate list for every investment instance
@@ -241,6 +245,7 @@ public class Game {
 
     public void buyGambling(Gambling selectedGambling) {
         deduceMoney(selectedGambling.getPrice());
+        statisticsManager.buyItem(selectedGambling.getPrice());
     }
 
     private void recalculateMoneyPerSecond() {
@@ -302,11 +307,13 @@ public class Game {
         }
     }
 
-    public List<Gambling> getGamblings() {
-        return gamblings;
-    }
-
-    public double getDPSPercentage(Investment investment) {
-        return getMoneyPerSec() == 0 ? 0 : investment.getMoneyPerSec() / getMoneyPerSec() * 100;
+    public void loadGameStatistics(List<GameStatistics> savedGameStatistics) {
+        for (GameStatistics savedStat : savedGameStatistics) {
+            for (GameStatistics stat : statisticsManager.getGameStatistics()) {
+                if (stat.getId() == savedStat.getId()) {
+                    stat.setValue(savedStat.getValue());
+                }
+            }
+        }
     }
 }

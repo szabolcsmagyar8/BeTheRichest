@@ -39,8 +39,7 @@ public class StatisticsActivity extends AppCompatActivity {
     }
 
     private void setStatTexts() {
-        Game.getGameStatistics().createStatItems();
-        StatisticsAdapter adapter = new StatisticsAdapter((Game.getGameStatistics().getStatsItems()));
+        StatisticsAdapter adapter = new StatisticsAdapter(Game.statisticsManager.getGameStatistics());
         ListView listView = findViewById(R.id.stat_listview);
         listView.setAdapter(adapter);
     }

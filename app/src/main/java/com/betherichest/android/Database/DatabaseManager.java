@@ -4,6 +4,7 @@ import com.betherichest.android.Game;
 import com.betherichest.android.GameElements.Investment;
 import com.betherichest.android.GameElements.Upgrade;
 import com.betherichest.android.GameState;
+import com.betherichest.android.GameStatistics;
 import com.betherichest.android.MainActivity;
 
 import java.util.List;
@@ -32,21 +33,25 @@ public class DatabaseManager {
             game.setMoneyPerSec(states.get(0).getMoneyPerSec());
             game.setMoneyPerTap(states.get(0).getMoneyPerTap());
         }
+
         if (appDatabase.investmentDao().getInvestments().size() != 0) {
             game.loadInvestments(appDatabase.investmentDao().getInvestments());
         }
         if (appDatabase.upgradeDao().getUpgrades().size() != 0) {
             game.loadUpgrades(appDatabase.upgradeDao().getUpgrades());
         }
+        if (appDatabase.gameStatisticsDao().geGameStatistics().size() != 0) {
+            game.loadGameStatistics(appDatabase.gameStatisticsDao().geGameStatistics());
+        }
     }
 
     public void saveStateToDb() {
-        GameState state = game.getGameState();
+        GameState state = Game.gameState;
         state.setCurrentMoney(game.getCurrentMoney());
         state.setMoneyPerSec(game.getMoneyPerSec());
         state.setMoneyPerTap(game.getMoneyPerTap());
-
         appDatabase.gameStateDAO().insertAll(state);
+
         for (Investment inv : game.getInvestments()) {
             appDatabase.investmentDao().insertAll(new Investment(inv.getId(), inv.getLevel()));
         }
@@ -54,6 +59,10 @@ public class DatabaseManager {
             if (upgrade.isPurchased()) {
                 appDatabase.upgradeDao().insertAll(new Upgrade(upgrade.getId()));
             }
+        }
+
+        for (GameStatistics stat : Game.statisticsManager.getGameStatistics()) {
+            appDatabase.gameStatisticsDao().insertAll(stat);
         }
 
     }

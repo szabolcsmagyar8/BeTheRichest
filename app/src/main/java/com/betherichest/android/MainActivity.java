@@ -29,12 +29,13 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        MainActivity.context = getApplicationContext();
+
         setContentView(R.layout.activity_main);
 
         mDrawerLayout = findViewById(R.id.drawer_layout);
         Toolbar toolbar = findViewById(R.id.toolbar);
 
-        MainActivity.context = getApplicationContext();
         dbManager = new DatabaseManager();
         dbManager.loadStateFromDb();
 

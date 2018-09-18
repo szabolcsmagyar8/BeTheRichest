@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "b9323d5cc69e269bdfb739eb5603f523",
+    "identityHash": "9ec572a4c2bebe02a5ef1d8b7e79b433",
     "entities": [
       {
         "tableName": "GameState",
@@ -93,11 +93,43 @@
         },
         "indices": [],
         "foreignKeys": []
+      },
+      {
+        "tableName": "GameStatistics",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `name` TEXT, `value` REAL NOT NULL, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "value",
+            "columnName": "value",
+            "affinity": "REAL",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
       }
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"b9323d5cc69e269bdfb739eb5603f523\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"9ec572a4c2bebe02a5ef1d8b7e79b433\")"
     ]
   }
 }

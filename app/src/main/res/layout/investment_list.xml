@@ -11,8 +11,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="28dp"
-        android:background="@color/investmentDividerColor"
-        android:divider="@null" />
+        android:divider="@color/investmentDividerColor"
+        android:background="@color/investmentDividerColor" />
 
     <ImageView
         android:id="@+id/scroll"

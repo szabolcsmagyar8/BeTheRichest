@@ -17,9 +17,9 @@ public class StatisticsAdapter extends BaseAdapter {
     private TextView statTextView;
     private TextView statValueTextView;
     private ImageView iconImageView;
-    private List<GameStatistics.StatisticsItem> items;
+    private List<GameStatistics> items;
 
-    public StatisticsAdapter(List<GameStatistics.StatisticsItem> items) {
+    public StatisticsAdapter(List<GameStatistics> items) {
         this.items = items;
     }
 

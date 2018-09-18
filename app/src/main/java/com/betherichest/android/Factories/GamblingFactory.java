@@ -8,8 +8,8 @@ import java.util.List;
 
 public class GamblingFactory {
 
-    public static List<Gambling> getCreateGamblings() {
-        List<Gambling> gamblings = new ArrayList<Gambling>();
+    public static List<Gambling> getCreatedGamblings() {
+        List<Gambling> gamblings = new ArrayList<>();
         gamblings.add(
                 new Gambling(
                         "Scratch Off",

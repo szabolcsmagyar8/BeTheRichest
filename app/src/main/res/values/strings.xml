@@ -22,4 +22,6 @@
     <string name="total_clicks">Total Clicks</string>
     <string name="total_money_from_clicks">Total Money From Clicks</string>
     <string name="total_money_collected">Total Money Collected</string>
+    <string name="total_time_spent">Total Time Spent</string>
+    <string name="total_money_spent">Total Money Spent</string>
 </resources>
