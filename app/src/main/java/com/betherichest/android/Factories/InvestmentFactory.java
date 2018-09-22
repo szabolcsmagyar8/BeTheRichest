@@ -1,8 +1,11 @@
 package com.betherichest.android.Factories;
 
+import com.betherichest.android.App;
 import com.betherichest.android.GameElements.Investment;
 import com.betherichest.android.R;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,8 +25,13 @@ public class InvestmentFactory {
 //    private static String parseJSONtoInvestments() {
 //        String json = null;
 //        try {
-//            InputStream stream = getResources().openRawResource(R.raw.json_file);("com/betherichest/android/investments.json");
-//            int size = stream.available();
+//            InputStream stream = App.getContext().getResources().openRawResource(R.raw.investments);
+//            int size = 0;
+//            try {
+//                size = stream.available();
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
 //            byte[] buffer = new byte[size];
 //            stream.read(buffer);
 //            stream.close();

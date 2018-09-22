@@ -48,7 +48,7 @@ public class InvestmentListFragment extends Fragment {
             listView.onRestoreInstanceState(state);
         }
 
-        game.adapterRefreshListener = new AdapterRefreshListener() {
+        game.slowAdapterRefreshListener = new AdapterRefreshListener() {
             @Override
             public void refreshAdapter() {
                 adapter.notifyDataSetChanged();

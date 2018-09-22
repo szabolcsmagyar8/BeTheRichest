@@ -96,6 +96,9 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+        if (Game.isGamblingAnimationRunning()) {
+            return;
+        }
         if (mDrawerLayout.isDrawerOpen(Gravity.START)) {
             mDrawerLayout.closeDrawer(Gravity.START);
         } else if (fragmentManager.getBackStackEntryCount() > 0) {

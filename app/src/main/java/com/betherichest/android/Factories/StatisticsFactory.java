@@ -29,7 +29,8 @@ public class StatisticsFactory {
         gameStatistics.put(StatType.GAMBLING_BALANCE, new GameStatistics(res.getString(R.string.gambling_balance), 0, R.drawable.ic_balance));
         gameStatistics.put(StatType.TOTAL_INVESTMENT_LEVELS, new GameStatistics(res.getString(R.string.total_investment_levels), 0, R.drawable.ic_investment));
         gameStatistics.put(StatType.UPGRADES_BOUGHT, new GameStatistics(res.getString(R.string.upgrades_bought), 0, R.drawable.ic_upgrade));
-        gameStatistics.put(StatType.FIRST_DOLLAR, new GameStatistics(res.getString(R.string.first_dollar), (new Date().getTime()), R.drawable.ic_money));
+        gameStatistics.put(StatType.FIRST_DOLLAR, new GameStatistics(res.getString(R.string.first_dollar), new Date().getTime(), R.drawable.ic_money));
+        gameStatistics.put(StatType.HIGHEST_MONEY, new GameStatistics(res.getString(R.string.highest_money), 0, R.drawable.ic_money));
         return gameStatistics;
     }
 }

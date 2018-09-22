@@ -21,6 +21,9 @@ public class GameState {
     @ColumnInfo(name = "first_dollar_click")
     private boolean firstDollarClick = true;
 
+    @ColumnInfo(name = "max_current_money")
+    private double maxCurrentMoney = 0;
+
     public int getId() {
         return id;
     }
@@ -59,5 +62,13 @@ public class GameState {
 
     public void setFirstDollarClick(boolean firstDollarClick) {
         this.firstDollarClick = firstDollarClick;
+    }
+
+    public double getMaxCurrentMoney() {
+        return maxCurrentMoney;
+    }
+
+    public void setMaxCurrentMoney(double maxCurrentMoney) {
+        this.maxCurrentMoney = maxCurrentMoney;
     }
 }

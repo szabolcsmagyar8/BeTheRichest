@@ -85,4 +85,8 @@ public class StatisticsManager {
     public void firstDollarClick() {
         gameStatistics.get(StatType.FIRST_DOLLAR).setValue((new Date().getTime()));
     }
+
+    public void setMaxCurrentMoney(double maxCurrentMoney) {
+        gameStatistics.get(StatType.HIGHEST_MONEY).setValue(maxCurrentMoney);
+    }
 }

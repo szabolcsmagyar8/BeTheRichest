@@ -10,7 +10,7 @@ import com.betherichest.android.MainActivity;
 import java.util.List;
 
 public class DatabaseManager {
-    private static DatabaseManager instance;
+    public static DatabaseManager instance;
     private Game game;
 
     private AppDatabase appDatabase;
@@ -33,6 +33,7 @@ public class DatabaseManager {
             game.setMoneyPerSec(states.get(0).getMoneyPerSec());
             game.setMoneyPerTap(states.get(0).getMoneyPerTap());
             Game.gameState.setFirstDollarClick(states.get(0).isFirstDollarClick());
+            Game.gameState.setMaxCurrentMoney(states.get(0).getMaxCurrentMoney());
         }
 
         if (appDatabase.investmentDao().getInvestments().size() != 0) {

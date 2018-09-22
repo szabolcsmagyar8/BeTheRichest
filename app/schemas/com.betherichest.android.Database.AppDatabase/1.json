@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "be539c036d5f39fe7ffada78fd386717",
+    "identityHash": "085ee529964ee6a58a9e867b6d002189",
     "entities": [
       {
         "tableName": "GameState",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `current_money` REAL NOT NULL, `money_per_tap` REAL NOT NULL, `money_per_sec` REAL NOT NULL, `first_dollar_click` INTEGER NOT NULL, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `current_money` REAL NOT NULL, `money_per_tap` REAL NOT NULL, `money_per_sec` REAL NOT NULL, `first_dollar_click` INTEGER NOT NULL, `max_current_money` REAL NOT NULL, PRIMARY KEY(`id`))",
         "fields": [
           {
             "fieldPath": "id",
@@ -36,6 +36,12 @@
             "fieldPath": "firstDollarClick",
             "columnName": "first_dollar_click",
             "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "maxCurrentMoney",
+            "columnName": "max_current_money",
+            "affinity": "REAL",
             "notNull": true
           }
         ],
@@ -129,7 +135,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"be539c036d5f39fe7ffada78fd386717\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"085ee529964ee6a58a9e867b6d002189\")"
     ]
   }
 }

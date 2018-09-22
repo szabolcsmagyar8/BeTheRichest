@@ -56,7 +56,7 @@ public class UpgradeListFragment extends Fragment {
         final GridView listView = rootView.findViewById(R.id.upgrade_listview);
         listView.setAdapter(adapter);
 
-        game.adapterRefreshListener = new AdapterRefreshListener() {
+        game.slowAdapterRefreshListener = new AdapterRefreshListener() {
             @Override
             public void refreshAdapter() {
                 adapter.notifyDataSetChanged();

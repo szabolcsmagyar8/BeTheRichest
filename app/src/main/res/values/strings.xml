@@ -33,4 +33,5 @@
     <string name="total_investment_levels">Total Investment Levels</string>
     <string name="upgrades_bought">Upgrades Bought</string>
     <string name="first_dollar">First Dollar</string>
+    <string name="highest_money">Highest Money</string>
 </resources>

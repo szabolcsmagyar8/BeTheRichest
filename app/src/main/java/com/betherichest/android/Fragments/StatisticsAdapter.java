@@ -7,7 +7,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.betherichest.android.GameElements.GameStatistics;
+import com.betherichest.android.ListenerInterfaces.AdapterRefreshListener;
 import com.betherichest.android.MainActivity;
+import com.betherichest.android.Mangers.Game;
 import com.betherichest.android.R;
 
 import java.util.List;
@@ -46,6 +48,13 @@ public class StatisticsAdapter extends BaseAdapter {
         } else {
             listItemView = view;
         }
+
+        Game.getInstance().adapterRefreshListener = new AdapterRefreshListener() {
+            @Override
+            public void refreshAdapter() {
+                StatisticsAdapter.super.notifyDataSetChanged();
+            }
+        };
 
         statTextView = listItemView.findViewById(R.id.statText);
         statValueTextView = listItemView.findViewById(R.id.statValueText);

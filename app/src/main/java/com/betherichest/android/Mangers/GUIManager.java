@@ -80,8 +80,8 @@ public class GUIManager {
         return activityOpened;
     }
 
-    public static void setActivityOpened(boolean a) {
-        activityOpened = false;
+    public static void setActivityOpened(boolean opened) {
+        activityOpened = opened;
     }
 
     private void initializeViews() {

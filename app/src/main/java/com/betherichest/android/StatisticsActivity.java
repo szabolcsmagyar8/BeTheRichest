@@ -6,6 +6,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.ListView;
 
+import com.betherichest.android.Database.DatabaseManager;
 import com.betherichest.android.Fragments.StatisticsAdapter;
 import com.betherichest.android.Mangers.GUIManager;
 import com.betherichest.android.Mangers.Game;
@@ -26,9 +27,21 @@ public class StatisticsActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        Game.setTimerPaused(false);
+    }
+
+    @Override
     protected void onPause() {
         super.onPause();
         Game.setTimerPaused(true);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        DatabaseManager.instance.saveStateToDb();
     }
 
     @Override

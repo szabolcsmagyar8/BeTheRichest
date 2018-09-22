@@ -56,7 +56,9 @@ public class Game {
     public Handler handler;
     public MoneyChangedListener moneyChangedListener;
     public AdapterRefreshListener adapterRefreshListener;
+    private static boolean gamblingAnimationRunning = false;
     private ArrayList<Upgrade> purchasedUpgrades = new ArrayList<>();
+    public AdapterRefreshListener slowAdapterRefreshListener;
     //endregion
 
     //region CONSTRUCTORS
@@ -173,39 +175,15 @@ public class Game {
     public List<Gambling> getGamblings() {
         return gamblings;
     }
+
+    public static boolean isGamblingAnimationRunning() {
+        return gamblingAnimationRunning;
+    }
+
+    public static void setGamblingAnimationRunning(boolean gamblingAnimationRunning) {
+        Game.gamblingAnimationRunning = gamblingAnimationRunning;
+    }
     //endregion
-
-    public void startTimer() {
-        T.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                if (!timerPaused) {
-                    earnMoney(getMoneyPerSec() / FPS);
-                }
-            }
-        }, 0, 1000 / FPS);
-
-        T.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                if (!timerPaused) {
-                    postAdapterRefreshRequest();    // the adapter need to be refreshed continuously, providing a constant update in availability colors and displayable elements in the list
-                }
-            }
-        }, 0, 300);
-        T.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                if (!timerPaused) {
-                    statisticsManager.addSecond();    // the adapter need to be refreshed continuously, providing a constant update in availability colors and displayable elements in the list
-                }
-            }
-        }, 0, 1000);
-    }
-
-    private void deduceMoney(double price) {
-        currentMoney -= price;
-    }
 
     //region EVENTHANDLERS
     private void postAdapterRefreshRequest() {
@@ -219,6 +197,18 @@ public class Game {
         });
     }
 
+    private void postSlowAdapterRefreshRequest() {
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                if (slowAdapterRefreshListener != null) {
+                    slowAdapterRefreshListener.refreshAdapter();
+                }
+            }
+        });
+    }
+
+
     private void postMoneyChanged() {
         handler.post(new Runnable() {
             @Override
@@ -231,8 +221,42 @@ public class Game {
     }
     //endregion
 
+    public void startTimer() {
+        T.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                if (!timerPaused) {
+                    earnMoney(getMoneyPerSec() / FPS);
+                    postAdapterRefreshRequest();   // the adapter need to be refreshed continuously, providing a constant update in availability colors and displayable elements in the list
+                }
+            }
+        }, 0, 1000 / FPS);
+
+        T.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                if (!timerPaused) {
+                    statisticsManager.addSecond();    // counts the elapsed seconds in the game
+                }
+            }
+        }, 0, 1000);
+
+        T.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                if (!timerPaused) {
+                    postSlowAdapterRefreshRequest();   // the adapter need to be refreshed continuously, providing a constant update in availability colors and displayable elements in the list
+                }
+            }
+        }, 0, 400);
+    }
+
+    private void deduceMoney(double price) {
+        currentMoney -= price;
+    }
+
     public void dollarClick() {
-        currentMoney += moneyPerTap;
+        earnMoney(moneyPerTap);
         statisticsManager.dollarClick(moneyPerTap);
         if (gameState.isFirstDollarClick()) {
             statisticsManager.firstDollarClick();
@@ -242,6 +266,11 @@ public class Game {
 
     public void earnMoney(double money) {
         currentMoney += money;
+        if (currentMoney > gameState.getMaxCurrentMoney()) {
+            gameState.setMaxCurrentMoney(currentMoney);
+            statisticsManager.setMaxCurrentMoney(currentMoney);
+        }
+
         statisticsManager.earnMoney(money);
         postMoneyChanged();
     }
