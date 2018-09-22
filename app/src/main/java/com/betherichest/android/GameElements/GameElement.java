@@ -3,7 +3,7 @@ package com.betherichest.android.GameElements;
 import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 
-import com.betherichest.android.Game;
+import com.betherichest.android.Mangers.Game;
 
 public abstract class GameElement {
 

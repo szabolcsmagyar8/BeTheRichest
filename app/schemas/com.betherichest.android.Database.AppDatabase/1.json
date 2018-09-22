@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "9ec572a4c2bebe02a5ef1d8b7e79b433",
+    "identityHash": "be539c036d5f39fe7ffada78fd386717",
     "entities": [
       {
         "tableName": "GameState",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `current_money` REAL NOT NULL, `money_per_tap` REAL NOT NULL, `money_per_sec` REAL NOT NULL, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `current_money` REAL NOT NULL, `money_per_tap` REAL NOT NULL, `money_per_sec` REAL NOT NULL, `first_dollar_click` INTEGER NOT NULL, PRIMARY KEY(`id`))",
         "fields": [
           {
             "fieldPath": "id",
@@ -30,6 +30,12 @@
             "fieldPath": "moneyPerSec",
             "columnName": "money_per_sec",
             "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "firstDollarClick",
+            "columnName": "first_dollar_click",
+            "affinity": "INTEGER",
             "notNull": true
           }
         ],
@@ -96,19 +102,13 @@
       },
       {
         "tableName": "GameStatistics",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `name` TEXT, `value` REAL NOT NULL, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `value` REAL NOT NULL, PRIMARY KEY(`id`))",
         "fields": [
           {
             "fieldPath": "id",
             "columnName": "id",
             "affinity": "INTEGER",
             "notNull": true
-          },
-          {
-            "fieldPath": "name",
-            "columnName": "name",
-            "affinity": "TEXT",
-            "notNull": false
           },
           {
             "fieldPath": "value",
@@ -129,7 +129,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"9ec572a4c2bebe02a5ef1d8b7e79b433\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"be539c036d5f39fe7ffada78fd386717\")"
     ]
   }
 }

@@ -7,7 +7,7 @@ import android.arch.persistence.room.PrimaryKey;
 
 @Entity
 public class Upgrade extends GameElement {
-    @PrimaryKey
+    @Ignore
     static int currentId = 0;
 
     @Ignore

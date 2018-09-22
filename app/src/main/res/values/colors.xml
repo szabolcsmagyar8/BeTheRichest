@@ -10,4 +10,5 @@
     <color name="darkGray">#878787</color>
     <color name="white">#ffffffff</color>
     <color name="investmentDividerColor">#f2ffcc7b</color>
+    <color name="iconHighlightColor">#35ffae00</color>
 </resources>

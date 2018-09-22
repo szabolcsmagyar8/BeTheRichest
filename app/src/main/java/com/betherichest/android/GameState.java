@@ -18,6 +18,9 @@ public class GameState {
     @ColumnInfo(name = "money_per_sec")
     private double moneyPerSec = 0d;
 
+    @ColumnInfo(name = "first_dollar_click")
+    private boolean firstDollarClick = true;
+
     public int getId() {
         return id;
     }
@@ -48,5 +51,13 @@ public class GameState {
 
     public void setMoneyPerSec(double moneyPerSec) {
         this.moneyPerSec = moneyPerSec;
+    }
+
+    public boolean isFirstDollarClick() {
+        return firstDollarClick;
+    }
+
+    public void setFirstDollarClick(boolean firstDollarClick) {
+        this.firstDollarClick = firstDollarClick;
     }
 }

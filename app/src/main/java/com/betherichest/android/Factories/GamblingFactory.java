@@ -16,7 +16,7 @@ public class GamblingFactory {
                         100,
                         200,
                         1000,
-                        30,
+                        50,
                         R.drawable.scratchoff));
         gamblings.add(
                 new Gambling(
@@ -24,7 +24,7 @@ public class GamblingFactory {
                         500,
                         1000,
                         5000,
-                        16,
+                        20,
                         R.drawable.horserace));
         gamblings.add(
                 new Gambling(
@@ -32,7 +32,7 @@ public class GamblingFactory {
                         5000,
                         20000,
                         100000,
-                        1,
+                        5,
                         R.drawable.slotmachine));
         return gamblings;
     }

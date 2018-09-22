@@ -1,4 +1,4 @@
-package com.betherichest.android;
+package com.betherichest.android.Mangers;
 
 import android.os.Build;
 import android.os.Handler;
@@ -9,10 +9,12 @@ import com.betherichest.android.Factories.GamblingFactory;
 import com.betherichest.android.Factories.InvestmentFactory;
 import com.betherichest.android.Factories.UpgradeFactory;
 import com.betherichest.android.GameElements.Gambling;
+import com.betherichest.android.GameElements.GameStatistics;
 import com.betherichest.android.GameElements.Investment;
 import com.betherichest.android.GameElements.InvestmentUpgrade;
 import com.betherichest.android.GameElements.TapUpgrade;
 import com.betherichest.android.GameElements.Upgrade;
+import com.betherichest.android.GameState;
 import com.betherichest.android.ListenerInterfaces.AdapterRefreshListener;
 import com.betherichest.android.ListenerInterfaces.MoneyChangedListener;
 
@@ -44,6 +46,8 @@ public class Game {
     private List<Investment> investments;
     private List<Upgrade> upgrades;
     private List<Gambling> gamblings;
+
+    private static boolean timerPaused;
     private ArrayList<Upgrade> purchasedTapUpgrades = new ArrayList<>();
 
     public static GameState gameState;
@@ -52,8 +56,7 @@ public class Game {
     public Handler handler;
     public MoneyChangedListener moneyChangedListener;
     public AdapterRefreshListener adapterRefreshListener;
-
-    private boolean timerPaused;
+    private ArrayList<Upgrade> purchasedUpgrades = new ArrayList<>();
     //endregion
 
     //region CONSTRUCTORS
@@ -71,7 +74,7 @@ public class Game {
         gamblings = GamblingFactory.getCreatedGamblings();
         handler = new Handler(Looper.getMainLooper());
 
-        statisticsManager = new StatisticsManager();
+        statisticsManager = StatisticsManager.getInstance();
         gameState = new GameState();
         startTimer();
     }
@@ -137,6 +140,10 @@ public class Game {
         return upgrades;
     }
 
+    public static void setTimerPaused(boolean paused) {
+        timerPaused = paused;
+    }
+
     public List<Upgrade> getDisplayableUpgrades() {
         ArrayList<Upgrade> displayableUpgrades = new ArrayList<>();
         for (Upgrade upgrade : getUpgrades()) {
@@ -151,20 +158,22 @@ public class Game {
         return getMoneyPerSec() == 0 ? 0 : investment.getMoneyPerSec() / getMoneyPerSec() * 100;
     }
 
-    public void setTimerPaused(boolean timerPaused) {
-        this.timerPaused = timerPaused;
+    public ArrayList<Upgrade> getPurchasedUpgrades() {
+        return purchasedUpgrades;
+    }
+
+    public double getTotalInvestmentLevels() {
+        double sum = 0;
+        for (Investment inv : investments) {
+            sum += inv.getLevel();
+        }
+        return sum;
     }
 
     public List<Gambling> getGamblings() {
         return gamblings;
     }
-
     //endregion
-
-    public void dollarClick() {
-        currentMoney += moneyPerTap;
-        statisticsManager.dollarClick(moneyPerTap);
-    }
 
     public void startTimer() {
         T.schedule(new TimerTask() {
@@ -184,13 +193,21 @@ public class Game {
                 }
             }
         }, 0, 300);
+        T.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                if (!timerPaused) {
+                    statisticsManager.addSecond();    // the adapter need to be refreshed continuously, providing a constant update in availability colors and displayable elements in the list
+                }
+            }
+        }, 0, 1000);
     }
 
     private void deduceMoney(double price) {
         currentMoney -= price;
     }
-    //region EVENTHANDLERS
 
+    //region EVENTHANDLERS
     private void postAdapterRefreshRequest() {
         handler.post(new Runnable() {
             @Override
@@ -212,8 +229,16 @@ public class Game {
             }
         });
     }
-
     //endregion
+
+    public void dollarClick() {
+        currentMoney += moneyPerTap;
+        statisticsManager.dollarClick(moneyPerTap);
+        if (gameState.isFirstDollarClick()) {
+            statisticsManager.firstDollarClick();
+            gameState.setFirstDollarClick(false);
+        }
+    }
 
     public void earnMoney(double money) {
         currentMoney += money;
@@ -231,8 +256,8 @@ public class Game {
     public void buyUpgrade(Upgrade selectedUpgrade) {
         selectedUpgrade.setPurchased(true);
         deduceMoney(selectedUpgrade.getPrice());
-        statisticsManager.buyItem(selectedUpgrade.getPrice());
 
+        purchasedUpgrades.add(selectedUpgrade);
         if (selectedUpgrade instanceof InvestmentUpgrade) {
             ((InvestmentUpgrade) selectedUpgrade).getRelevantInvestment().addPurchasedRelevantUpgrade(selectedUpgrade); // to store the purchased upgrades in a separate list for every investment instance
             recalculateMoneyPerSecond();
@@ -241,11 +266,14 @@ public class Game {
             purchasedTapUpgrades.add(selectedUpgrade);
             recalculateMoneyPerTap();
         }
+
+        statisticsManager.buyItem(selectedUpgrade.getPrice());
     }
 
     public void buyGambling(Gambling selectedGambling) {
         deduceMoney(selectedGambling.getPrice());
         statisticsManager.buyItem(selectedGambling.getPrice());
+        statisticsManager.gamble(selectedGambling.getPrice());
     }
 
     private void recalculateMoneyPerSecond() {
@@ -295,6 +323,7 @@ public class Game {
             for (Upgrade upgrade : upgrades) {
                 if (upgrade.getId() == savedUpgrade.getId()) {
                     upgrade.setPurchased(true);
+                    purchasedUpgrades.add(upgrade);
                     if (upgrade instanceof InvestmentUpgrade) {
                         Investment inv = ((InvestmentUpgrade) upgrade).getRelevantInvestment();
                         if (!inv.getPurchasedRelevantUpgrades().contains(upgrade)) {

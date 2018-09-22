@@ -8,7 +8,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.betherichest.android.Game;
+import com.betherichest.android.Mangers.Game;
 import com.betherichest.android.GameElements.Investment;
 import com.betherichest.android.R;
 import com.bumptech.glide.Glide;

@@ -6,7 +6,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.betherichest.android.GameStatistics;
+import com.betherichest.android.GameElements.GameStatistics;
 import com.betherichest.android.MainActivity;
 import com.betherichest.android.R;
 

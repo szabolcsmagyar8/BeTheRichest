@@ -4,7 +4,7 @@ import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Ignore;
 
-import com.betherichest.android.Game;
+import com.betherichest.android.Mangers.Game;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,18 +52,6 @@ public class Investment extends GameElement {
     public Investment(int id, int level) {
         this.id = id;
         this.level = level;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public String getName() {
-        return name;
     }
 
     public int getLevel() {

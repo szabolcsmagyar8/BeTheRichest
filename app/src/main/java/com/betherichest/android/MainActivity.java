@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
@@ -16,11 +15,11 @@ import com.betherichest.android.Database.DatabaseManager;
 import com.betherichest.android.Fragments.GamblingListFragment;
 import com.betherichest.android.Fragments.InvestmentListFragment;
 import com.betherichest.android.Fragments.UpgradeListFragment;
+import com.betherichest.android.Mangers.GUIManager;
+import com.betherichest.android.Mangers.Game;
 
 public class MainActivity extends AppCompatActivity {
     private static Context context;
-
-    private Game game = Game.getInstance();
     private GUIManager guiManager;
     private FragmentManager fragmentManager = getSupportFragmentManager();
     private DatabaseManager dbManager;
@@ -30,29 +29,15 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         MainActivity.context = getApplicationContext();
-
         setContentView(R.layout.activity_main);
 
         mDrawerLayout = findViewById(R.id.drawer_layout);
-        Toolbar toolbar = findViewById(R.id.toolbar);
 
         dbManager = new DatabaseManager();
         dbManager.loadStateFromDb();
 
-        setSupportActionBar(toolbar);
-        ActionBar actionbar = getSupportActionBar();
-        guiManager = new GUIManager(this.findViewById(android.R.id.content), getWindowManager(), actionbar, fragmentManager);
-        guiManager.setMainUITexts();
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                mDrawerLayout.openDrawer(GravityCompat.START);
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
+        setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
+        guiManager = new GUIManager(this.findViewById(android.R.id.content), getWindowManager(), getSupportActionBar(), fragmentManager);
     }
 
     public static Context getContext() {
@@ -71,17 +56,25 @@ public class MainActivity extends AppCompatActivity {
         guiManager.openFragment(R.id.gambling_list_container, new GamblingListFragment());
     }
 
+    public void leaderboardIconClick(View view) {
+        return;
+    }
+
+    public void closeClick(View view) {
+        onBackPressed();
+    }
+
     @Override
     protected void onResume() {
         super.onResume();
-        game.setTimerPaused(false);
+        Game.setTimerPaused(false);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        if (!guiManager.isActivityOpened()) {
-            game.setTimerPaused(true);
+        if (!GUIManager.isActivityOpened()) {
+            Game.setTimerPaused(true);
         }
     }
 
@@ -89,6 +82,16 @@ public class MainActivity extends AppCompatActivity {
     protected void onStop() {
         super.onStop();
         dbManager.saveStateToDb();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                mDrawerLayout.openDrawer(GravityCompat.START);
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -100,12 +103,6 @@ public class MainActivity extends AppCompatActivity {
         } else {
             super.onBackPressed();
         }
-
         guiManager.setDollarMargin(50);
     }
-
-    public void closeClick(View view) {
-        onBackPressed();
-    }
-
 }

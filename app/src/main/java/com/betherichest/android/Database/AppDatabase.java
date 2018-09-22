@@ -8,7 +8,7 @@ import android.content.Context;
 import com.betherichest.android.GameElements.Investment;
 import com.betherichest.android.GameElements.Upgrade;
 import com.betherichest.android.GameState;
-import com.betherichest.android.GameStatistics;
+import com.betherichest.android.GameElements.GameStatistics;
 
 @Database(entities = {GameState.class, Investment.class, Upgrade.class, GameStatistics.class}, version = 1)
 public abstract class AppDatabase extends RoomDatabase {

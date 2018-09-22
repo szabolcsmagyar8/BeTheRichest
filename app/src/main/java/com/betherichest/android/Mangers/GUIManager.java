@@ -1,9 +1,11 @@
-package com.betherichest.android;
+package com.betherichest.android.Mangers;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.Point;
+import android.graphics.drawable.GradientDrawable;
 import android.os.SystemClock;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -26,6 +28,8 @@ import android.widget.Toast;
 
 import com.betherichest.android.Fragments.UpgradeListFragment;
 import com.betherichest.android.ListenerInterfaces.MoneyChangedListener;
+import com.betherichest.android.R;
+import com.betherichest.android.StatisticsActivity;
 
 import java.text.NumberFormat;
 import java.util.Locale;
@@ -38,24 +42,24 @@ public class GUIManager {
 
     private WindowManager windowManager;
     private FragmentManager fragmentManager;
-    private DrawerLayout mDrawerLayout;
 
     private TextView currentMoneyText;
     private TextView moneyPerSecText;
     private TextView moneyPerTapText;
     private ImageView dollarImage;
     private ImageView smallDollar;
+    private static boolean activityOpened = false;
+    private ImageView investmentsImageView;
+    private ImageView upgradesImageView;
+    private ImageView gamblingImageView;
     private RelativeLayout mainRelativeLayout;
+    private ImageView leaderboardImageView;
     private ActionBar actionBar;
     private NavigationView navigationView;
-
-    private ImageView investmentsImageView;
-
     private Toast noAvailableUpgradesToast = null;
 
     static Random rnd = new Random();
-
-    private boolean activityOpened = false;
+    private DrawerLayout mDrawerLayout;
 
     public GUIManager(View view, WindowManager windowManager, ActionBar supportActionBar, FragmentManager fragmentManager) {
         this.view = view;
@@ -69,6 +73,15 @@ public class GUIManager {
         initializeViews();
         initializeEventListeners();
         initializeActionBar(supportActionBar);
+        setMainUITexts();
+    }
+
+    public static boolean isActivityOpened() {
+        return activityOpened;
+    }
+
+    public static void setActivityOpened(boolean a) {
+        activityOpened = false;
     }
 
     private void initializeViews() {
@@ -77,11 +90,14 @@ public class GUIManager {
         moneyPerTapText = view.findViewById(R.id.moneyPerTapText);
         dollarImage = view.findViewById(R.id.dollarImage);
         smallDollar = view.findViewById(R.id.smallDollar);
-        investmentsImageView = view.findViewById(R.id.investments);
+        investmentsImageView = view.findViewById(R.id.investmentsIcon);
+        upgradesImageView = view.findViewById(R.id.upgradesIcon);
+        gamblingImageView = view.findViewById(R.id.gamblingIcon);
+        leaderboardImageView = view.findViewById(R.id.leaderboardIcon);
+
         mDrawerLayout = view.findViewById(R.id.drawer_layout);
         navigationView = view.findViewById(R.id.nav_view);
     }
-
 
     @SuppressLint("ClickableViewAccessibility")
     private void initializeEventListeners() {
@@ -104,9 +120,31 @@ public class GUIManager {
         investmentsImageView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
-                if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
-                    //  animateIconPress(view);
-                }
+                highlightIconOnPress(view, motionEvent);
+                return false;
+            }
+        });
+
+        upgradesImageView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                highlightIconOnPress(view, motionEvent);
+                return false;
+            }
+        });
+
+        gamblingImageView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                highlightIconOnPress(view, motionEvent);
+                return false;
+            }
+        });
+
+        leaderboardImageView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                highlightIconOnPress(view, motionEvent);
                 return false;
             }
         });
@@ -126,6 +164,7 @@ public class GUIManager {
                             case R.id.nav_stats:
                                 mDrawerLayout.closeDrawers();
                                 Intent intent = new Intent(context, StatisticsActivity.class);
+                                StatisticsManager.getInstance().initailizeBasicStats();
                                 context.startActivity(intent);
                         }
                         activityOpened = true;
@@ -197,8 +236,19 @@ public class GUIManager {
         tapText.startAnimation(growAndFade);
     }
 
-    public boolean isActivityOpened() {
-        return activityOpened;
+    private void highlightIconOnPress(View view, MotionEvent motionEvent) {
+        GradientDrawable shape = new GradientDrawable();
+        shape.setCornerRadius(25);
+        shape.setColor(context.getResources().getColor(R.color.iconHighlightColor));
+        switch (motionEvent.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                ((RelativeLayout) view.getParent()).setBackground(shape);
+                break;
+            case MotionEvent.ACTION_UP:
+            case MotionEvent.ACTION_CANCEL:
+                ((RelativeLayout) view.getParent()).setBackgroundColor(Color.TRANSPARENT);
+                break;
+        }
     }
 
     private int getNewRandomYPositionOnDollarImage() {
@@ -265,7 +315,7 @@ public class GUIManager {
         }
     }
 
-    protected void setDollarMargin(int marginTop) {
+    public void setDollarMargin(int marginTop) {
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
         params.addRule(RelativeLayout.BELOW, R.id.moneyPerTapText);
         params.setMargins(0, convertPixelToDp(marginTop), 0, 0);

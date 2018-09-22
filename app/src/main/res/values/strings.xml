@@ -22,6 +22,15 @@
     <string name="total_clicks">Total Clicks</string>
     <string name="total_money_from_clicks">Total Money From Clicks</string>
     <string name="total_money_collected">Total Money Collected</string>
-    <string name="total_time_spent">Total Time Spent</string>
-    <string name="total_money_spent">Total Money Spent</string>
+    <string name="total_playing_time">Total Playing Time</string>
+    <string name="money_spent">Money Spent</string>
+    <string name="total_gambling">Number of Gamblings</string>
+    <string name="gambling_wins">Gambling Wins</string>
+    <string name="gambling_loses">Gambling Loses</string>
+    <string name="money_from_gambling">Money From Gambling</string>
+    <string name="money_spent_on_gambling">Money Spent On Gambling</string>
+    <string name="gambling_balance">Gambling Balance</string>
+    <string name="total_investment_levels">Total Investment Levels</string>
+    <string name="upgrades_bought">Upgrades Bought</string>
+    <string name="first_dollar">First Dollar</string>
 </resources>

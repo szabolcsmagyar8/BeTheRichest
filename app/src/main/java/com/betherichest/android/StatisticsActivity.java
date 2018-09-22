@@ -1,6 +1,5 @@
 package com.betherichest.android;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -8,6 +7,8 @@ import android.view.MenuItem;
 import android.widget.ListView;
 
 import com.betherichest.android.Fragments.StatisticsAdapter;
+import com.betherichest.android.Mangers.GUIManager;
+import com.betherichest.android.Mangers.Game;
 
 public class StatisticsActivity extends AppCompatActivity {
 
@@ -24,8 +25,10 @@ public class StatisticsActivity extends AppCompatActivity {
         setStatTexts();
     }
 
-    public static Context getContext() {
-        return getContext();
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Game.setTimerPaused(true);
     }
 
     @Override
@@ -33,6 +36,7 @@ public class StatisticsActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case android.R.id.home:
                 onBackPressed();
+                GUIManager.setActivityOpened(false);
                 return true;
         }
         return super.onOptionsItemSelected(item);
