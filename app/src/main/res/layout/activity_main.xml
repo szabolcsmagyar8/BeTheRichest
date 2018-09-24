@@ -89,9 +89,9 @@
             android:id="@+id/dollarImage"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/moneyPerTapText"
-            android:layout_marginTop="50dp"
             android:adjustViewBounds="true"
+            android:layout_centerVertical="true"
+            android:paddingBottom="50dp"
             app:srcCompat="@drawable/dollar" />
 
         <LinearLayout
@@ -174,10 +174,10 @@
 
                 <ImageView
                     android:id="@+id/leaderboardIcon"
-                    android:onClick="leaderboardIconClick"
                     android:layout_width="70dp"
                     android:layout_height="70dp"
                     android:layout_centerHorizontal="true"
+                    android:onClick="leaderboardIconClick"
                     app:srcCompat="@drawable/top100" />
 
                 <TextView
@@ -210,7 +210,12 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_alignParentBottom="true"
-            android:layout_below="@+id/dollarImage" />
+            android:layout_below="@+id/dollarImage">
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp" />
+        </FrameLayout>
     </RelativeLayout>
 
     <android.support.design.widget.NavigationView

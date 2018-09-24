@@ -106,6 +106,6 @@ public class MainActivity extends AppCompatActivity {
         } else {
             super.onBackPressed();
         }
-        guiManager.setDollarMargin(50);
+        guiManager.relocateDollarImage(false);
     }
 }

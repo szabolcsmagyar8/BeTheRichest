@@ -292,7 +292,7 @@ public class GUIManager {
         ft.replace(containerId, newFragment);
         ft.commit();
 
-        setDollarMargin(0);
+        relocateDollarImage(true);
     }
 
     public void showNoUpgradeToast() {
@@ -315,10 +315,15 @@ public class GUIManager {
         }
     }
 
-    public void setDollarMargin(int marginTop) {
+    public void relocateDollarImage(boolean toUp) {
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-        params.addRule(RelativeLayout.BELOW, R.id.moneyPerTapText);
-        params.setMargins(0, convertPixelToDp(marginTop), 0, 0);
+        if (toUp) {
+            params.addRule(RelativeLayout.BELOW, R.id.moneyPerTapText);
+            dollarImage.setPadding(0, 0, 0, 0);
+        } else {
+            params.addRule(RelativeLayout.CENTER_IN_PARENT);
+            dollarImage.setPadding(0, 0, 0, 50);
+        }
         dollarImage.setLayoutParams(params);
     }
 
