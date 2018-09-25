@@ -168,10 +168,12 @@ public class GUIManager {
                                 intent = new Intent(context, StatisticsActivity.class);
                                 StatisticsManager.getInstance().initailizeBasicStats();
                                 context.startActivity(intent);
+                                break;
                             case R.id.nav_boosters:
                                 mDrawerLayout.closeDrawers();
                                 intent = new Intent(context, BoostersActivity.class);
                                 context.startActivity(intent);
+                                break;
                         }
                         activityOpened = true;
                         return false;
