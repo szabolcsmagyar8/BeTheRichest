@@ -13,7 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".MainActivity"
+            android:name=".Activities.MainActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -34,9 +34,15 @@
         </service>
 
         <activity
-            android:name=".StatisticsActivity"
+            android:name=".Activities.StatisticsActivity"
             android:label="@string/statistics"
-            android:parentActivityName=".MainActivity"
+            android:parentActivityName=".Activities.MainActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".Activities.BoostersActivity"
+            android:label="@string/boosters"
+            android:parentActivityName=".Activities.MainActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
     </application>

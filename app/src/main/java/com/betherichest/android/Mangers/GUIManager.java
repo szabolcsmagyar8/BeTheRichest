@@ -26,10 +26,11 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.betherichest.android.Activities.BoostersActivity;
 import com.betherichest.android.Fragments.UpgradeListFragment;
 import com.betherichest.android.ListenerInterfaces.MoneyChangedListener;
 import com.betherichest.android.R;
-import com.betherichest.android.StatisticsActivity;
+import com.betherichest.android.Activities.StatisticsActivity;
 
 import java.text.NumberFormat;
 import java.util.Locale;
@@ -160,11 +161,16 @@ public class GUIManager {
                 new NavigationView.OnNavigationItemSelectedListener() {
                     @Override
                     public boolean onNavigationItemSelected(MenuItem menuItem) {
+                        Intent intent;
                         switch (menuItem.getItemId()) {
                             case R.id.nav_stats:
                                 mDrawerLayout.closeDrawers();
-                                Intent intent = new Intent(context, StatisticsActivity.class);
+                                intent = new Intent(context, StatisticsActivity.class);
                                 StatisticsManager.getInstance().initailizeBasicStats();
+                                context.startActivity(intent);
+                            case R.id.nav_boosters:
+                                mDrawerLayout.closeDrawers();
+                                intent = new Intent(context, BoostersActivity.class);
                                 context.startActivity(intent);
                         }
                         activityOpened = true;

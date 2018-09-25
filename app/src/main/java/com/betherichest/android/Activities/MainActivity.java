@@ -1,4 +1,4 @@
-package com.betherichest.android;
+package com.betherichest.android.Activities;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -17,6 +17,7 @@ import com.betherichest.android.Fragments.InvestmentListFragment;
 import com.betherichest.android.Fragments.UpgradeListFragment;
 import com.betherichest.android.Mangers.GUIManager;
 import com.betherichest.android.Mangers.Game;
+import com.betherichest.android.R;
 
 public class MainActivity extends AppCompatActivity {
     private static Context context;

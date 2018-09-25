@@ -13,7 +13,7 @@
         android:layout_height="match_parent"
         android:background="@drawable/wall"
         android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
-        tools:context=".MainActivity">
+        tools:context=".Activities.MainActivity">
 
         <FrameLayout
             android:id="@+id/content_frame"
