@@ -90,7 +90,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/moneyPerTapText"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="60dp"
             android:adjustViewBounds="true"
             app:srcCompat="@drawable/dollar" />
 
@@ -174,10 +174,10 @@
 
                 <ImageView
                     android:id="@+id/leaderboardIcon"
-                    android:onClick="leaderboardIconClick"
                     android:layout_width="70dp"
                     android:layout_height="70dp"
                     android:layout_centerHorizontal="true"
+                    android:onClick="leaderboardIconClick"
                     app:srcCompat="@drawable/top100" />
 
                 <TextView

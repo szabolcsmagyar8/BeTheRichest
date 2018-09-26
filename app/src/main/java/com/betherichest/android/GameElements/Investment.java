@@ -3,7 +3,9 @@ package com.betherichest.android.GameElements;
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Ignore;
+import android.content.res.Resources;
 
+import com.betherichest.android.App;
 import com.betherichest.android.Mangers.Game;
 
 import java.util.ArrayList;
@@ -54,6 +56,12 @@ public class Investment extends GameElement {
         this.level = level;
     }
 
+    @Ignore
+    public Investment(String drawable) {
+        int resourceId = Resources.getSystem().getIdentifier(drawable, "drawable", App.getContext().getPackageName());
+        this.imageResource = resourceId;
+    }
+
     public int getLevel() {
         return level;
     }
@@ -68,6 +76,10 @@ public class Investment extends GameElement {
 
     public long getBasePrice() {
         return Math.round(basePrice);
+    }
+
+    public double getBaseDpS() {
+        return baseDpS;
     }
 
     @Override

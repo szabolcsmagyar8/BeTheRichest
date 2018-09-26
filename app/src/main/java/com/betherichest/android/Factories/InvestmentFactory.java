@@ -3,49 +3,61 @@ package com.betherichest.android.Factories;
 import com.betherichest.android.App;
 import com.betherichest.android.GameElements.Investment;
 import com.betherichest.android.R;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
-
-/**
- * Created by Szabi on 2018. 03. 14..
- */
 
 public class InvestmentFactory {
     private static List<Investment> investments = new ArrayList<>();
 
     static {    // initializer
         createInvestments();
-        //parseJSONtoInvestments();
+        try {
+            parseJSONtoInvestments();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
-//    private static String parseJSONtoInvestments() {
-//        String json = null;
-//        try {
-//            InputStream stream = App.getContext().getResources().openRawResource(R.raw.investments);
-//            int size = 0;
-//            try {
-//                size = stream.available();
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//            byte[] buffer = new byte[size];
-//            stream.read(buffer);
-//            stream.close();
-//            json = new String(buffer, "UTF-8");
-//        } catch (IOException ex) {
-//            ex.printStackTrace();
-//            return null;
-//        }
-//        return json;
-//    }
+    private static void parseJSONtoInvestments() throws IOException {
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+
+        String json = getJsonFromResource();
+        JsonNode jsonNode = mapper.readTree(json);
+        String arrayString = jsonNode.get("investments").toString();
+        List<Investment> invs = Arrays.asList(mapper.readValue(arrayString, Investment[].class));
+    }
+
+    private static String getJsonFromResource() {
+        String json;
+        try {
+            InputStream stream = App.getContext().getResources().openRawResource(R.raw.investments);
+            int size = 0;
+            try {
+                size = stream.available();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            byte[] buffer = new byte[size];
+            stream.read(buffer);
+            stream.close();
+            json = new String(buffer, "UTF-8");
+        } catch (IOException ex) {
+            ex.printStackTrace();
+            return null;
+        }
+        return json;
+    }
 
     public static List<Investment> getCreatedInvestments() {
-       // String investmentsJson = parseJSONtoInvestments();
-
         return investments;
     }
 
@@ -53,7 +65,7 @@ public class InvestmentFactory {
         investments.add(investment);
     }
 
-    private static List<Investment> createInvestments() {
+    private static void createInvestments() {
         addInvestment(new Investment(
                 "Lemonade stand",              //NAME
                 10,                 //BASE PRICE
@@ -118,8 +130,5 @@ public class InvestmentFactory {
                 R.drawable.apartment,
                 new int[]{2, 2, 2, 3, 5}
         ));
-        return investments;
     }
-
-
 }

@@ -319,6 +319,7 @@ public class GUIManager {
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
         params.addRule(RelativeLayout.BELOW, R.id.moneyPerTapText);
         params.setMargins(0, convertPixelToDp(marginTop), 0, 0);
+
         dollarImage.setLayoutParams(params);
     }
 
