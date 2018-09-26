@@ -2,11 +2,9 @@ package com.betherichest.android.Mangers;
 
 import android.os.Build;
 import android.support.annotation.RequiresApi;
-import android.text.method.DateTimeKeyListener;
 
 import com.betherichest.android.Factories.StatisticsFactory;
 import com.betherichest.android.GameElements.GameStatistics;
-import com.betherichest.android.GameState;
 import com.betherichest.android.StatType;
 
 import java.util.ArrayList;

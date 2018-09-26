@@ -27,10 +27,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.betherichest.android.Activities.BoostersActivity;
+import com.betherichest.android.Activities.StatisticsActivity;
 import com.betherichest.android.Fragments.UpgradeListFragment;
 import com.betherichest.android.ListenerInterfaces.MoneyChangedListener;
 import com.betherichest.android.R;
-import com.betherichest.android.Activities.StatisticsActivity;
 
 import java.text.NumberFormat;
 import java.util.Locale;

@@ -6,9 +6,9 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.betherichest.android.Activities.MainActivity;
 import com.betherichest.android.GameElements.GameStatistics;
 import com.betherichest.android.ListenerInterfaces.AdapterRefreshListener;
-import com.betherichest.android.Activities.MainActivity;
 import com.betherichest.android.Mangers.Game;
 import com.betherichest.android.R;
 

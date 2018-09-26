@@ -14,9 +14,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.betherichest.android.Mangers.Game;
 import com.betherichest.android.GameElements.Gambling;
-import com.betherichest.android.ListenerInterfaces.AdapterRefreshListener;
+import com.betherichest.android.Mangers.Game;
 import com.betherichest.android.Mangers.StatisticsManager;
 import com.betherichest.android.R;
 
@@ -29,6 +28,7 @@ public class GamblingListFragment extends Fragment {
     private View rootView;
     private TextView wonMoneyText;
     private ImageView rotatingImage;
+    private ImageView closeImageView;
     private Toast noMoneyToast = null;
     private GamblingAdapter adapter;
     private ListView listView;
@@ -65,6 +65,7 @@ public class GamblingListFragment extends Fragment {
 
         wonMoneyText = rootView.findViewById(R.id.wonMoneyText);
         rotatingImage = rootView.findViewById(R.id.rotatingImage);
+        closeImageView = rootView.findViewById(R.id.closeIcon);
 
         setListeners();
     }
@@ -106,6 +107,7 @@ public class GamblingListFragment extends Fragment {
             @Override
             public void onAnimationStart(Animation animation) {
                 rotatingImage.setVisibility(View.VISIBLE);
+                closeImageView.setImageResource(R.drawable.close_gray);
                 Game.setGamblingAnimationRunning(true);
             }
 
@@ -143,6 +145,7 @@ public class GamblingListFragment extends Fragment {
             public void onAnimationEnd(Animation animation) {
                 rotatingImage.startAnimation(fade);
                 wonMoneyText.startAnimation(fade);
+
             }
 
             @Override
@@ -160,6 +163,7 @@ public class GamblingListFragment extends Fragment {
             public void onAnimationEnd(Animation animation) {
                 rotatingImage.setVisibility(View.GONE);
                 wonMoneyText.setVisibility(View.GONE);
+                closeImageView.setImageResource(R.drawable.close);
                 Game.setGamblingAnimationRunning(false);
             }
 

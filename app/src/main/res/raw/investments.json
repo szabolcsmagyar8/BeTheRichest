@@ -2,8 +2,8 @@
   "investments": [
     {
       "name": "Lemonade stand",
-      "basePrice": "10",
-      "baseDpS": "0.1",
+      "basePrice": 10,
+      "baseDpS": 0.1,
       "description": "Home made lemonade with fresh lemon is the best refreshing drink in the summer.",
       "imageResourceString": "lemonadestand",
       "upgradeEffectMultipliers": [
@@ -19,8 +19,8 @@
     },
     {
       "name": "Trampoline",
-      "basePrice": "40",
-      "baseDpS": "0.4",
+      "basePrice": 40,
+      "baseDpS": 0.4,
       "description": "A cheap trampoline that children can use next to a playground for a small price.",
       "imageResourceString": "trampoline",
       "upgradeEffectMultipliers": [
@@ -36,8 +36,8 @@
     },
     {
       "name": "Pedalo",
-      "basePrice": "400",
-      "baseDpS": "1",
+      "basePrice": 400,
+      "baseDpS": 1,
       "description": "Get a used pedalo and rent it out on the beach, it's a lot of fun.",
       "imageResourceString": "pedalo",
       "upgradeEffectMultipliers": [
@@ -52,8 +52,8 @@
     },
     {
       "name": "Bouncy Castle",
-      "basePrice": "940",
-      "baseDpS": "2.2",
+      "basePrice": 940,
+      "baseDpS": 2.2,
       "description": "One of every children's favourite activities, place it in a park and enjoy the income.",
       "imageResourceString": "bouncycastle",
       "upgradeEffectMultipliers": [
@@ -68,8 +68,8 @@
     },
     {
       "name": "Photo Studio",
-      "basePrice": "4400",
-      "baseDpS": "5",
+      "basePrice": 4400,
+      "baseDpS": 5,
       "description": "Professional environment for photographers.",
       "imageResourceString": "photostudio",
       "upgradeEffectMultipliers": [
@@ -83,8 +83,8 @@
     },
     {
       "name": "Hot Dog Truck",
-      "basePrice": "12800",
-      "baseDpS": "10",
+      "basePrice": 12800,
+      "baseDpS": 10,
       "description": "When hungry people see this car, they cannot resist to buy a delicious hot-dog.",
       "imageResourceString": "hotdogtruck",
       "upgradeEffectMultipliers": [
@@ -98,8 +98,8 @@
     },
     {
       "name": "Race Car Simulator",
-      "basePrice": "37000",
-      "baseDpS": "25",
+      "basePrice": 37000,
+      "baseDpS": 25,
       "description": "For those who are curious how it feels like driving a race car.",
       "imageResourceString": "racecarsimulator",
       "upgradeEffectMultipliers": [
@@ -113,8 +113,8 @@
     },
     {
       "name": "Apartment",
-      "basePrice": "102000",
-      "baseDpS": "50",
+      "basePrice": 102000,
+      "baseDpS": 50,
       "description": "Buy apartments that you rent out to people.",
       "imageResourceString": "apartment",
       "upgradeEffectMultipliers": [

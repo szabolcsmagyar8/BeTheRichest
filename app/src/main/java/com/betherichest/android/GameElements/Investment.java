@@ -3,9 +3,7 @@ package com.betherichest.android.GameElements;
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Ignore;
-import android.content.res.Resources;
 
-import com.betherichest.android.App;
 import com.betherichest.android.Mangers.Game;
 
 import java.util.ArrayList;
@@ -36,16 +34,6 @@ public class Investment extends GameElement {
 
     @Ignore
     private List<Upgrade> purchasedRelevantUpgrades = new ArrayList<>();
-
-    public Investment(String name, double basePrice, double baseDpS, String description, int imageResource, int[] upgradeEffectMultipliers) {
-        this.id = currentId++;
-        this.name = name;
-        this.basePrice = basePrice;
-        this.baseDpS = baseDpS;
-        this.description = description;
-        this.imageResource = imageResource;
-        this.upgradeEffectMultipliers = upgradeEffectMultipliers;
-    }
 
     public Investment(int id, int level) {
         this.id = id;

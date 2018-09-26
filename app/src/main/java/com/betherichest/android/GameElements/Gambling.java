@@ -5,17 +5,10 @@ public class Gambling extends GameElement {
 
     private int minWinAmount;
     private int maxWinAmount;
-
     private double chance;
 
-    public Gambling(String name, double price, int minWinAmount, int maxWinAmount, double chance, int imageResource) {
+    public Gambling() {
         this.id = currentId++;
-        this.name = name;
-        this.price = price;
-        this.imageResource = imageResource;
-        this.minWinAmount = minWinAmount;
-        this.maxWinAmount = maxWinAmount;
-        this.chance = chance;
     }
 
     public int getMinWinAmount() {

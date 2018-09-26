@@ -1,11 +1,11 @@
 package com.betherichest.android.Database;
 
-import com.betherichest.android.Mangers.Game;
+import com.betherichest.android.Activities.MainActivity;
+import com.betherichest.android.GameElements.GameStatistics;
 import com.betherichest.android.GameElements.Investment;
 import com.betherichest.android.GameElements.Upgrade;
 import com.betherichest.android.GameState;
-import com.betherichest.android.GameElements.GameStatistics;
-import com.betherichest.android.Activities.MainActivity;
+import com.betherichest.android.Mangers.Game;
 
 import java.util.List;
 

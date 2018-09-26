@@ -12,7 +12,7 @@
         android:dividerHeight="8dp" />
 
     <ImageView
-        android:id="@+id/scroll"
+        android:id="@+id/closeIcon"
         android:layout_width="48dp"
         android:layout_height="28dp"
         android:layout_alignParentEnd="true"

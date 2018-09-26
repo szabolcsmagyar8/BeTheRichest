@@ -1,0 +1,28 @@
+{
+  "gamblings": [
+    {
+      "name": "Scratch Off",
+      "price": 100,
+      "minWinAmount": 200,
+      "maxWinAmount": 1000,
+      "chance": 50,
+      "imageResourceString": "scratchoff"
+    },
+    {
+      "name": "Horse Race",
+      "price": 500,
+      "minWinAmount": 1000,
+      "maxWinAmount": 5000,
+      "chance": 25,
+      "imageResourceString": "horserace"
+    },
+    {
+      "name": "Slot Machine",
+      "price": 5000,
+      "minWinAmount": 20000,
+      "maxWinAmount": 100000,
+      "chance": 10,
+      "imageResourceString": "slotmachine"
+    }
+  ]
+}

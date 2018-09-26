@@ -11,9 +11,9 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.betherichest.android.Mangers.Game;
 import com.betherichest.android.GameElements.Investment;
 import com.betherichest.android.ListenerInterfaces.AdapterRefreshListener;
+import com.betherichest.android.Mangers.Game;
 import com.betherichest.android.R;
 
 import java.util.List;
