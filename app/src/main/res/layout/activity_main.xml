@@ -13,7 +13,7 @@
         android:layout_height="match_parent"
         android:background="@drawable/wall"
         android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
-        tools:context=".MainActivity">
+        tools:context=".Activities.MainActivity">
 
         <FrameLayout
             android:id="@+id/content_frame"
@@ -89,9 +89,9 @@
             android:id="@+id/dollarImage"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/moneyPerTapText"
-            android:layout_marginTop="60dp"
             android:adjustViewBounds="true"
+            android:layout_centerVertical="true"
+            android:paddingBottom="50dp"
             app:srcCompat="@drawable/dollar" />
 
         <LinearLayout
@@ -210,7 +210,12 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_alignParentBottom="true"
-            android:layout_below="@+id/dollarImage" />
+            android:layout_below="@+id/dollarImage">
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp" />
+        </FrameLayout>
     </RelativeLayout>
 
     <android.support.design.widget.NavigationView

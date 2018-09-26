@@ -51,7 +51,6 @@ public class StatisticsManager {
     public void dollarClick(double moneyPerTap) {
         gameStatistics.get(StatType.TOTAL_CLICKS).increaseValueByOne();
         gameStatistics.get(StatType.TOTAL_MONEY_FROM_CLICKS).increaseValueByAmount(moneyPerTap);
-        gameStatistics.get(StatType.TOTAL_MONEY_COLLECTED).increaseValueByAmount(moneyPerTap);
     }
 
     public void earnMoney(double moneyPerSec) {

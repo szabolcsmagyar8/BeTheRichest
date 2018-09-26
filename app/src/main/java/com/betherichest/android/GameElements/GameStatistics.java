@@ -3,6 +3,7 @@ package com.betherichest.android.GameElements;
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Ignore;
+import android.content.Context;
 
 import com.betherichest.android.App;
 import com.betherichest.android.R;
@@ -41,12 +42,14 @@ public class GameStatistics extends GameElement {
     }
 
     public String getValueAsString() {
-        if (name == App.getContext().getString(R.string.total_playing_time)) {
+        Context c = App.getContext();
+        if (name == c.getString(R.string.total_playing_time)) {
             return getPlayingTimeString();
         }
 
-        if (name == App.getContext().getString(R.string.first_dollar)) {
-            return String.valueOf(getDifferenceDays(new Date((long) value), new Date()) + " days ago");
+        if (name == c.getString(R.string.first_dollar)) {
+            long days = getDifferenceDays(new Date((long) value), new Date());
+            return String.valueOf(days > 1 ? days + " days ago" : days + " day ago");
         }
 
         return String.valueOf(NumberFormat.getNumberInstance(Locale.FRANCE).format(Math.round(value)));
