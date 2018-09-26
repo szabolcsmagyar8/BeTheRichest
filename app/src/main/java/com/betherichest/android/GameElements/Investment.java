@@ -11,10 +11,6 @@ import com.betherichest.android.Mangers.Game;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Szabi on 2018. 03. 14..
- */
-
 @Entity
 public class Investment extends GameElement {
     @Ignore
@@ -57,9 +53,8 @@ public class Investment extends GameElement {
     }
 
     @Ignore
-    public Investment(String drawable) {
-        int resourceId = Resources.getSystem().getIdentifier(drawable, "drawable", App.getContext().getPackageName());
-        this.imageResource = resourceId;
+    public Investment() {
+        this.id = currentId++;
     }
 
     public int getLevel() {

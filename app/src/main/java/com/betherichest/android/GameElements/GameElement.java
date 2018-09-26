@@ -3,6 +3,7 @@ package com.betherichest.android.GameElements;
 import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 
+import com.betherichest.android.App;
 import com.betherichest.android.Mangers.Game;
 
 public abstract class GameElement {
@@ -18,6 +19,9 @@ public abstract class GameElement {
 
     @Ignore
     protected int imageResource;
+
+    @Ignore
+    protected String imageResourceString;
 
     @Ignore
     protected String description;
@@ -42,7 +46,15 @@ public abstract class GameElement {
         return imageResource;
     }
 
+    public String getImageResourceString() {
+        return imageResourceString;
+    }
+
     public boolean isBuyable() {
         return Game.getInstance().getCurrentMoney() >= price;
+    }
+
+    public void setImageResourceFromString() {
+        imageResource = App.getContext().getResources().getIdentifier(imageResourceString, "drawable", App.getContext().getPackageName());
     }
 }

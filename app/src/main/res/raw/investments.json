@@ -5,7 +5,7 @@
       "basePrice": "10",
       "baseDpS": "0.1",
       "description": "Home made lemonade with fresh lemon is the best refreshing drink in the summer.",
-      "imageResourceX": "R.drawable.lemonadestand",
+      "imageResourceString": "lemonadestand",
       "upgradeEffectMultipliers": [
         2,
         2,
@@ -22,7 +22,7 @@
       "basePrice": "40",
       "baseDpS": "0.4",
       "description": "A cheap trampoline that children can use next to a playground for a small price.",
-      "imageResourceX": "R.drawable.trampoline",
+      "imageResourceString": "trampoline",
       "upgradeEffectMultipliers": [
         2,
         2,
@@ -39,7 +39,7 @@
       "basePrice": "400",
       "baseDpS": "1",
       "description": "Get a used pedalo and rent it out on the beach, it's a lot of fun.",
-      "imageResourceX": "R.drawable.pedalo",
+      "imageResourceString": "pedalo",
       "upgradeEffectMultipliers": [
         2,
         2,
@@ -55,7 +55,7 @@
       "basePrice": "940",
       "baseDpS": "2.2",
       "description": "One of every children's favourite activities, place it in a park and enjoy the income.",
-      "imageResourceX": "R.drawable.bouncycastle",
+      "imageResourceString": "bouncycastle",
       "upgradeEffectMultipliers": [
         2,
         2,
@@ -71,7 +71,7 @@
       "basePrice": "4400",
       "baseDpS": "5",
       "description": "Professional environment for photographers.",
-      "imageResourceX": "R.drawable.photostudio",
+      "imageResourceString": "photostudio",
       "upgradeEffectMultipliers": [
         2,
         2,
@@ -86,7 +86,7 @@
       "basePrice": "12800",
       "baseDpS": "10",
       "description": "When hungry people see this car, they cannot resist to buy a delicious hot-dog.",
-      "imageResourceX": "R.drawable.hotdogtruck",
+      "imageResourceString": "hotdogtruck",
       "upgradeEffectMultipliers": [
         2,
         2,
@@ -101,7 +101,7 @@
       "basePrice": "37000",
       "baseDpS": "25",
       "description": "For those who are curious how it feels like driving a race car.",
-      "imageResourceX": "R.drawable.racecarsimulator",
+      "imageResourceString": "racecarsimulator",
       "upgradeEffectMultipliers": [
         2,
         2,
@@ -116,7 +116,7 @@
       "basePrice": "102000",
       "baseDpS": "50",
       "description": "Buy apartments that you rent out to people.",
-      "imageResourceX": "R.drawable.apartment",
+      "imageResourceString": "apartment",
       "upgradeEffectMultipliers": [
         2,
         2,

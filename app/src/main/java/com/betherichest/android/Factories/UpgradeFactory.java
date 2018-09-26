@@ -12,10 +12,6 @@ import com.betherichest.android.GameElements.Upgrade;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Szabi on 2018.03.22..
- */
-
 public class UpgradeFactory {
     private static InvestmentUpgradeConfig[] investmentUpgradeConfigs = new InvestmentUpgradeConfig[]{
             new InvestmentUpgradeConfig(10, 1),
