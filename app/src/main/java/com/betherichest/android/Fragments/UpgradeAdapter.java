@@ -28,9 +28,8 @@ public class UpgradeAdapter extends BaseAdapter {
     private ImageView imageView;
     private TextView effectTextView;
     private RelativeLayout relativeLayout;
-    Context context;
-
-    Upgrade upgrade;
+    private Context context;
+    private Upgrade upgrade;
 
     private NumberFormat nf = NumberFormat.getNumberInstance(Locale.FRANCE);
 
@@ -68,10 +67,30 @@ public class UpgradeAdapter extends BaseAdapter {
             listItemView = view;
         }
 
+        final View finalListItemView = listItemView;
+//        listItemView.setOnTouchListener(new View.OnTouchListener() {
+//            @Override
+//            public boolean onTouch(View view, MotionEvent motionEvent) {
+//                GradientDrawable shape = new GradientDrawable();
+//                shape.setCornerRadius(20);
+//                shape.setColor(App.getContext().getResources().getColor(R.color.upgradeHighlightColor));
+//                switch (motionEvent.getAction()) {
+//                    case MotionEvent.ACTION_DOWN:
+//                         finalListItemView.setBackground(shape);
+//                        break;
+//                    case MotionEvent.ACTION_UP:
+//                    case MotionEvent.ACTION_CANCEL:
+//                        finalListItemView.setBackgroundColor(Color.TRANSPARENT);
+//                        break;
+//                }
+//                return false;
+//            }
+//        });
+
         priceTextView = listItemView.findViewById(R.id.price);
         imageView = listItemView.findViewById(R.id.investmentIcon);
         effectTextView = listItemView.findViewById(R.id.multiplier);
-        relativeLayout = listItemView.findViewById(R.id.layout);
+        relativeLayout = listItemView.findViewById(R.id.boosterItem);
 
         upgrade = items.get(position);
         Glide

@@ -5,6 +5,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.support.annotation.RequiresApi;
 
+import com.betherichest.android.Factories.BoostersFactory;
 import com.betherichest.android.Factories.GamblingFactory;
 import com.betherichest.android.Factories.InvestmentFactory;
 import com.betherichest.android.Factories.UpgradeFactory;
@@ -13,6 +14,7 @@ import com.betherichest.android.GameElements.GameStatistics;
 import com.betherichest.android.GameElements.Investment;
 import com.betherichest.android.GameElements.InvestmentUpgrade;
 import com.betherichest.android.GameElements.TapUpgrade;
+import com.betherichest.android.GameElements.Booster;
 import com.betherichest.android.GameElements.Upgrade;
 import com.betherichest.android.GameState;
 import com.betherichest.android.ListenerInterfaces.AdapterRefreshListener;
@@ -46,6 +48,7 @@ public class Game {
     private List<Investment> investments;
     private List<Upgrade> upgrades;
     private List<Gambling> gamblings;
+    private List<Booster> boosters;
 
     private static boolean timerPaused;
     private ArrayList<Upgrade> purchasedTapUpgrades = new ArrayList<>();
@@ -74,6 +77,8 @@ public class Game {
         UpgradeFactory.createUpgrades(investments);
         upgrades = UpgradeFactory.getCreatedUpgrades();
         gamblings = GamblingFactory.getCreatedGamblings();
+        boosters = BoostersFactory.getCreatedBoosters();
+
         handler = new Handler(Looper.getMainLooper());
 
         statisticsManager = StatisticsManager.getInstance();
@@ -176,6 +181,10 @@ public class Game {
         return gamblings;
     }
 
+    public List<Booster> getBoosters() {
+        return boosters;
+    }
+
     public static boolean isGamblingAnimationRunning() {
         return gamblingAnimationRunning;
     }
@@ -208,7 +217,6 @@ public class Game {
         });
     }
 
-
     private void postMoneyChanged() {
         handler.post(new Runnable() {
             @Override
@@ -227,7 +235,7 @@ public class Game {
             public void run() {
                 if (!timerPaused) {
                     earnMoney(getMoneyPerSec() / FPS);
-                    postAdapterRefreshRequest();   // the adapter need to be refreshed continuously, providing a constant update in availability colors and displayable elements in the list
+                    postAdapterRefreshRequest();   // the adapters need to be refreshed continuously, providing a constant update in availability colors and displayable elements in the list
                 }
             }
         }, 0, 1000 / FPS);
@@ -245,7 +253,7 @@ public class Game {
             @Override
             public void run() {
                 if (!timerPaused) {
-                    postSlowAdapterRefreshRequest();   // the adapter need to be refreshed continuously, providing a constant update in availability colors and displayable elements in the list
+                    postSlowAdapterRefreshRequest();   // the adapters need to be refreshed continuously, providing a constant update in availability colors and displayable elements in the list
                 }
             }
         }, 0, 400);

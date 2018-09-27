@@ -8,12 +8,7 @@ public class JsonManager {
         String json;
         try {
             InputStream stream = App.getContext().getResources().openRawResource(resource);
-            int size = 0;
-            try {
-                size = stream.available();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            int size = stream.available();
             byte[] buffer = new byte[size];
             stream.read(buffer);
             stream.close();

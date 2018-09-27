@@ -8,8 +8,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="28dp"
-        android:background="@drawable/greentexture"
-        android:dividerHeight="8dp" />
+        android:background="@drawable/gambling_list_background"
+        android:divider="@null" />
 
     <ImageView
         android:id="@+id/closeIcon"
@@ -19,7 +19,7 @@
         android:layout_alignParentRight="true"
         android:onClick="closeClick"
         android:scaleType="centerCrop"
-        android:src="@drawable/close" />
+        android:src="@drawable/close_flat" />
 
     <ImageView
         android:id="@+id/rotatingImage"

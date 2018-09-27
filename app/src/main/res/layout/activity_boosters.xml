@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_below="@+id/content_frame"
-    android:background="@drawable/bluewood_big"
+    android:background="@color/royalBlue"
     android:theme="@style/ThemeOverlay.AppCompat.Dark"
     tools:context=".Activities.StatisticsActivity">
 
@@ -24,11 +24,23 @@
     </FrameLayout>
 
     <TextView
+        android:id="@+id/timeWarpsText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:text="Welcome to the boosters page!"
-        android:textSize="25sp"
-        android:textStyle="bold"
-        />
+        android:layout_below="@+id/content_frame"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="5dp"
+        android:text="Time Warps"
+        android:textSize="20dp"
+        android:textStyle="bold" />
+
+    <GridView
+        android:id="@+id/timeWarpGridview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/timeWarpsText"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="3dp"
+        android:numColumns="3"
+        android:textAlignment="center" />
 </android.widget.RelativeLayout>

@@ -107,7 +107,7 @@ public class GamblingListFragment extends Fragment {
             @Override
             public void onAnimationStart(Animation animation) {
                 rotatingImage.setVisibility(View.VISIBLE);
-                closeImageView.setImageResource(R.drawable.close_gray);
+                closeImageView.setImageResource(R.drawable.close_gray_flat);
                 Game.setGamblingAnimationRunning(true);
             }
 
@@ -163,7 +163,7 @@ public class GamblingListFragment extends Fragment {
             public void onAnimationEnd(Animation animation) {
                 rotatingImage.setVisibility(View.GONE);
                 wonMoneyText.setVisibility(View.GONE);
-                closeImageView.setImageResource(R.drawable.close);
+                closeImageView.setImageResource(R.drawable.close_flat);
                 Game.setGamblingAnimationRunning(false);
             }
 

@@ -13,7 +13,7 @@
         android:layout_height="match_parent"
         android:layout_marginTop="28dp"
         android:layout_centerHorizontal="true"
-        android:background="@drawable/blackwood"
+        android:background="@drawable/upgrade_list_background"
         android:numColumns="4"
         android:textAlignment="center" />
 
@@ -25,5 +25,5 @@
         android:layout_alignParentRight="true"
         android:onClick="closeClick"
         android:scaleType="centerCrop"
-        android:src="@drawable/close" />
+        android:src="@drawable/close_flat" />
 </RelativeLayout>

@@ -41,8 +41,8 @@ public class StatisticsActivity extends AppCompatActivity {
 
     @Override
     protected void onStop() {
-        super.onStop();
         DatabaseManager.instance.saveStateToDb();
+        super.onStop();
     }
 
     @Override
