@@ -51,7 +51,6 @@ public class Game {
     private List<Booster> boosters;
 
     private static boolean timerPaused;
-    private ArrayList<Upgrade> purchasedTapUpgrades = new ArrayList<>();
 
     public static GameState gameState;
     public static StatisticsManager statisticsManager;
@@ -60,7 +59,6 @@ public class Game {
     public MoneyChangedListener moneyChangedListener;
     public AdapterRefreshListener adapterRefreshListener;
     private static boolean gamblingAnimationRunning = false;
-    private ArrayList<Upgrade> purchasedUpgrades = new ArrayList<>();
     public AdapterRefreshListener slowAdapterRefreshListener;
     //endregion
 
@@ -165,10 +163,6 @@ public class Game {
         return getMoneyPerSec() == 0 ? 0 : investment.getMoneyPerSec() / getMoneyPerSec() * 100;
     }
 
-    public ArrayList<Upgrade> getPurchasedUpgrades() {
-        return purchasedUpgrades;
-    }
-
     public double getTotalInvestmentLevels() {
         double sum = 0;
         for (Investment inv : investments) {
@@ -191,6 +185,16 @@ public class Game {
 
     public static void setGamblingAnimationRunning(boolean gamblingAnimationRunning) {
         Game.gamblingAnimationRunning = gamblingAnimationRunning;
+    }
+
+    public List<Upgrade> getPurchasedUpgrades() {
+        List<Upgrade> purchasedUpgrades = new ArrayList<>();
+        for (Upgrade upgrade : upgrades) {
+            if (upgrade.isPurchased()) {
+                purchasedUpgrades.add(upgrade);
+            }
+        }
+        return purchasedUpgrades;
     }
     //endregion
 
@@ -294,13 +298,11 @@ public class Game {
         selectedUpgrade.setPurchased(true);
         deduceMoney(selectedUpgrade.getPrice());
 
-        purchasedUpgrades.add(selectedUpgrade);
         if (selectedUpgrade instanceof InvestmentUpgrade) {
             ((InvestmentUpgrade) selectedUpgrade).getRelevantInvestment().addPurchasedRelevantUpgrade(selectedUpgrade); // to store the purchased upgrades in a separate list for every investment instance
             recalculateMoneyPerSecond();
         }
         if (selectedUpgrade instanceof TapUpgrade) {
-            purchasedTapUpgrades.add(selectedUpgrade);
             recalculateMoneyPerTap();
         }
 
@@ -328,8 +330,11 @@ public class Game {
 
     private void recalculateMoneyPerTap() {
         double sum = START_MONEY_PER_TAP;
-        for (Upgrade tapUpgrade : purchasedTapUpgrades) {
-            sum *= tapUpgrade.getMultiplier();
+
+        for (Upgrade upgrade : upgrades) {
+            if (upgrade.isPurchased() && upgrade instanceof TapUpgrade) {
+                sum *= upgrade.getMultiplier();
+            }
         }
 
         moneyPerTap = sum;
@@ -360,7 +365,6 @@ public class Game {
             for (Upgrade upgrade : upgrades) {
                 if (upgrade.getId() == savedUpgrade.getId()) {
                     upgrade.setPurchased(true);
-                    purchasedUpgrades.add(upgrade);
                     if (upgrade instanceof InvestmentUpgrade) {
                         Investment inv = ((InvestmentUpgrade) upgrade).getRelevantInvestment();
                         if (!inv.getPurchasedRelevantUpgrades().contains(upgrade)) {
