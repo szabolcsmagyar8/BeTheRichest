@@ -331,12 +331,12 @@ public class GUIManager {
             dollarImage.setPadding(0, 0, 0, 0);
         } else {
             params.addRule(RelativeLayout.CENTER_IN_PARENT);
-            dollarImage.setPadding(0, 0, 0, 50);
+            dollarImage.setPadding(0, 0, 0, convertPixelToDp(50));
         }
         dollarImage.setLayoutParams(params);
     }
 
-    private int convertPixelToDp(int marginTop) {
-        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, marginTop, context.getResources().getDisplayMetrics());
+    private int convertPixelToDp(int pixel) {
+        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, pixel, context.getResources().getDisplayMetrics());
     }
 }
