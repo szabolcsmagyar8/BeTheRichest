@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 public class JsonManager {
+
     public static String getJsonFromResource(int resource) {
         String json;
         try {
@@ -20,3 +21,4 @@ public class JsonManager {
         return json;
     }
 }
+

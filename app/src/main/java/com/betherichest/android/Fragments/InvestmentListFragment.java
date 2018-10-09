@@ -63,6 +63,8 @@ public class InvestmentListFragment extends Fragment {
                 if (selectedInvestment.isBuyable()) {
                     game.buyInvestment(selectedInvestment);
                     adapter.notifyDataSetChanged();
+                } else if (selectedInvestment.isLocked()) {
+                    return;
                 } else {
                     if (noMoneyToast != null) {
                         noMoneyToast.cancel();
