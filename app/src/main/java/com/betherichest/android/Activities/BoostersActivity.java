@@ -27,15 +27,27 @@ public class BoostersActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        Game.setTimerPaused(false);
+    }
+
+    @Override
     protected void onPause() {
-        super.onPause();
         Game.setTimerPaused(true);
+        super.onPause();
     }
 
     @Override
     protected void onStop() {
-        super.onStop();
         DatabaseManager.instance.saveStateToDb();
+        super.onStop();
+    }
+
+    @Override
+    public void onBackPressed() {
+        GUIManager.setActivityOpened(false);
+        super.onBackPressed();
     }
 
     @Override

@@ -11,8 +11,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="28dp"
-        android:divider="@color/investmentDividerColor"
-        android:background="@drawable/investment_list_background" />
+        android:background="@drawable/investment_list_background"
+        android:divider="@null" />
 
     <ImageView
         android:id="@+id/closeIcon"
@@ -23,5 +23,4 @@
         android:onClick="closeClick"
         android:scaleType="centerCrop"
         android:src="@drawable/close_flat" />
-
 </RelativeLayout>

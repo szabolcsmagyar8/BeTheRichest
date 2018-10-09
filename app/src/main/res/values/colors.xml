@@ -9,9 +9,10 @@
     <color name="darkRed">#8b110b</color>
     <color name="darkGray">#000000</color>
     <color name="white">#ffffffff</color>
-    <color name="investmentDividerColor">#ffcc7b</color>
+    <color name="investmentBackgroundColor">#ffcc7b</color>
     <color name="iconHighlightColor">#35ffae00</color>
     <color name="upgradeHighlightColor">#37ffffff</color>
+    <color name="gamblingHighlightColor">#37ffffff</color>
     <color name="transparent">#00ffffff</color>
     <color name="darkGreen">#003103</color>
     <color name="redwood">#460001</color>
