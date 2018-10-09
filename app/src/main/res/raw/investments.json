@@ -6,16 +6,7 @@
       "baseDpS": 0.1,
       "description": "Home made lemonade with fresh lemon is the best refreshing drink in the summer.",
       "imageResourceString": "lemonadestand",
-      "upgradeEffectMultipliers": [
-        2,
-        2,
-        2,
-        3,
-        3,
-        5,
-        8,
-        10
-      ]
+      "upgradeEffectMultipliers": [2, 2, 2, 3, 3, 5, 8, 10]
     },
     {
       "name": "Trampoline",
@@ -23,16 +14,7 @@
       "baseDpS": 0.4,
       "description": "A cheap trampoline that children can use next to a playground for a small price.",
       "imageResourceString": "trampoline",
-      "upgradeEffectMultipliers": [
-        2,
-        2,
-        2,
-        3,
-        3,
-        5,
-        5,
-        8
-      ]
+      "upgradeEffectMultipliers": [2, 2, 2, 3, 3, 5, 5, 8]
     },
     {
       "name": "Pedalo",
@@ -40,15 +22,7 @@
       "baseDpS": 1,
       "description": "Get a used pedalo and rent it out on the beach, it's a lot of fun.",
       "imageResourceString": "pedalo",
-      "upgradeEffectMultipliers": [
-        2,
-        2,
-        2,
-        3,
-        3,
-        5,
-        8
-      ]
+      "upgradeEffectMultipliers": [2, 2, 2, 3, 3, 5, 8]
     },
     {
       "name": "Bouncy Castle",

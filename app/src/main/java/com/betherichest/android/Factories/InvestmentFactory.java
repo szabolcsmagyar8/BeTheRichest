@@ -11,8 +11,6 @@ import java.util.Arrays;
 import java.util.List;
 
 public class InvestmentFactory {
-    static final String jsonRoot = "investments";
-
     public static List<Investment> getCreatedInvestments() {
         List<Investment> investments = null;
         try {
@@ -26,6 +24,8 @@ public class InvestmentFactory {
         }
         return investments;
     }
+
+    private static final String jsonRoot = "investments";
 
     private static List<Investment> parseJsonToInvestments() throws IOException {
         ObjectMapper mapper = new ObjectMapper();

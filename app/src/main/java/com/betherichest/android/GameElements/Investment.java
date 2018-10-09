@@ -35,6 +35,9 @@ public class Investment extends GameElement {
     @Ignore
     private List<Upgrade> purchasedRelevantUpgrades = new ArrayList<>();
 
+    @Ignore
+    private boolean locked;
+
     public Investment(int id, int level) {
         this.id = id;
         this.level = level;
@@ -65,6 +68,11 @@ public class Investment extends GameElement {
         return baseDpS;
     }
 
+    public boolean isLocked() {
+        List<Investment> invs = Game.getInstance().getInvestments();
+        return id - 1 >= 0 && invs.get(id - 1).getLevel() == 0;
+    }
+
     @Override
     public double getPrice() {
         return (double) Math.round(basePrice * Math.pow(coefficient, level));
@@ -92,7 +100,7 @@ public class Investment extends GameElement {
 
     @Override
     public boolean isBuyable() {
-        return Game.getInstance().getCurrentMoney() >= getPrice();
+        return Game.getInstance().getCurrentMoney() >= getPrice() && !isLocked();
     }
 
     public List<Upgrade> getRelevantUpgrades() {

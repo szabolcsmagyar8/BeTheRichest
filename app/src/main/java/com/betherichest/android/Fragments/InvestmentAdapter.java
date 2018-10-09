@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.betherichest.android.App;
 import com.betherichest.android.GameElements.Investment;
 import com.betherichest.android.Mangers.Game;
 import com.betherichest.android.R;
@@ -16,6 +17,7 @@ import com.bumptech.glide.Glide;
 import java.text.NumberFormat;
 import java.util.List;
 import java.util.Locale;
+import java.util.Random;
 
 public class InvestmentAdapter extends BaseAdapter {
     View listItemView;
@@ -28,6 +30,7 @@ public class InvestmentAdapter extends BaseAdapter {
     private ImageView investmentImageView;
     private ImageView purchasedUpgradeImageView;
     private RelativeLayout upgradeIconContainer;
+    Investment investment;
 
     NumberFormat nf = NumberFormat.getNumberInstance(Locale.FRANCE);
 
@@ -53,27 +56,22 @@ public class InvestmentAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View view, ViewGroup parent) {
         listItemView = view;
+
         if (listItemView == null) {
             listItemView = View.inflate(parent.getContext(), R.layout.investment_listitem, null);
         } else {
             listItemView = view;
         }
-        initializeListUIElements(listItemView);
-        Investment investment = items.get(position);
 
-        Glide
-                .with(parent.getContext())
-                .load(investment.getImageResource())
-                .asBitmap()
-                .dontAnimate()
-                .dontTransform()
-                .into(investmentImageView);
+        investment = items.get(position);
+        initializeListUIElements();
 
         setUIElementValues(investment);
+
         return listItemView;
     }
 
-    private void initializeListUIElements(View listItemView) {
+    private void initializeListUIElements() {
         nameTextView = listItemView.findViewById(R.id.name);
         priceTextView = listItemView.findViewById(R.id.price);
         dpsPerLevelTextView = listItemView.findViewById(R.id.dpsPerLevel);
@@ -125,19 +123,40 @@ public class InvestmentAdapter extends BaseAdapter {
     }
 
     private void setUIElementValues(Investment investment) {
-        nameTextView.setText(investment.getName());
-        priceTextView.setText("Price: " + nf.format(investment.getPrice()));
-        levelTextView.setText(String.valueOf(investment.getLevel()));
-        dpsPerLevelTextView.setText("DPS: " + String.valueOf(nf.format(investment.getMoneyPerSecPerLevel())));
-        totalDPSTextView.setText("Total: " + String.valueOf(nf.format((investment.getMoneyPerSec())) + " (" + String.format("%.2f", Game.getInstance().getDPSPercentage(investment)) + "%)"));
-        investmentImageView.setImageResource(investment.getImageResource());
-//        purchasedUpgradeImageView.setImageResource(investment.getImageResource());
+        if (investment.isLocked()) {
+            listItemView.setEnabled(false);
+            nameTextView.setText(R.string.locked);
+            priceTextView.setText("");
+            levelTextView.setText("");
+            dpsPerLevelTextView.setText("");
+            totalDPSTextView.setText("");
+            investmentImageView.setImageResource(R.drawable.questionmark);
+        } else {
+            listItemView.setEnabled(true);
+            nameTextView.setText(investment.getName());
+            priceTextView.setText("Price: " + nf.format(investment.getPrice()) + " $");
+            levelTextView.setText(String.valueOf(investment.getLevel()));
+            dpsPerLevelTextView.setText("DPS: " + String.valueOf(nf.format(investment.getMoneyPerSecPerLevel())));
+            totalDPSTextView.setText("Total: " + String.valueOf(nf.format((investment.getMoneyPerSec())) + " (" + String.format("%.2f", Game.getInstance().getDPSPercentage(investment)) + "%)"));
+            Glide
+                    .with(App.getContext())
+                    .load(investment.getImageResource())
+                    .asBitmap()
+                    .dontAnimate()
+                    .dontTransform()
+                    .into(investmentImageView);
+            investmentImageView.setImageResource(investment.getImageResource());
+            //      purchasedUpgradeImageView.setImageResource(investment.getImageResource());
+            //      showPurchasedUpgrades(investment);
+        }
         setTextColorByAvailability(investment);
-        showPurchasedUpgrades(investment);
     }
 
     private void setTextColorByAvailability(Investment investment) {
-        if (investment.isBuyable()) {
+        if (investment.isLocked()){
+            nameTextView.setTextColor(App.getContext().getResources().getColor(android.R.color.secondary_text_light));//App.getContext().getResources().getColor(R.color.black));
+        }
+        else if (investment.isBuyable()) {
             nameTextView.setTextColor(Color.parseColor("#0c6f04"));
         } else {
             nameTextView.setTextColor(Color.parseColor("#760c07"));

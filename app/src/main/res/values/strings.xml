@@ -35,4 +35,5 @@
     <string name="first_dollar">First Dollar</string>
     <string name="highest_money">Highest Money</string>
     <string name="price">Price</string>
+    <string name="locked">LOCKED</string>
 </resources>
