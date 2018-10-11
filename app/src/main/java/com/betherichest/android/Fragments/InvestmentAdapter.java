@@ -17,7 +17,6 @@ import com.bumptech.glide.Glide;
 import java.text.NumberFormat;
 import java.util.List;
 import java.util.Locale;
-import java.util.Random;
 
 public class InvestmentAdapter extends BaseAdapter {
     View listItemView;
@@ -27,7 +26,9 @@ public class InvestmentAdapter extends BaseAdapter {
     private TextView dpsPerLevelTextView;
     private TextView levelTextView;
     private TextView totalDPSTextView;
+    private TextView upsTextView;
     private ImageView investmentImageView;
+    private ImageView dollarImageView;
     private ImageView purchasedUpgradeImageView;
     private RelativeLayout upgradeIconContainer;
     Investment investment;
@@ -58,7 +59,7 @@ public class InvestmentAdapter extends BaseAdapter {
         listItemView = view;
 
         if (listItemView == null) {
-            listItemView = View.inflate(parent.getContext(), R.layout.investment_listitem, null);
+            listItemView = View.inflate(parent.getContext(), R.layout.listitem_investment, null);
         } else {
             listItemView = view;
         }
@@ -77,7 +78,9 @@ public class InvestmentAdapter extends BaseAdapter {
         dpsPerLevelTextView = listItemView.findViewById(R.id.dpsPerLevel);
         levelTextView = listItemView.findViewById(R.id.level);
         totalDPSTextView = listItemView.findViewById(R.id.total);
+        upsTextView = listItemView.findViewById(R.id.ups);
         investmentImageView = listItemView.findViewById(R.id.investmentIcon);
+        dollarImageView = listItemView.findViewById(R.id.dollarIcon);
         //purchasedUpgradeImageView = listItemView.findViewById(R.id.purchasedUpgrade);
         upgradeIconContainer = listItemView.findViewById(R.id.upgradeIconContainer);
     }
@@ -130,14 +133,17 @@ public class InvestmentAdapter extends BaseAdapter {
             levelTextView.setText("");
             dpsPerLevelTextView.setText("");
             totalDPSTextView.setText("");
+            upsTextView.setText("");
             investmentImageView.setImageResource(R.drawable.questionmark);
+            dollarImageView.setVisibility(View.INVISIBLE);
         } else {
             listItemView.setEnabled(true);
             nameTextView.setText(investment.getName());
-            priceTextView.setText("Price: " + nf.format(investment.getPrice()) + " $");
+            priceTextView.setText("Price: " + nf.format(investment.getPrice()));
             levelTextView.setText(String.valueOf(investment.getLevel()));
             dpsPerLevelTextView.setText("DPS: " + String.valueOf(nf.format(investment.getMoneyPerSecPerLevel())));
             totalDPSTextView.setText("Total: " + String.valueOf(nf.format((investment.getMoneyPerSec())) + " (" + String.format("%.2f", Game.getInstance().getDPSPercentage(investment)) + "%)"));
+            upsTextView.setText("UPs: " + investment.getPurchasedRelevantUpgrades().size() + "/" + investment.getRelevantUpgrades().size());
             Glide
                     .with(App.getContext())
                     .load(investment.getImageResource())
@@ -146,6 +152,7 @@ public class InvestmentAdapter extends BaseAdapter {
                     .dontTransform()
                     .into(investmentImageView);
             investmentImageView.setImageResource(investment.getImageResource());
+            dollarImageView.setVisibility(View.VISIBLE);
             //      purchasedUpgradeImageView.setImageResource(investment.getImageResource());
             //      showPurchasedUpgrades(investment);
         }
@@ -153,10 +160,9 @@ public class InvestmentAdapter extends BaseAdapter {
     }
 
     private void setTextColorByAvailability(Investment investment) {
-        if (investment.isLocked()){
-            nameTextView.setTextColor(App.getContext().getResources().getColor(android.R.color.secondary_text_light));//App.getContext().getResources().getColor(R.color.black));
-        }
-        else if (investment.isBuyable()) {
+        if (investment.isLocked()) {
+            nameTextView.setTextColor(App.getContext().getResources().getColor(R.color.darkGray));//App.getContext().getResources().getColor(R.color.black));
+        } else if (investment.isBuyable()) {
             nameTextView.setTextColor(Color.parseColor("#0c6f04"));
         } else {
             nameTextView.setTextColor(Color.parseColor("#760c07"));

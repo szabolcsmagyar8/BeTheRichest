@@ -44,7 +44,7 @@ public class BoostersAdapter extends BaseAdapter {
     public View getView(int i, View view, ViewGroup viewGroup) {
         listItemView = view;
         if (listItemView == null) {
-            listItemView = View.inflate(MainActivity.getContext(), R.layout.booster_listitem, null);
+            listItemView = View.inflate(MainActivity.getContext(), R.layout.listitem_booster, null);
         } else {
             listItemView = view;
         }

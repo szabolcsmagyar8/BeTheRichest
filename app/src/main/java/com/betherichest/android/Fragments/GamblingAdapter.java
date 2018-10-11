@@ -50,7 +50,7 @@ public class GamblingAdapter extends BaseAdapter {
         View listItemView = view;
 
         if (listItemView == null) {
-            listItemView = View.inflate(parent.getContext(), R.layout.gambling_listitem, null);
+            listItemView = View.inflate(parent.getContext(), R.layout.listitem_gambling, null);
         } else {
             listItemView = view;
         }

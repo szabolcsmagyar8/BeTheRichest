@@ -7,10 +7,10 @@
     <color name="orange">#ffffbb33</color>
     <color name="leaderBoardColor">#e1e1e1</color>
     <color name="darkRed">#8b110b</color>
-    <color name="darkGray">#000000</color>
+    <color name="darkGray">#434343</color>
     <color name="white">#ffffffff</color>
     <color name="investmentBackgroundColor">#ffcc7b</color>
-    <color name="iconHighlightColor">#35ffae00</color>
+    <color name="iconHighlightColor">#23ffae00</color>
     <color name="upgradeHighlightColor">#37ffffff</color>
     <color name="gamblingHighlightColor">#37ffffff</color>
     <color name="transparent">#00ffffff</color>

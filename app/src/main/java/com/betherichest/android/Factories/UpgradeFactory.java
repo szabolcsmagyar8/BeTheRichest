@@ -37,12 +37,12 @@ public class UpgradeFactory {
     private static int[] colors = new int[]{
             Color.parseColor("#ffffff"),   // Simple White
             Color.parseColor("#fff700"),   // Uncommon Yellow
-            Color.parseColor("#32ff00"),   // Common Green
-            Color.parseColor("#3daaff"),   // Rare Lightblue
-            Color.parseColor("#ff8b00"),   // Special Orange
-            Color.parseColor("#a20000"),   // Legendary Red
-            Color.parseColor("#1300b4"),   // Epic Blue
-            Color.parseColor("#380064"),   // Mysterious Purple
+            Color.parseColor("#90bcff"),   // Common Lightblue
+            Color.parseColor("#32ff00"),   // Rare Green
+            Color.parseColor("#ffa200"),   // Special Orange
+            Color.parseColor("#e10000"),   // Legendary Red
+            Color.parseColor("#0048ed"),   // Epic Blue
+            Color.parseColor("#6e00c4"),   // Mysterious Purple
     };
 
     private static List<Upgrade> upgrades = new ArrayList<>();
@@ -82,7 +82,7 @@ public class UpgradeFactory {
                         upgradeEffectMultipliersForActualInvestment[i],
                         investmentUpgradeConfigs[i].getRequiredLevel(),
                         investment.getImageResource(),
-                        colors[i],
+                        colors[colors.length - upgradeEffectMultipliersForActualInvestment.length + i],
                         investment);
 
                 addUpgrade(upgrade);

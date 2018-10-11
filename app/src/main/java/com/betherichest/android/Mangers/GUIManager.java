@@ -210,7 +210,7 @@ public class GUIManager {
     private void createAndAnimateTapTextOnDollarImage() { // creates a TextView which appears above the dollar icon in a random position, and starts animation
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
 
-        final TextView tapText = (TextView) View.inflate(context, R.layout.dollar_tap_popup_text, null);
+        final TextView tapText = (TextView) View.inflate(context, R.layout.text_dollar_tap_popup, null);
         tapText.setText("+" + String.valueOf(NumberFormat.getNumberInstance(Locale.FRANCE).format((int) game.getMoneyPerTap()) + "$"));
 
         tapText.measure(0, 0);

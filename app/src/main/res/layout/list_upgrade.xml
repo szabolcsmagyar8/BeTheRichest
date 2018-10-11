@@ -1,18 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/list_layout"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:clickable="true"
+    android:focusable="true"
     tools:context=".Activities.MainActivity">
 
-    <ListView
-        android:id="@+id/investment_listview"
+    <GridView
+        android:id="@+id/upgrade_listview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="28dp"
-        android:background="@drawable/investment_list_background"
-        android:divider="@null" />
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/background_upgrade_list"
+        android:numColumns="4"
+        android:textAlignment="center" />
 
     <ImageView
         android:id="@+id/closeIcon"

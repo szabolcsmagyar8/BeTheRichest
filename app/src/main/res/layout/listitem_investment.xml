@@ -44,6 +44,17 @@
                 android:textSize="14sp"
                 android:textStyle="bold" />
 
+            <ImageView
+                android:id="@+id/dollarIcon"
+                android:layout_width="30dp"
+                android:layout_height="14sp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="6dp"
+                android:layout_toEndOf="@+id/price"
+                android:layout_toRightOf="@+id/price"
+                android:adjustViewBounds="true"
+                android:src="@drawable/dollarextrasmall" />
+
             <TextView
                 android:id="@+id/dpsPerLevel"
                 android:layout_width="wrap_content"
@@ -67,6 +78,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/total"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/ups"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="5dp"
                 android:textSize="14sp"
                 android:textStyle="bold" />
 

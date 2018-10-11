@@ -44,7 +44,7 @@ public class StatisticsAdapter extends BaseAdapter {
     public View getView(int i, View view, ViewGroup viewGroup) {
         listItemView = view;
         if (listItemView == null) {
-            listItemView = View.inflate(MainActivity.getContext(), R.layout.statistics_listitem, null);
+            listItemView = View.inflate(MainActivity.getContext(), R.layout.listitem_statistics, null);
         } else {
             listItemView = view;
         }

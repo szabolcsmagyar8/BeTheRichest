@@ -22,7 +22,7 @@
       "baseDpS": 1,
       "description": "Get a used pedalo and rent it out on the beach, it's a lot of fun.",
       "imageResourceString": "pedalo",
-      "upgradeEffectMultipliers": [2, 2, 2, 3, 3, 5, 8]
+      "upgradeEffectMultipliers": [2, 2, 2, 2, 3, 3, 5, 8]
     },
     {
       "name": "Bouncy Castle",
@@ -30,15 +30,7 @@
       "baseDpS": 2.2,
       "description": "One of every children's favourite activities, place it in a park and enjoy the income.",
       "imageResourceString": "bouncycastle",
-      "upgradeEffectMultipliers": [
-        2,
-        2,
-        2,
-        3,
-        3,
-        3,
-        5
-      ]
+      "upgradeEffectMultipliers": [2, 2, 3, 3, 3, 5, 5]
     },
     {
       "name": "Photo Studio",
@@ -46,14 +38,7 @@
       "baseDpS": 5,
       "description": "Professional environment for photographers.",
       "imageResourceString": "photostudio",
-      "upgradeEffectMultipliers": [
-        2,
-        2,
-        2,
-        3,
-        3,
-        5
-      ]
+      "upgradeEffectMultipliers": [2, 2, 2, 3, 3, 5]
     },
     {
       "name": "Hot Dog Truck",
@@ -61,14 +46,7 @@
       "baseDpS": 10,
       "description": "When hungry people see this car, they cannot resist to buy a delicious hot-dog.",
       "imageResourceString": "hotdogtruck",
-      "upgradeEffectMultipliers": [
-        2,
-        2,
-        2,
-        3,
-        3,
-        5
-      ]
+      "upgradeEffectMultipliers": [2, 2, 2, 3, 3, 5]
     },
     {
       "name": "Race Car Simulator",
@@ -76,14 +54,7 @@
       "baseDpS": 25,
       "description": "For those who are curious how it feels like driving a race car.",
       "imageResourceString": "racecarsimulator",
-      "upgradeEffectMultipliers": [
-        2,
-        2,
-        2,
-        2,
-        2,
-        5
-      ]
+      "upgradeEffectMultipliers": [2, 2, 2, 2, 2, 5]
     },
     {
       "name": "Apartment",
@@ -91,13 +62,7 @@
       "baseDpS": 50,
       "description": "Buy apartments that you rent out to people.",
       "imageResourceString": "apartment",
-      "upgradeEffectMultipliers": [
-        2,
-        2,
-        2,
-        3,
-        5
-      ]
+      "upgradeEffectMultipliers": [2, 2, 2, 3, 5]
     },
     {
       "name": "Family House",
@@ -105,13 +70,7 @@
       "baseDpS": 110,
       "description": "Buy family houses that you rent out.",
       "imageResourceString": "familyhouse",
-      "upgradeEffectMultipliers": [
-        2,
-        2,
-        2,
-        2,
-        5
-      ]
+      "upgradeEffectMultipliers": [2, 2, 2, 2, 5]
     },
     {
       "name": "Yacht",
@@ -119,12 +78,7 @@
       "baseDpS": 230,
       "description": "",
       "imageResourceString": "yacht",
-      "upgradeEffectMultipliers": [
-        2,
-        3,
-        3,
-        5
-      ]
+      "upgradeEffectMultipliers": [2, 3, 3, 5]
     },
     {
       "name": "Mine Truck",

@@ -62,7 +62,7 @@ public class UpgradeAdapter extends BaseAdapter {
         View listItemView = view;
 
         if (listItemView == null) {
-            listItemView = View.inflate(parent.getContext(), R.layout.upgrade_listitem, null);
+            listItemView = View.inflate(parent.getContext(), R.layout.listitem_upgrade, null);
         } else {
             listItemView = view;
         }
