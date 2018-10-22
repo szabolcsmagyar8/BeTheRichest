@@ -6,7 +6,7 @@
     android:layout_below="@+id/content_frame"
     android:background="@color/royalBlue"
     android:theme="@style/ThemeOverlay.AppCompat.Dark"
-    tools:context=".Activities.StatisticsActivity">
+    tools:context=".activities.StatisticsActivity">
 
     <FrameLayout
         android:id="@+id/content_frame"

@@ -4,6 +4,7 @@
     package="com.betherichest.android">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="com.android.vending.BILLING" />
 
     <application
         android:name=".App"
@@ -14,7 +15,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".Activities.MainActivity"
+            android:name=".activities.MainActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,13 +24,15 @@
             </intent-filter>
         </activity>
 
-        <service android:name=".Services.MyFirebaseMessagingService"
+        <service
+            android:name=".services.MyFirebaseMessagingService"
             tools:ignore="InnerclassSeparator">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-        <service android:name=".Services.MyFirebaseInstanceIDService"
+        <service
+            android:name=".services.MyFirebaseInstanceIDService"
             tools:ignore="InnerclassSeparator">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
@@ -37,16 +40,30 @@
         </service>
 
         <activity
-            android:name=".Activities.StatisticsActivity"
+            android:name=".activities.StatisticsActivity"
             android:label="@string/statistics"
-            android:parentActivityName=".Activities.MainActivity"
+            android:parentActivityName=".activities.MainActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             tools:ignore="InnerclassSeparator" />
         <activity
-            android:name=".Activities.BoostersActivity"
+            android:name=".activities.BoostersActivity"
             android:label="@string/boosters"
-            android:parentActivityName=".Activities.MainActivity"
+            android:parentActivityName=".activities.MainActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"
+            tools:ignore="InnerclassSeparator" />
+        <activity
+            android:name=".activities.AchievementsActivity"
+            android:label="@string/achievements"
+            android:parentActivityName=".activities.MainActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"
+            tools:ignore="InnerclassSeparator" />
+        <activity
+            android:name=".activities.SettingsActivity"
+            android:label="@string/settings"
+            android:parentActivityName=".activities.MainActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             tools:ignore="InnerclassSeparator" />
