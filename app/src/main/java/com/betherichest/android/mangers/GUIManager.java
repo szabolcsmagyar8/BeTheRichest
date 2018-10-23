@@ -28,6 +28,7 @@ import android.widget.Toast;
 
 import com.betherichest.android.activities.AchievementsActivity;
 import com.betherichest.android.activities.BoostersActivity;
+import com.betherichest.android.activities.LoginActivity;
 import com.betherichest.android.activities.SettingsActivity;
 import com.betherichest.android.activities.StatisticsActivity;
 import com.betherichest.android.fragments.UpgradeListFragment;
@@ -196,9 +197,9 @@ public class GUIManager {
                                 context.startActivity(intent);
                                 activityOpened = true;
                                 break;
-                            case R.id.nav_support:
+                            case R.id.nav_profile:
                                 mDrawerLayout.closeDrawers();
-                                intent = new Intent(context, SettingsActivity.class);
+                                intent = new Intent(context, LoginActivity.class);
                                 context.startActivity(intent);
                                 activityOpened = true;
                                 break;

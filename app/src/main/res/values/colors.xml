@@ -6,7 +6,7 @@
     <color name="mainTextColor">#fde444</color>
     <color name="orange">#ffffbb33</color>
     <color name="leaderBoardColor">#e1e1e1</color>
-    <color name="darkRed">#8b110b</color>
+    <color name="red">#8b110b</color>
     <color name="darkGray">#434343</color>
     <color name="white">#ffffffff</color>
     <color name="investmentBackgroundColor">#ffcc7b</color>
@@ -15,8 +15,9 @@
     <color name="gamblingHighlightColor">#37ffffff</color>
     <color name="transparent">#00ffffff</color>
     <color name="darkGreen">#003103</color>
-    <color name="redwood">#460001</color>
-    <color name="royalBlue">#003a46</color>
+    <color name="darkRed">#310001</color>
+    <color name="royalBlue">#001f25</color>
     <color name="lightBlue">#c0d7ff</color>
     <color name="black">#000000</color>
+    <color name="almostBlack">#1d1d1d</color>
 </resources>

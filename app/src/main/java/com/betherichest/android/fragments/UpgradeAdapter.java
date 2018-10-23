@@ -164,6 +164,8 @@ public class UpgradeAdapter extends BaseAdapter {
             priceTextView.setText(nf.format(price / 1000000d) + "M");
         } else if (price >= 1000000000) {
             priceTextView.setText(nf.format(price / 1000000000d) + "B");
+        } else if (price >= 1000000000000d) {
+            priceTextView.setText(nf.format(price / 1000000000000d) + "T");
         }
     }
 

@@ -32,12 +32,12 @@
             android:icon="@drawable/ic_settings"
             android:title="@string/settings" />
         <item
-            android:id="@+id/nav_support"
-            android:icon="@drawable/ic_payment"
-            android:title="@string/support" />
+            android:id="@+id/nav_profile"
+            android:icon="@drawable/ic_person"
+            android:title="@string/profile" />
         <item
             android:id="@+id/nav_about"
-            android:icon="@drawable/ic_person"
+            android:icon="@drawable/ic_info"
             android:title="@string/about" />
     </group>
 </menu>

@@ -109,7 +109,6 @@ public class BoostersActivity extends AppCompatActivity {
     IabHelper.OnIabPurchaseFinishedListener mPurchaseFinishedListener = new IabHelper.OnIabPurchaseFinishedListener() {
         public void onIabPurchaseFinished(IabResult result, Purchase purchase) {
             if (result.isFailure()) {
-                Toast.makeText(App.getContext(), "Failed!", Toast.LENGTH_LONG);
             } else if (purchase.getSku().equals(SKU_TIMEWARP)) {
                 try {
                     mHelper.consumeAsync(purchase, mConsumeFinishedListener);
@@ -123,7 +122,6 @@ public class BoostersActivity extends AppCompatActivity {
     IabHelper.QueryInventoryFinishedListener mReceivedInventoryListener = new IabHelper.QueryInventoryFinishedListener() {
         public void onQueryInventoryFinished(IabResult result, Inventory inventory) {
             if (result.isFailure()) {
-                Toast.makeText(App.getContext(), "Failed!", Toast.LENGTH_LONG);
                 return;
             }
 
@@ -131,7 +129,6 @@ public class BoostersActivity extends AppCompatActivity {
             if (purchase != null) {
                 try {
                     mHelper.consumeAsync(purchase, mConsumeFinishedListener);
-                    Toast.makeText(App.getContext(), "Consumed", Toast.LENGTH_LONG);
                 } catch (IabHelper.IabAsyncInProgressException e) {
                     e.printStackTrace();
                 }
@@ -142,9 +139,9 @@ public class BoostersActivity extends AppCompatActivity {
     IabHelper.OnConsumeFinishedListener mConsumeFinishedListener = new IabHelper.OnConsumeFinishedListener() {
         public void onConsumeFinished(Purchase purchase, IabResult result) {
             if (result.isSuccess()) {
-                Toast.makeText(App.getContext(), "Purchase successful! :)", Toast.LENGTH_LONG);
+                Toast.makeText(App.getContext(), "Purchase successful! :)", Toast.LENGTH_LONG).show();
             } else {
-                Toast.makeText(App.getContext(), "Purchase failed. Try again!", Toast.LENGTH_LONG);
+                Toast.makeText(App.getContext(), "Purchase failed. Try again!", Toast.LENGTH_SHORT).show();
             }
         }
     };
@@ -160,7 +157,6 @@ public class BoostersActivity extends AppCompatActivity {
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 try {
                     mHelper.launchPurchaseFlow(self, SKU_TIMEWARP, 101, mPurchaseFinishedListener, "mypurchasetoken");
-                    Toast.makeText(App.getContext(), "Click", Toast.LENGTH_LONG);
                 } catch (IabHelper.IabAsyncInProgressException e) {
                     e.printStackTrace();
                 }

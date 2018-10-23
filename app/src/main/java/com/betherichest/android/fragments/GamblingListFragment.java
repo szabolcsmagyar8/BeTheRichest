@@ -117,7 +117,7 @@ public class GamblingListFragment extends Fragment {
                 String text;
                 if (wonMoney == 0) {
                     text = getString(R.string.gambling_no_win);
-                    wonMoneyText.setTextColor(getResources().getColor(R.color.darkRed));
+                    wonMoneyText.setTextColor(getResources().getColor(R.color.red));
                     StatisticsManager.getInstance().gamblingLose();
                 } else {
                     text = "You won " + nf.format(wonMoney) + "$";
