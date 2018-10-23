@@ -5,18 +5,18 @@ import android.os.Handler;
 import android.os.Looper;
 import android.support.annotation.RequiresApi;
 
+import com.betherichest.android.GameState;
 import com.betherichest.android.factories.BoostersFactory;
 import com.betherichest.android.factories.GamblingFactory;
 import com.betherichest.android.factories.InvestmentFactory;
 import com.betherichest.android.factories.UpgradeFactory;
+import com.betherichest.android.gameElements.Booster;
 import com.betherichest.android.gameElements.Gambling;
 import com.betherichest.android.gameElements.GameStatistics;
 import com.betherichest.android.gameElements.Investment;
 import com.betherichest.android.gameElements.InvestmentUpgrade;
 import com.betherichest.android.gameElements.TapUpgrade;
-import com.betherichest.android.gameElements.Booster;
 import com.betherichest.android.gameElements.Upgrade;
-import com.betherichest.android.GameState;
 import com.betherichest.android.listenerInterfaces.AdapterRefreshListener;
 import com.betherichest.android.listenerInterfaces.MoneyChangedListener;
 
@@ -178,6 +178,15 @@ public class Game {
 
     public List<Booster> getBoosters() {
         return boosters;
+    }
+
+    public Booster getBoosterBySkuId(String selectedSKU) {
+        for (Booster booster : boosters){
+            if (booster.getSkuId() == selectedSKU){
+                return booster;
+            }
+        }
+        return null;
     }
 
     public static boolean isGamblingAnimationRunning() {

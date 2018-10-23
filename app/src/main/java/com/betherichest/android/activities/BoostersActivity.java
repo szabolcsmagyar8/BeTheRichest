@@ -1,8 +1,10 @@
 package com.betherichest.android.activities;
 
 import android.annotation.SuppressLint;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -31,13 +33,17 @@ public class BoostersActivity extends AppCompatActivity {
     private IabHelper mHelper;
     private static final String TAG = "com.betherichest.android.inappbilling";
     private String selectedSKU = "";
-    BoostersAdapter adapter;
+    private BoostersAdapter adapter;
+    List<Booster> boosters = new ArrayList<>();
+    private Game game = Game.getInstance();
+    private static double HOUR_MULTIPLIER = 3600; // sec * 60 * 60 = hour = 3600
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_boosters);
 
+        boosters = game.getBoosters();
         Toolbar toolbar = findViewById(R.id.toolbar);
 
         setSupportActionBar(toolbar);
@@ -118,9 +124,14 @@ public class BoostersActivity extends AppCompatActivity {
     IabHelper.OnIabPurchaseFinishedListener mPurchaseFinishedListener = new IabHelper.OnIabPurchaseFinishedListener() {
         public void onIabPurchaseFinished(IabResult result, Purchase purchase) {
             if (result.isFailure()) {
+                Toast.makeText(App.getContext(),"Purchase failed!", Toast.LENGTH_SHORT).show();
             } else if (purchase.getSku().equals(selectedSKU)) {
                 try {
                     mHelper.consumeAsync(purchase, mConsumeFinishedListener);
+
+                    double moneyReceived = game.getMoneyPerSec() * HOUR_MULTIPLIER * game.getBoosterBySkuId(selectedSKU).getInterval();
+                    game.earnMoney(moneyReceived);
+                    showAlertDialog(moneyReceived);
                 } catch (IabHelper.IabAsyncInProgressException e) {
                     e.printStackTrace();
                 }
@@ -158,7 +169,7 @@ public class BoostersActivity extends AppCompatActivity {
     };
 
     private void setAdapter(Inventory inventory) {
-        adapter = new BoostersAdapter(Game.getInstance().getBoosters(), inventory);
+        adapter = new BoostersAdapter(boosters, inventory);
         GridView listView = findViewById(R.id.timeWarpGridview);
         listView.setAdapter(adapter);
 
@@ -174,6 +185,20 @@ public class BoostersActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    private void showAlertDialog(double moneyReceived) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder
+                .setTitle("Thanks for purchase!")
+                .setMessage("You received "+ String.valueOf(moneyReceived) + "$")
+                .setIcon(android.R.drawable.ic_dialog_info)
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        //Yes button clicked, do something
+                    }
+                })
+                .show();
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
