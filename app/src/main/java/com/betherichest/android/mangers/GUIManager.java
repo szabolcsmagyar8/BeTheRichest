@@ -26,6 +26,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.betherichest.android.activities.AboutActivity;
 import com.betherichest.android.activities.AchievementsActivity;
 import com.betherichest.android.activities.BoostersActivity;
 import com.betherichest.android.activities.LoginActivity;
@@ -193,7 +194,7 @@ public class GUIManager {
                                 break;
                             case R.id.nav_about:
                                 mDrawerLayout.closeDrawers();
-                                intent = new Intent(context, SettingsActivity.class);
+                                intent = new Intent(context, AboutActivity.class);
                                 context.startActivity(intent);
                                 activityOpened = true;
                                 break;

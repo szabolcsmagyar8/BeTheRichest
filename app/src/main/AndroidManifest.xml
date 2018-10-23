@@ -74,5 +74,12 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             tools:ignore="InnerclassSeparator" />
+        <activity
+            android:name=".activities.AboutActivity"
+            android:label="@string/about_btr"
+            android:parentActivityName=".activities.MainActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"
+            tools:ignore="InnerclassSeparator" />
     </application>
 </manifest>
