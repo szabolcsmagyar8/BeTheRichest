@@ -5,11 +5,17 @@ public class Booster extends GameElement {
 
     private int interval;
 
+    private String skuId;
+
     public Booster() {
         this.id = currentId++;
     }
 
     public int getInterval() {
         return interval;
+    }
+
+    public String getSkuId() {
+        return skuId;
     }
 }

@@ -5,10 +5,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
+import com.betherichest.android.R;
 import com.betherichest.android.database.DatabaseManager;
 import com.betherichest.android.mangers.GUIManager;
 import com.betherichest.android.mangers.Game;
-import com.betherichest.android.R;
 
 public class AchievementsActivity extends AppCompatActivity {
     @Override
@@ -21,7 +21,7 @@ public class AchievementsActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        setAchievementsTexts();
+        setAdapter();
     }
 
     @Override
@@ -59,7 +59,7 @@ public class AchievementsActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void setAchievementsTexts() {
+    private void setAdapter() {
 //        BoostersAdapter adapter = new BoostersAdapter(Game.getInstance().getBoosters());
 //        GridView listView = findViewById(R.id.timeWarpGridview);
 //        listView.setAdapter(adapter);

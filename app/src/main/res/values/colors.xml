@@ -16,8 +16,8 @@
     <color name="transparent">#00ffffff</color>
     <color name="darkGreen">#003103</color>
     <color name="darkRed">#310001</color>
-    <color name="royalBlue">#001f25</color>
-    <color name="lightBlue">#c0d7ff</color>
+    <color name="royalBlue">#00242b</color>
+    <color name="lightBlue">#91c0d7ff</color>
     <color name="black">#000000</color>
     <color name="almostBlack">#1d1d1d</color>
 </resources>

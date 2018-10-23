@@ -2,31 +2,35 @@
   "boosters": [
     {
       "name": "Time Warp 1h",
+      "skuId": "timewarp1",
       "interval": 1,
-      "price": 1.99,
-      "description": "Make one hour production money.",
+      "price": 0.99,
+      "description": "Make one hour of production money.",
       "imageResourceString": "timewarp"
     },
     {
       "name": "Time Warp 3h",
+      "skuId": "timewarp3",
       "interval": 3,
-      "price": 3.99,
-      "description": "Make three hours production money.",
+      "price": 2.49,
+      "description": "Make three hours of production money.",
       "imageResourceString": "timewarp"
     },
     {
-      "name": "Time Warp 10h",
-      "interval": 10,
-      "price": 9.99,
-      "description": "Make ten hours production money.",
+      "name": "Time Warp 8h",
+      "skuId": "timewarp8",
+      "interval": 8,
+      "price": 5.99,
+      "description": "Make eight hours of production money.",
       "imageResourceString": "timewarp"
     },
     {
-      "name": "Gambling Allower",
-      "interval": 10,
-      "price": 0.99,
-      "description": "Make ten hours production money.",
-      "imageResourceString": "clover"
+      "name": "Time Warp 24h",
+      "skuId": "timewarp24",
+      "interval": 24,
+      "price": 12.99,
+      "description": "Make one day of production money.",
+      "imageResourceString": "timewarp"
     }
   ]
 }

@@ -6,11 +6,11 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.ListView;
 
+import com.betherichest.android.R;
 import com.betherichest.android.database.DatabaseManager;
 import com.betherichest.android.fragments.StatisticsAdapter;
 import com.betherichest.android.mangers.GUIManager;
 import com.betherichest.android.mangers.Game;
-import com.betherichest.android.R;
 
 public class StatisticsActivity extends AppCompatActivity {
 
@@ -24,7 +24,7 @@ public class StatisticsActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        setStatTexts();
+        setAdapter();
     }
 
     @Override
@@ -62,7 +62,7 @@ public class StatisticsActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void setStatTexts() {
+    private void setAdapter() {
         StatisticsAdapter adapter = new StatisticsAdapter(Game.statisticsManager.getGameStatistics());
         ListView listView = findViewById(R.id.stat_listview);
         listView.setAdapter(adapter);

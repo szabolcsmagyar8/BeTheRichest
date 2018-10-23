@@ -6,10 +6,10 @@
 
     <RelativeLayout
         android:id="@+id/boosterItem"
-        android:layout_width="200dp"
+        android:layout_width="220dp"
         android:layout_height="wrap_content"
         android:background="@drawable/background_booster_listitem"
-        android:padding="4dp">
+        android:padding="8dp">
 
         <RelativeLayout
             android:id="@+id/boosterMainInfo"
@@ -44,7 +44,7 @@
             android:layout_below="@+id/boosterMainInfo"
             android:layout_centerHorizontal="true"
             android:text="1,99$"
-            android:textSize="20sp" />
-
+            android:layout_marginBottom="5dp"
+            android:textSize="14sp" />
     </RelativeLayout>
 </RelativeLayout>

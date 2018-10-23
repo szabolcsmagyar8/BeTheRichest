@@ -1,34 +1,37 @@
 package com.betherichest.android.activities;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.Toast;
 
 import com.betherichest.android.App;
+import com.betherichest.android.R;
 import com.betherichest.android.database.DatabaseManager;
 import com.betherichest.android.fragments.BoostersAdapter;
+import com.betherichest.android.gameElements.Booster;
 import com.betherichest.android.mangers.GUIManager;
 import com.betherichest.android.mangers.Game;
-import com.betherichest.android.R;
 import com.betherichest.android.util.IabHelper;
 import com.betherichest.android.util.IabResult;
 import com.betherichest.android.util.Inventory;
 import com.betherichest.android.util.Purchase;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class BoostersActivity extends AppCompatActivity {
-    IabHelper mHelper;
+    private IabHelper mHelper;
     private static final String TAG = "com.betherichest.android.inappbilling";
-    static final String ITEM_SKU = "android.test.cancelled";
-    static final String SKU_TIMEWARP = "timewarp.1";
+    private String selectedSKU = "";
+    BoostersAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,8 +42,14 @@ public class BoostersActivity extends AppCompatActivity {
 
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
 
-        setBoosterTexts();
+    private List<String> getAllSkus() {
+        List<String> allSkus = new ArrayList<>();
+        for (Booster booster : Game.getInstance().getBoosters()) {
+            allSkus.add(booster.getSkuId());
+        }
+        return allSkus;
     }
 
     @Override
@@ -63,7 +72,7 @@ public class BoostersActivity extends AppCompatActivity {
 
                 Log.d(TAG, "In-app Billing is set up OK");
                 try {
-                    mHelper.queryInventoryAsync(mReceivedInventoryListener);
+                    mHelper.queryInventoryAsync(true, getAllSkus(), null, mReceivedInventoryListener);
                 } catch (IabHelper.IabAsyncInProgressException e) {
                     e.printStackTrace();
                 }
@@ -109,7 +118,7 @@ public class BoostersActivity extends AppCompatActivity {
     IabHelper.OnIabPurchaseFinishedListener mPurchaseFinishedListener = new IabHelper.OnIabPurchaseFinishedListener() {
         public void onIabPurchaseFinished(IabResult result, Purchase purchase) {
             if (result.isFailure()) {
-            } else if (purchase.getSku().equals(SKU_TIMEWARP)) {
+            } else if (purchase.getSku().equals(selectedSKU)) {
                 try {
                     mHelper.consumeAsync(purchase, mConsumeFinishedListener);
                 } catch (IabHelper.IabAsyncInProgressException e) {
@@ -125,7 +134,9 @@ public class BoostersActivity extends AppCompatActivity {
                 return;
             }
 
-            Purchase purchase = inventory.getPurchase(SKU_TIMEWARP);
+            setAdapter(inventory);
+
+            Purchase purchase = inventory.getPurchase(selectedSKU);
             if (purchase != null) {
                 try {
                     mHelper.consumeAsync(purchase, mConsumeFinishedListener);
@@ -139,28 +150,28 @@ public class BoostersActivity extends AppCompatActivity {
     IabHelper.OnConsumeFinishedListener mConsumeFinishedListener = new IabHelper.OnConsumeFinishedListener() {
         public void onConsumeFinished(Purchase purchase, IabResult result) {
             if (result.isSuccess()) {
-                Toast.makeText(App.getContext(), "Purchase successful! :)", Toast.LENGTH_LONG).show();
+                Toast.makeText(App.getContext(), "Purchase successful! :)", Toast.LENGTH_SHORT).show();
             } else {
                 Toast.makeText(App.getContext(), "Purchase failed. Try again!", Toast.LENGTH_SHORT).show();
             }
         }
     };
 
-    @SuppressLint("ClickableViewAccessibility")
-    private void setBoosterTexts() {
-        BoostersAdapter adapter = new BoostersAdapter(Game.getInstance().getBoosters());
+    private void setAdapter(Inventory inventory) {
+        adapter = new BoostersAdapter(Game.getInstance().getBoosters(), inventory);
         GridView listView = findViewById(R.id.timeWarpGridview);
         listView.setAdapter(adapter);
-        final Activity self = this;
-        listView.setOnTouchListener(new View.OnTouchListener() {
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 try {
-                    mHelper.launchPurchaseFlow(self, SKU_TIMEWARP, 101, mPurchaseFinishedListener, "mypurchasetoken");
+                    Booster booster = adapter.getItem(i);
+                    selectedSKU = booster.getSkuId();
+                    mHelper.launchPurchaseFlow(BoostersActivity.this, selectedSKU, 101, mPurchaseFinishedListener, "mypurchasetoken");
                 } catch (IabHelper.IabAsyncInProgressException e) {
                     e.printStackTrace();
                 }
-                return false;
             }
         });
     }
