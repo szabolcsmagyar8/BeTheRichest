@@ -41,7 +41,7 @@
         android:layout_below="@+id/timeWarpsText"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="3dp"
-        android:numColumns="3"
+        android:numColumns="2"
         android:textAlignment="center" />
 
 </android.widget.RelativeLayout>

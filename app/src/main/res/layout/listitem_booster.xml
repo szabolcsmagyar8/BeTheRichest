@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:padding="5dp">
+    android:padding="8dp">
 
     <RelativeLayout
         android:id="@+id/boosterItem"
@@ -22,8 +22,7 @@
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_marginRight="5dp"
-                android:layout_marginTop="5dp"
-                android:src="@drawable/timewarp" />
+                android:layout_marginTop="5dp" />
 
             <TextView
                 android:id="@+id/interval"
@@ -32,19 +31,29 @@
                 android:layout_centerVertical="true"
                 android:layout_toEndOf="@+id/booster_icon"
                 android:layout_toRightOf="@+id/booster_icon"
-                android:text="1h"
                 android:textSize="30sp"
                 android:textStyle="bold" />
         </RelativeLayout>
 
         <TextView
-            android:id="@+id/price"
+            android:id="@+id/reward"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/boosterMainInfo"
             android:layout_centerHorizontal="true"
-            android:text="1,99$"
+            android:layout_marginBottom="2dp"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/reward"
+            android:layout_centerHorizontal="true"
             android:layout_marginBottom="5dp"
-            android:textSize="14sp" />
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:textStyle="bold" />
     </RelativeLayout>
 </RelativeLayout>

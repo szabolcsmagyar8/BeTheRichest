@@ -26,8 +26,10 @@ import com.betherichest.android.util.IabResult;
 import com.betherichest.android.util.Inventory;
 import com.betherichest.android.util.Purchase;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class BoostersActivity extends AppCompatActivity {
     private IabHelper mHelper;
@@ -36,7 +38,6 @@ public class BoostersActivity extends AppCompatActivity {
     private BoostersAdapter adapter;
     List<Booster> boosters = new ArrayList<>();
     private Game game = Game.getInstance();
-    private static double HOUR_MULTIPLIER = 3600; // sec * 60 * 60 = hour = 3600
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -124,12 +125,12 @@ public class BoostersActivity extends AppCompatActivity {
     IabHelper.OnIabPurchaseFinishedListener mPurchaseFinishedListener = new IabHelper.OnIabPurchaseFinishedListener() {
         public void onIabPurchaseFinished(IabResult result, Purchase purchase) {
             if (result.isFailure()) {
-                Toast.makeText(App.getContext(),"Purchase failed!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(App.getContext(), "Purchase cancelled.", Toast.LENGTH_SHORT).show();
             } else if (purchase.getSku().equals(selectedSKU)) {
                 try {
                     mHelper.consumeAsync(purchase, mConsumeFinishedListener);
 
-                    double moneyReceived = game.getMoneyPerSec() * HOUR_MULTIPLIER * game.getBoosterBySkuId(selectedSKU).getInterval();
+                    double moneyReceived = game.getMoneyPerSec() * Game.SEC_TO_HOUR_MULTIPLIER * game.getBoosterBySkuId(selectedSKU).getInterval();
                     game.earnMoney(moneyReceived);
                     showAlertDialog(moneyReceived);
                 } catch (IabHelper.IabAsyncInProgressException e) {
@@ -161,7 +162,7 @@ public class BoostersActivity extends AppCompatActivity {
     IabHelper.OnConsumeFinishedListener mConsumeFinishedListener = new IabHelper.OnConsumeFinishedListener() {
         public void onConsumeFinished(Purchase purchase, IabResult result) {
             if (result.isSuccess()) {
-                Toast.makeText(App.getContext(), "Purchase successful! :)", Toast.LENGTH_SHORT).show();
+                Toast.makeText(App.getContext(), "Purchase successful!", Toast.LENGTH_SHORT).show();
             } else {
                 Toast.makeText(App.getContext(), "Purchase failed. Try again!", Toast.LENGTH_SHORT).show();
             }
@@ -191,7 +192,7 @@ public class BoostersActivity extends AppCompatActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder
                 .setTitle("Thanks for purchase!")
-                .setMessage("You received "+ String.valueOf(moneyReceived) + "$")
+                .setMessage("You received " + String.valueOf(NumberFormat.getNumberInstance(Locale.FRANCE).format(moneyReceived)) + "$")
                 .setIcon(android.R.drawable.ic_dialog_info)
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {

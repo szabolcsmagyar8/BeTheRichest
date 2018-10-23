@@ -1,5 +1,7 @@
 package com.betherichest.android.gameElements;
 
+import com.betherichest.android.mangers.Game;
+
 public class Booster extends GameElement {
     private static int currentId = 0;
 
@@ -17,5 +19,9 @@ public class Booster extends GameElement {
 
     public String getSkuId() {
         return skuId;
+    }
+
+    public double getActualReward() {
+        return Game.getInstance().getMoneyPerSec() * Game.SEC_TO_HOUR_MULTIPLIER * interval;
     }
 }

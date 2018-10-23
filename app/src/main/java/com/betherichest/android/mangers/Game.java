@@ -40,7 +40,9 @@ public class Game {
     private double currentMoney = 0d;
     private double moneyPerTap = 1d;
     private double moneyPerSec = 0d;
+
     public static Integer FPS = 24;
+    public static double SEC_TO_HOUR_MULTIPLIER = 3600;
     private NumberFormat nf = NumberFormat.getNumberInstance(Locale.FRANCE);
 
     private Timer T = new Timer();

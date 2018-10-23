@@ -11,11 +11,14 @@ import com.betherichest.android.activities.MainActivity;
 import com.betherichest.android.gameElements.Booster;
 import com.betherichest.android.util.Inventory;
 
+import java.text.NumberFormat;
 import java.util.List;
+import java.util.Locale;
 
 public class BoostersAdapter extends BaseAdapter {
     private View listItemView;
     private TextView nameTextView;
+    private TextView rewardTextView;
     private TextView priceTextView;
     private ImageView iconImageView;
     private List<Booster> items;
@@ -51,11 +54,12 @@ public class BoostersAdapter extends BaseAdapter {
         }
 
         nameTextView = listItemView.findViewById(R.id.interval);
+        rewardTextView = listItemView.findViewById(R.id.reward);
         priceTextView = listItemView.findViewById(R.id.price);
         iconImageView = listItemView.findViewById(R.id.booster_icon);
 
         nameTextView.setText(String.valueOf(items.get(i).getInterval()) + "h");
-        //priceTextView.setText(String.valueOf(items.get(i).getPrice() + "$"));
+        rewardTextView.setText("Reward: " + String.valueOf(NumberFormat.getNumberInstance(Locale.FRANCE).format(items.get(i).getActualReward()) + " $"));
         priceTextView.setText(inventory.getSkuDetails(items.get(i).getSkuId()).getPrice());
         iconImageView.setImageResource(items.get(i).getImageResource());
 
