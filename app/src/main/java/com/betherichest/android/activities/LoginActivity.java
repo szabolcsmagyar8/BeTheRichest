@@ -12,7 +12,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -36,7 +35,7 @@ public class LoginActivity extends AppCompatActivity {
     private static final int RC_SIGN_IN = 9001;
     TextView userTextView;
     TextView emailTextView;
-    ImageView photoImageView;
+    TextView nameCircleTextView;
     Button signOutButton;
     RelativeLayout accountDetailLayout;
     RelativeLayout signInDetailLayout;
@@ -55,7 +54,7 @@ public class LoginActivity extends AppCompatActivity {
 
         userTextView = findViewById(R.id.username);
         emailTextView = findViewById(R.id.email);
-        photoImageView = findViewById(R.id.photo);
+        nameCircleTextView = findViewById(R.id.name_circle);
         signOutButton = findViewById(R.id.sign_out_button);
         accountDetailLayout = findViewById(R.id.account_details);
         signInDetailLayout = findViewById(R.id.sign_in_details);
@@ -104,12 +103,7 @@ public class LoginActivity extends AppCompatActivity {
     private void setProfilePage(GoogleSignInAccount account) {
         userTextView.setText(account.getDisplayName());
         emailTextView.setText(account.getEmail());
-
-        if (account.getPhotoUrl() == null) {
-            photoImageView.setImageResource(R.drawable.ic_account);
-        } else {
-            photoImageView.setImageURI(account.getPhotoUrl());
-        }
+        nameCircleTextView.setText(account.getGivenName().substring(0, 2));
     }
 
     @Override
