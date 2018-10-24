@@ -14,14 +14,14 @@ import java.util.List;
 
 public class UpgradeFactory {
     private static InvestmentUpgradeConfig[] investmentUpgradeConfigs = new InvestmentUpgradeConfig[]{
-            new InvestmentUpgradeConfig(10, 1),
-            new InvestmentUpgradeConfig(50, 5),
-            new InvestmentUpgradeConfig(500, 10),
-            new InvestmentUpgradeConfig(5000, 20),
-            new InvestmentUpgradeConfig(10000, 30),
-            new InvestmentUpgradeConfig(50000, 50),
-            new InvestmentUpgradeConfig(100000, 70),
-            new InvestmentUpgradeConfig(500000, 100)};
+            new InvestmentUpgradeConfig(10, 1),             // 1
+            new InvestmentUpgradeConfig(50, 5),             // 2
+            new InvestmentUpgradeConfig(500, 10),           // 3
+            new InvestmentUpgradeConfig(5000, 20),          // 4
+            new InvestmentUpgradeConfig(10000, 30),         // 5
+            new InvestmentUpgradeConfig(50000, 50),         // 6
+            new InvestmentUpgradeConfig(100000, 70),        // 7
+            new InvestmentUpgradeConfig(500000, 100)};      // 8
 
     private static TapUpgradeConfig[] tapUpgradeConfigs = new TapUpgradeConfig[]{
             new TapUpgradeConfig(1000, 2),

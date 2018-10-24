@@ -28,7 +28,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
-import java.net.InetAddress;
+import java.io.IOException;
 
 public class LoginActivity extends AppCompatActivity {
     GoogleSignInClient mGoogleSignInClient;
@@ -126,13 +126,13 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void signInClick() {
-        if (!(isInternetAvailable() || isNetworkConnected())) {
-            showToast("Please check your internet connection!", Toast.LENGTH_SHORT);
-            return;
+        if (isNetworkConnected() && isOnline()) {
+            Intent signInIntent = mGoogleSignInClient.getSignInIntent();
+            startActivityForResult(signInIntent, RC_SIGN_IN);
         }
-
-        Intent signInIntent = mGoogleSignInClient.getSignInIntent();
-        startActivityForResult(signInIntent, RC_SIGN_IN);
+        else{
+            showToast("Please check your internet connection!", Toast.LENGTH_SHORT);
+        }
     }
 
     public void signOutClick() {
@@ -153,13 +153,19 @@ public class LoginActivity extends AppCompatActivity {
         return activeNetwork != null && activeNetwork.isConnectedOrConnecting();
     }
 
-    public boolean isInternetAvailable() {
+    public boolean isOnline() {
+        Runtime runtime = Runtime.getRuntime();
         try {
-            InetAddress ipAddr = InetAddress.getByName("google.com");
-            return !ipAddr.equals("");
-        } catch (Exception e) {
-            return false;
+            Process ipProcess = runtime.exec("/system/bin/ping -c 1 8.8.8.8");
+            int exitValue = ipProcess.waitFor();
+            return (exitValue == 0);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
+
+        return false;
     }
 
     @Override

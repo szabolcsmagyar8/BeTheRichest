@@ -58,9 +58,11 @@ public class BoostersAdapter extends BaseAdapter {
         priceTextView = listItemView.findViewById(R.id.price);
         iconImageView = listItemView.findViewById(R.id.booster_icon);
 
-        nameTextView.setText(String.valueOf(items.get(i).getInterval()) + "h");
+        nameTextView.setText(items.get(i).getTitle());
         rewardTextView.setText("Reward: " + String.valueOf(NumberFormat.getNumberInstance(Locale.FRANCE).format(items.get(i).getActualReward()) + " $"));
-        priceTextView.setText(inventory.getSkuDetails(items.get(i).getSkuId()).getPrice());
+        if (inventory!= null){
+            priceTextView.setText(inventory.getSkuDetails(items.get(i).getSkuId()).getPrice());
+        }
         iconImageView.setImageResource(items.get(i).getImageResource());
 
         return listItemView;

@@ -125,7 +125,7 @@ public class BoostersActivity extends AppCompatActivity {
     IabHelper.OnIabPurchaseFinishedListener mPurchaseFinishedListener = new IabHelper.OnIabPurchaseFinishedListener() {
         public void onIabPurchaseFinished(IabResult result, Purchase purchase) {
             if (result.isFailure()) {
-                Toast.makeText(App.getContext(), "Purchase cancelled.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(App.getContext(), "Purchase cancelled", Toast.LENGTH_SHORT).show();
             } else if (purchase.getSku().equals(selectedSKU)) {
                 try {
                     mHelper.consumeAsync(purchase, mConsumeFinishedListener);

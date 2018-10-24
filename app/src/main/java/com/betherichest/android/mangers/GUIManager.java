@@ -26,15 +26,16 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.betherichest.android.R;
 import com.betherichest.android.activities.AboutActivity;
 import com.betherichest.android.activities.AchievementsActivity;
+import com.betherichest.android.activities.AdWatcherActivity;
 import com.betherichest.android.activities.BoostersActivity;
 import com.betherichest.android.activities.LoginActivity;
 import com.betherichest.android.activities.SettingsActivity;
 import com.betherichest.android.activities.StatisticsActivity;
 import com.betherichest.android.fragments.UpgradeListFragment;
 import com.betherichest.android.listenerInterfaces.MoneyChangedListener;
-import com.betherichest.android.R;
 
 import java.text.NumberFormat;
 import java.util.Locale;
@@ -183,6 +184,12 @@ public class GUIManager {
                             case R.id.nav_achievements:
                                 mDrawerLayout.closeDrawers();
                                 intent = new Intent(context, AchievementsActivity.class);
+                                context.startActivity(intent);
+                                activityOpened = true;
+                                break;
+                            case R.id.nav_ads:
+                                mDrawerLayout.closeDrawers();
+                                intent = new Intent(context, AdWatcherActivity.class);
                                 context.startActivity(intent);
                                 activityOpened = true;
                                 break;
