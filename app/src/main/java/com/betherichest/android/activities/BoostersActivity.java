@@ -49,6 +49,8 @@ public class BoostersActivity extends AppCompatActivity {
 
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        setAdapter(null);
     }
 
     private List<String> getAllSkus() {

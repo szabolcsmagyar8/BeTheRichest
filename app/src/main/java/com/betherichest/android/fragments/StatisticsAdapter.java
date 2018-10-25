@@ -6,11 +6,11 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.betherichest.android.activities.MainActivity;
+import com.betherichest.android.App;
+import com.betherichest.android.R;
 import com.betherichest.android.gameElements.GameStatistics;
 import com.betherichest.android.listenerInterfaces.AdapterRefreshListener;
 import com.betherichest.android.mangers.Game;
-import com.betherichest.android.R;
 
 import java.util.List;
 
@@ -44,7 +44,7 @@ public class StatisticsAdapter extends BaseAdapter {
     public View getView(int i, View view, ViewGroup viewGroup) {
         listItemView = view;
         if (listItemView == null) {
-            listItemView = View.inflate(MainActivity.getContext(), R.layout.listitem_statistics, null);
+            listItemView = View.inflate(App.getContext(), R.layout.listitem_statistics, null);
         } else {
             listItemView = view;
         }

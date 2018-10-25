@@ -8,7 +8,8 @@
     <color name="leaderBoardColor">#e1e1e1</color>
     <color name="red">#8b110b</color>
     <color name="darkGray">#434343</color>
-    <color name="white">#ffffffff</color>
+    <color name="darkerGray">#2d2d2d</color>
+    <color name="white">#ffffff</color>
     <color name="investmentBackgroundColor">#ffcc7b</color>
     <color name="iconHighlightColor">#23ffae00</color>
     <color name="upgradeHighlightColor">#37ffffff</color>

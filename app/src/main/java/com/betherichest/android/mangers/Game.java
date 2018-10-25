@@ -41,8 +41,10 @@ public class Game {
     private double moneyPerTap = 1d;
     private double moneyPerSec = 0d;
 
-    public static Integer FPS = 24;
-    public static double SEC_TO_HOUR_MULTIPLIER = 3600;
+    public static final Integer FPS = 24;
+    public static final double SEC_TO_HOUR_MULTIPLIER = 3600;
+    private static final double AD_REWARD_MULTIPLIER = 100;
+
     private NumberFormat nf = NumberFormat.getNumberInstance(Locale.FRANCE);
 
     private Timer T = new Timer();
@@ -207,6 +209,10 @@ public class Game {
             }
         }
         return purchasedUpgrades;
+    }
+
+    public double getAdReward() {
+        return moneyPerSec * AD_REWARD_MULTIPLIER;
     }
     //endregion
 

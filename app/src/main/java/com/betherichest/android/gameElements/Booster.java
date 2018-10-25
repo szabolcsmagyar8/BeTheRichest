@@ -11,6 +11,8 @@ public class Booster extends GameElement {
 
     private String title;
 
+    private String priceText;
+
     public Booster() {
         this.id = currentId++;
     }
@@ -29,5 +31,9 @@ public class Booster extends GameElement {
 
     public String getTitle() {
         return title;
+    }
+
+    public String getPriceText() {
+        return priceText;
     }
 }

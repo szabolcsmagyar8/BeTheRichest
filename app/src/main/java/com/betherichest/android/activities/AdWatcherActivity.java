@@ -1,10 +1,11 @@
 package com.betherichest.android.activities;
 
-import android.content.DialogInterface;
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.widget.Toast;
 
 import com.betherichest.android.R;
@@ -17,26 +18,31 @@ import com.google.android.gms.ads.reward.RewardItem;
 import com.google.android.gms.ads.reward.RewardedVideoAd;
 import com.google.android.gms.ads.reward.RewardedVideoAdListener;
 
-import java.text.NumberFormat;
-import java.util.Locale;
-
 public class AdWatcherActivity extends AppCompatActivity implements RewardedVideoAdListener {
-    private static final double AD_REWARD_MULTIPLIER = 300;
     private RewardedVideoAd mRewardedVideoAd;
     private static final String AD_UNIT_ID = "ca-app-pub-3940256099942544/5224354917";
     Game game = Game.getInstance();
     double rewardMoney;
-    
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ad_watcher);
 
+        Toolbar toolbar = findViewById(R.id.toolbar);
+
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         MobileAds.initialize(this, AD_UNIT_ID);
         mRewardedVideoAd = MobileAds.getRewardedVideoAdInstance(this);
         mRewardedVideoAd.setRewardedVideoAdListener(this);
 
-        loadRewardedVideoAd();
+        if (mRewardedVideoAd.isLoaded()) {
+            mRewardedVideoAd.show();
+        } else {
+            loadRewardedVideoAd();
+        }
     }
 
     private void loadRewardedVideoAd() {
@@ -46,22 +52,7 @@ public class AdWatcherActivity extends AppCompatActivity implements RewardedVide
 
     @Override
     public void onRewarded(RewardItem reward) {
-        rewardMoney = game.getMoneyPerSec() * AD_REWARD_MULTIPLIER;
-        game.earnMoney(rewardMoney);
-    }
 
-    private void showRewardDialog(double rewardMoney) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder
-                .setTitle("Video reward")
-                .setMessage("You received " + String.valueOf(NumberFormat.getNumberInstance(Locale.FRANCE).format(rewardMoney)) + "$")
-                .setIcon(android.R.drawable.ic_dialog_info)
-                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        onBackPressed();
-                    }
-                })
-                .show();
     }
 
     @Override
@@ -70,7 +61,9 @@ public class AdWatcherActivity extends AppCompatActivity implements RewardedVide
 
     @Override
     public void onRewardedVideoAdClosed() {
-        showRewardDialog(rewardMoney);
+        Intent returnIntent = new Intent();
+        setResult(Activity.RESULT_OK,returnIntent);
+        finish();
     }
 
     @Override
@@ -93,6 +86,7 @@ public class AdWatcherActivity extends AppCompatActivity implements RewardedVide
 
     @Override
     public void onRewardedVideoCompleted() {
+
     }
 
     @Override

@@ -6,6 +6,7 @@
       "skuId": "timewarp1",
       "interval": 0.5,
       "price": 0.99,
+      "priceText": "HUF 300.00",
       "description": "Make half an hour of production money.",
       "imageResourceString": "timewarp"
     },
@@ -15,6 +16,7 @@
       "skuId": "timewarp3",
       "interval": 1.5,
       "price": 2.49,
+      "priceText": "HUF 750.00",
       "description": "Make 90 minutes of production money.",
       "imageResourceString": "timewarp"
     },
@@ -24,6 +26,7 @@
       "skuId": "timewarp8",
       "interval": 4,
       "price": 5.99,
+      "priceText": "HUF 1,800.00",
       "description": "Make four hours of production money.",
       "imageResourceString": "timewarp"
     },
@@ -33,6 +36,7 @@
       "skuId": "timewarp24",
       "interval": 12,
       "price": 12.99,
+      "priceText": "HUF 3,900.00",
       "description": "Make half a day of production money.",
       "imageResourceString": "timewarp"
     }

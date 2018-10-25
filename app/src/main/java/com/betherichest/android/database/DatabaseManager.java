@@ -1,10 +1,10 @@
 package com.betherichest.android.database;
 
-import com.betherichest.android.activities.MainActivity;
+import com.betherichest.android.App;
+import com.betherichest.android.GameState;
 import com.betherichest.android.gameElements.GameStatistics;
 import com.betherichest.android.gameElements.Investment;
 import com.betherichest.android.gameElements.Upgrade;
-import com.betherichest.android.GameState;
 import com.betherichest.android.mangers.Game;
 
 import java.util.List;
@@ -20,7 +20,7 @@ public class DatabaseManager {
         if (instance == null) {
             instance = this;
         }
-        appDatabase = AppDatabase.getAppDatabase(MainActivity.getContext());
+        appDatabase = AppDatabase.getAppDatabase(App.getContext());
     }
 
     public void loadStateFromDb() {

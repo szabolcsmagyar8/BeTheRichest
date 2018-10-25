@@ -6,8 +6,8 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.betherichest.android.App;
 import com.betherichest.android.R;
-import com.betherichest.android.activities.MainActivity;
 import com.betherichest.android.gameElements.Booster;
 import com.betherichest.android.util.Inventory;
 
@@ -48,7 +48,7 @@ public class BoostersAdapter extends BaseAdapter {
     public View getView(int i, View view, ViewGroup viewGroup) {
         listItemView = view;
         if (listItemView == null) {
-            listItemView = View.inflate(MainActivity.getContext(), R.layout.listitem_booster, null);
+            listItemView = View.inflate(App.getContext(), R.layout.listitem_booster, null);
         } else {
             listItemView = view;
         }
@@ -60,8 +60,10 @@ public class BoostersAdapter extends BaseAdapter {
 
         nameTextView.setText(items.get(i).getTitle());
         rewardTextView.setText("Reward: " + String.valueOf(NumberFormat.getNumberInstance(Locale.FRANCE).format(items.get(i).getActualReward()) + " $"));
-        if (inventory!= null){
+        if (inventory != null) {
             priceTextView.setText(inventory.getSkuDetails(items.get(i).getSkuId()).getPrice());
+        } else {
+            priceTextView.setText(items.get(i).getPriceText());
         }
         iconImageView.setImageResource(items.get(i).getImageResource());
 

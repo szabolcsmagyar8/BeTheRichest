@@ -2,7 +2,6 @@ package com.betherichest.android.mangers;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.drawable.GradientDrawable;
@@ -15,6 +14,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.util.TypedValue;
 import android.view.Display;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
@@ -26,14 +26,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.betherichest.android.App;
 import com.betherichest.android.R;
-import com.betherichest.android.activities.AboutActivity;
-import com.betherichest.android.activities.AchievementsActivity;
-import com.betherichest.android.activities.AdWatcherActivity;
-import com.betherichest.android.activities.BoostersActivity;
-import com.betherichest.android.activities.LoginActivity;
-import com.betherichest.android.activities.SettingsActivity;
-import com.betherichest.android.activities.StatisticsActivity;
 import com.betherichest.android.fragments.UpgradeListFragment;
 import com.betherichest.android.listenerInterfaces.MoneyChangedListener;
 
@@ -63,9 +57,11 @@ public class GUIManager {
     private ActionBar actionBar;
     private NavigationView navigationView;
     private Toast noAvailableUpgradesToast = null;
+    private DrawerLayout mDrawerLayout;
 
     static Random rnd = new Random();
-    private DrawerLayout mDrawerLayout;
+    private long mLastClickTime = 0;
+
 
     public GUIManager(View view, WindowManager windowManager, ActionBar supportActionBar, FragmentManager fragmentManager) {
         this.view = view;
@@ -161,66 +157,6 @@ public class GUIManager {
                 setMainUITexts();
             }
         };
-
-        navigationView.setNavigationItemSelectedListener(
-                new NavigationView.OnNavigationItemSelectedListener() {
-                    @Override
-                    public boolean onNavigationItemSelected(MenuItem menuItem) {
-                        Intent intent;
-                        switch (menuItem.getItemId()) {
-                            case R.id.nav_stats:
-                                mDrawerLayout.closeDrawers();
-                                intent = new Intent(context, StatisticsActivity.class);
-                                StatisticsManager.getInstance().initailizeBasicStats();
-                                context.startActivity(intent);
-                                activityOpened = true;
-                                break;
-                            case R.id.nav_boosters:
-                                mDrawerLayout.closeDrawers();
-                                intent = new Intent(context, BoostersActivity.class);
-                                context.startActivity(intent);
-                                activityOpened = true;
-                                break;
-                            case R.id.nav_achievements:
-                                mDrawerLayout.closeDrawers();
-                                intent = new Intent(context, AchievementsActivity.class);
-                                context.startActivity(intent);
-                                activityOpened = true;
-                                break;
-                            case R.id.nav_ads:
-                                mDrawerLayout.closeDrawers();
-                                intent = new Intent(context, AdWatcherActivity.class);
-                                context.startActivity(intent);
-                                activityOpened = true;
-                                break;
-                            case R.id.nav_settings:
-                                mDrawerLayout.closeDrawers();
-                                intent = new Intent(context, SettingsActivity.class);
-                                context.startActivity(intent);
-                                activityOpened = true;
-                                break;
-                            case R.id.nav_about:
-                                mDrawerLayout.closeDrawers();
-                                intent = new Intent(context, AboutActivity.class);
-                                context.startActivity(intent);
-                                activityOpened = true;
-                                break;
-                            case R.id.nav_profile:
-                                mDrawerLayout.closeDrawers();
-                                intent = new Intent(context, LoginActivity.class);
-                                context.startActivity(intent);
-                                activityOpened = true;
-                                break;
-                            case R.id.nav_help:
-                                mDrawerLayout.closeDrawers();
-                                intent = new Intent(context, SettingsActivity.class);
-                                context.startActivity(intent);
-                                activityOpened = true;
-                                break;
-                        }
-                        return false;
-                    }
-                });
     }
 
     public void changeCurrentMoneyText() {
@@ -323,8 +259,6 @@ public class GUIManager {
         return marginLeft;
     }
 
-    private long mLastClickTime = 0;
-
     public void openFragment(int containerId, Fragment newFragment) {
         if (SystemClock.elapsedRealtime() - mLastClickTime < 500) {
             return;
@@ -350,12 +284,7 @@ public class GUIManager {
         if (noAvailableUpgradesToast != null) {
             noAvailableUpgradesToast.cancel();
         }
-        noAvailableUpgradesToast =
-                Toast.makeText(
-                        context,
-                        R.string.no_upgrades_available,
-                        Toast.LENGTH_SHORT
-                );
+        noAvailableUpgradesToast = Toast.makeText(context, R.string.no_upgrades_available, Toast.LENGTH_SHORT);
         noAvailableUpgradesToast.show();
     }
 
@@ -380,5 +309,13 @@ public class GUIManager {
 
     private int convertPixelToDp(int pixel) {
         return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, pixel, context.getResources().getDisplayMetrics());
+    }
+
+    public void changeAdRewardMenuItemText() {
+        NavigationView navigationView = view.findViewById(R.id.nav_view);
+        Menu menu = navigationView.getMenu();
+        MenuItem navAds = menu.findItem(R.id.nav_ads);
+        String rewardString = String.valueOf(NumberFormat.getNumberInstance(Locale.FRANCE).format(game.getAdReward()));
+        navAds.setTitle(App.getContext().getResources().getString(R.string.ads) + " " + rewardString + " $");
     }
 }
