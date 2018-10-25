@@ -10,7 +10,6 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.util.TypedValue;
 import android.view.Display;
@@ -55,9 +54,7 @@ public class GUIManager {
     private RelativeLayout mainRelativeLayout;
     private ImageView leaderboardImageView;
     private ActionBar actionBar;
-    private NavigationView navigationView;
-    private Toast noAvailableUpgradesToast = null;
-    private DrawerLayout mDrawerLayout;
+    private static Toast toast = null;
 
     static Random rnd = new Random();
     private long mLastClickTime = 0;
@@ -96,9 +93,6 @@ public class GUIManager {
         upgradesImageView = view.findViewById(R.id.upgradesIcon);
         gamblingImageView = view.findViewById(R.id.gamblingIcon);
         leaderboardImageView = view.findViewById(R.id.leaderboardIcon);
-
-        mDrawerLayout = view.findViewById(R.id.drawer_layout);
-        navigationView = view.findViewById(R.id.nav_view);
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -265,7 +259,7 @@ public class GUIManager {
         }
 
         if (newFragment instanceof UpgradeListFragment && game.getDisplayableUpgrades().size() == 0) {
-            showNoUpgradeToast();
+            showToast(R.string.no_upgrades_available);
             return;
         }
 
@@ -280,12 +274,12 @@ public class GUIManager {
         relocateDollarImage(true);
     }
 
-    public void showNoUpgradeToast() {
-        if (noAvailableUpgradesToast != null) {
-            noAvailableUpgradesToast.cancel();
+    public static void showToast(int stringResource) {
+        if (toast != null) {
+            toast.cancel();
         }
-        noAvailableUpgradesToast = Toast.makeText(context, R.string.no_upgrades_available, Toast.LENGTH_SHORT);
-        noAvailableUpgradesToast.show();
+        toast = Toast.makeText(App.getContext(), stringResource, Toast.LENGTH_SHORT);
+        toast.show();
     }
 
     public void initializeActionBar(ActionBar actionbar) {

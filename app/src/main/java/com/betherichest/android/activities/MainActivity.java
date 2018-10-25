@@ -16,7 +16,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 import com.betherichest.android.App;
 import com.betherichest.android.R;
@@ -186,10 +185,6 @@ public class MainActivity extends AppCompatActivity {
         guiManager.relocateDollarImage(false);
     }
 
-    public void onVideoWatchPressed(Intent intent) {
-        startActivityForResult(intent, 1);
-    }
-
     private void initNavigatonViewListener() {
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(
@@ -203,21 +198,18 @@ public class MainActivity extends AppCompatActivity {
                                 intent = new Intent(context, StatisticsActivity.class);
                                 StatisticsManager.getInstance().initailizeBasicStats();
                                 context.startActivity(intent);
-//                                activityOpened = true;
                                 GUIManager.setActivityOpened(true);
                                 break;
                             case R.id.nav_boosters:
                                 mDrawerLayout.closeDrawers();
                                 intent = new Intent(context, BoostersActivity.class);
                                 context.startActivity(intent);
-//                                activityOpened = true;
                                 GUIManager.setActivityOpened(true);
                                 break;
                             case R.id.nav_achievements:
                                 mDrawerLayout.closeDrawers();
                                 intent = new Intent(context, AchievementsActivity.class);
                                 context.startActivity(intent);
-//                                activityOpened = true;
                                 GUIManager.setActivityOpened(true);
                                 break;
                             case R.id.nav_ads:
@@ -225,38 +217,33 @@ public class MainActivity extends AppCompatActivity {
                                     mDrawerLayout.closeDrawers();
                                     intent = new Intent(context, AdWatcherActivity.class);
                                     startActivityForResult(intent, 1);
-//                                    activityOpened = true;
                                     GUIManager.setActivityOpened(true);
                                 } else {
-                                    Toast.makeText(App.getContext(), "Please check your internet connection!", Toast.LENGTH_SHORT).show();
+                                    GUIManager.showToast(R.string.check_net_connection);
                                 }
                                 break;
                             case R.id.nav_settings:
                                 mDrawerLayout.closeDrawers();
                                 intent = new Intent(context, SettingsActivity.class);
                                 context.startActivity(intent);
-//                                activityOpened = true;
                                 GUIManager.setActivityOpened(true);
                                 break;
                             case R.id.nav_about:
                                 mDrawerLayout.closeDrawers();
                                 intent = new Intent(context, AboutActivity.class);
                                 context.startActivity(intent);
-//                                activityOpened = true;
                                 GUIManager.setActivityOpened(true);
                                 break;
                             case R.id.nav_profile:
                                 mDrawerLayout.closeDrawers();
                                 intent = new Intent(context, LoginActivity.class);
                                 context.startActivity(intent);
-//                                activityOpened = true;
                                 GUIManager.setActivityOpened(true);
                                 break;
                             case R.id.nav_help:
                                 mDrawerLayout.closeDrawers();
                                 intent = new Intent(context, SettingsActivity.class);
                                 context.startActivity(intent);
-//                                activityOpened = true;
                                 GUIManager.setActivityOpened(true);
                                 break;
                         }

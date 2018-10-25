@@ -17,7 +17,7 @@
     <string name="about">About</string>
     <string name="about_btr">About Be The Richest</string>
     <string name="ads">Watch ad for </string>
-    <string name="video_load">Loading video...</string>
+    <string name="video_load">Loading video …</string>
     <string name="boosters">Boosters</string>
     <string name="achievements">Achievements</string>
     <string name="total_clicks">Total Clicks</string>
@@ -38,4 +38,10 @@
     <string name="price">Price</string>
     <string name="locked">LOCKED</string>
     <string name="profile">My Profile</string>
+    <string name="purchase_cancelled">Purchase cancelled</string>
+    <string name="purchase_failed">Purchase failed</string>
+    <string name="purchase_successful">Purchase successful</string>
+    <string name="login_successful">Login successful</string>
+    <string name="check_net_connection">Please check your internet connection!</string>
+    <string name="signed_out">Signed out successfully</string>
 </resources>

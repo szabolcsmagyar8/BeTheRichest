@@ -12,12 +12,12 @@ import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.betherichest.android.R;
 import com.betherichest.android.gameElements.Gambling;
+import com.betherichest.android.mangers.GUIManager;
 import com.betherichest.android.mangers.Game;
 import com.betherichest.android.mangers.StatisticsManager;
-import com.betherichest.android.R;
 
 import java.text.NumberFormat;
 import java.util.List;
@@ -29,7 +29,6 @@ public class GamblingListFragment extends Fragment {
     private TextView wonMoneyText;
     private ImageView rotatingImage;
     private ImageView closeImageView;
-    private Toast noMoneyToast = null;
     private GamblingAdapter adapter;
     private ListView listView;
     private Game game = Game.getInstance();
@@ -84,16 +83,7 @@ public class GamblingListFragment extends Fragment {
                         setAnimationListeners(position);
 
                     } else {
-                        if (noMoneyToast != null) {
-                            noMoneyToast.cancel();
-                        }
-                        noMoneyToast =
-                                Toast.makeText(
-                                        getContext(),
-                                        R.string.not_enough_money,
-                                        Toast.LENGTH_SHORT
-                                );
-                        noMoneyToast.show();
+                        GUIManager.showToast(R.string.not_enough_money);
                     }
                 } else {
                     return;

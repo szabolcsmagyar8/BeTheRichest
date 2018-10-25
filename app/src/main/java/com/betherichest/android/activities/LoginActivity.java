@@ -14,7 +14,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.betherichest.android.App;
 import com.betherichest.android.R;
@@ -37,7 +36,6 @@ public class LoginActivity extends AppCompatActivity {
     Button signOutButton;
     RelativeLayout accountDetailLayout;
     RelativeLayout signInDetailLayout;
-    Toast toast;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -111,16 +109,8 @@ public class LoginActivity extends AppCompatActivity {
         if (requestCode == RC_SIGN_IN && resultCode == -1) {
             GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
             updateUI(account);
-            showToast("Login Successful!", Toast.LENGTH_SHORT);
+            GUIManager.showToast(R.string.login_successful);
         }
-    }
-
-    private void showToast(String text, int toastLength) {
-        if (toast != null) {
-            toast.cancel();
-        }
-        toast = Toast.makeText(App.getContext(), text, toastLength);
-        toast.show();
     }
 
     private void signInClick() {
@@ -129,7 +119,7 @@ public class LoginActivity extends AppCompatActivity {
             startActivityForResult(signInIntent, RC_SIGN_IN);
         }
         else{
-            showToast("Please check your internet connection!", Toast.LENGTH_SHORT);
+            GUIManager.showToast(R.string.check_net_connection);
         }
     }
 
@@ -138,7 +128,7 @@ public class LoginActivity extends AppCompatActivity {
                 .addOnCompleteListener(this, new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
-                        showToast("Signed out successfully!", Toast.LENGTH_SHORT);
+                        GUIManager.showToast(R.string.signed_out);
                         updateUI(null);
                     }
                 });

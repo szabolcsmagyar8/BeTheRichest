@@ -9,19 +9,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
 
+import com.betherichest.android.R;
 import com.betherichest.android.gameElements.Investment;
 import com.betherichest.android.listenerInterfaces.AdapterRefreshListener;
+import com.betherichest.android.mangers.GUIManager;
 import com.betherichest.android.mangers.Game;
-import com.betherichest.android.R;
 
 import java.util.List;
 
 public class InvestmentListFragment extends Fragment {
     View rootView;
     ListView listView;
-    Toast noMoneyToast = null;
     Parcelable state;
 
     Game game;
@@ -66,16 +65,7 @@ public class InvestmentListFragment extends Fragment {
                 } else if (selectedInvestment.isLocked()) {
                     return;
                 } else {
-                    if (noMoneyToast != null) {
-                        noMoneyToast.cancel();
-                    }
-                    noMoneyToast =
-                            Toast.makeText(
-                                    getContext(),
-                                    R.string.not_enough_money,
-                                    Toast.LENGTH_SHORT
-                            );
-                    noMoneyToast.show();
+                    GUIManager.showToast(R.string.not_enough_money);
                 }
             }
         });

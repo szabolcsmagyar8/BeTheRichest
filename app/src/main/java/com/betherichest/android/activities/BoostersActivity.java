@@ -12,9 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
-import android.widget.Toast;
 
-import com.betherichest.android.App;
 import com.betherichest.android.R;
 import com.betherichest.android.database.DatabaseManager;
 import com.betherichest.android.fragments.BoostersAdapter;
@@ -127,7 +125,7 @@ public class BoostersActivity extends AppCompatActivity {
     IabHelper.OnIabPurchaseFinishedListener mPurchaseFinishedListener = new IabHelper.OnIabPurchaseFinishedListener() {
         public void onIabPurchaseFinished(IabResult result, Purchase purchase) {
             if (result.isFailure()) {
-                Toast.makeText(App.getContext(), "Purchase cancelled", Toast.LENGTH_SHORT).show();
+                GUIManager.showToast(R.string.purchase_cancelled);
             } else if (purchase.getSku().equals(selectedSKU)) {
                 try {
                     mHelper.consumeAsync(purchase, mConsumeFinishedListener);
@@ -164,9 +162,9 @@ public class BoostersActivity extends AppCompatActivity {
     IabHelper.OnConsumeFinishedListener mConsumeFinishedListener = new IabHelper.OnConsumeFinishedListener() {
         public void onConsumeFinished(Purchase purchase, IabResult result) {
             if (result.isSuccess()) {
-                Toast.makeText(App.getContext(), "Purchase successful!", Toast.LENGTH_SHORT).show();
+                GUIManager.showToast(R.string.purchase_successful);
             } else {
-                Toast.makeText(App.getContext(), "Purchase failed. Try again!", Toast.LENGTH_SHORT).show();
+                GUIManager.showToast(R.string.purchase_failed);
             }
         }
     };

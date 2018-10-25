@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.widget.Toast;
 
 import com.betherichest.android.R;
 import com.betherichest.android.database.DatabaseManager;
@@ -68,7 +67,7 @@ public class AdWatcherActivity extends AppCompatActivity implements RewardedVide
 
     @Override
     public void onRewardedVideoAdFailedToLoad(int errorCode) {
-        Toast.makeText(this, "Please check your internet connection!", Toast.LENGTH_SHORT).show();
+        GUIManager.showToast(R.string.check_net_connection);
     }
 
     @Override

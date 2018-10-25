@@ -8,25 +8,21 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
-import android.widget.Toast;
 
+import com.betherichest.android.R;
 import com.betherichest.android.gameElements.Upgrade;
 import com.betherichest.android.listenerInterfaces.AdapterRefreshListener;
+import com.betherichest.android.mangers.GUIManager;
 import com.betherichest.android.mangers.Game;
-import com.betherichest.android.R;
 
 import java.util.List;
 
-/**
- * Created by Szabi on 2018.03.27..
- */
 
 public class UpgradeListFragment extends Fragment {
     View rootView;
     Game game;
 
     List<Upgrade> items;
-    Toast noMoneyToast = null;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -73,16 +69,7 @@ public class UpgradeListFragment extends Fragment {
                     adapter.setItems(game.getDisplayableUpgrades());    //refreshing adapter when an upgrade is bought
                     adapter.notifyDataSetChanged();
                 } else {
-                    if (noMoneyToast != null) {
-                        noMoneyToast.cancel();
-                    }
-                    noMoneyToast =
-                            Toast.makeText(
-                                    getContext(),
-                                    R.string.not_enough_money,
-                                    Toast.LENGTH_SHORT
-                            );
-                    noMoneyToast.show();
+                    GUIManager.showToast(R.string.not_enough_money);
                 }
             }
         });
