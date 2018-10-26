@@ -44,4 +44,5 @@
     <string name="login_successful">Login successful</string>
     <string name="check_net_connection">Please check your internet connection!</string>
     <string name="signed_out">Signed out successfully</string>
+    <string name="remove_ads">Removing ads not implemented yet</string>
 </resources>

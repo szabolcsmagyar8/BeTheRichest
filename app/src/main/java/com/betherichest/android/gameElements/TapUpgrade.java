@@ -4,7 +4,7 @@ import com.betherichest.android.R;
 
 
 public class TapUpgrade extends Upgrade {
-    public TapUpgrade(double price, int multiplier, int color) {
+    public TapUpgrade(double price, double multiplier, int color) {
         super(price, multiplier, color);
         this.imageResource = R.drawable.click;
     }

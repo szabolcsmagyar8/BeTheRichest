@@ -205,7 +205,6 @@
             android:layout_alignParentBottom="true"
             android:layout_below="@+id/dollarImage" />
 
-
         <FrameLayout
             android:id="@+id/gambling_list_container"
             android:layout_width="match_parent"
@@ -213,41 +212,31 @@
             android:layout_alignParentBottom="true"
             android:layout_below="@+id/dollarImage" />
 
-        <com.google.android.gms.ads.AdView xmlns:ads="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/adView"
-            android:layout_width="match_parent"
+        <RelativeLayout
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            ads:adSize="SMART_BANNER"
-            ads:adUnitId="ca-app-pub-3940256099942544/6300978111" />
+            android:layout_alignParentBottom="true">
 
-        <!--<RelativeLayout-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_alignParentEnd="true"-->
-            <!--android:layout_alignParentRight="true"-->
-            <!--android:layout_alignParentBottom="true">-->
-            <!---->
-            <!--<TextView-->
-                <!--android:id="@+id/offline_banner"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="40dp"-->
-                <!--android:background="@color/darkGray"-->
-                <!--android:gravity="center"-->
-                <!--android:text="" />-->
+            <com.google.android.gms.ads.AdView xmlns:ads="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/adView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                ads:adSize="BANNER"
+                ads:adUnitId="ca-app-pub-3940256099942544/6300978111" />
 
-            <!--<TextView-->
-                <!--android:layout_width="30sp"-->
-                <!--android:layout_height="40dp"-->
-                <!--android:background="@color/darkerGray"-->
-                <!--android:layout_alignParentEnd="true"-->
-                <!--android:gravity="center"-->
-                <!--android:text="X"-->
-                <!--android:textSize="24sp"-->
-                <!--android:layout_alignParentRight="true" />-->
-        <!--</RelativeLayout>-->
-
+            <TextView
+                android:layout_width="40dp"
+                android:layout_height="50dp"
+                android:layout_alignEnd="@+id/adView"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignRight="@+id/adView"
+                android:background="@color/darkerGray"
+                android:gravity="center"
+                android:onClick="removeAds"
+                android:text="X"
+                android:textSize="24sp" />
+        </RelativeLayout>
     </RelativeLayout>
 
     <android.support.design.widget.NavigationView

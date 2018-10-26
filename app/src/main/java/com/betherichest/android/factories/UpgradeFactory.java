@@ -2,6 +2,8 @@ package com.betherichest.android.factories;
 
 import android.graphics.Color;
 
+import com.betherichest.android.gameElements.GlobalIncrementUpgrade;
+import com.betherichest.android.gameElements.GlobalIncrementUpgradeConfig;
 import com.betherichest.android.gameElements.Investment;
 import com.betherichest.android.gameElements.InvestmentUpgrade;
 import com.betherichest.android.gameElements.InvestmentUpgradeConfig;
@@ -34,6 +36,17 @@ public class UpgradeFactory {
             new TapUpgradeConfig(20000000, 8),
     };
 
+    private static GlobalIncrementUpgradeConfig[] globalIncrementConfigs = new GlobalIncrementUpgradeConfig[]{
+            new GlobalIncrementUpgradeConfig(100000, 0.1),
+            new GlobalIncrementUpgradeConfig(500000, 0.5),
+            new GlobalIncrementUpgradeConfig(3000000, 3),
+            new GlobalIncrementUpgradeConfig(15000000, 10),
+            new GlobalIncrementUpgradeConfig(80000000, 30),
+            new GlobalIncrementUpgradeConfig(500000000, 100),
+            new GlobalIncrementUpgradeConfig(3000000000d, 500),
+            new GlobalIncrementUpgradeConfig(25000000000d, 2500),
+    };
+
     private static int[] colors = new int[]{
             Color.parseColor("#ffffff"),   // Simple White
             Color.parseColor("#fff700"),   // Uncommon Yellow
@@ -59,6 +72,18 @@ public class UpgradeFactory {
         createInvestmentUpgrades(investments);
 
         createTapUpgrades();
+
+        createGlobalIncrements();
+    }
+
+    private static void createGlobalIncrements() {
+        for (int i = 0; i < globalIncrementConfigs.length; i++) {
+            Upgrade upgrade = new GlobalIncrementUpgrade(
+                    globalIncrementConfigs[i].getPrice(),
+                    globalIncrementConfigs[i].getMoneyPerTapMultiplier(),
+                    colors[i]);
+            addUpgrade(upgrade);
+        }
     }
 
     private static void createTapUpgrades() {

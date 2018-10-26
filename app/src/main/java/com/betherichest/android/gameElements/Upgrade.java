@@ -10,7 +10,7 @@ public class Upgrade extends GameElement {
     static int currentId = 0;
 
     @Ignore
-    private int multiplier;
+    private double multiplier;
 
     @Ignore
     private int color;
@@ -18,7 +18,7 @@ public class Upgrade extends GameElement {
     @ColumnInfo(name = "purchased")
     protected boolean purchased = false;
 
-    public Upgrade(double price, int multiplier, int color) {
+    public Upgrade(double price, double multiplier, int color) {
         this.id = currentId++;
         this.price = price;
         this.multiplier = multiplier;
@@ -33,7 +33,7 @@ public class Upgrade extends GameElement {
         return color;
     }
 
-    public int getMultiplier() {
+    public double getMultiplier() {
         return multiplier;
     }
 

@@ -14,8 +14,9 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.betherichest.android.gameElements.Upgrade;
 import com.betherichest.android.R;
+import com.betherichest.android.gameElements.GlobalIncrementUpgrade;
+import com.betherichest.android.gameElements.Upgrade;
 import com.bumptech.glide.Glide;
 
 import java.text.NumberFormat;
@@ -67,26 +68,6 @@ public class UpgradeAdapter extends BaseAdapter {
             listItemView = view;
         }
 
-        final View finalListItemView = listItemView;
-//        listItemView.setOnTouchListener(new View.OnTouchListener() {
-//            @Override
-//            public boolean onTouch(View view, MotionEvent motionEvent) {
-//                GradientDrawable shape = new GradientDrawable();
-//                shape.setCornerRadius(20);
-//                shape.setColor(App.getContext().getResources().getColor(R.color.upgradeHighlightColor));
-//                switch (motionEvent.getAction()) {
-//                    case MotionEvent.ACTION_DOWN:
-//                         finalListItemView.setBackground(shape);
-//                        break;
-//                    case MotionEvent.ACTION_UP:
-//                    case MotionEvent.ACTION_CANCEL:
-//                        finalListItemView.setBackgroundColor(Color.TRANSPARENT);
-//                        break;
-//                }
-//                return false;
-//            }
-//        });
-
         priceTextView = listItemView.findViewById(R.id.price);
         imageView = listItemView.findViewById(R.id.investmentIcon);
         effectTextView = listItemView.findViewById(R.id.multiplier);
@@ -124,17 +105,22 @@ public class UpgradeAdapter extends BaseAdapter {
     private void setLabelTexts() {
         priceTextView.setText(nf.format(upgrade.getPrice()));
 
-        effectTextView.setText("X" + String.valueOf(upgrade.getMultiplier()));
+        if (upgrade instanceof GlobalIncrementUpgrade){
+            effectTextView.setText("+" + String.valueOf(upgrade.getMultiplier()));
+        }
+        else{
+            effectTextView.setText("X" + String.valueOf((int)upgrade.getMultiplier()));
+        }
         effectTextView.setTextColor(upgrade.getColor());
 
         if (effectTextView.getText().length() > 3) {
-            effectTextView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 25);
+            effectTextView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 26);
         } else {
-            effectTextView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 28);
+            effectTextView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 30);
         }
     }
 
-    private void createColorfulBorder() {  // makes a dynamic border around the relative layout which contains the image and the effect text
+    private void createColorfulBorder() {       // makes a dynamic border around the relative layout which contains the image and the effect text
         GradientDrawable gd = new GradientDrawable();
 
         gd.setStroke((int) getPixelFromDP(3), upgrade.getColor());      // different borderSize in pixels for different density displays

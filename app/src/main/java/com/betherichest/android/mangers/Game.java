@@ -13,6 +13,7 @@ import com.betherichest.android.factories.UpgradeFactory;
 import com.betherichest.android.gameElements.Booster;
 import com.betherichest.android.gameElements.Gambling;
 import com.betherichest.android.gameElements.GameStatistics;
+import com.betherichest.android.gameElements.GlobalIncrementUpgrade;
 import com.betherichest.android.gameElements.Investment;
 import com.betherichest.android.gameElements.InvestmentUpgrade;
 import com.betherichest.android.gameElements.TapUpgrade;
@@ -43,7 +44,7 @@ public class Game {
 
     public static final Integer FPS = 24;
     public static final double SEC_TO_HOUR_MULTIPLIER = 3600;
-    private static final double AD_REWARD_MULTIPLIER = 100;
+    private static final double AD_REWARD_MULTIPLIER = 225;
 
     private NumberFormat nf = NumberFormat.getNumberInstance(Locale.FRANCE);
 
@@ -324,6 +325,10 @@ public class Game {
             recalculateMoneyPerTap();
         }
 
+        if (selectedUpgrade instanceof GlobalIncrementUpgrade) {
+            recalculateMoneyPerTap();
+        }
+
         statisticsManager.buyItem(selectedUpgrade.getPrice());
     }
 
@@ -352,6 +357,10 @@ public class Game {
         for (Upgrade upgrade : upgrades) {
             if (upgrade.isPurchased() && upgrade instanceof TapUpgrade) {
                 sum *= upgrade.getMultiplier();
+            }
+            if (upgrade.isPurchased() && upgrade instanceof GlobalIncrementUpgrade) {
+                double globalIncrementReward = getTotalInvestmentLevels()*upgrade.getMultiplier();
+                sum += globalIncrementReward;
             }
         }
 

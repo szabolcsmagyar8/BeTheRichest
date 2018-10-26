@@ -274,4 +274,8 @@ public class MainActivity extends AppCompatActivity {
                 })
                 .show();
     }
+
+    public void removeAds(View view) {
+        GUIManager.showToast(R.string.remove_ads);
+    }
 }

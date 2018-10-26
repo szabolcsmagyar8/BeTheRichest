@@ -1,6 +1,6 @@
 package com.betherichest.android.gameElements;
 
-public class TapUpgradeConfig {
+public class GlobalIncrementUpgradeConfig {
     private double price;
     private double moneyPerTapMultiplier;
 
@@ -12,7 +12,7 @@ public class TapUpgradeConfig {
         return moneyPerTapMultiplier;
     }
 
-    public TapUpgradeConfig(double price, double moneyPerTapMultiplier) {
+    public GlobalIncrementUpgradeConfig(double price, double moneyPerTapMultiplier) {
         this.price = price;
         this.moneyPerTapMultiplier = moneyPerTapMultiplier;
     }

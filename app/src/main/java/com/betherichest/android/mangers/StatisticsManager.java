@@ -3,9 +3,9 @@ package com.betherichest.android.mangers;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 
+import com.betherichest.android.StatType;
 import com.betherichest.android.factories.StatisticsFactory;
 import com.betherichest.android.gameElements.GameStatistics;
-import com.betherichest.android.StatType;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -30,8 +30,8 @@ public class StatisticsManager {
     }
 
     public void initailizeBasicStats() {
-        gameStatistics.get(StatType.TOTAL_INVESTMENT_LEVELS).setValue(Game.getInstance().getTotalInvestmentLevels());
-        gameStatistics.get(StatType.UPGRADES_BOUGHT).setValue(Game.getInstance().getPurchasedUpgrades().size());
+        getStatByType(StatType.TOTAL_INVESTMENT_LEVELS).setValue(Game.getInstance().getTotalInvestmentLevels());
+        getStatByType(StatType.UPGRADES_BOUGHT).setValue(Game.getInstance().getPurchasedUpgrades().size());
     }
 
     public List<GameStatistics> getGameStatistics() {
@@ -46,44 +46,48 @@ public class StatisticsManager {
         return statList;
     }
 
+    public GameStatistics getStatByType(StatType type) {
+        return gameStatistics.get(type);
+    }
+
     public void dollarClick(double moneyPerTap) {
-        gameStatistics.get(StatType.TOTAL_CLICKS).increaseValueByOne();
-        gameStatistics.get(StatType.TOTAL_MONEY_FROM_CLICKS).increaseValueByAmount(moneyPerTap);
+        getStatByType(StatType.TOTAL_CLICKS).increaseValueByOne();
+        getStatByType(StatType.TOTAL_MONEY_FROM_CLICKS).increaseValueByAmount(moneyPerTap);
     }
 
     public void earnMoney(double moneyPerSec) {
-        gameStatistics.get(StatType.TOTAL_MONEY_COLLECTED).increaseValueByAmount(moneyPerSec);
+        getStatByType(StatType.TOTAL_MONEY_COLLECTED).increaseValueByAmount(moneyPerSec);
     }
 
     public void buyItem(double price) {
-        gameStatistics.get(StatType.MONEY_SPENT).increaseValueByAmount(price);
+        getStatByType(StatType.MONEY_SPENT).increaseValueByAmount(price);
     }
 
     public void addSecond() {
-        gameStatistics.get(StatType.TOTAL_PLAYING_TIME).increaseValueByOne();
+        getStatByType(StatType.TOTAL_PLAYING_TIME).increaseValueByOne();
     }
 
     public void gamble(double price) {
-        gameStatistics.get(StatType.TOTAL_GAMBLING).increaseValueByOne();
-        gameStatistics.get(StatType.MONEY_SPENT_ON_GAMBLING).increaseValueByAmount(price);
+        getStatByType(StatType.TOTAL_GAMBLING).increaseValueByOne();
+        getStatByType(StatType.MONEY_SPENT_ON_GAMBLING).increaseValueByAmount(price);
     }
 
     public void gamblingWin(int wonMoney) {
-        gameStatistics.get(StatType.GAMBLING_WINS).increaseValueByOne();
-        gameStatistics.get(StatType.MONEY_FROM_GAMBLING).increaseValueByAmount(wonMoney);
-        gameStatistics.get(StatType.GAMBLING_BALANCE).setValue(gameStatistics.get(StatType.MONEY_FROM_GAMBLING).getValue() - gameStatistics.get(StatType.MONEY_SPENT_ON_GAMBLING).getValue());
+       getStatByType(StatType.GAMBLING_WINS).increaseValueByOne();
+       getStatByType(StatType.MONEY_FROM_GAMBLING).increaseValueByAmount(wonMoney);
+       getStatByType(StatType.GAMBLING_BALANCE).setValue(gameStatistics.get(StatType.MONEY_FROM_GAMBLING).getValue() - gameStatistics.get(StatType.MONEY_SPENT_ON_GAMBLING).getValue());
     }
 
     public void gamblingLose() {
-        gameStatistics.get(StatType.GAMBLING_LOSES).increaseValueByOne();
-        gameStatistics.get(StatType.GAMBLING_BALANCE).setValue(gameStatistics.get(StatType.MONEY_FROM_GAMBLING).getValue() - gameStatistics.get(StatType.MONEY_SPENT_ON_GAMBLING).getValue());
+        getStatByType(StatType.GAMBLING_LOSES).increaseValueByOne();
+        getStatByType(StatType.GAMBLING_BALANCE).setValue(gameStatistics.get(StatType.MONEY_FROM_GAMBLING).getValue() - gameStatistics.get(StatType.MONEY_SPENT_ON_GAMBLING).getValue());
     }
 
     public void firstDollarClick() {
-        gameStatistics.get(StatType.FIRST_DOLLAR).setValue((new Date().getTime()));
+        getStatByType(StatType.FIRST_DOLLAR).setValue((new Date().getTime()));
     }
 
     public void setMaxCurrentMoney(double maxCurrentMoney) {
-        gameStatistics.get(StatType.HIGHEST_MONEY).setValue(maxCurrentMoney);
+        getStatByType(StatType.HIGHEST_MONEY).setValue(maxCurrentMoney);
     }
 }
