@@ -2,7 +2,14 @@ package com.betherichest.android.gameElements;
 
 public class TapUpgradeConfig {
     private double price;
+    private double clickRequired;
     private double moneyPerTapMultiplier;
+
+    public TapUpgradeConfig(double price, double moneyPerTapMultiplier, double clickRequired) {
+        this.price = price;
+        this.moneyPerTapMultiplier = moneyPerTapMultiplier;
+        this.clickRequired = clickRequired;
+    }
 
     public double getPrice() {
         return price;
@@ -12,8 +19,7 @@ public class TapUpgradeConfig {
         return moneyPerTapMultiplier;
     }
 
-    public TapUpgradeConfig(double price, double moneyPerTapMultiplier) {
-        this.price = price;
-        this.moneyPerTapMultiplier = moneyPerTapMultiplier;
+    public double getClickRequired() {
+        return clickRequired;
     }
 }

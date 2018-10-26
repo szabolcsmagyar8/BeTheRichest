@@ -117,7 +117,8 @@ public class Game {
     }
 
     public String getMoneyPerTapAsString() {
-        return String.format("%s $ per tap", nf.format((int) moneyPerTap));
+        nf.setMaximumFractionDigits(1);
+        return String.format("%s $ per tap", nf.format(moneyPerTap));
     }
 
     public double getMoneyPerSec() {
@@ -160,6 +161,7 @@ public class Game {
         for (Upgrade upgrade : getUpgrades()) {
             if (upgrade.isDisplayable()) {
                 displayableUpgrades.add(upgrade);
+
             }
         }
         return displayableUpgrades;
@@ -186,8 +188,8 @@ public class Game {
     }
 
     public Booster getBoosterBySkuId(String selectedSKU) {
-        for (Booster booster : boosters){
-            if (booster.getSkuId() == selectedSKU){
+        for (Booster booster : boosters) {
+            if (booster.getSkuId() == selectedSKU) {
                 return booster;
             }
         }
@@ -311,6 +313,7 @@ public class Game {
         statisticsManager.buyItem(selectedInvestment.getPrice());
         selectedInvestment.increaseLevel();
         recalculateMoneyPerSecond();
+        recalculateMoneyPerTap();
     }
 
     public void buyUpgrade(Upgrade selectedUpgrade) {
@@ -354,13 +357,13 @@ public class Game {
     private void recalculateMoneyPerTap() {
         double sum = START_MONEY_PER_TAP;
 
-        for (Upgrade upgrade : upgrades) {
+        for (Upgrade upgrade : getPurchasedUpgrades()) {
+            if (upgrade.isPurchased() && upgrade instanceof GlobalIncrementUpgrade) {
+                double globalIncrementReward = getTotalInvestmentLevels() * upgrade.getMultiplier();
+                sum += globalIncrementReward;
+            }
             if (upgrade.isPurchased() && upgrade instanceof TapUpgrade) {
                 sum *= upgrade.getMultiplier();
-            }
-            if (upgrade.isPurchased() && upgrade instanceof GlobalIncrementUpgrade) {
-                double globalIncrementReward = getTotalInvestmentLevels()*upgrade.getMultiplier();
-                sum += globalIncrementReward;
             }
         }
 

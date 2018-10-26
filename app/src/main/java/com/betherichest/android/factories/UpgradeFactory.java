@@ -26,14 +26,14 @@ public class UpgradeFactory {
             new InvestmentUpgradeConfig(500000, 100)};      // 8
 
     private static TapUpgradeConfig[] tapUpgradeConfigs = new TapUpgradeConfig[]{
-            new TapUpgradeConfig(1000, 2),
-            new TapUpgradeConfig(5000, 2),
-            new TapUpgradeConfig(20000, 3),
-            new TapUpgradeConfig(50000, 3),
-            new TapUpgradeConfig(200000, 5),
-            new TapUpgradeConfig(1000000, 5),
-            new TapUpgradeConfig(5000000, 5),
-            new TapUpgradeConfig(20000000, 8),
+            new TapUpgradeConfig(1000, 2, 100),
+            new TapUpgradeConfig(5000, 2, 1000),
+            new TapUpgradeConfig(20000, 3, 2500),
+            new TapUpgradeConfig(50000, 3, 5000),
+            new TapUpgradeConfig(200000, 5, 8000),
+            new TapUpgradeConfig(1000000, 5, 12000),
+            new TapUpgradeConfig(5000000, 5, 20000),
+            new TapUpgradeConfig(20000000, 8, 30000),
     };
 
     private static GlobalIncrementUpgradeConfig[] globalIncrementConfigs = new GlobalIncrementUpgradeConfig[]{
@@ -91,6 +91,7 @@ public class UpgradeFactory {
             Upgrade upgrade = new TapUpgrade(
                     tapUpgradeConfigs[i].getPrice(),
                     tapUpgradeConfigs[i].getMoneyPerTapMultiplier(),
+                    tapUpgradeConfigs[i].getClickRequired(),
                     colors[i]);
             addUpgrade(upgrade);
         }

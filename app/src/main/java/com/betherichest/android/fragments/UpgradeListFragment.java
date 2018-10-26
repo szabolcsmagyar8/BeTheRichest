@@ -55,6 +55,7 @@ public class UpgradeListFragment extends Fragment {
         game.slowAdapterRefreshListener = new AdapterRefreshListener() {
             @Override
             public void refreshAdapter() {
+                adapter.setItems(game.getDisplayableUpgrades());
                 adapter.notifyDataSetChanged();
             }
         };
@@ -62,7 +63,6 @@ public class UpgradeListFragment extends Fragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
                 Upgrade selectedUpgrade = adapter.getItem(position);
                 if (selectedUpgrade.isBuyable()) {
                     game.buyUpgrade(selectedUpgrade);

@@ -1,16 +1,21 @@
 package com.betherichest.android.gameElements;
 
 import com.betherichest.android.R;
+import com.betherichest.android.StatType;
+import com.betherichest.android.mangers.StatisticsManager;
 
 
 public class TapUpgrade extends Upgrade {
-    public TapUpgrade(double price, double multiplier, int color) {
+    private double clickRequired;
+
+    public TapUpgrade(double price, double multiplier, double clickRequired, int color) {
         super(price, multiplier, color);
+        this.clickRequired = clickRequired;
         this.imageResource = R.drawable.click;
     }
 
     @Override
     public boolean isDisplayable() {
-        return !purchased;
+        return !purchased && clickRequired < StatisticsManager.getInstance().getStatByType(StatType.TOTAL_CLICKS).getValue();
     }
 }

@@ -5,6 +5,7 @@ import com.betherichest.android.StatType;
 import com.betherichest.android.mangers.StatisticsManager;
 
 public class GlobalIncrementUpgrade extends Upgrade {
+
     public GlobalIncrementUpgrade(double price, double multiplier, int color) {
         super(price, multiplier, color);
         this.imageResource = R.drawable.globalincrement;
@@ -14,5 +15,4 @@ public class GlobalIncrementUpgrade extends Upgrade {
     public boolean isDisplayable() {
         return !purchased && StatisticsManager.getInstance().getStatByType(StatType.TOTAL_MONEY_COLLECTED).getValue() > price;
     }
-
 }
