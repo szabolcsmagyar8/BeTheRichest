@@ -43,11 +43,10 @@ public class GameStatistics extends GameElement {
 
     public String getValueAsString() {
         Context c = App.getContext();
-        if (name == c.getString(R.string.total_playing_time)) {
+        if (name.equals(c.getResources().getString(R.string.total_playing_time))) {
             return getPlayingTimeString();
         }
-
-        if (name == c.getString(R.string.first_dollar)) {
+        if (name.equals(c.getString(R.string.first_dollar))) {
             long days = getDifferenceDays(new Date((long) value), new Date());
             return String.valueOf(days > 1 ? days + " days ago" : days + " day ago");
         }

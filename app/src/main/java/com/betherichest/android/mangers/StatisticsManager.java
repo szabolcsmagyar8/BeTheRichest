@@ -29,7 +29,7 @@ public class StatisticsManager {
         return instance;
     }
 
-    public void initailizeBasicStats() {
+    public void initializeBasicStats() {
         getStatByType(StatType.TOTAL_INVESTMENT_LEVELS).setValue(Game.getInstance().getTotalInvestmentLevels());
         getStatByType(StatType.UPGRADES_BOUGHT).setValue(Game.getInstance().getPurchasedUpgrades().size());
     }
@@ -75,12 +75,12 @@ public class StatisticsManager {
     public void gamblingWin(int wonMoney) {
        getStatByType(StatType.GAMBLING_WINS).increaseValueByOne();
        getStatByType(StatType.MONEY_FROM_GAMBLING).increaseValueByAmount(wonMoney);
-       getStatByType(StatType.GAMBLING_BALANCE).setValue(gameStatistics.get(StatType.MONEY_FROM_GAMBLING).getValue() - gameStatistics.get(StatType.MONEY_SPENT_ON_GAMBLING).getValue());
+       getStatByType(StatType.GAMBLING_BALANCE).setValue(gameStatistics.get(StatType.MONEY_FROM_GAMBLING).getValue() - getStatByType(StatType.MONEY_SPENT_ON_GAMBLING).getValue());
     }
 
     public void gamblingLose() {
         getStatByType(StatType.GAMBLING_LOSES).increaseValueByOne();
-        getStatByType(StatType.GAMBLING_BALANCE).setValue(gameStatistics.get(StatType.MONEY_FROM_GAMBLING).getValue() - gameStatistics.get(StatType.MONEY_SPENT_ON_GAMBLING).getValue());
+        getStatByType(StatType.GAMBLING_BALANCE).setValue(gameStatistics.get(StatType.MONEY_FROM_GAMBLING).getValue() - getStatByType(StatType.MONEY_SPENT_ON_GAMBLING).getValue());
     }
 
     public void firstDollarClick() {

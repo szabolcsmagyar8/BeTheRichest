@@ -196,7 +196,7 @@ public class MainActivity extends AppCompatActivity {
                             case R.id.nav_stats:
                                 mDrawerLayout.closeDrawers();
                                 intent = new Intent(context, StatisticsActivity.class);
-                                StatisticsManager.getInstance().initailizeBasicStats();
+                                StatisticsManager.getInstance().initializeBasicStats();
                                 context.startActivity(intent);
                                 GUIManager.setActivityOpened(true);
                                 break;

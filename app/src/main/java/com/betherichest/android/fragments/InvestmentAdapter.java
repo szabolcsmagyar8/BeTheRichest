@@ -29,8 +29,6 @@ public class InvestmentAdapter extends BaseAdapter {
     private TextView upsTextView;
     private ImageView investmentImageView;
     private ImageView dollarImageView;
-    private ImageView purchasedUpgradeImageView;
-    private RelativeLayout upgradeIconContainer;
     Investment investment;
 
     NumberFormat nf = NumberFormat.getNumberInstance(Locale.FRANCE);
@@ -81,48 +79,6 @@ public class InvestmentAdapter extends BaseAdapter {
         upsTextView = listItemView.findViewById(R.id.ups);
         investmentImageView = listItemView.findViewById(R.id.investmentIcon);
         dollarImageView = listItemView.findViewById(R.id.dollarIcon);
-        //purchasedUpgradeImageView = listItemView.findViewById(R.id.purchasedUpgrade);
-        upgradeIconContainer = listItemView.findViewById(R.id.upgradeIconContainer);
-    }
-
-    private void showPurchasedUpgrades(Investment investment) {
-//        List<Upgrade> relevantUpgrades = investment.getRelevantUpgrades();
-//        for (int i = 0; i < relevantUpgrades.size(); i++) {
-//            purchasedUpgradeImageView.setImageResource(investment.getImageResource());
-//            purchasedUpgradeImageView.setId(i);
-//
-//            RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) purchasedUpgradeImageView.getLayoutParams();
-//            if (i != 0) {
-//                lp.addRule(RelativeLayout.LEFT_OF, i - 1);
-//            }
-//            purchasedUpgradeImageView.setLayoutParams(lp);
-////            lp.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
-////            lp.setMarginEnd(10);
-//            //  lp.addRule(RelativeLayout.LEFT_OF, imageView.getId());
-//            //imageView.setLayoutParams(lp);
-//            //upgradeIconContainer.addView(imageView);
-//            //  }
-//            upgradeIconContainer.addView(purchasedUpgradeImageView);
-
-        //  }
-
-//        ImageView image;
-//        List<Upgrade> relevantUpgrades = investment.getRelevantUpgrades();
-//        for (int i = 0; i < relevantUpgrades.size(); i++) {
-//            RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
-//                    RelativeLayout.LayoutParams.WRAP_CONTENT,
-//                    RelativeLayout.LayoutParams.WRAP_CONTENT);
-//            params.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
-//            image = new ImageView(listItemView.getContext());
-//            image.setLayoutParams(params);
-//
-//            params.height = convertPxToDp(20);
-//            params.width = convertPxToDp(20);
-//            params.rightMargin = convertPxToDp(5);
-//
-//            image.setImageResource(relevantUpgrades.get(i).getImageResource());
-//            upgradeIconContainer.addView(image);
-//        }
     }
 
     private void setUIElementValues(Investment investment) {
@@ -159,7 +115,7 @@ public class InvestmentAdapter extends BaseAdapter {
 
     private void setTextColorByAvailability(Investment investment) {
         if (investment.isLocked()) {
-            nameTextView.setTextColor(App.getContext().getResources().getColor(R.color.darkGray));//App.getContext().getResources().getColor(R.color.black));
+            nameTextView.setTextColor(App.getContext().getResources().getColor(R.color.darkerGray));//App.getContext().getResources().getColor(R.color.black));
         } else if (investment.isBuyable()) {
             nameTextView.setTextColor(Color.parseColor("#0c6f04"));
         } else {
