@@ -82,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
         mAdView = findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
-        mAdView.setAdListener(new AdListener(){
+        mAdView.setAdListener(new AdListener() {
             @Override
             public void onAdLoaded() {
                 // Code to be executed when an ad finishes loading.
@@ -191,31 +191,22 @@ public class MainActivity extends AppCompatActivity {
                 new NavigationView.OnNavigationItemSelectedListener() {
                     @Override
                     public boolean onNavigationItemSelected(MenuItem menuItem) {
-                        Intent intent;
                         switch (menuItem.getItemId()) {
                             case R.id.nav_stats:
-                                mDrawerLayout.closeDrawers();
-                                intent = new Intent(context, StatisticsActivity.class);
                                 StatisticsManager.getInstance().initializeBasicStats();
-                                context.startActivity(intent);
-                                GUIManager.setActivityOpened(true);
+                                openActivity(new Intent(context, StatisticsActivity.class));
                                 break;
                             case R.id.nav_boosters:
-                                mDrawerLayout.closeDrawers();
-                                intent = new Intent(context, BoostersActivity.class);
-                                context.startActivity(intent);
-                                GUIManager.setActivityOpened(true);
+                                openActivity(new Intent(context, BoostersActivity.class));
                                 break;
                             case R.id.nav_achievements:
-                                mDrawerLayout.closeDrawers();
-                                intent = new Intent(context, AchievementsActivity.class);
-                                context.startActivity(intent);
-                                GUIManager.setActivityOpened(true);
+                                openActivity(new Intent(context, AchievementsActivity.class));
                                 break;
                             case R.id.nav_ads:
                                 if (App.isOnline()) {
                                     mDrawerLayout.closeDrawers();
-                                    intent = new Intent(context, AdWatcherActivity.class);
+                                    Intent intent = new Intent(context, AdWatcherActivity.class);
+//                                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                                     startActivityForResult(intent, 1);
                                     GUIManager.setActivityOpened(true);
                                 } else {
@@ -223,33 +214,28 @@ public class MainActivity extends AppCompatActivity {
                                 }
                                 break;
                             case R.id.nav_settings:
-                                mDrawerLayout.closeDrawers();
-                                intent = new Intent(context, SettingsActivity.class);
-                                context.startActivity(intent);
-                                GUIManager.setActivityOpened(true);
+                                openActivity(new Intent(context, SettingsActivity.class));
                                 break;
                             case R.id.nav_about:
-                                mDrawerLayout.closeDrawers();
-                                intent = new Intent(context, AboutActivity.class);
-                                context.startActivity(intent);
-                                GUIManager.setActivityOpened(true);
+                                openActivity(new Intent(context, AboutActivity.class));
                                 break;
                             case R.id.nav_profile:
-                                mDrawerLayout.closeDrawers();
-                                intent = new Intent(context, LoginActivity.class);
-                                context.startActivity(intent);
-                                GUIManager.setActivityOpened(true);
+                                openActivity(new Intent(context, LoginActivity.class));
                                 break;
                             case R.id.nav_help:
-                                mDrawerLayout.closeDrawers();
-                                intent = new Intent(context, SettingsActivity.class);
-                                context.startActivity(intent);
-                                GUIManager.setActivityOpened(true);
+                                openActivity(new Intent(context, SettingsActivity.class));
                                 break;
                         }
                         return false;
                     }
                 });
+    }
+
+    private void openActivity(Intent intent) {
+        mDrawerLayout.closeDrawers();
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(intent);
+        GUIManager.setActivityOpened(true);
     }
 
     @Override
@@ -263,7 +249,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void showRewardDialog(final double rewardMoney) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder
+                builder
                 .setTitle("Video reward")
                 .setMessage("You received " + String.valueOf(NumberFormat.getNumberInstance(Locale.FRANCE).format(rewardMoney)) + "$")
                 .setIcon(android.R.drawable.ic_dialog_info)

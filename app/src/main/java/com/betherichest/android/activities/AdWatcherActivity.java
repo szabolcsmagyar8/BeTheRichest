@@ -61,7 +61,7 @@ public class AdWatcherActivity extends AppCompatActivity implements RewardedVide
     @Override
     public void onRewardedVideoAdClosed() {
         Intent returnIntent = new Intent();
-        setResult(Activity.RESULT_OK,returnIntent);
+        setResult(Activity.RESULT_OK, returnIntent);
         finish();
     }
 

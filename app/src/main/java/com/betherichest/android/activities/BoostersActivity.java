@@ -180,7 +180,7 @@ public class BoostersActivity extends AppCompatActivity {
                 try {
                     Booster booster = adapter.getItem(i);
                     selectedSKU = booster.getSkuId();
-                    mHelper.launchPurchaseFlow(BoostersActivity.this, selectedSKU, 101, mPurchaseFinishedListener, "mypurchasetoken");
+                    mHelper.launchPurchaseFlow(BoostersActivity.this, selectedSKU,101, mPurchaseFinishedListener, "mypurchasetoken");
                 } catch (IabHelper.IabAsyncInProgressException e) {
                     e.printStackTrace();
                 }

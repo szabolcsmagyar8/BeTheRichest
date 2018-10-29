@@ -99,7 +99,7 @@ public class LoginActivity extends AppCompatActivity {
     private void setProfilePage(GoogleSignInAccount account) {
         userTextView.setText(account.getDisplayName());
         emailTextView.setText(account.getEmail());
-        nameCircleTextView.setText(account.getGivenName().substring(0, 2));
+        nameCircleTextView.setText(account.getDisplayName().substring(0, 2));
     }
 
     @Override

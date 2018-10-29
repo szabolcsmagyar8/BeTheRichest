@@ -188,13 +188,37 @@
                     android:text="@string/leaderboard"
                     android:textSize="15sp" />
             </RelativeLayout>
-
         </LinearLayout>
+
+        <RelativeLayout
+            android:id="@+id/adContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_alignEnd="@+id/adView"
+                android:layout_alignRight="@+id/adView"
+                android:background="@color/darkerGray"
+                android:gravity="center"
+                android:onClick="removeAds"
+                android:text="Ads by Google"
+                android:textSize="14sp" />
+
+            <com.google.android.gms.ads.AdView xmlns:ads="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/adView"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                ads:adSize="SMART_BANNER"
+                ads:adUnitId="ca-app-pub-3940256099942544/6300978111" />
+        </RelativeLayout>
 
         <FrameLayout
             android:id="@+id/investment_list_container"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_alignParentBottom="true"
             android:layout_below="@+id/dollarImage" />
 
@@ -212,41 +236,18 @@
             android:layout_alignParentBottom="true"
             android:layout_below="@+id/dollarImage" />
 
-        <RelativeLayout
-            android:id="@+id/adContainer"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_alignEnd="@+id/adView"
-                android:layout_alignRight="@+id/adView"
-                android:background="@color/darkGray"
-                android:gravity="center"
-                android:onClick="removeAds"
-                android:textSize="15sp" />
-
-            <com.google.android.gms.ads.AdView xmlns:ads="http://schemas.android.com/apk/res-auto"
-                android:id="@+id/adView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                ads:adSize="BANNER"
-                ads:adUnitId="ca-app-pub-3940256099942544/6300978111" />
-        </RelativeLayout>
 
         <!--<TextView-->
-            <!--android:layout_width="30dp"-->
-            <!--android:layout_height="50dp"-->
-            <!--android:layout_alignParentBottom="true"-->
-            <!--android:layout_alignParentEnd="true"-->
-            <!--android:layout_alignParentRight="true"-->
-            <!--android:background="@color/darkerGray"-->
-            <!--android:gravity="center"-->
-            <!--android:onClick="removeAds"-->
-            <!--android:text="X"-->
-            <!--android:textSize="24sp" />-->
+        <!--android:layout_width="30dp"-->
+        <!--android:layout_height="50dp"-->
+        <!--android:layout_alignParentBottom="true"-->
+        <!--android:layout_alignParentEnd="true"-->
+        <!--android:layout_alignParentRight="true"-->
+        <!--android:background="@color/darkerGray"-->
+        <!--android:gravity="center"-->
+        <!--android:onClick="removeAds"-->
+        <!--android:text="X"-->
+        <!--android:textSize="24sp" />-->
     </RelativeLayout>
 
     <android.support.design.widget.NavigationView

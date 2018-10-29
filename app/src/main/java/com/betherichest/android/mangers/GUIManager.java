@@ -37,7 +37,7 @@ import java.util.Random;
 public class GUIManager {
     private View view;
     private Game game;
-    private Context context;
+    private static Context context;
 
     private WindowManager windowManager;
     private FragmentManager fragmentManager;
@@ -65,7 +65,7 @@ public class GUIManager {
         this.windowManager = windowManager;
         this.actionBar = supportActionBar;
         this.fragmentManager = fragmentManager;
-        context = view.getContext();
+        context = App.getContext();
 
         game = Game.getInstance();
 

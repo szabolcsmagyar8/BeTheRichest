@@ -30,7 +30,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
+            android:layout_centerInParent="true"
             android:layout_marginTop="100dp"
+            android:paddingBottom="200dp"
             android:text="You are not logged in.\n\nSign in with your Google Account!"
             android:textAlignment="center"
             android:textColor="@color/white"
@@ -41,12 +43,10 @@
             android:id="@+id/sign_in_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="150dp"
+            android:layout_centerInParent="true"
             android:onClick="signInClick"
+            android:paddingTop="200dp"
             app:buttonSize="wide" />
-
     </RelativeLayout>
 
     <RelativeLayout
@@ -55,7 +55,7 @@
         android:layout_height="match_parent"
         android:layout_below="@id/content_frame"
         android:layout_centerHorizontal="true"
-        android:visibility="invisible">
+      >
 
         <RelativeLayout
             android:layout_width="120dp"
@@ -101,7 +101,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginBottom="200dp"
+            android:layout_marginBottom="160dp"
             android:drawableLeft="@drawable/ic_logout"
             android:text="Sign out" />
     </RelativeLayout>
