@@ -42,7 +42,10 @@
     <string name="purchase_failed">Purchase failed</string>
     <string name="purchase_successful">Purchase successful</string>
     <string name="login_successful">Login successful</string>
+    <string name="login_failed">Login Failed</string>
     <string name="check_net_connection">Please check your internet connection!</string>
     <string name="signed_out">Signed out successfully</string>
     <string name="remove_ads">Removing ads not implemented yet</string>
+    <string name="videos_wathced">Videos Watched</string>
+    <string name="money_from_videos">Money From Videos</string>
 </resources>

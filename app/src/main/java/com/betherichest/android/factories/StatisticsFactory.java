@@ -3,9 +3,9 @@ package com.betherichest.android.factories;
 import android.content.res.Resources;
 
 import com.betherichest.android.App;
-import com.betherichest.android.gameElements.GameStatistics;
 import com.betherichest.android.R;
 import com.betherichest.android.StatType;
+import com.betherichest.android.gameElements.GameStatistics;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -31,6 +31,8 @@ public class StatisticsFactory {
         gameStatistics.put(StatType.UPGRADES_BOUGHT, new GameStatistics(res.getString(R.string.upgrades_bought), 0, R.drawable.ic_upgrade));
         gameStatistics.put(StatType.FIRST_DOLLAR, new GameStatistics(res.getString(R.string.first_dollar), new Date().getTime(), R.drawable.ic_money));
         gameStatistics.put(StatType.HIGHEST_MONEY, new GameStatistics(res.getString(R.string.highest_money), 0, R.drawable.ic_money));
+        gameStatistics.put(StatType.VIDEOS_WATCHED, new GameStatistics(res.getString(R.string.videos_wathced), 0, R.drawable.ic_videos));
+        gameStatistics.put(StatType.MONEY_FROM_VIDEOS, new GameStatistics(res.getString(R.string.money_from_videos), 0, R.drawable.ic_money));
         return gameStatistics;
     }
 }

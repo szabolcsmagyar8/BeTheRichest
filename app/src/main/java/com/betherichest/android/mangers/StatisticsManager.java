@@ -90,4 +90,9 @@ public class StatisticsManager {
     public void setMaxCurrentMoney(double maxCurrentMoney) {
         getStatByType(StatType.HIGHEST_MONEY).setValue(maxCurrentMoney);
     }
+
+    public void videoWatched() {
+        getStatByType(StatType.VIDEOS_WATCHED).increaseValueByOne();
+        getStatByType(StatType.MONEY_FROM_VIDEOS).increaseValueByAmount(Game.getInstance().getAdReward());
+    }
 }

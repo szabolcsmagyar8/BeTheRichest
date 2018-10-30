@@ -11,6 +11,7 @@ import com.betherichest.android.R;
 import com.betherichest.android.database.DatabaseManager;
 import com.betherichest.android.mangers.GUIManager;
 import com.betherichest.android.mangers.Game;
+import com.betherichest.android.mangers.StatisticsManager;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.reward.RewardItem;
@@ -62,6 +63,7 @@ public class AdWatcherActivity extends AppCompatActivity implements RewardedVide
     public void onRewardedVideoAdClosed() {
         Intent returnIntent = new Intent();
         setResult(Activity.RESULT_OK, returnIntent);
+        StatisticsManager.getInstance().videoWatched();
         finish();
     }
 

@@ -19,11 +19,12 @@
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
     </FrameLayout>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:text="HELLO ACHIEVEMENTS!"
-        android:textSize="20sp"
-        android:textStyle="bold" />
+    <GridView
+        android:id="@+id/achievements_grid"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="3dp"
+        android:numColumns="2"
+        android:textAlignment="center" />
 </RelativeLayout>

@@ -44,7 +44,7 @@ public class Game {
 
     public static final Integer FPS = 24;
     public static final double SEC_TO_HOUR_MULTIPLIER = 3600;
-    private static final double AD_REWARD_MULTIPLIER = 225;
+    private static final double AD_REWARD_MULTIPLIER = 220;
 
     private NumberFormat nf = NumberFormat.getNumberInstance(Locale.FRANCE);
 
