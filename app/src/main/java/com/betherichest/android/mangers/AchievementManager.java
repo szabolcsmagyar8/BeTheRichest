@@ -20,7 +20,7 @@ public class AchievementManager implements Observer {
     public void update(Observable observable, Object value) {
         for (Achievement achievement : achievements){
             if (!achievement.isUnlocked() && achievement instanceof TapAchievement){
-                if ((double)value > ((TapAchievement)achievement).getRequiredClick()){
+                if ((double)value >= ((TapAchievement)achievement).getRequiredClick()){
                     unlockAchievement(achievement);
                 }
             }
@@ -29,6 +29,6 @@ public class AchievementManager implements Observer {
 
     private void unlockAchievement(Achievement achievement) {
         achievement.unLock();
-        GUIManager.getInstance().displayAchievementNotification();
+        GUIManager.getInstance().displayAchievementNotification(achievement);
     }
 }

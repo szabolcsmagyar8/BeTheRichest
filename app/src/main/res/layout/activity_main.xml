@@ -236,13 +236,11 @@
             android:layout_alignParentBottom="true"
             android:layout_below="@+id/dollarImage" />
 
-        <!--<FrameLayout-->
-            <!--android:id="@+id/achievement_notification"-->
-            <!--android:layout_width="300dp"-->
-            <!--android:layout_height="60dp"-->
-            <!--android:layout_alignParentTop="true"-->
-            <!--android:layout_centerHorizontal="true"-->
-            <!--android:background="@color/orange" />-->
+        <FrameLayout
+            android:id="@+id/achievement_notification"
+            android:layout_width="350dp"
+            android:layout_height="65dp"
+            android:layout_centerHorizontal="true" />
     </RelativeLayout>
 
     <android.support.design.widget.NavigationView

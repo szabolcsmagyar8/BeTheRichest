@@ -120,15 +120,18 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void investmentsIconClick(View view) {
-        guiManager.openFragment(R.id.investment_list_container, new InvestmentListFragment());
+        guiManager.openFragment(R.id.investment_list_container, new InvestmentListFragment(), null);
+        guiManager.relocateDollarImage(true);
     }
 
     public void upgradesIconClick(View view) {
-        guiManager.openFragment(R.id.upgrade_list_container, new UpgradeListFragment());
+        guiManager.openFragment(R.id.upgrade_list_container, new UpgradeListFragment(), null);
+        guiManager.relocateDollarImage(true);
     }
 
     public void gamblingIconClick(View view) {
-        guiManager.openFragment(R.id.gambling_list_container, new GamblingListFragment());
+        guiManager.openFragment(R.id.gambling_list_container, new GamblingListFragment(), null);
+        guiManager.relocateDollarImage(true);
     }
 
     public void leaderboardIconClick(View view) {

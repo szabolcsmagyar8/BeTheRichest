@@ -5,6 +5,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.drawable.GradientDrawable;
+import android.os.Bundle;
 import android.os.SystemClock;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -27,8 +28,9 @@ import android.widget.Toast;
 
 import com.betherichest.android.App;
 import com.betherichest.android.R;
-import com.betherichest.android.fragments.GamblingListFragment;
+import com.betherichest.android.fragments.AchievementNotificationFragment;
 import com.betherichest.android.fragments.UpgradeListFragment;
+import com.betherichest.android.gameElements.Achievement;
 import com.betherichest.android.listenerInterfaces.MoneyChangedListener;
 
 import java.text.NumberFormat;
@@ -261,25 +263,30 @@ public class GUIManager {
         return marginLeft;
     }
 
-    public void openFragment(int containerId, Fragment newFragment) {
+    public void openFragment(int containerId, Fragment fragment, Bundle bundle) {
         if (SystemClock.elapsedRealtime() - mLastClickTime < 500) {
             return;
         }
 
-        if (newFragment instanceof UpgradeListFragment && game.getDisplayableUpgrades().size() == 0) {
+        if (fragment instanceof UpgradeListFragment && game.getDisplayableUpgrades().size() == 0) {
             showToast(R.string.no_upgrades_available);
             return;
         }
+
+        fragment.setArguments(bundle);
 
         mLastClickTime = SystemClock.elapsedRealtime();
         FragmentTransaction ft = fragmentManager.beginTransaction();
         ft.addToBackStack(null);
 
-        ft.setCustomAnimations(R.anim.slide_in, R.anim.slide_out, R.anim.slide_in, R.anim.slide_out);
-        ft.replace(containerId, newFragment);
+        if (fragment instanceof AchievementNotificationFragment){
+            ft.setCustomAnimations(R.anim.slide_in_from_top, R.anim.slide_out_to_top, R.anim.slide_in_from_top, R.anim.slide_out_to_top);
+        }
+        else {
+            ft.setCustomAnimations(R.anim.slide_in_from_bottom, R.anim.slide_out_to_bottom, R.anim.slide_in_from_bottom, R.anim.slide_out_to_bottom);
+        }
+        ft.replace(containerId, fragment);
         ft.commit();
-
-        relocateDollarImage(true);
     }
 
     public static void showToast(int stringResource) {
@@ -329,8 +336,16 @@ public class GUIManager {
         navAds.setTitle(App.getContext().getResources().getString(R.string.ads) + " " + rewardString + " $");
     }
 
-    public void displayAchievementNotification() {
-        openFragment(R.id.gambling_list_container, new GamblingListFragment());
+    public void displayAchievementNotification(Achievement achievement) {
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("achievement", achievement);
+
+        openFragment(R.id.achievement_notification, new AchievementNotificationFragment(), bundle);
+        view.postDelayed(new Runnable() {
+            public void run() {
+                fragmentManager.popBackStack();
+            }
+        }, 4000);
     }
 
 }

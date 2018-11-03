@@ -163,7 +163,7 @@
     {
       "name": "High-Speed Rail Network",
       "basePrice": 33770000000,
-      "baseDpS": 550000,
+      "baseDpS": 500000,
       "description": "Extremely fast way to travel in he country.",
       "imageResourceString": "railwaysystem",
       "upgradeEffectMultipliers": [3]
@@ -171,7 +171,7 @@
     {
       "name": "Space Station",
       "basePrice": 150000000000,
-      "baseDpS": 2500000,
+      "baseDpS": 2000000,
       "description": "Provide the power for a whole city.",
       "imageResourceString": "spacestation",
       "upgradeEffectMultipliers": [2]
@@ -179,7 +179,7 @@
     {
       "name": "Mars Station",
       "basePrice": 500000000000,
-      "baseDpS": 7500000,
+      "baseDpS": 5000000,
       "description": "Search for aliens on Mars!",
       "imageResourceString": "marsstation",
       "upgradeEffectMultipliers": [2]

@@ -11,8 +11,11 @@ public class AchievementFactory {
     private static List<Achievement> achievements = new ArrayList<>();
 
     private static TapAchievement[] tapAchievements = new TapAchievement[]{
-            new TapAchievement("Rookie Tapper 1", 50, null),
-            new TapAchievement("Rookie Tapper 2", 500, null),
+            new TapAchievement("Rookie Tapper 10", 10, null),
+            new TapAchievement("Rookie Tapper 50", 50, null),
+            new TapAchievement("Rookie Tapper 100", 100, null),
+            new TapAchievement("Rookie Tapper 200", 200, null),
+            new TapAchievement("Rookie Tapper 500", 500, null),
             new TapAchievement("Rookie Tapper", 1000, null),
             new TapAchievement("Good Tapper", 5000, null),
             new TapAchievement("Serious Tapper", 10000, null),

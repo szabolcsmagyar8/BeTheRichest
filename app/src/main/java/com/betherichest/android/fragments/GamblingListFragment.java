@@ -37,6 +37,8 @@ public class GamblingListFragment extends Fragment {
 
     private Animation growAndRotate, grow, fade;
 
+
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

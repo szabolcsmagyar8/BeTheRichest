@@ -1,8 +1,9 @@
 package com.betherichest.android.gameElements;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Achievement extends GameElement {
+public class Achievement extends GameElement implements Serializable {
     protected Date dateOfAcquiring;
     protected Object reward;
     protected boolean unlocked = false;
