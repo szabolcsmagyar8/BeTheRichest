@@ -15,7 +15,7 @@ import android.widget.GridView;
 
 import com.betherichest.android.R;
 import com.betherichest.android.database.DatabaseManager;
-import com.betherichest.android.fragments.BoostersAdapter;
+import com.betherichest.android.fragments.BoosterAdapter;
 import com.betherichest.android.gameElements.Booster;
 import com.betherichest.android.mangers.GUIManager;
 import com.betherichest.android.mangers.Game;
@@ -33,7 +33,7 @@ public class BoostersActivity extends AppCompatActivity {
     private IabHelper mHelper;
     private static final String TAG = "com.betherichest.android.inappbilling";
     private String selectedSKU = "";
-    private BoostersAdapter adapter;
+    private BoosterAdapter adapter;
     List<Booster> boosters = new ArrayList<>();
     private Game game = Game.getInstance();
 
@@ -170,7 +170,7 @@ public class BoostersActivity extends AppCompatActivity {
     };
 
     private void setAdapter(Inventory inventory) {
-        adapter = new BoostersAdapter(boosters, inventory);
+        adapter = new BoosterAdapter(boosters, inventory);
         GridView listView = findViewById(R.id.timeWarpGridview);
         listView.setAdapter(adapter);
 

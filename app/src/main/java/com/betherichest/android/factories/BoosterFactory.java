@@ -1,8 +1,8 @@
 package com.betherichest.android.factories;
 
+import com.betherichest.android.R;
 import com.betherichest.android.gameElements.Booster;
 import com.betherichest.android.mangers.JsonManager;
-import com.betherichest.android.R;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
-public class BoostersFactory {
+public class BoosterFactory {
     static final String jsonRoot = "boosters";
 
     public static List<Booster> getCreatedBoosters() {

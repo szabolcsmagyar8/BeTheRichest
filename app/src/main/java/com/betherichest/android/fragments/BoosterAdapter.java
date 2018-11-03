@@ -15,7 +15,7 @@ import java.text.NumberFormat;
 import java.util.List;
 import java.util.Locale;
 
-public class BoostersAdapter extends BaseAdapter {
+public class BoosterAdapter extends BaseAdapter {
     private View listItemView;
     private TextView nameTextView;
     private TextView rewardTextView;
@@ -24,7 +24,7 @@ public class BoostersAdapter extends BaseAdapter {
     private List<Booster> items;
     Inventory inventory;
 
-    public BoostersAdapter(List<Booster> items, Inventory inv) {
+    public BoosterAdapter(List<Booster> items, Inventory inv) {
         this.items = items;
         this.inventory = inv;
     }

@@ -6,10 +6,12 @@ import android.os.Looper;
 import android.support.annotation.RequiresApi;
 
 import com.betherichest.android.GameState;
-import com.betherichest.android.factories.BoostersFactory;
+import com.betherichest.android.factories.AchievementFactory;
+import com.betherichest.android.factories.BoosterFactory;
 import com.betherichest.android.factories.GamblingFactory;
 import com.betherichest.android.factories.InvestmentFactory;
 import com.betherichest.android.factories.UpgradeFactory;
+import com.betherichest.android.gameElements.Achievement;
 import com.betherichest.android.gameElements.Booster;
 import com.betherichest.android.gameElements.Gambling;
 import com.betherichest.android.gameElements.GameStatistics;
@@ -54,11 +56,13 @@ public class Game {
     private List<Upgrade> upgrades;
     private List<Gambling> gamblings;
     private List<Booster> boosters;
+    private List<Achievement> achievements;
 
     private static boolean timerPaused;
 
     public static GameState gameState;
     public static StatisticsManager statisticsManager;
+    public static AchievementManager achievementManager;
 
     public Handler handler;
     public MoneyChangedListener moneyChangedListener;
@@ -80,11 +84,13 @@ public class Game {
         UpgradeFactory.createUpgrades(investments);
         upgrades = UpgradeFactory.getCreatedUpgrades();
         gamblings = GamblingFactory.getCreatedGamblings();
-        boosters = BoostersFactory.getCreatedBoosters();
+        boosters = BoosterFactory.getCreatedBoosters();
+        achievements = AchievementFactory.getCreatedAchievements();
 
         handler = new Handler(Looper.getMainLooper());
 
         statisticsManager = StatisticsManager.getInstance();
+        achievementManager = new AchievementManager(achievements);
         gameState = new GameState();
 
         startTimer();
@@ -185,6 +191,10 @@ public class Game {
 
     public List<Booster> getBoosters() {
         return boosters;
+    }
+
+    public List<Achievement> getAchievements() {
+        return achievements;
     }
 
     public Booster getBoosterBySkuId(String selectedSKU) {

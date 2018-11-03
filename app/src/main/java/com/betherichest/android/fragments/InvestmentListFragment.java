@@ -2,7 +2,6 @@ package com.betherichest.android.fragments;
 
 
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,13 +20,12 @@ import java.util.List;
 public class InvestmentListFragment extends Fragment {
     View rootView;
     ListView listView;
-    Parcelable state;
 
     Game game;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        rootView = inflater.inflate(R.layout.list_investment, container, false);
+        rootView = inflater.inflate(R.layout.fragment_investment, container, false);
         return rootView;
     }
 
@@ -42,10 +40,6 @@ public class InvestmentListFragment extends Fragment {
         listView = rootView.findViewById(R.id.investment_listview);
 
         listView.setAdapter(adapter);
-
-        if (state != null) {
-            listView.onRestoreInstanceState(state);
-        }
 
         game.slowAdapterRefreshListener = new AdapterRefreshListener() {
             @Override
@@ -69,11 +63,5 @@ public class InvestmentListFragment extends Fragment {
                 }
             }
         });
-    }
-
-    @Override
-    public void onPause() {
-        state = listView.onSaveInstanceState();
-        super.onPause();
     }
 }

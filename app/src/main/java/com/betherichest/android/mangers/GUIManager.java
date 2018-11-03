@@ -27,6 +27,7 @@ import android.widget.Toast;
 
 import com.betherichest.android.App;
 import com.betherichest.android.R;
+import com.betherichest.android.fragments.GamblingListFragment;
 import com.betherichest.android.fragments.UpgradeListFragment;
 import com.betherichest.android.listenerInterfaces.MoneyChangedListener;
 
@@ -38,6 +39,7 @@ public class GUIManager {
     private View view;
     private Game game;
     private static Context context;
+    private static GUIManager instance;
 
     private WindowManager windowManager;
     private FragmentManager fragmentManager;
@@ -59,8 +61,14 @@ public class GUIManager {
     static Random rnd = new Random();
     private long mLastClickTime = 0;
 
+    public static GUIManager getInstance() {
+        if (instance == null) {
+            instance = new GUIManager();
+        }
+        return instance;
+    }
 
-    public GUIManager(View view, WindowManager windowManager, ActionBar supportActionBar, FragmentManager fragmentManager) {
+    public void initializeParameters(View view, WindowManager windowManager, ActionBar supportActionBar, FragmentManager fragmentManager) {
         this.view = view;
         this.windowManager = windowManager;
         this.actionBar = supportActionBar;
@@ -282,6 +290,14 @@ public class GUIManager {
         toast.show();
     }
 
+    public static void showToast(String text) {
+        if (toast != null) {
+            toast.cancel();
+        }
+        toast = Toast.makeText(App.getContext(), text, Toast.LENGTH_SHORT);
+        toast.show();
+    }
+
     public void initializeActionBar(ActionBar actionbar) {
         if (actionbar != null) {
             actionbar.setDisplayHomeAsUpEnabled(true);
@@ -312,4 +328,9 @@ public class GUIManager {
         String rewardString = String.valueOf(NumberFormat.getNumberInstance(Locale.FRANCE).format(game.getAdReward()));
         navAds.setTitle(App.getContext().getResources().getString(R.string.ads) + " " + rewardString + " $");
     }
+
+    public void displayAchievementNotification() {
+        openFragment(R.id.gambling_list_container, new GamblingListFragment());
+    }
+
 }

@@ -17,7 +17,7 @@
             android:layout_height="35dp"
             android:layout_marginLeft="3dp"
             android:layout_gravity="center"
-            android:src="@drawable/click" />
+            android:src="@drawable/moneyclick" />
 
         <LinearLayout
             android:layout_width="wrap_content"

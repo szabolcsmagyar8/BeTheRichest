@@ -73,7 +73,9 @@ public class MainActivity extends AppCompatActivity {
         dbManager.loadStateFromDb();
 
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
-        guiManager = new GUIManager(this.findViewById(android.R.id.content), getWindowManager(), getSupportActionBar(), fragmentManager);
+        guiManager = GUIManager.getInstance();
+        guiManager.initializeParameters(this.findViewById(android.R.id.content), getWindowManager(), getSupportActionBar(), fragmentManager);
+       // guiManager = new GUIManager(this.findViewById(android.R.id.content), getWindowManager(), getSupportActionBar(), fragmentManager);
         initNavigatonViewListener();
         initAds();
     }
@@ -179,10 +181,10 @@ public class MainActivity extends AppCompatActivity {
             mDrawerLayout.closeDrawer(Gravity.START);
         } else if (fragmentManager.getBackStackEntryCount() > 0) {
             fragmentManager.popBackStack();
+            guiManager.relocateDollarImage(false);
         } else {
             super.onBackPressed();
         }
-        guiManager.relocateDollarImage(false);
     }
 
     private void initNavigatonViewListener() {
@@ -206,7 +208,6 @@ public class MainActivity extends AppCompatActivity {
                                 if (App.isOnline()) {
                                     mDrawerLayout.closeDrawers();
                                     Intent intent = new Intent(context, AdWatcherActivity.class);
-//                                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                                     startActivityForResult(intent, 1);
                                     GUIManager.setActivityOpened(true);
                                 } else {

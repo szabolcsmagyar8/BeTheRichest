@@ -2,7 +2,7 @@
   "investments": [
     {
       "name": "Lemonade stand",
-      "basePrice": 10,
+      "basePrice": 20,
       "baseDpS": 0.1,
       "description": "Home made lemonade with fresh lemon is the best refreshing drink in the summer.",
       "imageResourceString": "lemonadestand",

@@ -48,7 +48,7 @@ public class GamblingListFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        rootView = inflater.inflate(R.layout.list_gambling, container, false);
+        rootView = inflater.inflate(R.layout.fragment_gambling, container, false);
         return rootView;
     }
 

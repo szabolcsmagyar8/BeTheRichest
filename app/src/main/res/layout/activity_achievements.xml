@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#351a00">
+    android:background="#492400">
 
     <FrameLayout
         android:id="@+id/content_frame"
@@ -23,8 +23,10 @@
         android:id="@+id/achievements_grid"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@id/content_frame"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="3dp"
-        android:numColumns="2"
+        android:numColumns="4"
+        android:padding="3dp"
         android:textAlignment="center" />
 </RelativeLayout>

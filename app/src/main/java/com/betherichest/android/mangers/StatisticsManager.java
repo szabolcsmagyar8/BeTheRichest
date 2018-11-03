@@ -13,8 +13,9 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Observable;
 
-public class StatisticsManager {
+public class StatisticsManager extends Observable {
     private static StatisticsManager instance;
     private HashMap<StatType, GameStatistics> gameStatistics;
 
@@ -53,6 +54,8 @@ public class StatisticsManager {
     public void dollarClick(double moneyPerTap) {
         getStatByType(StatType.TOTAL_CLICKS).increaseValueByOne();
         getStatByType(StatType.TOTAL_MONEY_FROM_CLICKS).increaseValueByAmount(moneyPerTap);
+        setChanged();
+        notifyObservers(getStatByType(StatType.TOTAL_CLICKS).getValue());
     }
 
     public void earnMoney(double moneyPerSec) {

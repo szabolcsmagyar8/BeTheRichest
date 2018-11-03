@@ -21,8 +21,7 @@ import com.google.android.gms.ads.reward.RewardedVideoAdListener;
 public class AdWatcherActivity extends AppCompatActivity implements RewardedVideoAdListener {
     private RewardedVideoAd mRewardedVideoAd;
     private static final String AD_UNIT_ID = "ca-app-pub-3940256099942544/5224354917";
-    Game game = Game.getInstance();
-    double rewardMoney;
+    private boolean rewarded = false;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -52,18 +51,25 @@ public class AdWatcherActivity extends AppCompatActivity implements RewardedVide
 
     @Override
     public void onRewarded(RewardItem reward) {
-
+        rewarded = true;
     }
 
     @Override
     public void onRewardedVideoAdLeftApplication() {
+        GUIManager.showToast("onRewarded");
     }
 
     @Override
     public void onRewardedVideoAdClosed() {
         Intent returnIntent = new Intent();
-        setResult(Activity.RESULT_OK, returnIntent);
-        StatisticsManager.getInstance().videoWatched();
+        if (rewarded){
+            setResult(Activity.RESULT_OK, returnIntent);
+            StatisticsManager.getInstance().videoWatched();
+            rewarded = false;
+        }
+        else {
+            setResult(Activity.RESULT_CANCELED, returnIntent);
+        }
         finish();
     }
 
@@ -87,7 +93,7 @@ public class AdWatcherActivity extends AppCompatActivity implements RewardedVide
 
     @Override
     public void onRewardedVideoCompleted() {
-
+        GUIManager.showToast("onRewarded");
     }
 
     @Override
@@ -107,6 +113,7 @@ public class AdWatcherActivity extends AppCompatActivity implements RewardedVide
     @Override
     protected void onStop() {
         DatabaseManager.instance.saveStateToDb();
+        GUIManager.setActivityOpened(false);
         super.onStop();
     }
 
