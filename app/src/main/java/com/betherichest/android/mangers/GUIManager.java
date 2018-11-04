@@ -51,14 +51,16 @@ public class GUIManager {
     private TextView moneyPerTapText;
     private ImageView dollarImage;
     private ImageView smallDollar;
-    private static boolean activityOpened = false;
     private ImageView investmentsImageView;
     private ImageView upgradesImageView;
     private ImageView gamblingImageView;
     private RelativeLayout mainRelativeLayout;
     private ImageView leaderboardImageView;
     private ActionBar actionBar;
+
     private static Toast toast = null;
+    private static boolean activityOpened = false;
+    private static boolean notificationCloseRequested = false;
 
     static Random rnd = new Random();
     private long mLastClickTime = 0;
@@ -91,6 +93,14 @@ public class GUIManager {
 
     public static void setActivityOpened(boolean opened) {
         activityOpened = opened;
+    }
+
+    public static boolean isNotificationCloseRequested() {
+        return notificationCloseRequested;
+    }
+
+    public static void setNotificationCloseRequested(boolean notificationCloseRequested) {
+        GUIManager.notificationCloseRequested = notificationCloseRequested;
     }
 
     private void initializeViews() {
@@ -277,16 +287,16 @@ public class GUIManager {
 
         mLastClickTime = SystemClock.elapsedRealtime();
         FragmentTransaction ft = fragmentManager.beginTransaction();
-        ft.addToBackStack(null);
 
         if (fragment instanceof AchievementNotificationFragment){
             ft.setCustomAnimations(R.anim.slide_in_from_top, R.anim.slide_out_to_top, R.anim.slide_in_from_top, R.anim.slide_out_to_top);
+            ft.addToBackStack("achievement_notification");
         }
         else {
             ft.setCustomAnimations(R.anim.slide_in_from_bottom, R.anim.slide_out_to_bottom, R.anim.slide_in_from_bottom, R.anim.slide_out_to_bottom);
+            ft.addToBackStack(null);
         }
-        ft.replace(containerId, fragment);
-        ft.commit();
+        ft.replace(containerId, fragment).commitAllowingStateLoss();
     }
 
     public static void showToast(int stringResource) {
@@ -343,7 +353,13 @@ public class GUIManager {
         openFragment(R.id.achievement_notification, new AchievementNotificationFragment(), bundle);
         view.postDelayed(new Runnable() {
             public void run() {
-                fragmentManager.popBackStack();
+                if (!activityOpened){
+                    fragmentManager.popBackStackImmediate("achievement_notification", FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                    relocateDollarImage(false);
+                }
+                else{
+                    notificationCloseRequested = true;
+                }
             }
         }, 4000);
     }

@@ -31,8 +31,9 @@ public class StatisticsManager extends Observable {
     }
 
     public void initializeBasicStats() {
-        getStatByType(StatType.TOTAL_INVESTMENT_LEVELS).setValue(Game.getInstance().getTotalInvestmentLevels());
-        getStatByType(StatType.UPGRADES_BOUGHT).setValue(Game.getInstance().getPurchasedUpgrades().size());
+       // getStatByType(StatType.TOTAL_INVESTMENT_LEVELS).setValue(Game.getInstance().getTotalInvestmentLevels());
+       // getStatByType(StatType.UPGRADES_BOUGHT).setValue(Game.getInstance().getPurchasedUpgrades().size());
+       // onNotify(StatType.TOTAL_INVESTMENT_LEVELS);
     }
 
     public List<GameStatistics> getGameStatistics() {
@@ -54,20 +55,31 @@ public class StatisticsManager extends Observable {
     public void dollarClick(double moneyPerTap) {
         getStatByType(StatType.TOTAL_CLICKS).increaseValueByOne();
         getStatByType(StatType.TOTAL_MONEY_FROM_CLICKS).increaseValueByAmount(moneyPerTap);
-        setChanged();
-        notifyObservers(getStatByType(StatType.TOTAL_CLICKS).getValue());
+        onNotify(StatType.TOTAL_CLICKS);
     }
 
     public void earnMoney(double moneyPerSec) {
         getStatByType(StatType.TOTAL_MONEY_COLLECTED).increaseValueByAmount(moneyPerSec);
+        onNotify(StatType.TOTAL_MONEY_COLLECTED);
     }
 
     public void buyItem(double price) {
         getStatByType(StatType.MONEY_SPENT).increaseValueByAmount(price);
     }
 
+    public void buyInvestment() {
+        getStatByType(StatType.TOTAL_INVESTMENT_LEVELS).increaseValueByOne();
+        onNotify(StatType.TOTAL_INVESTMENT_LEVELS);
+    }
+
+    public void buyUpgrade() {
+        getStatByType(StatType.UPGRADES_BOUGHT).increaseValueByOne();
+        onNotify(StatType.UPGRADES_BOUGHT);
+    }
+
     public void addSecond() {
         getStatByType(StatType.TOTAL_PLAYING_TIME).increaseValueByOne();
+        onNotify(StatType.TOTAL_PLAYING_TIME);
     }
 
     public void gamble(double price) {
@@ -97,5 +109,10 @@ public class StatisticsManager extends Observable {
     public void videoWatched() {
         getStatByType(StatType.VIDEOS_WATCHED).increaseValueByOne();
         getStatByType(StatType.MONEY_FROM_VIDEOS).increaseValueByAmount(Game.getInstance().getAdReward());
+    }
+
+    private void onNotify(StatType statType) {
+        setChanged();
+        notifyObservers(statType);
     }
 }

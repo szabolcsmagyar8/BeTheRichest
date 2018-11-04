@@ -44,7 +44,7 @@ public class GameStatistics extends GameElement {
     public String getValueAsString() {
         Context c = App.getContext();
         if (name.equals(c.getResources().getString(R.string.total_playing_time))) {
-            return getPlayingTimeString();
+            return App.getPlayingTimeString(value);
         }
         if (name.equals(c.getString(R.string.first_dollar))) {
             long days = getDifferenceDays(new Date((long) value), new Date());
@@ -59,18 +59,18 @@ public class GameStatistics extends GameElement {
         return TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
     }
 
-    private String getPlayingTimeString() {
-        double hours = value / 3600;
-        double minutes = (value % 3600) / 60;
-        double seconds = value % 60;
-
-        String timeString = "";
-        timeString += hours > 1 ? (int) hours + "h " : "";
-        timeString += minutes > 1 ? (int) minutes + "m " : "";
-        timeString += seconds > 0 ? (int) seconds + "s" : "";
-
-        return timeString;
-    }
+//    private String getPlayingTimeString() {
+//        double hours = value / 3600;
+//        double minutes = (value % 3600) / 60;
+//        double seconds = value % 60;
+//
+//        String timeString = "";
+//        timeString += hours > 1 ? (int) hours + "h " : "";
+//        timeString += minutes > 1 ? (int) minutes + "m " : "";
+//        timeString += seconds > 0 ? (int) seconds + "s" : "";
+//
+//        return timeString;
+//    }
 
     public void increaseValueByOne() {
         value++;

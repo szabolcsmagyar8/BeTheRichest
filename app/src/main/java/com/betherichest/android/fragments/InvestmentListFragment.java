@@ -51,7 +51,6 @@ public class InvestmentListFragment extends Fragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
                 Investment selectedInvestment = (Investment) adapter.getItem(position);
                 if (selectedInvestment.isBuyable()) {
                     game.buyInvestment(selectedInvestment);

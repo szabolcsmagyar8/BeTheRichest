@@ -14,7 +14,6 @@ import com.betherichest.android.factories.UpgradeFactory;
 import com.betherichest.android.gameElements.Achievement;
 import com.betherichest.android.gameElements.Booster;
 import com.betherichest.android.gameElements.Gambling;
-import com.betherichest.android.gameElements.GameStatistics;
 import com.betherichest.android.gameElements.GlobalIncrementUpgrade;
 import com.betherichest.android.gameElements.Investment;
 import com.betherichest.android.gameElements.InvestmentUpgrade;
@@ -321,6 +320,7 @@ public class Game {
     public void buyInvestment(Investment selectedInvestment) {
         deduceMoney(selectedInvestment.getPrice());
         statisticsManager.buyItem(selectedInvestment.getPrice());
+        statisticsManager.buyInvestment();
         selectedInvestment.increaseLevel();
         recalculateMoneyPerSecond();
         recalculateMoneyPerTap();
@@ -343,6 +343,7 @@ public class Game {
         }
 
         statisticsManager.buyItem(selectedUpgrade.getPrice());
+        statisticsManager.buyUpgrade();
     }
 
     public void buyGambling(Gambling selectedGambling) {
@@ -387,43 +388,5 @@ public class Game {
     public void cheat() {
         moneyPerSec += 10;
         moneyPerSec *= 10;
-    }
-
-    public void loadInvestments(List<Investment> savedInvestments) {
-        for (Investment investment : investments) {
-            for (Investment savedInvestment : savedInvestments) {
-                if (investment.getId() == savedInvestment.getId()) {
-                    investment.setLevel(savedInvestment.getLevel());
-                    break;
-                }
-            }
-        }
-    }
-
-    public void loadUpgrades(List<Upgrade> savedUpgrades) {
-        for (Upgrade savedUpgrade : savedUpgrades) {
-            for (Upgrade upgrade : upgrades) {
-                if (upgrade.getId() == savedUpgrade.getId()) {
-                    upgrade.setPurchased(true);
-                    if (upgrade instanceof InvestmentUpgrade) {
-                        Investment inv = ((InvestmentUpgrade) upgrade).getRelevantInvestment();
-                        if (!inv.getPurchasedRelevantUpgrades().contains(upgrade)) {
-                            inv.addPurchasedRelevantUpgrade(upgrade);
-                        }
-                    }
-                    break;
-                }
-            }
-        }
-    }
-
-    public void loadGameStatistics(List<GameStatistics> savedGameStatistics) {
-        for (GameStatistics savedStat : savedGameStatistics) {
-            for (GameStatistics stat : statisticsManager.getGameStatistics()) {
-                if (stat.getId() == savedStat.getId()) {
-                    stat.setValue(savedStat.getValue());
-                }
-            }
-        }
     }
 }

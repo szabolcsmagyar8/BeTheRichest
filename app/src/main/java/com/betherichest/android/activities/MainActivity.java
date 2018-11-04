@@ -26,7 +26,6 @@ import com.betherichest.android.fragments.UpgradeListFragment;
 import com.betherichest.android.mangers.GUIManager;
 import com.betherichest.android.mangers.Game;
 import com.betherichest.android.mangers.StatisticsManager;
-import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 
@@ -75,7 +74,6 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
         guiManager = GUIManager.getInstance();
         guiManager.initializeParameters(this.findViewById(android.R.id.content), getWindowManager(), getSupportActionBar(), fragmentManager);
-       // guiManager = new GUIManager(this.findViewById(android.R.id.content), getWindowManager(), getSupportActionBar(), fragmentManager);
         initNavigatonViewListener();
         initAds();
     }
@@ -84,35 +82,6 @@ public class MainActivity extends AppCompatActivity {
         mAdView = findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
-        mAdView.setAdListener(new AdListener() {
-            @Override
-            public void onAdLoaded() {
-                // Code to be executed when an ad finishes loading.
-            }
-
-            @Override
-            public void onAdFailedToLoad(int errorCode) {
-                // Code to be executed when an ad request fails.
-            }
-
-            @Override
-            public void onAdOpened() {
-                // Code to be executed when an ad opens an overlay that
-                // covers the screen.
-            }
-
-            @Override
-            public void onAdLeftApplication() {
-                // Code to be executed when the user has left the app.
-            }
-
-            @Override
-            public void onAdClosed() {
-                // Code to be executed when when the user is about to return
-                // to the app after tapping on an ad.
-            }
-
-        });
     }
 
     public static Context getContext() {
@@ -146,6 +115,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         Game.setTimerPaused(false);
+        if (GUIManager.isNotificationCloseRequested()) {
+            fragmentManager.popBackStack("achievement_notification", FragmentManager.POP_BACK_STACK_INCLUSIVE);
+            guiManager.relocateDollarImage(false);
+            guiManager.setNotificationCloseRequested(false);
+        }
     }
 
     @Override
@@ -253,7 +227,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void showRewardDialog(final double rewardMoney) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                builder
+        builder
                 .setTitle("Video reward")
                 .setMessage("You received " + String.valueOf(NumberFormat.getNumberInstance(Locale.FRANCE).format(rewardMoney)) + "$")
                 .setIcon(android.R.drawable.ic_dialog_info)
