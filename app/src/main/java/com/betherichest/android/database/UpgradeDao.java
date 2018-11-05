@@ -5,7 +5,7 @@ import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.OnConflictStrategy;
 import android.arch.persistence.room.Query;
 
-import com.betherichest.android.gameElements.Upgrade;
+import com.betherichest.android.gameElements.upgrade.Upgrade;
 
 import java.util.List;
 

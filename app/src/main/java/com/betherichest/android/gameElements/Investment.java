@@ -4,6 +4,7 @@ import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Ignore;
 
+import com.betherichest.android.gameElements.upgrade.Upgrade;
 import com.betherichest.android.mangers.Game;
 
 import java.util.ArrayList;

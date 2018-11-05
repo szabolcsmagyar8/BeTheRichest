@@ -1,4 +1,6 @@
-package com.betherichest.android.gameElements;
+package com.betherichest.android.gameElements.upgrade;
+
+import com.betherichest.android.gameElements.Investment;
 
 public class InvestmentUpgrade extends Upgrade {
     private int requiredLevel;

@@ -1,4 +1,4 @@
-package com.betherichest.android.gameElements;
+package com.betherichest.android.gameElements.upgrade;
 
 /**
  * Created by Szabi on 2018. 06. 08..

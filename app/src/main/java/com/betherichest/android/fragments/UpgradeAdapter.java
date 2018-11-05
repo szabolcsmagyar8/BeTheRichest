@@ -15,8 +15,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.betherichest.android.R;
-import com.betherichest.android.gameElements.GlobalIncrementUpgrade;
-import com.betherichest.android.gameElements.Upgrade;
+import com.betherichest.android.gameElements.upgrade.GlobalIncrementUpgrade;
+import com.betherichest.android.gameElements.upgrade.Upgrade;
 import com.bumptech.glide.Glide;
 
 import java.text.NumberFormat;

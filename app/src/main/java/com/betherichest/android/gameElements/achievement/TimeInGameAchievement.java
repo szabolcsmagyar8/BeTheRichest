@@ -1,4 +1,4 @@
-package com.betherichest.android.gameElements;
+package com.betherichest.android.gameElements.achievement;
 
 import com.betherichest.android.App;
 import com.betherichest.android.R;

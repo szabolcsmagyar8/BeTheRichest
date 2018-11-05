@@ -1,4 +1,4 @@
-package com.betherichest.android.gameElements;
+package com.betherichest.android.gameElements.upgrade;
 
 import com.betherichest.android.R;
 import com.betherichest.android.StatType;

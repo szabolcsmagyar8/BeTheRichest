@@ -7,10 +7,10 @@ import android.arch.persistence.room.TypeConverters;
 import android.content.Context;
 
 import com.betherichest.android.GameState;
-import com.betherichest.android.gameElements.Achievement;
+import com.betherichest.android.gameElements.achievement.Achievement;
 import com.betherichest.android.gameElements.GameStatistics;
 import com.betherichest.android.gameElements.Investment;
-import com.betherichest.android.gameElements.Upgrade;
+import com.betherichest.android.gameElements.upgrade.Upgrade;
 
 @Database(entities = {GameState.class, Investment.class, Upgrade.class, GameStatistics.class, Achievement.class}, version = 1)
 @TypeConverters({Converters.class})

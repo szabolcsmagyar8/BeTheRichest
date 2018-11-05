@@ -1,8 +1,10 @@
-package com.betherichest.android.gameElements;
+package com.betherichest.android.gameElements.upgrade;
 
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Ignore;
+
+import com.betherichest.android.gameElements.GameElement;
 
 @Entity
 public class Upgrade extends GameElement {

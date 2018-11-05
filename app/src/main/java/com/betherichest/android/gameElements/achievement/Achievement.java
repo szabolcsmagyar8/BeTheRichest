@@ -1,9 +1,11 @@
-package com.betherichest.android.gameElements;
+package com.betherichest.android.gameElements.achievement;
 
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Ignore;
 import android.os.Parcel;
+
+import com.betherichest.android.gameElements.GameElement;
 
 import java.io.Serializable;
 import java.util.Date;

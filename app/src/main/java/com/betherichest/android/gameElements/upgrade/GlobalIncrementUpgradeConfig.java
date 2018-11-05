@@ -1,4 +1,4 @@
-package com.betherichest.android.gameElements;
+package com.betherichest.android.gameElements.upgrade;
 
 public class GlobalIncrementUpgradeConfig {
     private double price;

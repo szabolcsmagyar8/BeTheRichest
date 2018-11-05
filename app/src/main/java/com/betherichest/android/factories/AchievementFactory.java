@@ -1,11 +1,11 @@
 package com.betherichest.android.factories;
 
-import com.betherichest.android.gameElements.Achievement;
-import com.betherichest.android.gameElements.DollarMakerAchievement;
-import com.betherichest.android.gameElements.InvestmentLevelAchievement;
-import com.betherichest.android.gameElements.TapAchievement;
-import com.betherichest.android.gameElements.TimeInGameAchievement;
-import com.betherichest.android.gameElements.TotalUpgradeAchievement;
+import com.betherichest.android.gameElements.achievement.Achievement;
+import com.betherichest.android.gameElements.achievement.DollarMakerAchievement;
+import com.betherichest.android.gameElements.achievement.InvestmentLevelAchievement;
+import com.betherichest.android.gameElements.achievement.TapAchievement;
+import com.betherichest.android.gameElements.achievement.TimeInGameAchievement;
+import com.betherichest.android.gameElements.achievement.TotalUpgradeAchievement;
 
 import java.util.ArrayList;
 import java.util.Arrays;

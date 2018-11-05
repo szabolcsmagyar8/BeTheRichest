@@ -8,7 +8,7 @@ import android.widget.RelativeLayout;
 
 import com.betherichest.android.App;
 import com.betherichest.android.R;
-import com.betherichest.android.gameElements.Achievement;
+import com.betherichest.android.gameElements.achievement.Achievement;
 
 import java.util.List;
 

@@ -10,7 +10,7 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 
 import com.betherichest.android.R;
-import com.betherichest.android.gameElements.Upgrade;
+import com.betherichest.android.gameElements.upgrade.Upgrade;
 import com.betherichest.android.listenerInterfaces.AdapterRefreshListener;
 import com.betherichest.android.mangers.GUIManager;
 import com.betherichest.android.mangers.Game;

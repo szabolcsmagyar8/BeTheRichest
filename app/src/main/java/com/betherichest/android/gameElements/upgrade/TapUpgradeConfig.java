@@ -1,4 +1,4 @@
-package com.betherichest.android.gameElements;
+package com.betherichest.android.gameElements.upgrade;
 
 public class TapUpgradeConfig {
     private double price;

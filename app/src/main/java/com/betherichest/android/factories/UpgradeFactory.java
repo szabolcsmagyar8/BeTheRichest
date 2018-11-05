@@ -2,14 +2,14 @@ package com.betherichest.android.factories;
 
 import android.graphics.Color;
 
-import com.betherichest.android.gameElements.GlobalIncrementUpgrade;
-import com.betherichest.android.gameElements.GlobalIncrementUpgradeConfig;
+import com.betherichest.android.gameElements.upgrade.GlobalIncrementUpgrade;
+import com.betherichest.android.gameElements.upgrade.GlobalIncrementUpgradeConfig;
 import com.betherichest.android.gameElements.Investment;
-import com.betherichest.android.gameElements.InvestmentUpgrade;
-import com.betherichest.android.gameElements.InvestmentUpgradeConfig;
-import com.betherichest.android.gameElements.TapUpgrade;
-import com.betherichest.android.gameElements.TapUpgradeConfig;
-import com.betherichest.android.gameElements.Upgrade;
+import com.betherichest.android.gameElements.upgrade.InvestmentUpgrade;
+import com.betherichest.android.gameElements.upgrade.InvestmentUpgradeConfig;
+import com.betherichest.android.gameElements.upgrade.TapUpgrade;
+import com.betherichest.android.gameElements.upgrade.TapUpgradeConfig;
+import com.betherichest.android.gameElements.upgrade.Upgrade;
 
 import java.util.ArrayList;
 import java.util.List;

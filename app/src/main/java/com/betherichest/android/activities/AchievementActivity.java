@@ -12,7 +12,7 @@ import android.widget.GridView;
 import com.betherichest.android.R;
 import com.betherichest.android.database.DatabaseManager;
 import com.betherichest.android.fragments.AchievementAdapter;
-import com.betherichest.android.gameElements.Achievement;
+import com.betherichest.android.gameElements.achievement.Achievement;
 import com.betherichest.android.mangers.GUIManager;
 import com.betherichest.android.mangers.Game;
 

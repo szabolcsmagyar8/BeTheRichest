@@ -12,14 +12,14 @@ import com.betherichest.android.factories.BoosterFactory;
 import com.betherichest.android.factories.GamblingFactory;
 import com.betherichest.android.factories.InvestmentFactory;
 import com.betherichest.android.factories.UpgradeFactory;
-import com.betherichest.android.gameElements.Achievement;
+import com.betherichest.android.gameElements.achievement.Achievement;
 import com.betherichest.android.gameElements.Booster;
 import com.betherichest.android.gameElements.Gambling;
-import com.betherichest.android.gameElements.GlobalIncrementUpgrade;
+import com.betherichest.android.gameElements.upgrade.GlobalIncrementUpgrade;
 import com.betherichest.android.gameElements.Investment;
-import com.betherichest.android.gameElements.InvestmentUpgrade;
-import com.betherichest.android.gameElements.TapUpgrade;
-import com.betherichest.android.gameElements.Upgrade;
+import com.betherichest.android.gameElements.upgrade.InvestmentUpgrade;
+import com.betherichest.android.gameElements.upgrade.TapUpgrade;
+import com.betherichest.android.gameElements.upgrade.Upgrade;
 import com.betherichest.android.listenerInterfaces.AdapterRefreshListener;
 import com.betherichest.android.listenerInterfaces.MoneyChangedListener;
 
@@ -44,7 +44,7 @@ public class Game {
     private double moneyPerTap = 1d;
     private double moneyPerSec = 0d;
 
-    public static final Integer FPS = 24;
+    public static final long FPS = 30;
     public static final double SEC_TO_HOUR_MULTIPLIER = 3600;
     private static final double AD_REWARD_MULTIPLIER = 220;
 
