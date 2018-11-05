@@ -18,6 +18,7 @@ class LeaderboardAdapter extends BaseAdapter {
 
     private TextView nameTextView;
     private TextView moneyTextView;
+    private TextView rankTextView;
 
     private Leader leader;
 
@@ -51,18 +52,20 @@ class LeaderboardAdapter extends BaseAdapter {
         }
 
         leader = items.get(position);
-        initializeListUIElements();
+        initializeListUIElements(position);
 
         //setUIElementValues(investment);
 
         return listItemView;
     }
 
-    private void initializeListUIElements() {
+    private void initializeListUIElements(int position) {
         nameTextView = listItemView.findViewById(R.id.leader_name_text);
         moneyTextView = listItemView.findViewById(R.id.leader_money_text);
+        rankTextView = listItemView.findViewById(R.id.rank_circle);
 
         nameTextView.setText(leader.getName());
-        moneyTextView.setText(String.valueOf(NumberFormat.getInstance(Locale.FRANCE).format((int)leader.getMoney())));
+        moneyTextView.setText(String.valueOf(NumberFormat.getInstance(Locale.FRANCE).format((int) leader.getMoney())));
+        rankTextView.setText(String.format("#%s", String.valueOf(position + 1)));
     }
 }

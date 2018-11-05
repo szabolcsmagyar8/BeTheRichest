@@ -68,7 +68,7 @@
                 android:id="@+id/name_circle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/profile_circle"
+                android:background="@drawable/circle_profile"
                 android:gravity="center"
                 android:textColor="#efefef"
                 android:textSize="70sp" />
