@@ -16,24 +16,10 @@ import java.util.List;
 import java.util.Observable;
 
 public class StatisticsManager extends Observable {
-    private static StatisticsManager instance;
     private HashMap<StatType, GameStatistics> gameStatistics;
 
     public StatisticsManager() {
         gameStatistics = StatisticsFactory.initializeGameStatistics();
-    }
-
-    public static StatisticsManager getInstance() {
-        if (instance == null) {
-            instance = new StatisticsManager();
-        }
-        return instance;
-    }
-
-    public void initializeBasicStats() {
-       // getStatByType(StatType.TOTAL_INVESTMENT_LEVELS).setValue(Game.getInstance().getTotalInvestmentLevels());
-       // getStatByType(StatType.UPGRADES_BOUGHT).setValue(Game.getInstance().getPurchasedUpgrades().size());
-       // onNotify(StatType.TOTAL_INVESTMENT_LEVELS);
     }
 
     public List<GameStatistics> getGameStatistics() {
@@ -60,7 +46,6 @@ public class StatisticsManager extends Observable {
 
     public void earnMoney(double moneyPerSec) {
         getStatByType(StatType.TOTAL_MONEY_COLLECTED).increaseValueByAmount(moneyPerSec);
-        onNotify(StatType.TOTAL_MONEY_COLLECTED);
     }
 
     public void buyItem(double price) {
@@ -111,7 +96,7 @@ public class StatisticsManager extends Observable {
         getStatByType(StatType.MONEY_FROM_VIDEOS).increaseValueByAmount(Game.getInstance().getAdReward());
     }
 
-    private void onNotify(StatType statType) {
+    protected void onNotify(StatType statType) {
         setChanged();
         notifyObservers(statType);
     }

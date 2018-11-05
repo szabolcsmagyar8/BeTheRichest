@@ -8,7 +8,6 @@ import com.betherichest.android.gameElements.Investment;
 import com.betherichest.android.gameElements.InvestmentUpgrade;
 import com.betherichest.android.gameElements.Upgrade;
 import com.betherichest.android.mangers.Game;
-import com.betherichest.android.mangers.StatisticsManager;
 
 import java.util.List;
 
@@ -93,7 +92,7 @@ public class DatabaseManager {
 
     private void loadGameStatistics(List<GameStatistics> savedGameStatistics) {
         for (GameStatistics savedStat : savedGameStatistics) {
-            for (GameStatistics stat : StatisticsManager.getInstance().getGameStatistics()) {
+            for (GameStatistics stat : Game.statisticsManager.getGameStatistics()) {
                 if (stat.getId() == savedStat.getId()) {
                     stat.setValue(savedStat.getValue());
                 }

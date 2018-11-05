@@ -6,6 +6,7 @@ import android.os.Looper;
 import android.support.annotation.RequiresApi;
 
 import com.betherichest.android.GameState;
+import com.betherichest.android.StatType;
 import com.betherichest.android.factories.AchievementFactory;
 import com.betherichest.android.factories.BoosterFactory;
 import com.betherichest.android.factories.GamblingFactory;
@@ -88,7 +89,8 @@ public class Game {
 
         handler = new Handler(Looper.getMainLooper());
 
-        statisticsManager = StatisticsManager.getInstance();
+        statisticsManager = new StatisticsManager();
+        //statisticsManager = StatisticsManager.getInstance();
         achievementManager = new AchievementManager(achievements);
         gameState = new GameState();
 
@@ -166,7 +168,6 @@ public class Game {
         for (Upgrade upgrade : getUpgrades()) {
             if (upgrade.isDisplayable()) {
                 displayableUpgrades.add(upgrade);
-
             }
         }
         return displayableUpgrades;
@@ -279,6 +280,7 @@ public class Game {
             public void run() {
                 if (!timerPaused) {
                     statisticsManager.addSecond();    // counts the elapsed seconds in the game
+                    statisticsManager.onNotify(StatType.TOTAL_MONEY_COLLECTED);
                 }
             }
         }, 0, 1000);

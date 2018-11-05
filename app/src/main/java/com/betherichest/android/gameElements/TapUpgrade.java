@@ -2,7 +2,7 @@ package com.betherichest.android.gameElements;
 
 import com.betherichest.android.R;
 import com.betherichest.android.StatType;
-import com.betherichest.android.mangers.StatisticsManager;
+import com.betherichest.android.mangers.Game;
 
 
 public class TapUpgrade extends Upgrade {
@@ -16,6 +16,6 @@ public class TapUpgrade extends Upgrade {
 
     @Override
     public boolean isDisplayable() {
-        return !purchased && clickRequired < StatisticsManager.getInstance().getStatByType(StatType.TOTAL_CLICKS).getValue();
+        return !purchased && clickRequired < Game.statisticsManager.getStatByType(StatType.TOTAL_CLICKS).getValue();
     }
 }

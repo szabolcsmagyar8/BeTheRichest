@@ -28,9 +28,7 @@ import android.widget.Toast;
 
 import com.betherichest.android.App;
 import com.betherichest.android.R;
-import com.betherichest.android.fragments.AchievementNotificationFragment;
 import com.betherichest.android.fragments.UpgradeListFragment;
-import com.betherichest.android.gameElements.Achievement;
 import com.betherichest.android.listenerInterfaces.MoneyChangedListener;
 
 import java.text.NumberFormat;
@@ -41,7 +39,7 @@ public class GUIManager {
     private View view;
     private Game game;
     private static Context context;
-    private static GUIManager instance;
+
 
     private WindowManager windowManager;
     private FragmentManager fragmentManager;
@@ -65,14 +63,7 @@ public class GUIManager {
     static Random rnd = new Random();
     private long mLastClickTime = 0;
 
-    public static GUIManager getInstance() {
-        if (instance == null) {
-            instance = new GUIManager();
-        }
-        return instance;
-    }
-
-    public void initializeParameters(View view, WindowManager windowManager, ActionBar supportActionBar, FragmentManager fragmentManager) {
+    public GUIManager(View view, WindowManager windowManager, ActionBar supportActionBar, FragmentManager fragmentManager) {
         this.view = view;
         this.windowManager = windowManager;
         this.actionBar = supportActionBar;
@@ -283,19 +274,18 @@ public class GUIManager {
             return;
         }
 
+        if (fragmentManager == null) {
+            return;
+        }
+
         fragment.setArguments(bundle);
 
         mLastClickTime = SystemClock.elapsedRealtime();
         FragmentTransaction ft = fragmentManager.beginTransaction();
 
-        if (fragment instanceof AchievementNotificationFragment){
-            ft.setCustomAnimations(R.anim.slide_in_from_top, R.anim.slide_out_to_top, R.anim.slide_in_from_top, R.anim.slide_out_to_top);
-            ft.addToBackStack("achievement_notification");
-        }
-        else {
-            ft.setCustomAnimations(R.anim.slide_in_from_bottom, R.anim.slide_out_to_bottom, R.anim.slide_in_from_bottom, R.anim.slide_out_to_bottom);
-            ft.addToBackStack(null);
-        }
+        ft.setCustomAnimations(R.anim.slide_in_from_bottom, R.anim.slide_out_to_bottom, R.anim.slide_in_from_bottom, R.anim.slide_out_to_bottom);
+        ft.addToBackStack(null);
+
         ft.replace(containerId, fragment).commitAllowingStateLoss();
     }
 
@@ -344,24 +334,6 @@ public class GUIManager {
         MenuItem navAds = menu.findItem(R.id.nav_ads);
         String rewardString = String.valueOf(NumberFormat.getNumberInstance(Locale.FRANCE).format(game.getAdReward()));
         navAds.setTitle(App.getContext().getResources().getString(R.string.ads) + " " + rewardString + " $");
-    }
-
-    public void displayAchievementNotification(Achievement achievement) {
-        Bundle bundle = new Bundle();
-        bundle.putSerializable("achievement", achievement);
-
-        openFragment(R.id.achievement_notification, new AchievementNotificationFragment(), bundle);
-        view.postDelayed(new Runnable() {
-            public void run() {
-                if (!activityOpened){
-                    fragmentManager.popBackStackImmediate("achievement_notification", FragmentManager.POP_BACK_STACK_INCLUSIVE);
-                    relocateDollarImage(false);
-                }
-                else{
-                    notificationCloseRequested = true;
-                }
-            }
-        }, 4000);
     }
 
 }

@@ -3,6 +3,7 @@ package com.betherichest.android.gameElements;
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Ignore;
+import android.os.Parcel;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -32,6 +33,10 @@ public class Achievement extends GameElement implements Serializable {
         this.id = id;
         this.dateOfAcquiring = dateOfAcquiring;
         this.unlocked = unlocked;
+    }
+
+    protected Achievement(Parcel in) {
+        unlocked = in.readByte() != 0;
     }
 
     public Date getDateOfAcquiring() {

@@ -17,7 +17,6 @@ import com.betherichest.android.R;
 import com.betherichest.android.gameElements.Gambling;
 import com.betherichest.android.mangers.GUIManager;
 import com.betherichest.android.mangers.Game;
-import com.betherichest.android.mangers.StatisticsManager;
 
 import java.text.NumberFormat;
 import java.util.List;
@@ -110,12 +109,12 @@ public class GamblingListFragment extends Fragment {
                 if (wonMoney == 0) {
                     text = getString(R.string.gambling_no_win);
                     wonMoneyText.setTextColor(getResources().getColor(R.color.red));
-                    StatisticsManager.getInstance().gamblingLose();
+                    Game.statisticsManager.gamblingLose();
                 } else {
                     text = "You won " + nf.format(wonMoney) + "$";
                     game.earnMoney(wonMoney);
                     wonMoneyText.setTextColor(getResources().getColor(R.color.orange));
-                    StatisticsManager.getInstance().gamblingWin(wonMoney);
+                    Game.statisticsManager.gamblingWin(wonMoney);
                 }
                 wonMoneyText.setVisibility(View.VISIBLE);
                 wonMoneyText.setText(text);

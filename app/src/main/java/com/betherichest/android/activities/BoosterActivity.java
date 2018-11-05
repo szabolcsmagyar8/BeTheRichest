@@ -29,7 +29,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-public class BoostersActivity extends AppCompatActivity {
+public class BoosterActivity extends AppCompatActivity {
     private IabHelper mHelper;
     private static final String TAG = "com.betherichest.android.inappbilling";
     private String selectedSKU = "";
@@ -179,8 +179,11 @@ public class BoostersActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 try {
                     Booster booster = adapter.getItem(i);
+
                     selectedSKU = booster.getSkuId();
-                    mHelper.launchPurchaseFlow(BoostersActivity.this, selectedSKU,101, mPurchaseFinishedListener, "mypurchasetoken");
+                    mHelper.launchPurchaseFlow(BoosterActivity.this, selectedSKU,
+                            101, mPurchaseFinishedListener, "mypurchasetoken");
+
                 } catch (IabHelper.IabAsyncInProgressException e) {
                     e.printStackTrace();
                 }

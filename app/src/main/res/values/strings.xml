@@ -48,4 +48,5 @@
     <string name="remove_ads">Removing ads not implemented yet</string>
     <string name="videos_wathced">Videos Watched</string>
     <string name="money_from_videos">Money From Videos</string>
+    <string name="achievement_unlocked">ACHIEVEMENT UNLOCKED</string>
 </resources>

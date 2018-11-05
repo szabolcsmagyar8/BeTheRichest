@@ -6,7 +6,9 @@ import android.arch.persistence.room.PrimaryKey;
 import com.betherichest.android.App;
 import com.betherichest.android.mangers.Game;
 
-public abstract class GameElement {
+import java.io.Serializable;
+
+public abstract class GameElement implements Serializable{
 
     @PrimaryKey
     protected int id;

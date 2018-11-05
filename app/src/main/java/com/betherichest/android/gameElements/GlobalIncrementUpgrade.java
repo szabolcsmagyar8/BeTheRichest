@@ -2,7 +2,7 @@ package com.betherichest.android.gameElements;
 
 import com.betherichest.android.R;
 import com.betherichest.android.StatType;
-import com.betherichest.android.mangers.StatisticsManager;
+import com.betherichest.android.mangers.Game;
 
 public class GlobalIncrementUpgrade extends Upgrade {
 
@@ -13,6 +13,6 @@ public class GlobalIncrementUpgrade extends Upgrade {
 
     @Override
     public boolean isDisplayable() {
-        return !purchased && StatisticsManager.getInstance().getStatByType(StatType.TOTAL_MONEY_COLLECTED).getValue() > price * 2;
+        return !purchased && Game.statisticsManager.getStatByType(StatType.TOTAL_MONEY_COLLECTED).getValue() > price * 2;
     }
 }

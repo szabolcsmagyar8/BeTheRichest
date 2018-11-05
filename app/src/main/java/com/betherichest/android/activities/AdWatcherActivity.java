@@ -11,7 +11,6 @@ import com.betherichest.android.R;
 import com.betherichest.android.database.DatabaseManager;
 import com.betherichest.android.mangers.GUIManager;
 import com.betherichest.android.mangers.Game;
-import com.betherichest.android.mangers.StatisticsManager;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.reward.RewardItem;
@@ -45,8 +44,7 @@ public class AdWatcherActivity extends AppCompatActivity implements RewardedVide
     }
 
     private void loadRewardedVideoAd() {
-        mRewardedVideoAd.loadAd(AD_UNIT_ID,
-                new AdRequest.Builder().build());
+        mRewardedVideoAd.loadAd(AD_UNIT_ID, new AdRequest.Builder().build());
     }
 
     @Override
@@ -64,7 +62,7 @@ public class AdWatcherActivity extends AppCompatActivity implements RewardedVide
         Intent returnIntent = new Intent();
         if (rewarded){
             setResult(Activity.RESULT_OK, returnIntent);
-            StatisticsManager.getInstance().videoWatched();
+            Game.statisticsManager.videoWatched();
             rewarded = false;
         }
         else {

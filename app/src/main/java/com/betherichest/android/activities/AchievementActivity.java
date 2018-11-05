@@ -16,7 +16,7 @@ import com.betherichest.android.gameElements.Achievement;
 import com.betherichest.android.mangers.GUIManager;
 import com.betherichest.android.mangers.Game;
 
-public class AchievementsActivity extends AppCompatActivity {
+public class AchievementActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,7 +78,7 @@ public class AchievementsActivity extends AppCompatActivity {
                     return;
                 }
 
-                AlertDialog.Builder builder = new AlertDialog.Builder(AchievementsActivity.this);
+                AlertDialog.Builder builder = new AlertDialog.Builder(AchievementActivity.this);
                 builder
                         .setTitle(achievement.getName())
                         .setMessage(achievement.getDescription())

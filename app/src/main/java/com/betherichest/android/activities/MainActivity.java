@@ -25,7 +25,6 @@ import com.betherichest.android.fragments.InvestmentListFragment;
 import com.betherichest.android.fragments.UpgradeListFragment;
 import com.betherichest.android.mangers.GUIManager;
 import com.betherichest.android.mangers.Game;
-import com.betherichest.android.mangers.StatisticsManager;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 
@@ -34,9 +33,11 @@ import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
     private static Context context;
+
     private GUIManager guiManager;
     private FragmentManager fragmentManager = getSupportFragmentManager();
     private DatabaseManager dbManager;
+
     private DrawerLayout mDrawerLayout;
     private AdView mAdView;
 
@@ -72,8 +73,7 @@ public class MainActivity extends AppCompatActivity {
         dbManager.loadStateFromDb();
 
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
-        guiManager = GUIManager.getInstance();
-        guiManager.initializeParameters(this.findViewById(android.R.id.content), getWindowManager(), getSupportActionBar(), fragmentManager);
+        guiManager = new GUIManager(this.findViewById(android.R.id.content), getWindowManager(), getSupportActionBar(), fragmentManager);
         initNavigatonViewListener();
         initAds();
     }
@@ -117,7 +117,6 @@ public class MainActivity extends AppCompatActivity {
         Game.setTimerPaused(false);
         if (GUIManager.isNotificationCloseRequested()) {
             fragmentManager.popBackStack("achievement_notification", FragmentManager.POP_BACK_STACK_INCLUSIVE);
-            guiManager.relocateDollarImage(false);
             guiManager.setNotificationCloseRequested(false);
         }
     }
@@ -172,14 +171,13 @@ public class MainActivity extends AppCompatActivity {
                     public boolean onNavigationItemSelected(MenuItem menuItem) {
                         switch (menuItem.getItemId()) {
                             case R.id.nav_stats:
-                                StatisticsManager.getInstance().initializeBasicStats();
                                 openActivity(new Intent(context, StatisticsActivity.class));
                                 break;
                             case R.id.nav_boosters:
-                                openActivity(new Intent(context, BoostersActivity.class));
+                                openActivity(new Intent(context, BoosterActivity.class));
                                 break;
                             case R.id.nav_achievements:
-                                openActivity(new Intent(context, AchievementsActivity.class));
+                                openActivity(new Intent(context, AchievementActivity.class));
                                 break;
                             case R.id.nav_ads:
                                 if (App.isOnline()) {
@@ -212,7 +210,7 @@ public class MainActivity extends AppCompatActivity {
     private void openActivity(Intent intent) {
         mDrawerLayout.closeDrawers();
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        context.startActivity(intent);
+        startActivity(intent);
         GUIManager.setActivityOpened(true);
     }
 

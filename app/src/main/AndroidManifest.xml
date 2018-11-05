@@ -32,14 +32,14 @@
             android:theme="@style/AppTheme"
             tools:ignore="InnerclassSeparator" />
         <activity
-            android:name=".activities.BoostersActivity"
+            android:name=".activities.BoosterActivity"
             android:label="@string/boosters"
             android:parentActivityName=".activities.MainActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             tools:ignore="InnerclassSeparator" />
         <activity
-            android:name=".activities.AchievementsActivity"
+            android:name=".activities.AchievementActivity"
             android:label="@string/achievements"
             android:parentActivityName=".activities.MainActivity"
             android:screenOrientation="portrait"
@@ -73,6 +73,10 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             tools:ignore="InnerclassSeparator" />
+        <activity
+            android:name=".activities.AchievementNotificationActivity"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
 
         <service
             android:name=".services.MyFirebaseMessagingService"
@@ -92,5 +96,7 @@
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="ca-app-pub-3201079455068395~9303067462" />
+
+
     </application>
 </manifest>
