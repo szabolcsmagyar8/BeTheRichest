@@ -1,9 +1,7 @@
 package com.betherichest.android.mangers;
 
-import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
-import android.support.annotation.RequiresApi;
 
 import com.betherichest.android.GameState;
 import com.betherichest.android.StatType;
@@ -12,11 +10,11 @@ import com.betherichest.android.factories.BoosterFactory;
 import com.betherichest.android.factories.GamblingFactory;
 import com.betherichest.android.factories.InvestmentFactory;
 import com.betherichest.android.factories.UpgradeFactory;
-import com.betherichest.android.gameElements.achievement.Achievement;
 import com.betherichest.android.gameElements.Booster;
 import com.betherichest.android.gameElements.Gambling;
-import com.betherichest.android.gameElements.upgrade.GlobalIncrementUpgrade;
 import com.betherichest.android.gameElements.Investment;
+import com.betherichest.android.gameElements.achievement.Achievement;
+import com.betherichest.android.gameElements.upgrade.GlobalIncrementUpgrade;
 import com.betherichest.android.gameElements.upgrade.InvestmentUpgrade;
 import com.betherichest.android.gameElements.upgrade.TapUpgrade;
 import com.betherichest.android.gameElements.upgrade.Upgrade;
@@ -138,19 +136,11 @@ public class Game {
     }
 
     public List<Investment> getInvestments() {
-        Collections.sort(investments, new Comparator<Investment>() {
-            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-            @Override
-            public int compare(Investment o1, Investment o2) {
-                return Integer.compare(o1.getId(), o2.getId());
-            }
-        });
         return investments;
     }
 
     public List<Upgrade> getUpgrades() {
         Collections.sort(upgrades, new Comparator<Upgrade>() {
-            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
             public int compare(Upgrade o1, Upgrade o2) {
                 return Double.compare(o1.getPrice(), o2.getPrice());

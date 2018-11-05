@@ -239,6 +239,13 @@
             android:layout_below="@+id/dollarImage" />
 
         <FrameLayout
+            android:id="@+id/leaderboard_list_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentBottom="true"
+            android:layout_below="@+id/dollarImage" />
+
+        <FrameLayout
             android:id="@+id/achievement_notification"
             android:layout_width="350dp"
             android:layout_height="65dp"

@@ -22,6 +22,7 @@ import com.betherichest.android.R;
 import com.betherichest.android.database.DatabaseManager;
 import com.betherichest.android.fragments.GamblingListFragment;
 import com.betherichest.android.fragments.InvestmentListFragment;
+import com.betherichest.android.fragments.LeaderboardFragment;
 import com.betherichest.android.fragments.UpgradeListFragment;
 import com.betherichest.android.mangers.GUIManager;
 import com.betherichest.android.mangers.Game;
@@ -104,7 +105,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void leaderboardIconClick(View view) {
-        return;
+        guiManager.openFragment(R.id.leaderboard_list_container, new LeaderboardFragment(), null);
+        guiManager.relocateDollarImage(true);
     }
 
     public void closeClick(View view) {

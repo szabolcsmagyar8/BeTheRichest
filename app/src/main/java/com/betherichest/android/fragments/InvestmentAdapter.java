@@ -5,13 +5,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.betherichest.android.App;
+import com.betherichest.android.R;
 import com.betherichest.android.gameElements.Investment;
 import com.betherichest.android.mangers.Game;
-import com.betherichest.android.R;
 import com.bumptech.glide.Glide;
 
 import java.text.NumberFormat;
@@ -64,8 +63,7 @@ public class InvestmentAdapter extends BaseAdapter {
 
         investment = items.get(position);
         initializeListUIElements();
-
-        setUIElementValues(investment);
+        setUIElementValues();
 
         return listItemView;
     }
@@ -81,7 +79,7 @@ public class InvestmentAdapter extends BaseAdapter {
         dollarImageView = listItemView.findViewById(R.id.dollarIcon);
     }
 
-    private void setUIElementValues(Investment investment) {
+    private void setUIElementValues() {
         if (investment.isLocked()) {
             listItemView.setEnabled(false);
             nameTextView.setText(R.string.locked);
