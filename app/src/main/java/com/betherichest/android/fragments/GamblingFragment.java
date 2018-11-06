@@ -23,7 +23,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Random;
 
-public class GamblingListFragment extends Fragment {
+public class GamblingFragment extends Fragment {
     private View rootView;
     private TextView wonMoneyText;
     private ImageView rotatingImage;

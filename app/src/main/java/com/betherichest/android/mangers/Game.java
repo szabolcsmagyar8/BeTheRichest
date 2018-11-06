@@ -9,10 +9,12 @@ import com.betherichest.android.factories.AchievementFactory;
 import com.betherichest.android.factories.BoosterFactory;
 import com.betherichest.android.factories.GamblingFactory;
 import com.betherichest.android.factories.InvestmentFactory;
+import com.betherichest.android.factories.LeaderFactory;
 import com.betherichest.android.factories.UpgradeFactory;
 import com.betherichest.android.gameElements.Booster;
 import com.betherichest.android.gameElements.Gambling;
 import com.betherichest.android.gameElements.Investment;
+import com.betherichest.android.gameElements.Leader;
 import com.betherichest.android.gameElements.achievement.Achievement;
 import com.betherichest.android.gameElements.upgrade.GlobalIncrementUpgrade;
 import com.betherichest.android.gameElements.upgrade.InvestmentUpgrade;
@@ -49,14 +51,14 @@ public class Game {
     private NumberFormat nf = NumberFormat.getNumberInstance(Locale.FRANCE);
 
     private Timer T = new Timer();
+    private static boolean timerPaused;
 
     private List<Investment> investments;
     private List<Upgrade> upgrades;
     private List<Gambling> gamblings;
     private List<Booster> boosters;
     private List<Achievement> achievements;
-
-    private static boolean timerPaused;
+    private List<Leader> leaders;
 
     public static GameState gameState;
     public static StatisticsManager statisticsManager;
@@ -65,8 +67,8 @@ public class Game {
     public Handler handler;
     public MoneyChangedListener moneyChangedListener;
     public AdapterRefreshListener adapterRefreshListener;
-    private static boolean gamblingAnimationRunning = false;
     public AdapterRefreshListener slowAdapterRefreshListener;
+    private static boolean gamblingAnimationRunning = false;
     //endregion
 
     //region CONSTRUCTORS
@@ -79,19 +81,17 @@ public class Game {
 
     public Game() {
         investments = InvestmentFactory.getCreatedInvestments();
-        UpgradeFactory.createUpgrades(investments);
-        upgrades = UpgradeFactory.getCreatedUpgrades();
+        upgrades = UpgradeFactory.getCreatedUpgrades(investments);
         gamblings = GamblingFactory.getCreatedGamblings();
         boosters = BoosterFactory.getCreatedBoosters();
         achievements = AchievementFactory.getCreatedAchievements();
-
-        handler = new Handler(Looper.getMainLooper());
+        leaders = LeaderFactory.getLeaders();
 
         statisticsManager = new StatisticsManager();
-        //statisticsManager = StatisticsManager.getInstance();
         achievementManager = new AchievementManager(achievements);
         gameState = new GameState();
 
+        handler = new Handler(Looper.getMainLooper());
         startTimer();
     }
     //endregion
@@ -101,20 +101,25 @@ public class Game {
         return currentMoney;
     }
 
-    public void setMoneyPerTap(double moneyPerTap) {
-        this.moneyPerTap = moneyPerTap;
-    }
-
-    public void setMoneyPerSec(double moneyPerSec) {
-        this.moneyPerSec = moneyPerSec;
+    public String getCurrentMoneyAsString() {
+        return nf.format(Math.round(currentMoney));
     }
 
     public void setCurrentMoney(double currentMoney) {
         this.currentMoney = currentMoney;
     }
 
-    public String getCurrentMoneyAsString() {
-        return nf.format(Math.round(currentMoney));
+    public double getMoneyPerSec() {
+        return moneyPerSec;
+    }
+
+    public String getMoneyPerSecAsString() {
+        nf.setMaximumFractionDigits(1);
+        return nf.format(moneyPerSec) + " $ per sec";
+    }
+
+    public void setMoneyPerSec(double moneyPerSec) {
+        this.moneyPerSec = moneyPerSec;
     }
 
     public double getMoneyPerTap() {
@@ -126,13 +131,8 @@ public class Game {
         return String.format("%s $ per tap", nf.format(moneyPerTap));
     }
 
-    public double getMoneyPerSec() {
-        return moneyPerSec;
-    }
-
-    public String getMoneyPerSecAsString() {
-        nf.setMaximumFractionDigits(1);
-        return nf.format(moneyPerSec) + " $ per sec";
+    public void setMoneyPerTap(double moneyPerTap) {
+        this.moneyPerTap = moneyPerTap;
     }
 
     public List<Investment> getInvestments() {
@@ -149,8 +149,20 @@ public class Game {
         return upgrades;
     }
 
-    public static void setTimerPaused(boolean paused) {
-        timerPaused = paused;
+    public List<Gambling> getGamblings() {
+        return gamblings;
+    }
+
+    public List<Leader> getLeaders() {
+        return leaders;
+    }
+
+    public List<Booster> getBoosters() {
+        return boosters;
+    }
+
+    public List<Achievement> getAchievements() {
+        return achievements;
     }
 
     public List<Upgrade> getDisplayableUpgrades() {
@@ -163,6 +175,20 @@ public class Game {
         return displayableUpgrades;
     }
 
+    public List<Upgrade> getPurchasedUpgrades() {
+        List<Upgrade> purchasedUpgrades = new ArrayList<>();
+        for (Upgrade upgrade : upgrades) {
+            if (upgrade.isPurchased()) {
+                purchasedUpgrades.add(upgrade);
+            }
+        }
+        return purchasedUpgrades;
+    }
+
+    public static void setTimerPaused(boolean paused) {
+        timerPaused = paused;
+    }
+
     public double getDPSPercentage(Investment investment) {
         return getMoneyPerSec() == 0 ? 0 : investment.getMoneyPerSec() / getMoneyPerSec() * 100;
     }
@@ -173,18 +199,6 @@ public class Game {
             sum += inv.getLevel();
         }
         return sum;
-    }
-
-    public List<Gambling> getGamblings() {
-        return gamblings;
-    }
-
-    public List<Booster> getBoosters() {
-        return boosters;
-    }
-
-    public List<Achievement> getAchievements() {
-        return achievements;
     }
 
     public Booster getBoosterBySkuId(String selectedSKU) {
@@ -202,16 +216,6 @@ public class Game {
 
     public static void setGamblingAnimationRunning(boolean gamblingAnimationRunning) {
         Game.gamblingAnimationRunning = gamblingAnimationRunning;
-    }
-
-    public List<Upgrade> getPurchasedUpgrades() {
-        List<Upgrade> purchasedUpgrades = new ArrayList<>();
-        for (Upgrade upgrade : upgrades) {
-            if (upgrade.isPurchased()) {
-                purchasedUpgrades.add(upgrade);
-            }
-        }
-        return purchasedUpgrades;
     }
 
     public double getAdReward() {
@@ -260,6 +264,7 @@ public class Game {
             public void run() {
                 if (!timerPaused) {
                     earnMoney(getMoneyPerSec() / FPS);
+                    enrichLeaders();
                     postAdapterRefreshRequest();   // the adapters need to be refreshed continuously, providing a constant update in availability colors and displayable elements in the list
                 }
             }
@@ -285,6 +290,17 @@ public class Game {
         }, 0, 400);
     }
 
+    public void earnMoney(double money) {
+        currentMoney += money;
+        if (currentMoney > gameState.getMaxCurrentMoney()) {
+            gameState.setMaxCurrentMoney(currentMoney);
+            statisticsManager.setMaxCurrentMoney(currentMoney);
+        }
+
+        statisticsManager.earnMoney(money);
+        postMoneyChanged();
+    }
+
     private void deduceMoney(double price) {
         currentMoney -= price;
     }
@@ -296,17 +312,6 @@ public class Game {
             statisticsManager.firstDollarClick();
             gameState.setFirstDollarClick(false);
         }
-    }
-
-    public void earnMoney(double money) {
-        currentMoney += money;
-        if (currentMoney > gameState.getMaxCurrentMoney()) {
-            gameState.setMaxCurrentMoney(currentMoney);
-            statisticsManager.setMaxCurrentMoney(currentMoney);
-        }
-
-        statisticsManager.earnMoney(money);
-        postMoneyChanged();
     }
 
     public void buyInvestment(Investment selectedInvestment) {
@@ -342,6 +347,16 @@ public class Game {
         deduceMoney(selectedGambling.getPrice());
         statisticsManager.buyItem(selectedGambling.getPrice());
         statisticsManager.gamble(selectedGambling.getPrice());
+    }
+
+    private void enrichLeaders() {
+        for (Leader leader : leaders) {
+            if (leader.isPlayer()) {
+                leader.setMoney(currentMoney);
+            } else {
+                leader.setMoney(leader.getMoney() + (leader.getMoney() * (leader.getGrowthRate() - 1)) / 100000);
+            }
+        }
     }
 
     private void recalculateMoneyPerSecond() {

@@ -2,9 +2,9 @@ package com.betherichest.android.factories;
 
 import android.graphics.Color;
 
+import com.betherichest.android.gameElements.Investment;
 import com.betherichest.android.gameElements.upgrade.GlobalIncrementUpgrade;
 import com.betherichest.android.gameElements.upgrade.GlobalIncrementUpgradeConfig;
-import com.betherichest.android.gameElements.Investment;
 import com.betherichest.android.gameElements.upgrade.InvestmentUpgrade;
 import com.betherichest.android.gameElements.upgrade.InvestmentUpgradeConfig;
 import com.betherichest.android.gameElements.upgrade.TapUpgrade;
@@ -60,20 +60,16 @@ public class UpgradeFactory {
 
     private static List<Upgrade> upgrades = new ArrayList<>();
 
-    public static List<Upgrade> getCreatedUpgrades() {
-        return upgrades;
-    }
-
     private static void addUpgrade(Upgrade upgrade) {
         upgrades.add(upgrade);
     }
 
-    public static void createUpgrades(List<Investment> investments) {
+    public static List<Upgrade> getCreatedUpgrades(List<Investment> investments) {
         createInvestmentUpgrades(investments);
-
         createTapUpgrades();
-
         createGlobalIncrements();
+
+        return upgrades;
     }
 
     private static void createGlobalIncrements() {

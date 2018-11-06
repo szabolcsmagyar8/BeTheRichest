@@ -20,10 +20,10 @@ import android.view.View;
 import com.betherichest.android.App;
 import com.betherichest.android.R;
 import com.betherichest.android.database.DatabaseManager;
-import com.betherichest.android.fragments.GamblingListFragment;
-import com.betherichest.android.fragments.InvestmentListFragment;
+import com.betherichest.android.fragments.GamblingFragment;
+import com.betherichest.android.fragments.InvestmentFragment;
 import com.betherichest.android.fragments.LeaderboardFragment;
-import com.betherichest.android.fragments.UpgradeListFragment;
+import com.betherichest.android.fragments.UpgradeFragment;
 import com.betherichest.android.mangers.GUIManager;
 import com.betherichest.android.mangers.Game;
 import com.google.android.gms.ads.AdRequest;
@@ -90,17 +90,17 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void investmentsIconClick(View view) {
-        guiManager.openFragment(R.id.investment_list_container, new InvestmentListFragment(), null);
+        guiManager.openFragment(R.id.investment_list_container, new InvestmentFragment(), null);
         guiManager.relocateDollarImage(true);
     }
 
     public void upgradesIconClick(View view) {
-        guiManager.openFragment(R.id.upgrade_list_container, new UpgradeListFragment(), null);
+        guiManager.openFragment(R.id.upgrade_list_container, new UpgradeFragment(), null);
         guiManager.relocateDollarImage(true);
     }
 
     public void gamblingIconClick(View view) {
-        guiManager.openFragment(R.id.gambling_list_container, new GamblingListFragment(), null);
+        guiManager.openFragment(R.id.gambling_list_container, new GamblingFragment(), null);
         guiManager.relocateDollarImage(true);
     }
 

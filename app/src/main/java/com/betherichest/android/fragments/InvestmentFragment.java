@@ -17,7 +17,7 @@ import com.betherichest.android.mangers.Game;
 
 import java.util.List;
 
-public class InvestmentListFragment extends Fragment {
+public class InvestmentFragment extends Fragment {
     View rootView;
     ListView listView;
 

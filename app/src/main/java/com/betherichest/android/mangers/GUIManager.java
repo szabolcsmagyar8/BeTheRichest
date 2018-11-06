@@ -28,7 +28,7 @@ import android.widget.Toast;
 
 import com.betherichest.android.App;
 import com.betherichest.android.R;
-import com.betherichest.android.fragments.UpgradeListFragment;
+import com.betherichest.android.fragments.UpgradeFragment;
 import com.betherichest.android.listenerInterfaces.MoneyChangedListener;
 
 import java.text.NumberFormat;
@@ -269,7 +269,7 @@ public class GUIManager {
             return;
         }
 
-        if (fragment instanceof UpgradeListFragment && game.getDisplayableUpgrades().size() == 0) {
+        if (fragment instanceof UpgradeFragment && game.getDisplayableUpgrades().size() == 0) {
             showToast(R.string.no_upgrades_available);
             return;
         }

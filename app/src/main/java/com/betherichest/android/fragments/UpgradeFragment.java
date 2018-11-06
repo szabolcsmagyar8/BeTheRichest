@@ -18,7 +18,7 @@ import com.betherichest.android.mangers.Game;
 import java.util.List;
 
 
-public class UpgradeListFragment extends Fragment {
+public class UpgradeFragment extends Fragment {
     View rootView;
     Game game;
 

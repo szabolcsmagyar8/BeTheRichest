@@ -5,12 +5,18 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.betherichest.android.App;
 import com.betherichest.android.R;
+import com.betherichest.android.activities.LoginActivity;
 import com.betherichest.android.gameElements.Leader;
+import com.betherichest.android.mangers.Game;
 
 import java.text.NumberFormat;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
+
+import static java.util.Collections.sort;
 
 class LeaderboardAdapter extends BaseAdapter {
     private View listItemView;
@@ -21,6 +27,7 @@ class LeaderboardAdapter extends BaseAdapter {
     private TextView rankTextView;
 
     private Leader leader;
+    private NumberFormat nf = NumberFormat.getNumberInstance(Locale.FRANCE);
 
     public LeaderboardAdapter(List<Leader> items) {
         this.items = items;
@@ -51,10 +58,16 @@ class LeaderboardAdapter extends BaseAdapter {
             listItemView = view;
         }
 
-        leader = items.get(position);
-        initializeListUIElements(position);
+        sort(items, new Comparator<Leader>() {
+            @Override
+            public int compare(Leader o1, Leader o2) {
+                return Double.compare(o2.getMoney(), o1.getMoney());
+            }
+        });
 
-        //setUIElementValues(investment);
+        leader = items.get(position);
+
+        initializeListUIElements(position);
 
         return listItemView;
     }
@@ -64,8 +77,22 @@ class LeaderboardAdapter extends BaseAdapter {
         moneyTextView = listItemView.findViewById(R.id.leader_money_text);
         rankTextView = listItemView.findViewById(R.id.rank_circle);
 
-        nameTextView.setText(leader.getName());
-        moneyTextView.setText(String.valueOf(NumberFormat.getInstance(Locale.FRANCE).format((int) leader.getMoney())));
+        nf.setMaximumFractionDigits(0);
         rankTextView.setText(String.format("#%s", String.valueOf(position + 1)));
+
+        // highlights the player in the list
+        if (leader.isPlayer()) {
+            listItemView.setBackgroundColor(App.getContext().getResources().getColor(R.color.invisibleWhite));
+            moneyTextView.setText(String.valueOf(nf.format(Game.getInstance().getCurrentMoney())));
+            if (LoginActivity.account != null) {
+                nameTextView.setText(LoginActivity.account.getDisplayName());
+            } else {
+                nameTextView.setText(leader.getName());
+            }
+        } else {
+            listItemView.setBackgroundColor(App.getContext().getResources().getColor(R.color.transparent));
+            moneyTextView.setText(String.valueOf(nf.format(leader.getMoney())));
+            nameTextView.setText(leader.getName());
+        }
     }
 }

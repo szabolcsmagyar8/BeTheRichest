@@ -29,14 +29,17 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
 public class LoginActivity extends AppCompatActivity {
-    GoogleSignInClient mGoogleSignInClient;
+    private TextView userTextView;
+    private TextView emailTextView;
+    private TextView nameCircleTextView;
+    private Button signOutButton;
+    private RelativeLayout accountDetailLayout;
+    private RelativeLayout signInDetailLayout;
+
+    private GoogleSignInClient mGoogleSignInClient;
+    public static GoogleSignInAccount account;
+
     private static final int RC_SIGN_IN = 9001;
-    TextView userTextView;
-    TextView emailTextView;
-    TextView nameCircleTextView;
-    Button signOutButton;
-    RelativeLayout accountDetailLayout;
-    RelativeLayout signInDetailLayout;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -80,7 +83,7 @@ public class LoginActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
-        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
+        account = GoogleSignIn.getLastSignedInAccount(this);
         updateUI(account);
     }
 
@@ -115,14 +118,13 @@ public class LoginActivity extends AppCompatActivity {
 
     private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
         try {
-            GoogleSignInAccount account = completedTask.getResult(ApiException.class);
+            account = completedTask.getResult(ApiException.class);
             updateUI(account);
             GUIManager.showToast(R.string.login_successful);
         } catch (ApiException e) {
             updateUI(null);
             GUIManager.showToast(R.string.login_failed);
         }
-
     }
 
     private void signInClick() {
@@ -130,8 +132,7 @@ public class LoginActivity extends AppCompatActivity {
 
             Intent signInIntent = mGoogleSignInClient.getSignInIntent();
             startActivityForResult(signInIntent, RC_SIGN_IN);
-        }
-        else{
+        } else {
             GUIManager.showToast(R.string.check_net_connection);
         }
     }
@@ -141,8 +142,9 @@ public class LoginActivity extends AppCompatActivity {
                 .addOnCompleteListener(this, new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
+                        account = null;
                         GUIManager.showToast(R.string.signed_out);
-                        updateUI(null);
+                        updateUI(account);
                     }
                 });
     }
