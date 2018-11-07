@@ -17,6 +17,7 @@ import com.betherichest.android.database.DatabaseManager;
 import com.betherichest.android.gameElements.achievement.Achievement;
 import com.betherichest.android.mangers.GUIManager;
 import com.betherichest.android.mangers.Game;
+import com.bumptech.glide.Glide;
 
 public class AchievementNotificationActivity extends Activity {
     TextView achievementNameTextView;
@@ -69,9 +70,13 @@ public class AchievementNotificationActivity extends Activity {
     private void initializeUI(Achievement achievement) {
         achievementImageView = findViewById(R.id.achievement_image);
         achievementNameTextView = findViewById(R.id.achievement_name);
-
-        achievementImageView.setImageResource(achievement.getImageResource());
         achievementNameTextView.setText(achievement.getDescription());
+        Glide.with(App.getContext())
+                .load(achievement.getImageResource())
+                .asBitmap()
+                .dontAnimate()
+                .dontTransform()
+                .into(achievementImageView);
     }
 
     @Override

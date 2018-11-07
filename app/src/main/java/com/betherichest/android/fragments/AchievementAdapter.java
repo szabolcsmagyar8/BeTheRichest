@@ -5,17 +5,22 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.betherichest.android.App;
 import com.betherichest.android.R;
 import com.betherichest.android.gameElements.achievement.Achievement;
+import com.bumptech.glide.Glide;
 
 import java.util.List;
 
 public class AchievementAdapter extends BaseAdapter {
     private View listItemView;
     private ImageView iconImageView;
+    private TextView textView;
     private List<Achievement> items;
+    private RelativeLayout achievementContainer;
+    private RelativeLayout labelBackgroundLayout;
 
     public AchievementAdapter(List<Achievement> items) {
         this.items = items;
@@ -45,16 +50,28 @@ public class AchievementAdapter extends BaseAdapter {
             listItemView = view;
         }
 
+        Achievement achievement = items.get(i);
+
         iconImageView = listItemView.findViewById(R.id.achievement_icon);
-        RelativeLayout itemLayout = listItemView.findViewById(R.id.achievement_item);
+        textView = listItemView.findViewById(R.id.achievement_text);
+        labelBackgroundLayout = listItemView.findViewById(R.id.label_background);
+        achievementContainer = listItemView.findViewById(R.id.achievement_container);
 
         if (items.get(i).isUnlocked()) {
-            iconImageView.setImageResource(items.get(i).getImageResource());
-            iconImageView.setBackgroundColor(App.getContext().getResources().getColor(R.color.achievement_active));
+            Glide.with(App.getContext())
+                    .load(achievement.getImageResource())
+                    .asBitmap()
+                    .dontAnimate()
+                    .dontTransform()
+                    .into(iconImageView);
+            achievementContainer.setBackgroundColor(App.getContext().getResources().getColor(R.color.achievement_active));
+            labelBackgroundLayout.setVisibility(View.VISIBLE);
+            textView.setText(achievement.getText());
         } else {
             iconImageView.setImageResource(R.drawable.questionmark);
-            iconImageView.setBackgroundColor(App.getContext().getResources().getColor(R.color.achievement_inactive));
-            itemLayout.setBackground(null);
+            achievementContainer.setBackgroundColor(App.getContext().getResources().getColor(R.color.achievement_inactive));
+            labelBackgroundLayout.setVisibility(View.GONE);
+            textView.setText("");
         }
 
         return listItemView;

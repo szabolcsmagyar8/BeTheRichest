@@ -10,6 +10,7 @@
     <color name="white">#ffffff</color>
     <color name="almostWhite">#e2e2e2</color>
     <color name="invisibleWhite">#69ffffff</color>
+    <color name="transparentWhite">#20ffffff</color>
     <color name="investmentBackgroundColor">#ffcc7b</color>
     <color name="darkGreen">#003103</color>
     <color name="darkRed">#310001</color>

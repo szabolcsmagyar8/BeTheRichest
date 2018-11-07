@@ -31,12 +31,7 @@
             android:layout_centerVertical="true"
             android:alpha="0.9"
             android:gravity="center"
-            android:shadowColor="#000000"
-            android:shadowDx="2"
-            android:shadowDy="2"
-            android:shadowRadius="10"
             android:text="X2"
-            android:textAlignment="center"
             android:textSize="30sp"
             android:textStyle="bold" />
     </RelativeLayout>

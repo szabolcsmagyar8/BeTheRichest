@@ -6,13 +6,12 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.betherichest.android.gameElements.Gambling;
+import com.betherichest.android.App;
 import com.betherichest.android.R;
+import com.betherichest.android.gameElements.Gambling;
 import com.bumptech.glide.Glide;
 
-import java.text.NumberFormat;
 import java.util.List;
-import java.util.Locale;
 
 public class GamblingAdapter extends BaseAdapter {
     private List<Gambling> items;
@@ -23,8 +22,6 @@ public class GamblingAdapter extends BaseAdapter {
     private TextView winAmountTextView;
     private TextView chanceTextView;
     private ImageView imageView;
-
-    NumberFormat nf = NumberFormat.getNumberInstance(Locale.FRANCE);
 
     public GamblingAdapter(List<Gambling> items) {
         this.items = items;
@@ -73,7 +70,7 @@ public class GamblingAdapter extends BaseAdapter {
 
         nameTextView.setText(gambling.getName());
         priceTextView.setText("Price: " + String.valueOf((int) gambling.getPrice()));
-        winAmountTextView.setText("Win amount: " + nf.format(gambling.getMinWinAmount()) + " - " + nf.format(gambling.getMaxWinAmount()) + "$");
+        winAmountTextView.setText("Win amount: " + App.NF.format(gambling.getMinWinAmount()) + " - " + App.NF.format(gambling.getMaxWinAmount()) + "$");
         chanceTextView.setText("Chance: " + String.valueOf((int) gambling.getChance()) + "%");
         imageView.setBackgroundResource(gambling.getImageResource());
 

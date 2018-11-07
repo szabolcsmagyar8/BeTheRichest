@@ -7,11 +7,10 @@ import android.os.Parcel;
 
 import com.betherichest.android.gameElements.GameElement;
 
-import java.io.Serializable;
 import java.util.Date;
 
 @Entity
-public class Achievement extends GameElement implements Serializable {
+public class Achievement extends GameElement {
     @Ignore
     static int currentId = 0;
 
@@ -24,11 +23,15 @@ public class Achievement extends GameElement implements Serializable {
     @Ignore
     protected Object reward;
 
-    public Achievement(String name, String description, Object reward) {
+    @Ignore
+    protected String text;
+
+    public Achievement(String name, String description, Object reward, String text) {
         this.id = currentId++;
         this.name = name;
         this.description = description;
         this.reward = reward;
+        this.text = text;
     }
 
     public Achievement(int id, Date dateOfAcquiring, boolean unlocked) {
@@ -47,6 +50,10 @@ public class Achievement extends GameElement implements Serializable {
 
     public Object getReward() {
         return reward;
+    }
+
+    public String getText() {
+        return text;
     }
 
     public boolean isUnlocked() {

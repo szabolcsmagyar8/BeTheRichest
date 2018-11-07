@@ -3,6 +3,7 @@ package com.betherichest.android.mangers;
 import android.os.Handler;
 import android.os.Looper;
 
+import com.betherichest.android.App;
 import com.betherichest.android.GameState;
 import com.betherichest.android.StatType;
 import com.betherichest.android.factories.AchievementFactory;
@@ -23,12 +24,10 @@ import com.betherichest.android.gameElements.upgrade.Upgrade;
 import com.betherichest.android.listenerInterfaces.AdapterRefreshListener;
 import com.betherichest.android.listenerInterfaces.MoneyChangedListener;
 
-import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -44,11 +43,9 @@ public class Game {
     private double moneyPerTap = 1d;
     private double moneyPerSec = 0d;
 
-    public static final long FPS = 30;
+    public static final long FPS = 25;
     public static final double SEC_TO_HOUR_MULTIPLIER = 3600;
     private static final double AD_REWARD_MULTIPLIER = 220;
-
-    private NumberFormat nf = NumberFormat.getNumberInstance(Locale.FRANCE);
 
     private Timer T = new Timer();
     private static boolean timerPaused;
@@ -66,7 +63,7 @@ public class Game {
 
     public Handler handler;
     public MoneyChangedListener moneyChangedListener;
-    public AdapterRefreshListener adapterRefreshListener;
+    public AdapterRefreshListener smoothAdapterRefreshListener;
     public AdapterRefreshListener slowAdapterRefreshListener;
     private static boolean gamblingAnimationRunning = false;
     //endregion
@@ -102,7 +99,7 @@ public class Game {
     }
 
     public String getCurrentMoneyAsString() {
-        return nf.format(Math.round(currentMoney));
+        return App.NF.format(Math.round(currentMoney));
     }
 
     public void setCurrentMoney(double currentMoney) {
@@ -114,8 +111,8 @@ public class Game {
     }
 
     public String getMoneyPerSecAsString() {
-        nf.setMaximumFractionDigits(1);
-        return nf.format(moneyPerSec) + " $ per sec";
+        App.NF.setMaximumFractionDigits(1);
+        return App.NF.format(moneyPerSec) + " $ per sec";
     }
 
     public void setMoneyPerSec(double moneyPerSec) {
@@ -127,8 +124,8 @@ public class Game {
     }
 
     public String getMoneyPerTapAsString() {
-        nf.setMaximumFractionDigits(1);
-        return String.format("%s $ per tap", nf.format(moneyPerTap));
+        App.NF.setMaximumFractionDigits(1);
+        return String.format("%s $ per tap", App.NF.format(moneyPerTap));
     }
 
     public void setMoneyPerTap(double moneyPerTap) {
@@ -228,8 +225,8 @@ public class Game {
         handler.post(new Runnable() {
             @Override
             public void run() {
-                if (adapterRefreshListener != null) {
-                    adapterRefreshListener.refreshAdapter();
+                if (smoothAdapterRefreshListener != null) {
+                    smoothAdapterRefreshListener.refreshAdapter();
                 }
             }
         });
@@ -264,7 +261,6 @@ public class Game {
             public void run() {
                 if (!timerPaused) {
                     earnMoney(getMoneyPerSec() / FPS);
-                    enrichLeaders();
                     postAdapterRefreshRequest();   // the adapters need to be refreshed continuously, providing a constant update in availability colors and displayable elements in the list
                 }
             }
@@ -284,10 +280,11 @@ public class Game {
             @Override
             public void run() {
                 if (!timerPaused) {
+                    enrichLeaders();
                     postSlowAdapterRefreshRequest();   // the adapters need to be refreshed continuously, providing a constant update in availability colors and displayable elements in the list
                 }
             }
-        }, 0, 400);
+        }, 0, 500);
     }
 
     public void earnMoney(double money) {

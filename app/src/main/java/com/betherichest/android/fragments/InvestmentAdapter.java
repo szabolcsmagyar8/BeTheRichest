@@ -13,9 +13,7 @@ import com.betherichest.android.gameElements.Investment;
 import com.betherichest.android.mangers.Game;
 import com.bumptech.glide.Glide;
 
-import java.text.NumberFormat;
 import java.util.List;
-import java.util.Locale;
 
 public class InvestmentAdapter extends BaseAdapter {
     View listItemView;
@@ -29,8 +27,6 @@ public class InvestmentAdapter extends BaseAdapter {
     private ImageView investmentImageView;
     private ImageView dollarImageView;
     Investment investment;
-
-    NumberFormat nf = NumberFormat.getNumberInstance(Locale.FRANCE);
 
     public InvestmentAdapter(List<Investment> items) {
         this.items = items;
@@ -93,10 +89,10 @@ public class InvestmentAdapter extends BaseAdapter {
         } else {
             listItemView.setEnabled(true);
             nameTextView.setText(investment.getName());
-            priceTextView.setText("Price: " + nf.format(investment.getPrice()));
+            priceTextView.setText("Price: " + App.NF.format(investment.getPrice()));
             levelTextView.setText(String.valueOf(investment.getLevel()));
-            dpsPerLevelTextView.setText("DPS: " + String.valueOf(nf.format(investment.getMoneyPerSecPerLevel())));
-            totalDPSTextView.setText("Total: " + String.valueOf(nf.format((investment.getMoneyPerSec())) + " (" + String.format("%.2f", Game.getInstance().getDPSPercentage(investment)) + "%)"));
+            dpsPerLevelTextView.setText("DPS: " + String.valueOf(App.NF.format(investment.getMoneyPerSecPerLevel())));
+            totalDPSTextView.setText("Total: " + String.valueOf(App.NF.format((investment.getMoneyPerSec())) + " (" + String.format("%.2f", Game.getInstance().getDPSPercentage(investment)) + "%)"));
             upsTextView.setText("UPs: " + investment.getPurchasedRelevantUpgrades().size() + "/" + investment.getRelevantUpgrades().size());
             Glide
                     .with(App.getContext())
@@ -105,7 +101,6 @@ public class InvestmentAdapter extends BaseAdapter {
                     .dontAnimate()
                     .dontTransform()
                     .into(investmentImageView);
-            investmentImageView.setImageResource(investment.getImageResource());
             dollarImageView.setVisibility(View.VISIBLE);
         }
         setTextColorByAvailability(investment);

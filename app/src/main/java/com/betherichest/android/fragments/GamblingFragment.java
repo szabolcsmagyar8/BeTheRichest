@@ -13,14 +13,13 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.betherichest.android.App;
 import com.betherichest.android.R;
 import com.betherichest.android.gameElements.Gambling;
 import com.betherichest.android.mangers.GUIManager;
 import com.betherichest.android.mangers.Game;
 
-import java.text.NumberFormat;
 import java.util.List;
-import java.util.Locale;
 import java.util.Random;
 
 public class GamblingFragment extends Fragment {
@@ -32,11 +31,7 @@ public class GamblingFragment extends Fragment {
     private ListView listView;
     private Game game = Game.getInstance();
 
-    private NumberFormat nf = NumberFormat.getNumberInstance(Locale.FRANCE);
-
     private Animation growAndRotate, grow, fade;
-
-
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -111,7 +106,7 @@ public class GamblingFragment extends Fragment {
                     wonMoneyText.setTextColor(getResources().getColor(R.color.red));
                     Game.statisticsManager.gamblingLose();
                 } else {
-                    text = "You won " + nf.format(wonMoney) + "$";
+                    text = "You won " + App.NF.format(wonMoney) + "$";
                     game.earnMoney(wonMoney);
                     wonMoneyText.setTextColor(getResources().getColor(R.color.orange));
                     Game.statisticsManager.gamblingWin(wonMoney);

@@ -8,9 +8,7 @@ import android.content.Context;
 import com.betherichest.android.App;
 import com.betherichest.android.R;
 
-import java.text.NumberFormat;
 import java.util.Date;
-import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
 @Entity
@@ -51,7 +49,7 @@ public class GameStatistics extends GameElement {
             return String.valueOf(days > 1 ? days + " days ago" : days + " day ago");
         }
 
-        return String.valueOf(NumberFormat.getNumberInstance(Locale.FRANCE).format(Math.round(value)));
+        return String.valueOf(App.NF.format(Math.round(value)));
     }
 
     public long getDifferenceDays(Date d1, Date d2) {

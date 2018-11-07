@@ -31,8 +31,6 @@ import com.betherichest.android.R;
 import com.betherichest.android.fragments.UpgradeFragment;
 import com.betherichest.android.listenerInterfaces.MoneyChangedListener;
 
-import java.text.NumberFormat;
-import java.util.Locale;
 import java.util.Random;
 
 public class GUIManager {
@@ -75,7 +73,7 @@ public class GUIManager {
         initializeViews();
         initializeEventListeners();
         initializeActionBar(supportActionBar);
-        setMainUITexts();
+        setMainUIItems();
     }
 
     public static boolean isActivityOpened() {
@@ -104,6 +102,7 @@ public class GUIManager {
         upgradesImageView = view.findViewById(R.id.upgradesIcon);
         gamblingImageView = view.findViewById(R.id.gamblingIcon);
         leaderboardImageView = view.findViewById(R.id.leaderboardIcon);
+        mainRelativeLayout = view.findViewById(R.id.mainRelativeLayout);
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -159,7 +158,7 @@ public class GUIManager {
         game.moneyChangedListener = new MoneyChangedListener() {
             @Override
             public void onMoneyChanged() {
-                setMainUITexts();
+                setMainUIItems();
             }
         };
     }
@@ -168,7 +167,7 @@ public class GUIManager {
         currentMoneyText.setText(game.getCurrentMoneyAsString());
     }
 
-    public void setMainUITexts() {
+    public void setMainUIItems() {
         currentMoneyText.setText(game.getCurrentMoneyAsString());
         moneyPerSecText.setText(game.getMoneyPerSecAsString());
         moneyPerTapText.setText(game.getMoneyPerTapAsString());
@@ -193,13 +192,12 @@ public class GUIManager {
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
 
         final TextView tapText = (TextView) View.inflate(context, R.layout.text_dollar_tap_popup, null);
-        tapText.setText("+" + String.valueOf(NumberFormat.getNumberInstance(Locale.FRANCE).format((int) game.getMoneyPerTap()) + "$"));
+        tapText.setText("+" + String.valueOf(App.NF.format((int) game.getMoneyPerTap()) + "$"));
 
         tapText.measure(0, 0);
 
         params.setMargins(getNewRandomXPositionOnDollarImage(tapText), getNewRandomYPositionOnDollarImage(), 0, 0);
         tapText.setLayoutParams(params);
-        mainRelativeLayout = view.findViewById(R.id.mainRelativeLayout);
         mainRelativeLayout.addView(tapText);
 
         Animation growAndFade = AnimationUtils.loadAnimation(context, R.anim.grow_and_fade);
@@ -332,7 +330,7 @@ public class GUIManager {
         NavigationView navigationView = view.findViewById(R.id.nav_view);
         Menu menu = navigationView.getMenu();
         MenuItem navAds = menu.findItem(R.id.nav_ads);
-        String rewardString = String.valueOf(NumberFormat.getNumberInstance(Locale.FRANCE).format(game.getAdReward()));
+        String rewardString = String.valueOf(App.NF.format(game.getAdReward()));
         navAds.setTitle(App.getContext().getResources().getString(R.string.ads) + " " + rewardString + " $");
     }
 

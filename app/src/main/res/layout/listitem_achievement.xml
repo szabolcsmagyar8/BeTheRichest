@@ -1,15 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/achievement_item"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:background="@drawable/selector_achievements"
     android:padding="6dp">
 
-    <ImageView
-        android:id="@+id/achievement_icon"
+    <RelativeLayout
+        android:id="@+id/achievement_container"
         android:layout_width="80dp"
         android:layout_height="80dp"
-        android:background="@drawable/background_achievement_listitem"
-        android:padding="5dp" />
+        android:background="@drawable/background_achievement_listitem">
+
+        <ImageView
+            android:id="@+id/achievement_icon"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_above="@+id/label_background"
+            android:layout_centerInParent="true"
+            android:padding="3dp" />
+
+        <RelativeLayout
+            android:id="@+id/label_background"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="2dp"
+            android:background="@drawable/background_achievement_label"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/achievement_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_centerVertical="true"
+                android:gravity="center"
+                android:textColor="@color/darkGray"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+        </RelativeLayout>
+    </RelativeLayout>
 </RelativeLayout>

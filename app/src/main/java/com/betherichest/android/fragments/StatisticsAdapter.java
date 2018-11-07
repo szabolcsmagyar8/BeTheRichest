@@ -49,7 +49,7 @@ public class StatisticsAdapter extends BaseAdapter {
             listItemView = view;
         }
 
-        Game.getInstance().adapterRefreshListener = new AdapterRefreshListener() {
+        Game.getInstance().smoothAdapterRefreshListener = new AdapterRefreshListener() {
             @Override
             public void refreshAdapter() {
                 StatisticsAdapter.super.notifyDataSetChanged();

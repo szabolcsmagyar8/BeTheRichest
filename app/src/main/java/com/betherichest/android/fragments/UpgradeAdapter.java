@@ -14,14 +14,13 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.betherichest.android.App;
 import com.betherichest.android.R;
 import com.betherichest.android.gameElements.upgrade.GlobalIncrementUpgrade;
 import com.betherichest.android.gameElements.upgrade.Upgrade;
 import com.bumptech.glide.Glide;
 
-import java.text.NumberFormat;
 import java.util.List;
-import java.util.Locale;
 
 public class UpgradeAdapter extends BaseAdapter {
     private List<Upgrade> items;
@@ -32,7 +31,6 @@ public class UpgradeAdapter extends BaseAdapter {
     private Context context;
     private Upgrade upgrade;
 
-    private NumberFormat nf = NumberFormat.getNumberInstance(Locale.FRANCE);
 
     protected UpgradeAdapter(List<Upgrade> items, Context context) {
         this.items = items;
@@ -83,10 +81,10 @@ public class UpgradeAdapter extends BaseAdapter {
                 .into(imageView);
 
         setLayoutParamsByScreenSize();
-        setLabelTexts();
+        setUITexts();
         setTextColorByAvailability();
         createColorfulBorder();
-        convertThousandsToSIUnit();
+        //convertThousandsToSIUnit();
 
         return listItemView;
     }
@@ -102,8 +100,8 @@ public class UpgradeAdapter extends BaseAdapter {
         relativeLayout.setLayoutParams(layoutParams);
     }
 
-    private void setLabelTexts() {
-        priceTextView.setText(nf.format(upgrade.getPrice()));
+    private void setUITexts() {
+        priceTextView.setText(App.convertThousandsToSIUnit(upgrade.getPrice(), false));
 
         if (upgrade instanceof GlobalIncrementUpgrade){
             effectTextView.setText("+" + String.valueOf(upgrade.getMultiplier()));
@@ -123,35 +121,18 @@ public class UpgradeAdapter extends BaseAdapter {
     private void createColorfulBorder() {       // makes a dynamic border around the relative layout which contains the image and the effect text
         GradientDrawable gd = new GradientDrawable();
 
-        gd.setStroke((int) getPixelFromDP(3), upgrade.getColor());      // different borderSize in pixels for different density displays
-        gd.setCornerRadius(getPixelFromDP(12));
+        gd.setStroke((int) App.getPixelFromDP(3), upgrade.getColor());      // different borderSize in pixels for different density displays
+        gd.setCornerRadius(App.getPixelFromDP(12));
         relativeLayout.setBackground(gd);
     }
 
-    private float getPixelFromDP(int dp) {
-        return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, context.getResources().getDisplayMetrics());
-    }
+
 
     private void setTextColorByAvailability() {
         if (upgrade.isBuyable()) {
             priceTextView.setTextColor(Color.parseColor("#90EE90"));
         } else {
             priceTextView.setTextColor(Color.parseColor("#FF0027"));
-        }
-    }
-
-    private void convertThousandsToSIUnit() {
-        double price = upgrade.getPrice();
-        if (price < 10000) {
-            priceTextView.setText(nf.format(price));
-        } else if (price >= 10000 && price < 1000000) {
-            priceTextView.setText(nf.format(price / 1000d) + "K");
-        } else if (price >= 1000000 && price < 1000000000) {
-            priceTextView.setText(nf.format(price / 1000000d) + "M");
-        } else if (price >= 1000000000) {
-            priceTextView.setText(nf.format(price / 1000000000d) + "B");
-        } else if (price >= 1000000000000d) {
-            priceTextView.setText(nf.format(price / 1000000000000d) + "T");
         }
     }
 
