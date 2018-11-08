@@ -18,6 +18,7 @@ import android.widget.TextView;
 import com.betherichest.android.App;
 import com.betherichest.android.R;
 import com.betherichest.android.database.DatabaseManager;
+import com.betherichest.android.mangers.ConnectionManager;
 import com.betherichest.android.mangers.GUIManager;
 import com.betherichest.android.mangers.Game;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -27,6 +28,11 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 
 public class LoginActivity extends AppCompatActivity {
     private TextView userTextView;
@@ -60,6 +66,7 @@ public class LoginActivity extends AppCompatActivity {
         signInDetailLayout = findViewById(R.id.sign_in_details);
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.server_client_id))
                 .requestEmail()
                 .build();
         mGoogleSignInClient = GoogleSignIn.getClient(LoginActivity.this, gso);
@@ -110,7 +117,7 @@ public class LoginActivity extends AppCompatActivity {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == RC_SIGN_IN && resultCode == -1) {
+        if (requestCode == RC_SIGN_IN) {
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             handleSignInResult(task);
         }
@@ -119,17 +126,28 @@ public class LoginActivity extends AppCompatActivity {
     private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
         try {
             account = completedTask.getResult(ApiException.class);
+
+            String idToken = account.getIdToken();
+
+            Map<String, Object> requestParams = new HashMap<>();
+            requestParams.put("idToken", idToken);
+
+            Map<String, String> headerParams = new HashMap<>();
+            requestParams.put("Authentication", idToken);
+            new ConnectionManager(new URL(ConnectionManager.BTR_URL + "/muser/tokensignin"), requestParams, headerParams);
+
             updateUI(account);
             GUIManager.showToast(R.string.login_successful);
         } catch (ApiException e) {
             updateUI(null);
             GUIManager.showToast(R.string.login_failed);
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
         }
     }
 
     private void signInClick() {
         if (isNetworkConnected() && App.isOnline()) {
-
             Intent signInIntent = mGoogleSignInClient.getSignInIntent();
             startActivityForResult(signInIntent, RC_SIGN_IN);
         } else {

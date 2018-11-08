@@ -24,11 +24,14 @@ import com.betherichest.android.fragments.GamblingFragment;
 import com.betherichest.android.fragments.InvestmentFragment;
 import com.betherichest.android.fragments.LeaderboardFragment;
 import com.betherichest.android.fragments.UpgradeFragment;
+import com.betherichest.android.mangers.ConnectionManager;
 import com.betherichest.android.mangers.GUIManager;
 import com.betherichest.android.mangers.Game;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.text.NumberFormat;
 import java.util.Locale;
 
@@ -85,10 +88,6 @@ public class MainActivity extends AppCompatActivity {
         mAdView.loadAd(adRequest);
     }
 
-    public static Context getContext() {
-        return context;
-    }
-
     public void investmentsIconClick(View view) {
         guiManager.openFragment(R.id.investment_list_container, new InvestmentFragment(), null);
         guiManager.relocateDollarImage(true);
@@ -117,10 +116,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         Game.setTimerPaused(false);
-        if (GUIManager.isNotificationCloseRequested()) {
-            fragmentManager.popBackStack("achievement_notification", FragmentManager.POP_BACK_STACK_INCLUSIVE);
-            guiManager.setNotificationCloseRequested(false);
-        }
     }
 
     @Override
@@ -138,6 +133,12 @@ public class MainActivity extends AppCompatActivity {
             Game.setTimerPaused(true);
         }
         dbManager.saveStateToDb();
+
+        try {
+            new ConnectionManager(new URL("http://httpbin.org/post"), Game.statisticsManager.getStatRequestParams());
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

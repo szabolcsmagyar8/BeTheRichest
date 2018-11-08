@@ -255,7 +255,7 @@ public class Game {
     }
     //endregion
 
-    public void startTimer() {
+    private void startTimer() {
         T.schedule(new TimerTask() {
             @Override
             public void run() {

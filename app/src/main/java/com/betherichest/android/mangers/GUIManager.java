@@ -5,6 +5,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.drawable.GradientDrawable;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.support.design.widget.NavigationView;
@@ -36,8 +37,7 @@ import java.util.Random;
 public class GUIManager {
     private View view;
     private Game game;
-    private static Context context;
-
+    private Context context;
 
     private WindowManager windowManager;
     private FragmentManager fragmentManager;
@@ -54,9 +54,10 @@ public class GUIManager {
     private ImageView leaderboardImageView;
     private ActionBar actionBar;
 
+    MediaPlayer mp;
+
     private static Toast toast = null;
     private static boolean activityOpened = false;
-    private static boolean notificationCloseRequested = false;
 
     static Random rnd = new Random();
     private long mLastClickTime = 0;
@@ -82,14 +83,6 @@ public class GUIManager {
 
     public static void setActivityOpened(boolean opened) {
         activityOpened = opened;
-    }
-
-    public static boolean isNotificationCloseRequested() {
-        return notificationCloseRequested;
-    }
-
-    public static void setNotificationCloseRequested(boolean notificationCloseRequested) {
-        GUIManager.notificationCloseRequested = notificationCloseRequested;
     }
 
     private void initializeViews() {
@@ -180,8 +173,22 @@ public class GUIManager {
             changeCurrentMoneyText();
 
             animateDollarTap();
+
+           // playSound();
         }
     }
+
+//    private void playSound() {
+//        mp = MediaPlayer.create(context, R.raw.click);
+//
+//        try {
+//            if (mp.isPlaying()) {
+//                mp.stop();
+//                mp.release();
+//                mp = MediaPlayer.create(context, R.raw.click);
+//            } mp.start();
+//        } catch(Exception e) { e.printStackTrace(); }
+//    }
 
     private void animateDollarTap() {
         dollarImage.startAnimation(AnimationUtils.loadAnimation(context, R.anim.shrink));   // shrink animation

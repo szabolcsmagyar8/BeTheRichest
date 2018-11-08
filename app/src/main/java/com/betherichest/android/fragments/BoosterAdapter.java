@@ -11,9 +11,7 @@ import com.betherichest.android.R;
 import com.betherichest.android.gameElements.Booster;
 import com.betherichest.android.util.Inventory;
 
-import java.text.NumberFormat;
 import java.util.List;
-import java.util.Locale;
 
 public class BoosterAdapter extends BaseAdapter {
     private View listItemView;
@@ -59,7 +57,7 @@ public class BoosterAdapter extends BaseAdapter {
         iconImageView = listItemView.findViewById(R.id.booster_icon);
 
         nameTextView.setText(items.get(i).getTitle());
-        rewardTextView.setText("Reward: " + String.valueOf(NumberFormat.getNumberInstance(Locale.FRANCE).format(items.get(i).getActualReward()) + " $"));
+        rewardTextView.setText("Reward: " + App.convertThousandsToSIUnit(items.get(i).getActualReward(), false) + " $");
         if (inventory != null) {
             priceTextView.setText(inventory.getSkuDetails(items.get(i).getSkuId()).getPrice());
         } else {

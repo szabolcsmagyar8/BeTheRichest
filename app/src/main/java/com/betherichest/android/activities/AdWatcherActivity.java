@@ -54,7 +54,6 @@ public class AdWatcherActivity extends AppCompatActivity implements RewardedVide
 
     @Override
     public void onRewardedVideoAdLeftApplication() {
-        GUIManager.showToast("onRewarded");
     }
 
     @Override
@@ -91,7 +90,7 @@ public class AdWatcherActivity extends AppCompatActivity implements RewardedVide
 
     @Override
     public void onRewardedVideoCompleted() {
-        GUIManager.showToast("onRewarded");
+
     }
 
     @Override

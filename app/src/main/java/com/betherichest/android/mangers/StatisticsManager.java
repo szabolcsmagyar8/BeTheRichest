@@ -13,6 +13,7 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Observable;
 
 public class StatisticsManager extends Observable {
@@ -99,5 +100,24 @@ public class StatisticsManager extends Observable {
     protected void onNotify(StatType statType) {
         setChanged();
         notifyObservers(statType);
+    }
+
+    public Map<String, Object> getStatRequestParams() {
+        Map<String, Object> params = new HashMap<>();
+        params.put("currentMoney", Game.getInstance().getCurrentMoney());
+        params.put("currentClicks", getStatByType(StatType.TOTAL_CLICKS).getValue());
+        params.put("currentPlaytime", getStatByType(StatType.TOTAL_PLAYING_TIME).getValue());
+        params.put("totalMoneyCollected", getStatByType(StatType.TOTAL_MONEY_COLLECTED).getValue());
+        params.put("totalMoneySpent", getStatByType(StatType.MONEY_SPENT).getValue());
+        params.put("totalInvestmentLevels", getStatByType(StatType.TOTAL_INVESTMENT_LEVELS).getValue());
+        params.put("upgradesBought", getStatByType(StatType.UPGRADES_BOUGHT).getValue());
+        params.put("moneyFromVideos", getStatByType(StatType.MONEY_FROM_VIDEOS).getValue());
+        params.put("moneyFromGambling", getStatByType(StatType.MONEY_FROM_GAMBLING).getValue());
+        params.put("moneyFromClicks", getStatByType(StatType.TOTAL_MONEY_FROM_CLICKS).getValue());
+        params.put("highestMoney", getStatByType(StatType.HIGHEST_MONEY).getValue());
+        params.put("videosWatched", getStatByType(StatType.VIDEOS_WATCHED).getValue());
+        params.put("moneySpentGambling", getStatByType(StatType.MONEY_SPENT_ON_GAMBLING).getValue());
+        params.put("gamblingBalance", getStatByType(StatType.GAMBLING_BALANCE).getValue());
+        return params;
     }
 }
