@@ -25,4 +25,5 @@
     <color name="black">#000000</color>
     <color name="achievement_active">#36ffcc00</color>
     <color name="achievement_inactive">#bc616161</color>
+    <color name="lightGreen">#93bf00</color>
 </resources>

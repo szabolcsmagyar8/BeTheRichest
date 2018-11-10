@@ -18,6 +18,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.betherichest.android.App;
+import com.betherichest.android.HTTPMethod;
 import com.betherichest.android.R;
 import com.betherichest.android.database.DatabaseManager;
 import com.betherichest.android.fragments.GamblingFragment;
@@ -33,7 +34,9 @@ import com.google.android.gms.ads.AdView;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.NumberFormat;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
     private static Context context;
@@ -89,23 +92,19 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void investmentsIconClick(View view) {
-        guiManager.openFragment(R.id.investment_list_container, new InvestmentFragment(), null);
-        guiManager.relocateDollarImage(true);
+        guiManager.openFragment(R.id.investment_list_container, new InvestmentFragment());
     }
 
     public void upgradesIconClick(View view) {
-        guiManager.openFragment(R.id.upgrade_list_container, new UpgradeFragment(), null);
-        guiManager.relocateDollarImage(true);
+        guiManager.openFragment(R.id.upgrade_list_container, new UpgradeFragment());
     }
 
     public void gamblingIconClick(View view) {
-        guiManager.openFragment(R.id.gambling_list_container, new GamblingFragment(), null);
-        guiManager.relocateDollarImage(true);
+        guiManager.openFragment(R.id.gambling_list_container, new GamblingFragment());
     }
 
     public void leaderboardIconClick(View view) {
-        guiManager.openFragment(R.id.leaderboard_list_container, new LeaderboardFragment(), null);
-        guiManager.relocateDollarImage(true);
+        guiManager.openFragment(R.id.leaderboard_list_container, new LeaderboardFragment());
     }
 
     public void closeClick(View view) {
@@ -135,7 +134,10 @@ public class MainActivity extends AppCompatActivity {
         dbManager.saveStateToDb();
 
         try {
-            new ConnectionManager(new URL("http://httpbin.org/post"), Game.statisticsManager.getStatRequestParams());
+            //new ConnectionManager(new URL("http://httpbin.org/post"), Game.statisticsManager.getStatRequestParams());
+            Map<String, String> header = new HashMap<>();
+            header.put("Authorization", "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiNWJlNWJjOTQ4MDI4OGMwMDExMjZlNDUzIiwiaWF0IjoxNTQxNzgyNjc2LCJleHAiOjEwMTgxNzgyNjc2fQ.EnGfQLYHsgr63fD-FJ8ujH9aJ0uONw1sTZwbYCN49vw");
+            new ConnectionManager(new URL("https://betherichest-1994.appspot.com/muser/log-stats"), Game.statisticsManager.getStatRequestParams(), header, HTTPMethod.POST);
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }

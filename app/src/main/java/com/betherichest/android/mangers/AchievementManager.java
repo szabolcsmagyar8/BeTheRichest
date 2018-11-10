@@ -1,6 +1,8 @@
 package com.betherichest.android.mangers;
 
 import android.content.Intent;
+import android.os.Handler;
+import android.os.Looper;
 
 import com.betherichest.android.App;
 import com.betherichest.android.StatType;
@@ -11,14 +13,16 @@ import com.betherichest.android.gameElements.achievement.InvestmentLevelAchievem
 import com.betherichest.android.gameElements.achievement.TapAchievement;
 import com.betherichest.android.gameElements.achievement.TimeInGameAchievement;
 import com.betherichest.android.gameElements.achievement.TotalUpgradeAchievement;
+import com.betherichest.android.listenerInterfaces.AdapterRefreshListener;
 
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
 public class AchievementManager implements Observer {
-    List<Achievement> achievements;
-    StatisticsManager statManager;
+    private List<Achievement> achievements;
+    private StatisticsManager statManager;
+    public static AdapterRefreshListener refreshListener;
 
     public AchievementManager(List<Achievement> achievements) {
         this.achievements = achievements;
@@ -66,7 +70,16 @@ public class AchievementManager implements Observer {
 
     private void unlockAchievement(Achievement achievement) {
         achievement.unLock();
+        Game.statisticsManager.getStatByType(StatType.UNLOCKED_ACHIEVEMENTS).increaseValueByOne();
 
+        new Handler(Looper.getMainLooper()).post(new Runnable() {
+            @Override
+            public void run() {
+                if (refreshListener != null) {
+                    refreshListener.refreshAdapter();
+                }
+            }
+        });
         Intent intent = new Intent(App.getContext(), AchievementNotificationActivity.class);
         intent.putExtra("achievement", achievement);
         App.getContext().startActivity(intent);

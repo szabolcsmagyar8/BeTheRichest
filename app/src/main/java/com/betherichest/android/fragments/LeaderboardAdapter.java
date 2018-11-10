@@ -3,6 +3,7 @@ package com.betherichest.android.fragments;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.betherichest.android.App;
@@ -23,6 +24,7 @@ class LeaderboardAdapter extends BaseAdapter {
     private TextView nameTextView;
     private TextView moneyTextView;
     private TextView rankTextView;
+    private RelativeLayout listitemContent;
 
     private Leader leader;
 
@@ -73,13 +75,13 @@ class LeaderboardAdapter extends BaseAdapter {
         nameTextView = listItemView.findViewById(R.id.leader_name_text);
         moneyTextView = listItemView.findViewById(R.id.leader_money_text);
         rankTextView = listItemView.findViewById(R.id.rank_circle);
-
+        listitemContent = listItemView.findViewById(R.id.listitem_content);
         App.NF.setMaximumFractionDigits(0);
         rankTextView.setText(String.format("#%s", String.valueOf(position + 1)));
 
         // highlights the player in the list
         if (leader.isPlayer()) {
-            listItemView.setBackgroundColor(App.getContext().getResources().getColor(R.color.invisibleWhite));
+            listitemContent.setBackground(App.getContext().getResources().getDrawable(R.drawable.background_leaderboard_player));
             moneyTextView.setText(String.valueOf(App.NF.format(Game.getInstance().getCurrentMoney())));
             if (LoginActivity.account != null) {
                 nameTextView.setText(LoginActivity.account.getDisplayName());
@@ -88,7 +90,7 @@ class LeaderboardAdapter extends BaseAdapter {
             }
 
         } else {
-            listItemView.setBackgroundColor(App.getContext().getResources().getColor(R.color.transparent));
+            listitemContent.setBackgroundColor(App.getContext().getResources().getColor(R.color.transparent));
             moneyTextView.setText(String.valueOf(App.NF.format(leader.getMoney())));
             nameTextView.setText(leader.getName());
         }

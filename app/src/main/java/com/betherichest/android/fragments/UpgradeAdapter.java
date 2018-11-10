@@ -69,7 +69,7 @@ public class UpgradeAdapter extends BaseAdapter {
         priceTextView = listItemView.findViewById(R.id.price);
         imageView = listItemView.findViewById(R.id.investmentIcon);
         effectTextView = listItemView.findViewById(R.id.multiplier);
-        relativeLayout = listItemView.findViewById(R.id.boosterItem);
+        relativeLayout = listItemView.findViewById(R.id.upgrade_item);
 
         upgrade = items.get(position);
         Glide
@@ -84,7 +84,6 @@ public class UpgradeAdapter extends BaseAdapter {
         setUITexts();
         setTextColorByAvailability();
         createColorfulBorder();
-        //convertThousandsToSIUnit();
 
         return listItemView;
     }
@@ -103,11 +102,10 @@ public class UpgradeAdapter extends BaseAdapter {
     private void setUITexts() {
         priceTextView.setText(App.convertThousandsToSIUnit(upgrade.getPrice(), false));
 
-        if (upgrade instanceof GlobalIncrementUpgrade){
+        if (upgrade instanceof GlobalIncrementUpgrade) {
             effectTextView.setText("+" + String.valueOf(upgrade.getMultiplier()));
-        }
-        else{
-            effectTextView.setText("X" + String.valueOf((int)upgrade.getMultiplier()));
+        } else {
+            effectTextView.setText("X" + String.valueOf((int) upgrade.getMultiplier()));
         }
         effectTextView.setTextColor(upgrade.getColor());
 
@@ -125,8 +123,6 @@ public class UpgradeAdapter extends BaseAdapter {
         gd.setCornerRadius(App.getPixelFromDP(12));
         relativeLayout.setBackground(gd);
     }
-
-
 
     private void setTextColorByAvailability() {
         if (upgrade.isBuyable()) {

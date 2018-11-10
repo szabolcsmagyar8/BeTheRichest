@@ -8,19 +8,38 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.betherichest.android.R;
+import com.betherichest.android.StatType;
 import com.betherichest.android.database.DatabaseManager;
 import com.betherichest.android.fragments.AchievementAdapter;
 import com.betherichest.android.gameElements.achievement.Achievement;
+import com.betherichest.android.listenerInterfaces.AdapterRefreshListener;
+import com.betherichest.android.mangers.AchievementManager;
 import com.betherichest.android.mangers.GUIManager;
 import com.betherichest.android.mangers.Game;
 
 public class AchievementActivity extends AppCompatActivity {
+    private ProgressBar progressBar;
+    private TextView unlockedTextView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_achievements);
+
+        progressBar = findViewById(R.id.mprogress_bar);
+        unlockedTextView = findViewById(R.id.unlocked_text);
+        updateProgressBar();
+
+        AchievementManager.refreshListener = new AdapterRefreshListener() {
+            @Override
+            public void refreshAdapter() {
+                updateProgressBar();
+            }
+        };
 
         Toolbar toolbar = findViewById(R.id.toolbar);
 
@@ -28,6 +47,18 @@ public class AchievementActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         setAdapter();
+    }
+
+    private void updateProgressBar() {
+        progressBar.post(new Runnable() {
+            public void run() {
+                double unlockedAchievementNum = Game.statisticsManager.getStatByType(StatType.UNLOCKED_ACHIEVEMENTS).getValue();
+                int totalAchievementNum = Game.getInstance().getAchievements().size();
+                double percentage = unlockedAchievementNum / totalAchievementNum;
+                progressBar.setProgress((int) (percentage * 100));
+                unlockedTextView.setText(String.format("Unlocked: %s/%s", (int) unlockedAchievementNum, totalAchievementNum));
+            }
+        });
     }
 
     @Override
@@ -74,7 +105,7 @@ public class AchievementActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Achievement achievement = adapter.getItem(i);
-                if (!achievement.isUnlocked()){
+                if (!achievement.isUnlocked()) {
                     return;
                 }
 

@@ -9,7 +9,7 @@
     android:padding="7dp">
 
     <RelativeLayout
-        android:id="@+id/boosterItem"
+        android:id="@+id/upgrade_item"
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:layout_centerHorizontal="true">
@@ -40,7 +40,7 @@
         android:id="@+id/pricelayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/boosterItem"
+        android:layout_below="@+id/upgrade_item"
         android:layout_centerHorizontal="true"
         android:orientation="horizontal">
 

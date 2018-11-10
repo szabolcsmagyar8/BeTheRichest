@@ -18,4 +18,5 @@ public enum StatType {
     HIGHEST_MONEY,
     VIDEOS_WATCHED,
     MONEY_FROM_VIDEOS,
+    UNLOCKED_ACHIEVEMENTS,
 }

@@ -16,6 +16,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.betherichest.android.App;
+import com.betherichest.android.HTTPMethod;
 import com.betherichest.android.R;
 import com.betherichest.android.database.DatabaseManager;
 import com.betherichest.android.mangers.ConnectionManager;
@@ -134,7 +135,7 @@ public class LoginActivity extends AppCompatActivity {
 
             Map<String, String> headerParams = new HashMap<>();
             requestParams.put("Authentication", idToken);
-            new ConnectionManager(new URL(ConnectionManager.BTR_URL + "/muser/tokensignin"), requestParams, headerParams);
+            new ConnectionManager(new URL(ConnectionManager.BTR_URL + "/muser/register"), requestParams, headerParams, HTTPMethod.POST);
 
             updateUI(account);
             GUIManager.showToast(R.string.login_successful);

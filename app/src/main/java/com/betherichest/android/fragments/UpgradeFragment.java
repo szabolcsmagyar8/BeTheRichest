@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.TextView;
 
 import com.betherichest.android.R;
 import com.betherichest.android.gameElements.upgrade.Upgrade;
@@ -19,14 +20,17 @@ import java.util.List;
 
 
 public class UpgradeFragment extends Fragment {
-    View rootView;
-    Game game;
+    private View rootView;
+    private TextView noUpgradeTextView;
+    private Game game = Game.getInstance();
 
     List<Upgrade> items;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_upgrade, container, false);
+        noUpgradeTextView = rootView.findViewById(R.id.no_upgrade_textview);
+
         return rootView;
     }
 
@@ -44,8 +48,6 @@ public class UpgradeFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        game = Game.getInstance();
-
         items = game.getDisplayableUpgrades();
 
         final UpgradeAdapter adapter = new UpgradeAdapter(items, getContext());
@@ -57,6 +59,12 @@ public class UpgradeFragment extends Fragment {
             public void refreshAdapter() {
                 adapter.setItems(game.getDisplayableUpgrades());
                 adapter.notifyDataSetChanged();
+                items = game.getDisplayableUpgrades();
+                if (items.size() == 0) {
+                    noUpgradeTextView.setVisibility(View.VISIBLE);
+                } else {
+                    noUpgradeTextView.setVisibility(View.INVISIBLE);
+                }
             }
         };
 
@@ -73,5 +81,7 @@ public class UpgradeFragment extends Fragment {
                 }
             }
         });
+
+
     }
 }

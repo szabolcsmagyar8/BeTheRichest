@@ -8,7 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="28dp"
-        android:background="#fff0bb"
+        android:background="@drawable/background_leaderboard_list"
         android:divider="@null" />
 
     <ImageView

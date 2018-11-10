@@ -33,6 +33,7 @@ public class StatisticsFactory {
         gameStatistics.put(StatType.HIGHEST_MONEY, new GameStatistics(res.getString(R.string.highest_money), 0, R.drawable.ic_money));
         gameStatistics.put(StatType.VIDEOS_WATCHED, new GameStatistics(res.getString(R.string.videos_wathced), 0, R.drawable.ic_videos));
         gameStatistics.put(StatType.MONEY_FROM_VIDEOS, new GameStatistics(res.getString(R.string.money_from_videos), 0, R.drawable.ic_money));
+        gameStatistics.put(StatType.UNLOCKED_ACHIEVEMENTS, new GameStatistics(res.getString(R.string.unlocked_achievements), 0, R.drawable.ic_achievements));
         return gameStatistics;
     }
 }

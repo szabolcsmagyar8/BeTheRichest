@@ -111,6 +111,8 @@ public class StatisticsManager extends Observable {
         params.put("totalMoneySpent", getStatByType(StatType.MONEY_SPENT).getValue());
         params.put("totalInvestmentLevels", getStatByType(StatType.TOTAL_INVESTMENT_LEVELS).getValue());
         params.put("upgradesBought", getStatByType(StatType.UPGRADES_BOUGHT).getValue());
+        params.put("moneyFromInvestments", 19941006);
+        params.put("achievementsUnlocked", 8);
         params.put("moneyFromVideos", getStatByType(StatType.MONEY_FROM_VIDEOS).getValue());
         params.put("moneyFromGambling", getStatByType(StatType.MONEY_FROM_GAMBLING).getValue());
         params.put("moneyFromClicks", getStatByType(StatType.TOTAL_MONEY_FROM_CLICKS).getValue());

@@ -6,7 +6,6 @@ import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.drawable.GradientDrawable;
 import android.media.MediaPlayer;
-import android.os.Bundle;
 import android.os.SystemClock;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -29,7 +28,6 @@ import android.widget.Toast;
 
 import com.betherichest.android.App;
 import com.betherichest.android.R;
-import com.betherichest.android.fragments.UpgradeFragment;
 import com.betherichest.android.listenerInterfaces.MoneyChangedListener;
 
 import java.util.Random;
@@ -174,7 +172,7 @@ public class GUIManager {
 
             animateDollarTap();
 
-           // playSound();
+            // playSound();
         }
     }
 
@@ -269,29 +267,18 @@ public class GUIManager {
         return marginLeft;
     }
 
-    public void openFragment(int containerId, Fragment fragment, Bundle bundle) {
+    public void openFragment(int containerId, Fragment fragment) {
         if (SystemClock.elapsedRealtime() - mLastClickTime < 500) {
             return;
         }
-
-        if (fragment instanceof UpgradeFragment && game.getDisplayableUpgrades().size() == 0) {
-            showToast(R.string.no_upgrades_available);
-            return;
-        }
-
-        if (fragmentManager == null) {
-            return;
-        }
-
-        fragment.setArguments(bundle);
 
         mLastClickTime = SystemClock.elapsedRealtime();
         FragmentTransaction ft = fragmentManager.beginTransaction();
 
         ft.setCustomAnimations(R.anim.slide_in_from_bottom, R.anim.slide_out_to_bottom, R.anim.slide_in_from_bottom, R.anim.slide_out_to_bottom);
         ft.addToBackStack(null);
-
-        ft.replace(containerId, fragment).commitAllowingStateLoss();
+        ft.replace(containerId, fragment).commit();
+        relocateDollarImage(true);
     }
 
     public static void showToast(int stringResource) {
@@ -337,7 +324,7 @@ public class GUIManager {
         NavigationView navigationView = view.findViewById(R.id.nav_view);
         Menu menu = navigationView.getMenu();
         MenuItem navAds = menu.findItem(R.id.nav_ads);
-        String rewardString = String.valueOf(App.NF.format(game.getAdReward()));
+        String rewardString = App.convertThousandsToSIUnit(game.getAdReward(), false);
         navAds.setTitle(App.getContext().getResources().getString(R.string.ads) + " " + rewardString + " $");
     }
 
