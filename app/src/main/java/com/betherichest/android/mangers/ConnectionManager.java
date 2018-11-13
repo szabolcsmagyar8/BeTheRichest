@@ -6,6 +6,7 @@ import com.betherichest.android.HTTPMethod;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
@@ -87,8 +88,15 @@ public class ConnectionManager extends AsyncTask<URL, String, Void> {
     private void printResponse(HttpURLConnection conn) throws IOException {
         System.out.println("Response Code: " + conn.getResponseCode() + " " + conn.getResponseMessage());
 
-        BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+        InputStream inputStream = null;
+        try {
+            inputStream = conn.getInputStream();
+        } catch(IOException exception) {
+            inputStream = conn.getErrorStream();
+        }
+        BufferedReader br = new BufferedReader(new InputStreamReader(inputStream));
         StringBuilder response = new StringBuilder();
+        response.append("---------------------> OUTPUT: ");
         String output;
         while ((output = br.readLine()) != null) {
             response.append(output);

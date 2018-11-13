@@ -1,0 +1,214 @@
+{
+  "leaders": [
+    {
+      "name": "Rithcie, the Legend",
+      "money": 10000000000000,
+      "growthRate": 1.1
+    },
+    {
+      "name": "Billy, the Rocker ",
+      "money": 5000000000000,
+      "growthRate": 1.1
+    },
+    {
+      "name": "Cameron",
+      "money": 2500000000000,
+      "growthRate": 1.1
+    },
+    {
+      "name": "Roger",
+      "money": 1000000000000,
+      "growthRate": 1.1
+    },
+    {
+      "name": "Hector",
+      "money": 800000000000,
+      "growthRate": 1.1
+    },
+    {
+      "name": "Warren",
+      "money": 600000000000,
+      "growthRate": 1.1
+    },
+    {
+      "name": "Victor",
+      "money": 400000000000,
+      "growthRate": 1.1
+    },
+    {
+      "name": "Jonas",
+      "money": 300000000000,
+      "growthRate": 1.1
+    },
+    {
+      "name": "Donnie",
+      "money": 100000000000,
+      "growthRate": 1.1
+    },
+    {
+      "name": "Borislav",
+      "money": 90000000000,
+      "growthRate": 1.1
+    },
+    {
+      "name": "Alfred",
+      "money": 70000000000,
+      "growthRate": 1.1
+    },
+    {
+      "name": "Vladimir",
+      "money": 50000000000,
+      "growthRate": 1.1
+    },
+    {
+      "name": "Chan",
+      "money": 30000000000,
+      "growthRate": 1.1
+    },
+    {
+      "name": "Elisabeth",
+      "money": 15000000000,
+      "growthRate": 1.1
+    },
+    {
+      "name": "Daan",
+      "money": 8000000000,
+      "growthRate": 1.1
+    },
+    {
+      "name": "Juan",
+      "money": 5000000000,
+      "growthRate": 1.1
+    },
+    {
+      "name": "Lisa",
+      "money": 3000000000,
+      "growthRate": 1.1
+    },
+    {
+      "name": "Jillian ",
+      "money": 2000000000,
+      "growthRate": 1.1
+    },
+    {
+      "name": "Dimitri",
+      "money": 1000000000,
+      "growthRate": 1.1
+    },
+    {
+      "name": "Van Rowan",
+      "money": 900000000,
+      "growthRate": 1.1
+    },
+    {
+      "name": "Ahmed",
+      "money": 700000000,
+      "growthRate": 1.1
+    },
+    {
+      "name": "Robert",
+      "money": 500000000,
+      "growthRate": 1.1
+    },
+    {
+      "name": "Benjamin ",
+      "money": 300000000,
+      "growthRate": 1.1
+    },
+    {
+      "name": "Joy",
+      "money": 100000000,
+      "growthRate": 1.1
+    },
+    {
+      "name": "Aleksey",
+      "money": 75000000,
+      "growthRate": 1.1
+    },
+    {
+      "name": "Javier",
+      "money": 50000000,
+      "growthRate": 1.1
+    },
+    {
+      "name": "Electra",
+      "money": 30000000,
+      "growthRate": 1.1
+    },
+    {
+      "name": "Christian",
+      "money": 20000000,
+      "growthRate": 1.1
+    },
+    {
+      "name": "William",
+      "money": 10000000,
+      "growthRate": 1.1
+    },
+    {
+      "name": "Nathan",
+      "money": 8500000,
+      "growthRate": 1.1
+    },
+    {
+      "name": "Daniel",
+      "money": 7000000,
+      "growthRate": 1.1
+    },
+    {
+      "name": "Oliver",
+      "money": 5000000,
+      "growthRate": 1.1
+    },
+    {
+      "name": "Megan",
+      "money": 2500000,
+      "growthRate": 1.1
+    },
+    {
+      "name": "Rebecca",
+      "money": 1000000,
+      "growthRate": 1.1
+    },
+    {
+      "name": "Harry",
+      "money": 800000,
+      "growthRate": 1.1
+    },
+    {
+      "name": "Fernando",
+      "money": 600000,
+      "growthRate": 1.1
+    },
+    {
+      "name": "Abigel",
+      "money": 400000,
+      "growthRate": 1.1
+    },
+    {
+      "name": "Sebastian",
+      "money": 200000,
+      "growthRate": 1.1
+    },
+    {
+      "name": "Manuel",
+      "money": 100000,
+      "growthRate": 1.1
+    },
+    {
+      "name": "Victoria",
+      "money": 60000,
+      "growthRate": 1.1
+    },
+    {
+      "name": "Patrick",
+      "money": 30000,
+      "growthRate": 1.1
+    },
+    {
+      "name": "Alex",
+      "money": 10000,
+      "growthRate": 1.1
+    }
+  ]
+}

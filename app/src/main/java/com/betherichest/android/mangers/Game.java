@@ -82,7 +82,7 @@ public class Game {
         gamblings = GamblingFactory.getCreatedGamblings();
         boosters = BoosterFactory.getCreatedBoosters();
         achievements = AchievementFactory.getCreatedAchievements();
-        leaders = LeaderFactory.getLeaders();
+        leaders = LeaderFactory.getCreatedLeaders();
 
         statisticsManager = new StatisticsManager();
         achievementManager = new AchievementManager(achievements);

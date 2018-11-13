@@ -34,21 +34,35 @@
                 android:textStyle="bold" />
         </RelativeLayout>
 
-        <TextView
-            android:id="@+id/reward"
+        <LinearLayout
+            android:id="@+id/reward_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/boosterMainInfo"
             android:layout_centerHorizontal="true"
-            android:layout_marginBottom="2dp"
-            android:textSize="14sp"
-            android:textStyle="bold" />
+            android:gravity="center"
+            android:layout_marginBottom="2dp">
+
+            <TextView
+                android:id="@+id/reward"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:adjustViewBounds="true"
+                android:src="@drawable/dollarextrasmall" />
+        </LinearLayout>
 
         <TextView
             android:id="@+id/price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/reward"
+            android:layout_below="@+id/reward_layout"
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="3dp"
             android:textColor="@color/white"

@@ -82,6 +82,7 @@ public class AchievementManager implements Observer {
         });
         Intent intent = new Intent(App.getContext(), AchievementNotificationActivity.class);
         intent.putExtra("achievement", achievement);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         App.getContext().startActivity(intent);
     }
 }

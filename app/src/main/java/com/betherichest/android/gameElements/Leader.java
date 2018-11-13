@@ -1,18 +1,18 @@
 package com.betherichest.android.gameElements;
 
 public class Leader extends GameElement {
+    private static int currentId = 0;
     private boolean isPlayer = false;
     private double money;
 
     private double growthRate;
 
-    public Leader(String name, double money, double growthRate) {
-        this.name = name;
-        this.money = money;
-        this.growthRate = growthRate;
+    public Leader() {
+        this.id = currentId++;
     }
 
     public Leader(String name, double money, boolean isPlayer) {
+        this.id = currentId++;
         this.name = name;
         this.money = money;
         this.isPlayer = isPlayer;

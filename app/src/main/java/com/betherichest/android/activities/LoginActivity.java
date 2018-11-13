@@ -133,9 +133,7 @@ public class LoginActivity extends AppCompatActivity {
             Map<String, Object> requestParams = new HashMap<>();
             requestParams.put("idToken", idToken);
 
-            Map<String, String> headerParams = new HashMap<>();
-            requestParams.put("Authentication", idToken);
-            new ConnectionManager(new URL(ConnectionManager.BTR_URL + "/muser/register"), requestParams, headerParams, HTTPMethod.POST);
+            new ConnectionManager(new URL(ConnectionManager.BTR_URL + "/muser/tokensignin"), requestParams, null, HTTPMethod.POST);
 
             updateUI(account);
             GUIManager.showToast(R.string.login_successful);
