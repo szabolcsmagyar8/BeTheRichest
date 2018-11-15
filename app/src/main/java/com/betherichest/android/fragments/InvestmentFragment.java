@@ -54,7 +54,6 @@ public class InvestmentFragment extends Fragment {
                 Investment selectedInvestment = (Investment) adapter.getItem(position);
                 if (selectedInvestment.isBuyable()) {
                     game.buyInvestment(selectedInvestment);
-                    adapter.notifyDataSetChanged();
                 } else if (selectedInvestment.isLocked()) {
                     return;
                 } else {
@@ -62,5 +61,11 @@ public class InvestmentFragment extends Fragment {
                 }
             }
         });
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        game.slowAdapterRefreshListener = null;
     }
 }

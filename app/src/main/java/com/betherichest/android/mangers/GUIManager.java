@@ -5,7 +5,6 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.drawable.GradientDrawable;
-import android.media.MediaPlayer;
 import android.os.SystemClock;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -52,7 +51,7 @@ public class GUIManager {
     private ImageView leaderboardImageView;
     private ActionBar actionBar;
 
-    MediaPlayer mp;
+//    MediaPlayer mp;
 
     private static Toast toast = null;
     private static boolean activityOpened = false;
@@ -154,10 +153,6 @@ public class GUIManager {
         };
     }
 
-    public void changeCurrentMoneyText() {
-        currentMoneyText.setText(game.getCurrentMoneyAsString());
-    }
-
     public void setMainUIItems() {
         currentMoneyText.setText(game.getCurrentMoneyAsString());
         moneyPerSecText.setText(game.getMoneyPerSecAsString());
@@ -168,7 +163,6 @@ public class GUIManager {
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
             game.dollarClick();
 
-            changeCurrentMoneyText();
 
             animateDollarTap();
 

@@ -81,7 +81,11 @@ public class UpgradeFragment extends Fragment {
                 }
             }
         });
+    }
 
-
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        game.slowAdapterRefreshListener = null;
     }
 }

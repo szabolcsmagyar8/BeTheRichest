@@ -8,7 +8,7 @@ public class TotalUpgradeAchievement extends Achievement {
 
     public TotalUpgradeAchievement(String name, int requiredUpgradeNum, Object reward) {
         super(name, "Buy " + requiredUpgradeNum + " upgrades", reward, App.convertThousandsToSIUnit(requiredUpgradeNum, true));
-        this.imageResource = R.drawable.upgrade;
+        this.imageResource = R.mipmap.upgrade;
         this.requiredUpgradeNum = requiredUpgradeNum;
     }
 

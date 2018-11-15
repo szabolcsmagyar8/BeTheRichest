@@ -17,6 +17,7 @@ import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.betherichest.android.ActionType;
 import com.betherichest.android.App;
 import com.betherichest.android.HTTPMethod;
 import com.betherichest.android.R;
@@ -133,13 +134,14 @@ public class MainActivity extends AppCompatActivity {
         }
         dbManager.saveStateToDb();
 
-        try {
-            //new ConnectionManager(new URL("http://httpbin.org/post"), Game.statisticsManager.getStatRequestParams());
-            Map<String, String> header = new HashMap<>();
-            header.put("Authorization", "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiNWJlNWJjOTQ4MDI4OGMwMDExMjZlNDUzIiwiaWF0IjoxNTQxNzgyNjc2LCJleHAiOjEwMTgxNzgyNjc2fQ.EnGfQLYHsgr63fD-FJ8ujH9aJ0uONw1sTZwbYCN49vw");
-            new ConnectionManager(new URL(ConnectionManager.BTR_URL + "/muser/log-stats"), Game.statisticsManager.getStatRequestParams(), header, HTTPMethod.POST);
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
+        if (LoginActivity.BEARER_TOKEN != null){
+            try {
+                Map<String, String> header = new HashMap<>();
+                header.put("Authorization", LoginActivity.BEARER_TOKEN);
+                new ConnectionManager(new URL(ConnectionManager.BTR_URL + "/muser/log-stats"), Game.statisticsManager.getStatRequestParams(), header, HTTPMethod.POST, ActionType.LOG);
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
         }
     }
 

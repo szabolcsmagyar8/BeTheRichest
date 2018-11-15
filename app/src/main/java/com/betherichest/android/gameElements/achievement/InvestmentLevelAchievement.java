@@ -8,7 +8,7 @@ public class InvestmentLevelAchievement extends Achievement {
 
     public InvestmentLevelAchievement(String name, int requiredInvestmentLevel, Object reward) {
         super(name, "Buy " + requiredInvestmentLevel + " investments", reward, App.convertThousandsToSIUnit(requiredInvestmentLevel, true));
-        this.imageResource = R.drawable.investments;
+        this.imageResource = R.mipmap.investments;
         this.requiredInvestmentLevel = requiredInvestmentLevel;
     }
 

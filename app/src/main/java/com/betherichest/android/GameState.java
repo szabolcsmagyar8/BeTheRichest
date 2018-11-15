@@ -24,6 +24,9 @@ public class GameState {
     @ColumnInfo(name = "max_current_money")
     private double maxCurrentMoney = 0;
 
+    @ColumnInfo(name = "bearer_token")
+    private String bearerToken = null;
+
     public int getId() {
         return id;
     }
@@ -70,5 +73,13 @@ public class GameState {
 
     public void setMaxCurrentMoney(double maxCurrentMoney) {
         this.maxCurrentMoney = maxCurrentMoney;
+    }
+
+    public String getBearerToken() {
+        return bearerToken;
+    }
+
+    public void setBearerToken(String bearerToken) {
+        this.bearerToken = bearerToken;
     }
 }

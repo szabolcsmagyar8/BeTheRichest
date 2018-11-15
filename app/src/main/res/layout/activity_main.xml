@@ -11,7 +11,7 @@
         android:id="@+id/mainRelativeLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/wall"
+        android:background="@mipmap/wall"
         android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
         tools:context=".activities.MainActivity">
 
@@ -112,7 +112,7 @@
                     android:layout_height="70dp"
                     android:layout_centerHorizontal="true"
                     android:onClick="investmentsIconClick"
-                    app:srcCompat="@drawable/investments" />
+                    app:srcCompat="@mipmap/investments" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -134,7 +134,7 @@
                     android:layout_height="70dp"
                     android:layout_centerHorizontal="true"
                     android:onClick="upgradesIconClick"
-                    app:srcCompat="@drawable/upgrade" />
+                    app:srcCompat="@mipmap/upgrade" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -156,7 +156,7 @@
                     android:layout_height="70dp"
                     android:layout_centerHorizontal="true"
                     android:onClick="gamblingIconClick"
-                    app:srcCompat="@drawable/clover" />
+                    app:srcCompat="@mipmap/clover" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -178,7 +178,7 @@
                     android:layout_height="70dp"
                     android:layout_centerHorizontal="true"
                     android:onClick="leaderboardIconClick"
-                    app:srcCompat="@drawable/top100" />
+                    app:srcCompat="@mipmap/top100" />
 
                 <TextView
                     android:layout_width="wrap_content"

@@ -2,9 +2,10 @@ package com.betherichest.android.database;
 
 import com.betherichest.android.App;
 import com.betherichest.android.GameState;
-import com.betherichest.android.gameElements.achievement.Achievement;
+import com.betherichest.android.activities.LoginActivity;
 import com.betherichest.android.gameElements.GameStatistics;
 import com.betherichest.android.gameElements.Investment;
+import com.betherichest.android.gameElements.achievement.Achievement;
 import com.betherichest.android.gameElements.upgrade.InvestmentUpgrade;
 import com.betherichest.android.gameElements.upgrade.Upgrade;
 import com.betherichest.android.mangers.Game;
@@ -36,6 +37,7 @@ public class DatabaseManager {
             game.setMoneyPerTap(states.get(0).getMoneyPerTap());
             Game.gameState.setFirstDollarClick(states.get(0).isFirstDollarClick());
             Game.gameState.setMaxCurrentMoney(states.get(0).getMaxCurrentMoney());
+            LoginActivity.BEARER_TOKEN = states.get(0).getBearerToken();
         }
 
         if (appDatabase.investmentDao().getInvestments().size() != 0) {
@@ -57,6 +59,7 @@ public class DatabaseManager {
         state.setCurrentMoney(game.getCurrentMoney());
         state.setMoneyPerSec(game.getMoneyPerSec());
         state.setMoneyPerTap(game.getMoneyPerTap());
+        state.setBearerToken(LoginActivity.BEARER_TOKEN);
 
         appDatabase.gameStateDAO().insertAll(state);
 

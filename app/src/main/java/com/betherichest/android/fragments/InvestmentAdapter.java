@@ -91,8 +91,8 @@ public class InvestmentAdapter extends BaseAdapter {
             nameTextView.setText(investment.getName());
             priceTextView.setText("Price: " + App.NF.format(investment.getPrice()));
             levelTextView.setText(String.valueOf(investment.getLevel()));
-            dpsPerLevelTextView.setText("DPS: " + String.valueOf(App.NF.format(investment.getMoneyPerSecPerLevel())));
-            totalDPSTextView.setText("Total: " + String.valueOf(App.NF.format((investment.getMoneyPerSec())) + " (" + String.format("%.2f", Game.getInstance().getDPSPercentage(investment)) + "%)"));
+            dpsPerLevelTextView.setText("DPS: " + App.NF.format(investment.getMoneyPerSecPerLevel()));
+            totalDPSTextView.setText("Total: " + App.NF.format((investment.getMoneyPerSec())) + " (" + String.format("%.2f", Game.getInstance().getDPSPercentage(investment)) + "%)");
             upsTextView.setText("UPs: " + investment.getPurchasedRelevantUpgrades().size() + "/" + investment.getRelevantUpgrades().size());
             Glide
                     .with(App.getContext())
@@ -114,11 +114,6 @@ public class InvestmentAdapter extends BaseAdapter {
         } else {
             nameTextView.setTextColor(Color.parseColor("#760c07"));
         }
-    }
-
-    private int convertPxToDp(int px) {
-        float density = listItemView.getContext().getResources().getDisplayMetrics().density;
-        return (int) (px * density);
     }
 
     public void notifyDataSetChanged() {

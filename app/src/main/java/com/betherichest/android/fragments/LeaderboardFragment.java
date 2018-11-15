@@ -41,7 +41,7 @@ public class LeaderboardFragment extends Fragment {
 
         listView.setAdapter(adapter);
 
-        game.slowAdapterRefreshListener = new AdapterRefreshListener() {
+        game.smoothAdapterRefreshListener = new AdapterRefreshListener() {
             @Override
             public void refreshAdapter() {
                 adapter.notifyDataSetChanged();
@@ -56,5 +56,11 @@ public class LeaderboardFragment extends Fragment {
             }
         }
         return false;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        game.smoothAdapterRefreshListener = null;
     }
 }

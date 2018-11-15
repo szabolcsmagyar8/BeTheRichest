@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.betherichest.android.ActionType;
 import com.betherichest.android.App;
 import com.betherichest.android.HTTPMethod;
 import com.betherichest.android.R;
@@ -47,6 +48,7 @@ public class LoginActivity extends AppCompatActivity {
     public static GoogleSignInAccount account;
 
     private static final int RC_SIGN_IN = 9001;
+    public static String BEARER_TOKEN;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -133,7 +135,7 @@ public class LoginActivity extends AppCompatActivity {
             Map<String, Object> requestParams = new HashMap<>();
             requestParams.put("idToken", idToken);
 
-            new ConnectionManager(new URL(ConnectionManager.BTR_URL + "/muser/tokensignin"), requestParams, null, HTTPMethod.POST);
+            new ConnectionManager(new URL(ConnectionManager.BTR_URL + "/muser/tokensignin"), requestParams, null, HTTPMethod.POST, ActionType.LOGIN);
 
             updateUI(account);
             GUIManager.showToast(R.string.login_successful);

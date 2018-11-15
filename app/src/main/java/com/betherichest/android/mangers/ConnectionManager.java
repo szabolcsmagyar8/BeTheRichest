@@ -2,7 +2,9 @@ package com.betherichest.android.mangers;
 
 import android.os.AsyncTask;
 
+import com.betherichest.android.ActionType;
 import com.betherichest.android.HTTPMethod;
+import com.betherichest.android.activities.LoginActivity;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -21,22 +23,18 @@ public class ConnectionManager extends AsyncTask<URL, String, Void> {
     private Map<String, Object> requestParams;
     private Map<String, String> headerParams;
     private HTTPMethod httpMethod;
+    private ActionType actionType;
     public static final String BTR_URL = "https://betherichest-1994.appspot.com";
-
-    public ConnectionManager(URL url, Map<String, Object> requestParams) {
-        this.url = url;
-        this.requestParams = requestParams;
-        execute();
-    }
 
     /**
      * @param requestParams key-value pair request parameters
-     * */
-    public ConnectionManager(URL url, Map<String, Object> requestParams, Map<String, String> headerParams, HTTPMethod httpMethod) {
+     * @param actionType*/
+    public ConnectionManager(URL url, Map<String, Object> requestParams, Map<String, String> headerParams, HTTPMethod httpMethod, ActionType actionType) {
         this.url = url;
         this.requestParams = requestParams;
         this.headerParams = headerParams;
         this.httpMethod = httpMethod;
+        this.actionType = actionType;
         execute();
     }
 
@@ -100,6 +98,10 @@ public class ConnectionManager extends AsyncTask<URL, String, Void> {
         String output;
         while ((output = br.readLine()) != null) {
             response.append(output);
+            if (actionType == ActionType.LOGIN){
+                output = output.replace("\"", "");
+                LoginActivity.BEARER_TOKEN = "Bearer " + output;
+            }
         }
         System.out.println(response.toString());
     }
