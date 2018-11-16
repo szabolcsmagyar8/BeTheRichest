@@ -76,21 +76,16 @@ public class Game {
         return instance;
     }
 
-    public Game() {
-        investments = InvestmentFactory.getCreatedInvestments();
-        upgrades = UpgradeFactory.getCreatedUpgrades(investments);
-        gamblings = GamblingFactory.getCreatedGamblings();
-        boosters = BoosterFactory.getCreatedBoosters();
-        achievements = AchievementFactory.getCreatedAchievements();
-        leaders = LeaderFactory.getCreatedLeaders();
-
-        statisticsManager = new StatisticsManager();
-        achievementManager = new AchievementManager(achievements);
-        gameState = new GameState();
-
-        handler = new Handler(Looper.getMainLooper());
-        startTimer();
-    }
+    //region EVENTHANDLERS
+    Runnable draw = new Runnable() {
+        @Override
+        public void run() {
+            if (smoothAdapterRefreshListener != null) {
+                smoothAdapterRefreshListener.refreshAdapter();
+            }
+            handler.postDelayed(draw, 100);
+        }
+    };
     //endregion
 
     //region PROPERTIES
@@ -220,16 +215,21 @@ public class Game {
     }
     //endregion
 
-    //region EVENTHANDLERS
-    private void postAdapterRefreshRequest() {
-        handler.post(new Runnable() {
-            @Override
-            public void run() {
-                if (smoothAdapterRefreshListener != null) {
-                    smoothAdapterRefreshListener.refreshAdapter();
-                }
-            }
-        });
+    public Game() {
+        investments = InvestmentFactory.getCreatedInvestments();
+        upgrades = UpgradeFactory.getCreatedUpgrades(investments);
+        gamblings = GamblingFactory.getCreatedGamblings();
+        boosters = BoosterFactory.getCreatedBoosters();
+        achievements = AchievementFactory.getCreatedAchievements();
+        leaders = LeaderFactory.getCreatedLeaders();
+
+        statisticsManager = new StatisticsManager();
+        achievementManager = new AchievementManager(achievements);
+        gameState = new GameState();
+
+        handler = new Handler(Looper.getMainLooper());
+        handler.post(draw);
+        startTimer();
     }
 
     private void postSlowAdapterRefreshRequest() {
@@ -260,8 +260,8 @@ public class Game {
             @Override
             public void run() {
                 if (!timerPaused) {
+                    enrichLeaders();
                     earnMoney(getMoneyPerSec() / FPS);
-                    postAdapterRefreshRequest();   // the adapters need to be refreshed continuously, providing a constant update in availability colors and displayable elements in the list
                 }
             }
         }, 0, 1000 / FPS);
@@ -280,7 +280,6 @@ public class Game {
             @Override
             public void run() {
                 if (!timerPaused) {
-                    enrichLeaders();
                     postSlowAdapterRefreshRequest();   // the adapters need to be refreshed continuously, providing a constant update in availability colors and displayable elements in the list
                 }
             }
@@ -317,7 +316,7 @@ public class Game {
         statisticsManager.buyInvestment();
         selectedInvestment.increaseLevel();
         recalculateMoneyPerSecond();
-        recalculateMoneyPerTap();
+        recalculateMoneyPerTap();   // for GlobalIncrements
     }
 
     public void buyUpgrade(Upgrade selectedUpgrade) {
@@ -331,7 +330,6 @@ public class Game {
         if (selectedUpgrade instanceof TapUpgrade) {
             recalculateMoneyPerTap();
         }
-
         if (selectedUpgrade instanceof GlobalIncrementUpgrade) {
             recalculateMoneyPerTap();
         }
@@ -361,12 +359,7 @@ public class Game {
         for (Investment investment : investments) {
             sum += investment.getMoneyPerSec();
         }
-
         moneyPerSec = sum;
-
-        if (moneyChangedListener != null) {
-            moneyChangedListener.onMoneyChanged();
-        }
     }
 
     private void recalculateMoneyPerTap() {
@@ -381,12 +374,7 @@ public class Game {
                 sum *= upgrade.getMultiplier();
             }
         }
-
         moneyPerTap = sum;
-
-        if (moneyChangedListener != null) {
-            moneyChangedListener.onMoneyChanged();
-        }
     }
 
     public void cheat() {

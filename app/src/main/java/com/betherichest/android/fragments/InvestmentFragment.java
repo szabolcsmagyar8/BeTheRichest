@@ -14,6 +14,7 @@ import com.betherichest.android.gameElements.Investment;
 import com.betherichest.android.listenerInterfaces.AdapterRefreshListener;
 import com.betherichest.android.mangers.GUIManager;
 import com.betherichest.android.mangers.Game;
+import com.betherichest.android.mangers.SoundManager;
 
 import java.util.List;
 
@@ -21,11 +22,13 @@ public class InvestmentFragment extends Fragment {
     View rootView;
     ListView listView;
 
-    Game game;
+    Game game = Game.getInstance();
+    ;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_investment, container, false);
+        listView = rootView.findViewById(R.id.investment_listview);
         return rootView;
     }
 
@@ -33,12 +36,9 @@ public class InvestmentFragment extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        game = Game.getInstance();
         List<Investment> items = game.getInvestments();
 
         final InvestmentAdapter adapter = new InvestmentAdapter(items);
-        listView = rootView.findViewById(R.id.investment_listview);
-
         listView.setAdapter(adapter);
 
         game.slowAdapterRefreshListener = new AdapterRefreshListener() {
@@ -54,10 +54,13 @@ public class InvestmentFragment extends Fragment {
                 Investment selectedInvestment = (Investment) adapter.getItem(position);
                 if (selectedInvestment.isBuyable()) {
                     game.buyInvestment(selectedInvestment);
+                    adapter.notifyDataSetChanged();
+                    SoundManager.playSound(SoundManager.soundBuy);
                 } else if (selectedInvestment.isLocked()) {
                     return;
                 } else {
                     GUIManager.showToast(R.string.not_enough_money);
+                    SoundManager.playSound(SoundManager.soundBottle);
                 }
             }
         });

@@ -15,6 +15,7 @@ import com.betherichest.android.gameElements.upgrade.Upgrade;
 import com.betherichest.android.listenerInterfaces.AdapterRefreshListener;
 import com.betherichest.android.mangers.GUIManager;
 import com.betherichest.android.mangers.Game;
+import com.betherichest.android.mangers.SoundManager;
 
 import java.util.List;
 
@@ -30,7 +31,6 @@ public class UpgradeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_upgrade, container, false);
         noUpgradeTextView = rootView.findViewById(R.id.no_upgrade_textview);
-
         return rootView;
     }
 
@@ -76,8 +76,10 @@ public class UpgradeFragment extends Fragment {
                     game.buyUpgrade(selectedUpgrade);
                     adapter.setItems(game.getDisplayableUpgrades());    //refreshing adapter when an upgrade is bought
                     adapter.notifyDataSetChanged();
+                    SoundManager.playSound(SoundManager.soundBuy);
                 } else {
                     GUIManager.showToast(R.string.not_enough_money);
+                    SoundManager.playSound(SoundManager.soundBottle);
                 }
             }
         });

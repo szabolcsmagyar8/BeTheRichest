@@ -17,7 +17,6 @@ import java.util.List;
 public class LeaderboardFragment extends Fragment {
     View rootView;
     ListView listView;
-
     Game game = Game.getInstance();
 
     @Override

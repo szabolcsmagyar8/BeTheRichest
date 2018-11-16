@@ -19,7 +19,7 @@ import com.betherichest.android.database.DatabaseManager;
 import com.betherichest.android.gameElements.achievement.Achievement;
 import com.betherichest.android.mangers.GUIManager;
 import com.betherichest.android.mangers.Game;
-import com.bumptech.glide.Glide;
+import com.betherichest.android.mangers.SoundManager;
 
 public class AchievementNotificationActivity extends Activity {
     TextView achievementNameTextView;
@@ -35,8 +35,9 @@ public class AchievementNotificationActivity extends Activity {
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
 
         Achievement achievement = (Achievement) getIntent().getSerializableExtra("achievement");
-
         initializeUI(achievement);
+
+        SoundManager.playSound(SoundManager.soundAchievement);
 
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
@@ -73,12 +74,7 @@ public class AchievementNotificationActivity extends Activity {
         achievementImageView = findViewById(R.id.achievement_image);
         achievementNameTextView = findViewById(R.id.achievement_name);
         achievementNameTextView.setText(achievement.getDescription());
-        Glide.with(App.getContext())
-                .load(achievement.getImageResource())
-                .asBitmap()
-                .dontAnimate()
-                .dontTransform()
-                .into(achievementImageView);
+        achievementImageView.setImageResource(achievement.getImageResource());
     }
 
     @Override

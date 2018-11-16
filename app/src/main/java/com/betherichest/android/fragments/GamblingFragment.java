@@ -18,6 +18,7 @@ import com.betherichest.android.R;
 import com.betherichest.android.gameElements.Gambling;
 import com.betherichest.android.mangers.GUIManager;
 import com.betherichest.android.mangers.Game;
+import com.betherichest.android.mangers.SoundManager;
 
 import java.util.List;
 import java.util.Random;
@@ -95,6 +96,7 @@ public class GamblingFragment extends Fragment {
                 rotatingImage.setVisibility(View.VISIBLE);
                 closeImageView.setImageResource(R.drawable.close_gray_flat);
                 Game.setGamblingAnimationRunning(true);
+                SoundManager.playSound(SoundManager.soundGambling);
             }
 
             @Override

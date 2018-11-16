@@ -67,4 +67,9 @@ public class StatisticsActivity extends AppCompatActivity {
         ListView listView = findViewById(R.id.stat_listview);
         listView.setAdapter(adapter);
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
 }

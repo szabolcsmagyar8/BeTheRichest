@@ -29,6 +29,7 @@ import com.betherichest.android.fragments.UpgradeFragment;
 import com.betherichest.android.mangers.ConnectionManager;
 import com.betherichest.android.mangers.GUIManager;
 import com.betherichest.android.mangers.Game;
+import com.betherichest.android.mangers.SoundManager;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 
@@ -48,6 +49,8 @@ public class MainActivity extends AppCompatActivity {
 
     private DrawerLayout mDrawerLayout;
     private AdView mAdView;
+
+    //   private MediaPlayer mp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,13 +80,20 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        new SoundManager(this);
         dbManager = new DatabaseManager();
         dbManager.loadStateFromDb();
 
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
-        guiManager = new GUIManager(this.findViewById(android.R.id.content), getWindowManager(), getSupportActionBar(), fragmentManager);
+        guiManager = new GUIManager(this.findViewById(android.R.id.content), getWindowManager(), getSupportActionBar(), fragmentManager, this);
         initNavigatonViewListener();
         initAdBanner();
+
+//        mp = MediaPlayer.create(getApplicationContext(), R.raw.music);
+//        if (!mp.isPlaying()) {
+//            mp.start();
+//            mp.setLooping(true);
+//        }
     }
 
     private void initAdBanner() {
@@ -116,6 +126,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         Game.setTimerPaused(false);
+        //     mp.start();
     }
 
     @Override
@@ -124,6 +135,7 @@ public class MainActivity extends AppCompatActivity {
         if (!GUIManager.isActivityOpened()) {
             Game.setTimerPaused(true);
         }
+//        mp.pause();
     }
 
     @Override
@@ -134,7 +146,7 @@ public class MainActivity extends AppCompatActivity {
         }
         dbManager.saveStateToDb();
 
-        if (LoginActivity.BEARER_TOKEN != null){
+        if (App.isOnline() && LoginActivity.BEARER_TOKEN != null) {
             try {
                 Map<String, String> header = new HashMap<>();
                 header.put("Authorization", LoginActivity.BEARER_TOKEN);
@@ -143,6 +155,7 @@ public class MainActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
         }
+//        mp.release();
     }
 
     @Override

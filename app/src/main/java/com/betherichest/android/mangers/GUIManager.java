@@ -1,6 +1,7 @@
 package com.betherichest.android.mangers;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Point;
@@ -51,15 +52,13 @@ public class GUIManager {
     private ImageView leaderboardImageView;
     private ActionBar actionBar;
 
-//    MediaPlayer mp;
-
     private static Toast toast = null;
     private static boolean activityOpened = false;
 
     static Random rnd = new Random();
     private long mLastClickTime = 0;
 
-    public GUIManager(View view, WindowManager windowManager, ActionBar supportActionBar, FragmentManager fragmentManager) {
+    public GUIManager(View view, WindowManager windowManager, ActionBar supportActionBar, FragmentManager fragmentManager, Activity activity) {
         this.view = view;
         this.windowManager = windowManager;
         this.actionBar = supportActionBar;
@@ -108,7 +107,11 @@ public class GUIManager {
         dollarImage.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                onDollarClick(event);
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                    game.dollarClick();
+                    animateDollarTap();
+                    SoundManager.playSound(SoundManager.soundClick);
+                }
                 return false;
             }
         });
@@ -158,29 +161,6 @@ public class GUIManager {
         moneyPerSecText.setText(game.getMoneyPerSecAsString());
         moneyPerTapText.setText(game.getMoneyPerTapAsString());
     }
-
-    public void onDollarClick(MotionEvent event) {
-        if (event.getAction() == MotionEvent.ACTION_DOWN) {
-            game.dollarClick();
-
-
-            animateDollarTap();
-
-            // playSound();
-        }
-    }
-
-//    private void playSound() {
-//        mp = MediaPlayer.create(context, R.raw.click);
-//
-//        try {
-//            if (mp.isPlaying()) {
-//                mp.stop();
-//                mp.release();
-//                mp = MediaPlayer.create(context, R.raw.click);
-//            } mp.start();
-//        } catch(Exception e) { e.printStackTrace(); }
-//    }
 
     private void animateDollarTap() {
         dollarImage.startAnimation(AnimationUtils.loadAnimation(context, R.anim.shrink));   // shrink animation
