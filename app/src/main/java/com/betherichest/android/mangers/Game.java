@@ -36,16 +36,17 @@ public class Game {
     //region VARIABLES
     private static Game instance;
 
-    private double START_MONEY_PER_TAP = 1d;
-    private double START_MONEY_PER_SEC = 0d;
+    private static final long FPS = 25;
+    private static final double AD_REWARD_MULTIPLIER = 220;
 
     private double currentMoney = 0d;
     private double moneyPerTap = 1d;
     private double moneyPerSec = 0d;
-
-    public static final long FPS = 25;
+    public static boolean soundDisabled;
+    private static double START_MONEY_PER_TAP = 1d;
     public static final double SEC_TO_HOUR_MULTIPLIER = 3600;
-    private static final double AD_REWARD_MULTIPLIER = 220;
+    private static double START_MONEY_PER_SEC = 0d;
+    private static boolean gamblingAnimationRunning = false;
 
     private Timer T = new Timer();
     private static boolean timerPaused;
@@ -65,7 +66,7 @@ public class Game {
     public MoneyChangedListener moneyChangedListener;
     public AdapterRefreshListener smoothAdapterRefreshListener;
     public AdapterRefreshListener slowAdapterRefreshListener;
-    private static boolean gamblingAnimationRunning = false;
+
     //endregion
 
     //region CONSTRUCTORS
@@ -260,8 +261,9 @@ public class Game {
             @Override
             public void run() {
                 if (!timerPaused) {
-                    enrichLeaders();
                     earnMoney(getMoneyPerSec() / FPS);
+                    statisticsManager.earnInvestmentMoney(getMoneyPerSec() / (double) FPS);
+                    enrichLeaders();
                 }
             }
         }, 0, 1000 / FPS);
@@ -292,7 +294,6 @@ public class Game {
             gameState.setMaxCurrentMoney(currentMoney);
             statisticsManager.setMaxCurrentMoney(currentMoney);
         }
-
         statisticsManager.earnMoney(money);
         postMoneyChanged();
     }

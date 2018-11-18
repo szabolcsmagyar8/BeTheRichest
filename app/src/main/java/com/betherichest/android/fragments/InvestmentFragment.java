@@ -12,7 +12,6 @@ import android.widget.ListView;
 import com.betherichest.android.R;
 import com.betherichest.android.gameElements.Investment;
 import com.betherichest.android.listenerInterfaces.AdapterRefreshListener;
-import com.betherichest.android.mangers.GUIManager;
 import com.betherichest.android.mangers.Game;
 import com.betherichest.android.mangers.SoundManager;
 
@@ -59,7 +58,6 @@ public class InvestmentFragment extends Fragment {
                 } else if (selectedInvestment.isLocked()) {
                     return;
                 } else {
-                    GUIManager.showToast(R.string.not_enough_money);
                     SoundManager.playSound(SoundManager.soundBottle);
                 }
             }

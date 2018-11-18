@@ -18,8 +18,9 @@ public class StatisticsFactory {
 
         gameStatistics.put(StatType.TOTAL_MONEY_COLLECTED, new GameStatistics(res.getString(R.string.total_money_collected), 0.0, R.drawable.ic_money));
         gameStatistics.put(StatType.TOTAL_CLICKS, new GameStatistics(res.getString(R.string.total_clicks), 0, R.drawable.ic_click));
-        gameStatistics.put(StatType.TOTAL_MONEY_FROM_CLICKS, new GameStatistics(res.getString(R.string.total_money_from_clicks), 0.0, R.drawable.ic_money));
+        gameStatistics.put(StatType.MONEY_FROM_CLICKS, new GameStatistics(res.getString(R.string.total_money_from_clicks), 0.0, R.drawable.ic_money));
         gameStatistics.put(StatType.MONEY_SPENT, new GameStatistics(res.getString(R.string.money_spent), 0, R.drawable.ic_shopping));
+        gameStatistics.put(StatType.MONEY_FROM_INVESTMENTS, new GameStatistics(res.getString(R.string.money_from_investments), 0.0, R.drawable.ic_money));
         gameStatistics.put(StatType.TOTAL_PLAYING_TIME, new GameStatistics(res.getString(R.string.total_playing_time), 0, R.drawable.ic_timer));
         gameStatistics.put(StatType.TOTAL_GAMBLING, new GameStatistics(res.getString(R.string.total_gambling), 0, R.drawable.ic_clover));
         gameStatistics.put(StatType.GAMBLING_WINS, new GameStatistics(res.getString(R.string.gambling_wins), 0, R.drawable.ic_clover));
@@ -33,7 +34,7 @@ public class StatisticsFactory {
         gameStatistics.put(StatType.HIGHEST_MONEY, new GameStatistics(res.getString(R.string.highest_money), 0, R.drawable.ic_money));
         gameStatistics.put(StatType.VIDEOS_WATCHED, new GameStatistics(res.getString(R.string.videos_wathced), 0, R.drawable.ic_videos));
         gameStatistics.put(StatType.MONEY_FROM_VIDEOS, new GameStatistics(res.getString(R.string.money_from_videos), 0, R.drawable.ic_money));
-        gameStatistics.put(StatType.UNLOCKED_ACHIEVEMENTS, new GameStatistics(res.getString(R.string.unlocked_achievements), 0, R.drawable.ic_achievements));
+        gameStatistics.put(StatType.ACHIEVEMENTS_UNLOCKED, new GameStatistics(res.getString(R.string.achievements_unlocked), 0, R.drawable.ic_achievements));
         return gameStatistics;
     }
 }

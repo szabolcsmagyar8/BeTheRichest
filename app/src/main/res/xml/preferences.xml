@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen>
+    <SwitchPreference
+        key="notifications"
+        title="Sound" />
+
+    <Preference
+        key="feedback"
+        summary="Report technical issues or suggest new features"
+        title="Send feedback" />
+</PreferenceScreen>

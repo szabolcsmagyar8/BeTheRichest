@@ -147,6 +147,7 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
+
     private void signInClick() {
         if (isNetworkConnected() && App.isOnline()) {
             Intent signInIntent = mGoogleSignInClient.getSignInIntent();
@@ -156,7 +157,7 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    public void signOutClick() {
+    private void signOutClick() {
         mGoogleSignInClient.signOut()
                 .addOnCompleteListener(this, new OnCompleteListener<Void>() {
                     @Override

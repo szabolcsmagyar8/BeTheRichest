@@ -1,32 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.widget.RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_below="@+id/content_frame"
     android:background="@color/darkRed"
-    android:theme="@style/ThemeOverlay.AppCompat.Dark"
-    tools:context=".activities.StatisticsActivity">
+    android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
-    <FrameLayout
-        android:id="@+id/content_frame"
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:background="@color/black"
-            android:gravity="center"
-            android:minHeight="56dp"
-            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
-    </FrameLayout>
+        android:layout_height="wrap_content"
+        android:background="@color/black"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <ListView
         android:id="@+id/stat_listview"
-        android:layout_below="@+id/content_frame"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@+id/toolbar"
         android:divider="@null" />
 </android.widget.RelativeLayout>

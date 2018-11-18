@@ -56,7 +56,7 @@
                 android:layout_marginLeft="5dp"
                 android:layout_toRightOf="@+id/currentMoneyText"
                 android:adjustViewBounds="true"
-                app:srcCompat="@drawable/dollarsmall" />
+                android:src="@drawable/dollarsmall" />
         </RelativeLayout>
 
         <TextView
@@ -92,7 +92,7 @@
             android:layout_centerVertical="true"
             android:adjustViewBounds="true"
             android:paddingBottom="50dp"
-            app:srcCompat="@drawable/dollar" />
+            android:src="@drawable/dollar" />
 
         <LinearLayout
             android:id="@+id/icons"
@@ -112,7 +112,7 @@
                     android:layout_height="70dp"
                     android:layout_centerHorizontal="true"
                     android:onClick="investmentsIconClick"
-                    app:srcCompat="@mipmap/investments" />
+                    android:src="@mipmap/investments" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -134,7 +134,7 @@
                     android:layout_height="70dp"
                     android:layout_centerHorizontal="true"
                     android:onClick="upgradesIconClick"
-                    app:srcCompat="@mipmap/upgrade" />
+                    android:src="@mipmap/upgrade" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -156,7 +156,7 @@
                     android:layout_height="70dp"
                     android:layout_centerHorizontal="true"
                     android:onClick="gamblingIconClick"
-                    app:srcCompat="@mipmap/clover" />
+                    android:src="@mipmap/clover" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -178,7 +178,7 @@
                     android:layout_height="70dp"
                     android:layout_centerHorizontal="true"
                     android:onClick="leaderboardIconClick"
-                    app:srcCompat="@mipmap/top100" />
+                    android:src="@mipmap/top100" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -204,7 +204,7 @@
                 android:background="@color/darkerGray"
                 android:gravity="center"
                 android:onClick="removeAds"
-                android:text="Ads by Google"
+                android:text="@string/ads_by_google"
                 android:textSize="14sp" />
 
             <com.google.android.gms.ads.AdView xmlns:ads="http://schemas.android.com/apk/res-auto"
@@ -213,7 +213,6 @@
                 android:layout_height="50dp"
                 ads:adSize="SMART_BANNER"
                 ads:adUnitId="ca-app-pub-3940256099942544/6300978111" />
-
         </RelativeLayout>
 
         <FrameLayout
@@ -243,12 +242,6 @@
             android:layout_height="match_parent"
             android:layout_alignParentBottom="true"
             android:layout_below="@+id/dollarImage" />
-
-        <FrameLayout
-            android:id="@+id/achievement_notification"
-            android:layout_width="350dp"
-            android:layout_height="65dp"
-            android:layout_centerHorizontal="true" />
     </RelativeLayout>
 
     <android.support.design.widget.NavigationView
@@ -260,7 +253,6 @@
         android:fitsSystemWindows="true"
         app:headerLayout="@layout/nav_header"
         app:menu="@menu/drawer_view" />
-
 </android.support.v4.widget.DrawerLayout>
 
 

@@ -5,12 +5,34 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
+import com.betherichest.android.R;
 import com.betherichest.android.database.DatabaseManager;
 import com.betherichest.android.mangers.GUIManager;
 import com.betherichest.android.mangers.Game;
-import com.betherichest.android.R;
 
 public class SettingsActivity extends AppCompatActivity {
+
+//    public static class MyPreferenceFragment extends PreferenceFragment {
+//        @Override
+//        public void onCreate(final Bundle savedInstanceState) {
+//            super.onCreate(savedInstanceState);
+//            addPreferencesFromResource(R.xml.preferences);
+//        }
+//
+//        @Override
+//        public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+//            View layout = inflater.inflate(R.layout.activity_settings, container, false);
+//            if (layout != null) {
+//                SettingsActivity activity = (SettingsActivity) getActivity();
+//                Toolbar toolbar = layout.findViewById(R.id.toolbar);
+//                activity.setSupportActionBar(toolbar);
+//
+//                activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//            }
+//            return layout;
+//        }
+//    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -20,6 +42,8 @@ public class SettingsActivity extends AppCompatActivity {
 
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        //getFragmentManager().beginTransaction().replace(R.id.list_layout, new MyPreferenceFragment()).commit();
     }
 
     @Override

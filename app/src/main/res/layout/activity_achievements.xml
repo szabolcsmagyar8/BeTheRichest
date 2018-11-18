@@ -4,25 +4,17 @@
     android:layout_height="match_parent"
     android:background="#492400">
 
-    <FrameLayout
-        android:id="@+id/content_frame"
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:background="@color/black"
-            android:gravity="center"
-            android:minHeight="56dp"
-            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
-    </FrameLayout>
+        android:layout_height="wrap_content"
+        android:background="@color/black"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/content_frame"
+        android:layout_below="@+id/toolbar"
         android:orientation="vertical">
 
         <RelativeLayout
@@ -47,8 +39,8 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
-                android:paddingBottom="1dp"
                 android:layout_marginRight="10dp"
+                android:paddingBottom="1dp"
                 android:textColor="@color/white"
                 android:textSize="11sp" />
         </RelativeLayout>

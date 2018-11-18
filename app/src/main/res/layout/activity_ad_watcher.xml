@@ -5,20 +5,12 @@
     android:layout_height="match_parent"
     android:background="@color/almostBlack">
 
-    <FrameLayout
-        android:id="@+id/content_frame"
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:background="@color/black"
-            android:gravity="center"
-            android:minHeight="56dp"
-            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
-    </FrameLayout>
+        android:layout_height="wrap_content"
+        android:background="@color/black"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <ProgressBar
         android:id="@+id/progressBar"

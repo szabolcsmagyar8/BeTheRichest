@@ -70,7 +70,7 @@ public class AchievementManager implements Observer {
 
     private void unlockAchievement(Achievement achievement) {
         achievement.unLock();
-        Game.statisticsManager.getStatByType(StatType.UNLOCKED_ACHIEVEMENTS).increaseValueByOne();
+        Game.statisticsManager.getStatByType(StatType.ACHIEVEMENTS_UNLOCKED).increaseValueByOne();
 
         new Handler(Looper.getMainLooper()).post(new Runnable() {
             @Override

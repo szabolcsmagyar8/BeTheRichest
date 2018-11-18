@@ -1,7 +1,6 @@
 package com.betherichest.android.mangers;
 
 import android.app.Activity;
-import android.content.Context;
 import android.media.AudioAttributes;
 import android.media.AudioManager;
 import android.media.SoundPool;
@@ -19,17 +18,12 @@ public class SoundManager {
     public static int soundAchievement;
     public static int soundBottle;
     public static int soundGambling;
+    public static int soundPull;
+
     private static SoundPool soundPool;
     private static boolean loaded;
-    private static float volume;
-    private AudioManager audioManager;
 
     public SoundManager(Activity activity) {
-        audioManager = (AudioManager) activity.getSystemService(Context.AUDIO_SERVICE);
-        float currentVolumeIndex = (float) (audioManager != null ? audioManager.getStreamVolume(streamType) : 0);
-        float maxVolumeIndex = (float) (audioManager != null ? audioManager.getStreamMaxVolume(streamType) : 0);
-        this.volume = currentVolumeIndex / maxVolumeIndex;
-
         activity.setVolumeControlStream(streamType);
         if (Build.VERSION.SDK_INT >= 21) {
             AudioAttributes audioAttrib = new AudioAttributes.Builder()
@@ -56,14 +50,15 @@ public class SoundManager {
         soundError = this.soundPool.load(App.getContext(), R.raw.error, 1);
         soundBottle = this.soundPool.load(App.getContext(), R.raw.bottle, 1);
         soundGambling = this.soundPool.load(App.getContext(), R.raw.gambling, 1);
+        soundPull = this.soundPool.load(App.getContext(), R.raw.pull, 1);
     }
 
     public static void playSound(int sound) {
+        if (Game.soundDisabled) {
+            return;
+        }
         if (loaded) {
-            float leftVolume = volume;
-            float rightVolume = volume;
-
-            soundPool.play(sound, leftVolume, rightVolume, 1, 0, 1f);
+            soundPool.play(sound, 1, 1, 1, 0, 1f);
         }
     }
 }

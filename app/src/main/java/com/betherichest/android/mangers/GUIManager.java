@@ -253,6 +253,7 @@ public class GUIManager {
         ft.addToBackStack(null);
         ft.replace(containerId, fragment).commit();
         relocateDollarImage(true);
+        SoundManager.playSound(SoundManager.soundPull);
     }
 
     public static void showToast(int stringResource) {

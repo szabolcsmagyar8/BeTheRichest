@@ -27,6 +27,9 @@ public class GameState {
     @ColumnInfo(name = "bearer_token")
     private String bearerToken = null;
 
+    @ColumnInfo(name = "sound_disabled")
+    private boolean soundDisabled = false;
+
     public int getId() {
         return id;
     }
@@ -81,5 +84,13 @@ public class GameState {
 
     public void setBearerToken(String bearerToken) {
         this.bearerToken = bearerToken;
+    }
+
+    public boolean getSoundDisabled() {
+        return soundDisabled;
+    }
+
+    public void setSoundDisabled(boolean soundDisabled) {
+        this.soundDisabled = soundDisabled;
     }
 }

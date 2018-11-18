@@ -52,7 +52,7 @@ public class AchievementActivity extends AppCompatActivity {
     private void updateProgressBar() {
         progressBar.post(new Runnable() {
             public void run() {
-                double unlockedAchievementNum = Game.statisticsManager.getStatByType(StatType.UNLOCKED_ACHIEVEMENTS).getValue();
+                double unlockedAchievementNum = Game.statisticsManager.getStatByType(StatType.ACHIEVEMENTS_UNLOCKED).getValue();
                 int totalAchievementNum = Game.getInstance().getAchievements().size();
                 double percentage = unlockedAchievementNum / totalAchievementNum;
                 progressBar.setProgress((int) (percentage * 100));

@@ -16,6 +16,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 
 import com.betherichest.android.ActionType;
 import com.betherichest.android.App;
@@ -49,6 +50,8 @@ public class MainActivity extends AppCompatActivity {
 
     private DrawerLayout mDrawerLayout;
     private AdView mAdView;
+    private ImageView soundIcon;
+
 
     //   private MediaPlayer mp;
 
@@ -57,6 +60,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         MainActivity.context = getApplicationContext();
         setContentView(R.layout.activity_main);
+
+        dbManager = new DatabaseManager();
+        dbManager.loadStateFromDb();
 
         mDrawerLayout = findViewById(R.id.drawer_layout);
         mDrawerLayout.addDrawerListener(new DrawerLayout.DrawerListener() {
@@ -80,9 +86,11 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        NavigationView navigationView = findViewById(R.id.nav_view);
+        soundIcon = navigationView.getHeaderView(0).findViewById(R.id.soundIcon);
+        soundIcon.setImageResource(Game.soundDisabled ? R.drawable.soundoff : R.drawable.soundon);
+
         new SoundManager(this);
-        dbManager = new DatabaseManager();
-        dbManager.loadStateFromDb();
 
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
         guiManager = new GUIManager(this.findViewById(android.R.id.content), getWindowManager(), getSupportActionBar(), fragmentManager, this);
@@ -178,6 +186,7 @@ public class MainActivity extends AppCompatActivity {
         } else if (fragmentManager.getBackStackEntryCount() > 0) {
             fragmentManager.popBackStack();
             guiManager.relocateDollarImage(false);
+            SoundManager.playSound(SoundManager.soundPull);
         } else {
             super.onBackPressed();
         }
@@ -257,7 +266,13 @@ public class MainActivity extends AppCompatActivity {
                 .show();
     }
 
-    public void removeAds(View view) {
-        GUIManager.showToast(R.string.remove_ads);
+    public void onSoundIconClick(View view) {
+        if (Game.soundDisabled) {
+            soundIcon.setImageResource(R.drawable.soundon);
+            Game.soundDisabled = false;
+        } else {
+            soundIcon.setImageResource(R.drawable.soundoff);
+            Game.soundDisabled = true;
+        }
     }
 }

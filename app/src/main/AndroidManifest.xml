@@ -61,7 +61,7 @@
             tools:ignore="InnerclassSeparator" />
         <activity
             android:name=".activities.AboutActivity"
-            android:label="@string/about_btr"
+            android:label="@string/about"
             android:parentActivityName=".activities.MainActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
@@ -77,6 +77,7 @@
             android:name=".activities.AchievementNotificationActivity"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+
 
         <service
             android:name=".services.MyFirebaseMessagingService"
@@ -97,6 +98,6 @@
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="ca-app-pub-3201079455068395~9303067462" />
 
-
     </application>
+
 </manifest>

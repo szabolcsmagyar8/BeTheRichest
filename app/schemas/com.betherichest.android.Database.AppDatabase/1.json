@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "147981f0a25bd475cf8f74bb7f4fdc64",
+    "identityHash": "76b4a9777677c499dc7c456feb5579bd",
     "entities": [
       {
         "tableName": "GameState",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `current_money` REAL NOT NULL, `money_per_tap` REAL NOT NULL, `money_per_sec` REAL NOT NULL, `first_dollar_click` INTEGER NOT NULL, `max_current_money` REAL NOT NULL, `bearer_token` TEXT, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `current_money` REAL NOT NULL, `money_per_tap` REAL NOT NULL, `money_per_sec` REAL NOT NULL, `first_dollar_click` INTEGER NOT NULL, `max_current_money` REAL NOT NULL, `bearer_token` TEXT, `sound_disabled` INTEGER NOT NULL, PRIMARY KEY(`id`))",
         "fields": [
           {
             "fieldPath": "id",
@@ -49,6 +49,12 @@
             "columnName": "bearer_token",
             "affinity": "TEXT",
             "notNull": false
+          },
+          {
+            "fieldPath": "soundDisabled",
+            "columnName": "sound_disabled",
+            "affinity": "INTEGER",
+            "notNull": true
           }
         ],
         "primaryKey": {
@@ -173,7 +179,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"147981f0a25bd475cf8f74bb7f4fdc64\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"76b4a9777677c499dc7c456feb5579bd\")"
     ]
   }
 }

@@ -41,7 +41,7 @@ public class StatisticsManager extends Observable {
 
     public void dollarClick(double moneyPerTap) {
         getStatByType(StatType.TOTAL_CLICKS).increaseValueByOne();
-        getStatByType(StatType.TOTAL_MONEY_FROM_CLICKS).increaseValueByAmount(moneyPerTap);
+        getStatByType(StatType.MONEY_FROM_CLICKS).increaseValueByAmount(moneyPerTap);
         onNotify(StatType.TOTAL_CLICKS);
     }
 
@@ -56,6 +56,10 @@ public class StatisticsManager extends Observable {
     public void buyInvestment() {
         getStatByType(StatType.TOTAL_INVESTMENT_LEVELS).increaseValueByOne();
         onNotify(StatType.TOTAL_INVESTMENT_LEVELS);
+    }
+
+    public void earnInvestmentMoney(double money) {
+        getStatByType(StatType.MONEY_FROM_INVESTMENTS).increaseValueByAmount(money);
     }
 
     public void buyUpgrade() {
@@ -111,15 +115,16 @@ public class StatisticsManager extends Observable {
         params.put("totalMoneySpent", getStatByType(StatType.MONEY_SPENT).getValue());
         params.put("totalInvestmentLevels", getStatByType(StatType.TOTAL_INVESTMENT_LEVELS).getValue());
         params.put("upgradesBought", getStatByType(StatType.UPGRADES_BOUGHT).getValue());
-        params.put("moneyFromInvestments", 19941006);
-        params.put("achievementsUnlocked", 8);
+        params.put("moneyFromInvestments", getStatByType(StatType.MONEY_FROM_INVESTMENTS).getValue());
+        params.put("achievementsUnlocked", getStatByType(StatType.ACHIEVEMENTS_UNLOCKED).getValue());
         params.put("moneyFromVideos", getStatByType(StatType.MONEY_FROM_VIDEOS).getValue());
         params.put("moneyFromGambling", getStatByType(StatType.MONEY_FROM_GAMBLING).getValue());
-        params.put("moneyFromClicks", getStatByType(StatType.TOTAL_MONEY_FROM_CLICKS).getValue());
+        params.put("moneyFromClicks", getStatByType(StatType.MONEY_FROM_CLICKS).getValue());
         params.put("highestMoney", getStatByType(StatType.HIGHEST_MONEY).getValue());
         params.put("videosWatched", getStatByType(StatType.VIDEOS_WATCHED).getValue());
         params.put("moneySpentGambling", getStatByType(StatType.MONEY_SPENT_ON_GAMBLING).getValue());
         params.put("gamblingBalance", getStatByType(StatType.GAMBLING_BALANCE).getValue());
         return params;
     }
+
 }

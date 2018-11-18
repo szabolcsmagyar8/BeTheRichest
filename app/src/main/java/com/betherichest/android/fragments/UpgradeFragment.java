@@ -10,10 +10,10 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.TextView;
 
+import com.betherichest.android.App;
 import com.betherichest.android.R;
 import com.betherichest.android.gameElements.upgrade.Upgrade;
 import com.betherichest.android.listenerInterfaces.AdapterRefreshListener;
-import com.betherichest.android.mangers.GUIManager;
 import com.betherichest.android.mangers.Game;
 import com.betherichest.android.mangers.SoundManager;
 
@@ -57,14 +57,16 @@ public class UpgradeFragment extends Fragment {
         game.slowAdapterRefreshListener = new AdapterRefreshListener() {
             @Override
             public void refreshAdapter() {
+                if (items.size() == 0) {
+                    noUpgradeTextView.setText(App.getContext().getResources().getString(R.string.no_upgrades_available));
+                    noUpgradeTextView.setVisibility(View.VISIBLE);
+                } else {
+                    noUpgradeTextView.setText(null);
+                    noUpgradeTextView.setVisibility(View.GONE);
+                }
                 adapter.setItems(game.getDisplayableUpgrades());
                 adapter.notifyDataSetChanged();
                 items = game.getDisplayableUpgrades();
-                if (items.size() == 0) {
-                    noUpgradeTextView.setVisibility(View.VISIBLE);
-                } else {
-                    noUpgradeTextView.setVisibility(View.INVISIBLE);
-                }
             }
         };
 
@@ -78,7 +80,6 @@ public class UpgradeFragment extends Fragment {
                     adapter.notifyDataSetChanged();
                     SoundManager.playSound(SoundManager.soundBuy);
                 } else {
-                    GUIManager.showToast(R.string.not_enough_money);
                     SoundManager.playSound(SoundManager.soundBottle);
                 }
             }

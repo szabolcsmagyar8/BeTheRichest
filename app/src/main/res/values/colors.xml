@@ -20,8 +20,8 @@
     <color name="achievementHighlightColor">#11ffffff</color>
     <color name="transparent">#00ffffff</color>
     <color name="darkGray">#434343</color>
-    <color name="darkerGray">#2d2d2d</color>
-    <color name="almostBlack">#1d1d1d</color>
+    <color name="darkerGray">#292929</color>
+    <color name="almostBlack">#181818</color>
     <color name="black">#000000</color>
     <color name="achievement_active">#36ffcc00</color>
     <color name="achievement_inactive">#bc616161</color>
