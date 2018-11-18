@@ -77,7 +77,7 @@ public class StatisticsManager extends Observable {
         getStatByType(StatType.MONEY_SPENT_ON_GAMBLING).increaseValueByAmount(price);
     }
 
-    public void gamblingWin(int wonMoney) {
+    public void gamblingWin(double wonMoney) {
        getStatByType(StatType.GAMBLING_WINS).increaseValueByOne();
        getStatByType(StatType.MONEY_FROM_GAMBLING).increaseValueByAmount(wonMoney);
        getStatByType(StatType.GAMBLING_BALANCE).setValue(gameStatistics.get(StatType.MONEY_FROM_GAMBLING).getValue() - getStatByType(StatType.MONEY_SPENT_ON_GAMBLING).getValue());

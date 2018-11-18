@@ -17,6 +17,7 @@ import com.betherichest.android.gameElements.Gambling;
 import com.betherichest.android.gameElements.Investment;
 import com.betherichest.android.gameElements.Leader;
 import com.betherichest.android.gameElements.achievement.Achievement;
+import com.betherichest.android.gameElements.upgrade.GamblingUpgrade;
 import com.betherichest.android.gameElements.upgrade.GlobalIncrementUpgrade;
 import com.betherichest.android.gameElements.upgrade.InvestmentUpgrade;
 import com.betherichest.android.gameElements.upgrade.TapUpgrade;
@@ -66,7 +67,6 @@ public class Game {
     public MoneyChangedListener moneyChangedListener;
     public AdapterRefreshListener smoothAdapterRefreshListener;
     public AdapterRefreshListener slowAdapterRefreshListener;
-
     //endregion
 
     //region CONSTRUCTORS
@@ -77,7 +77,24 @@ public class Game {
         return instance;
     }
 
-    //region EVENTHANDLERS
+    public Game() {
+        investments = InvestmentFactory.getCreatedInvestments();
+        upgrades = UpgradeFactory.getCreatedUpgrades(investments);
+        gamblings = GamblingFactory.getCreatedGamblings();
+        boosters = BoosterFactory.getCreatedBoosters();
+        achievements = AchievementFactory.getCreatedAchievements();
+        leaders = LeaderFactory.getCreatedLeaders();
+
+        statisticsManager = new StatisticsManager();
+        achievementManager = new AchievementManager(achievements);
+        gameState = new GameState();
+
+        handler = new Handler(Looper.getMainLooper());
+        handler.post(draw);
+        startTimer();
+    }
+    // endregion
+
     Runnable draw = new Runnable() {
         @Override
         public void run() {
@@ -87,7 +104,6 @@ public class Game {
             handler.postDelayed(draw, 100);
         }
     };
-    //endregion
 
     //region PROPERTIES
     public double getCurrentMoney() {
@@ -214,46 +230,7 @@ public class Game {
     public double getAdReward() {
         return moneyPerSec * AD_REWARD_MULTIPLIER;
     }
-    //endregion
 
-    public Game() {
-        investments = InvestmentFactory.getCreatedInvestments();
-        upgrades = UpgradeFactory.getCreatedUpgrades(investments);
-        gamblings = GamblingFactory.getCreatedGamblings();
-        boosters = BoosterFactory.getCreatedBoosters();
-        achievements = AchievementFactory.getCreatedAchievements();
-        leaders = LeaderFactory.getCreatedLeaders();
-
-        statisticsManager = new StatisticsManager();
-        achievementManager = new AchievementManager(achievements);
-        gameState = new GameState();
-
-        handler = new Handler(Looper.getMainLooper());
-        handler.post(draw);
-        startTimer();
-    }
-
-    private void postSlowAdapterRefreshRequest() {
-        handler.post(new Runnable() {
-            @Override
-            public void run() {
-                if (slowAdapterRefreshListener != null) {
-                    slowAdapterRefreshListener.refreshAdapter();
-                }
-            }
-        });
-    }
-
-    private void postMoneyChanged() {
-        handler.post(new Runnable() {
-            @Override
-            public void run() {
-                if (moneyChangedListener != null) {
-                    moneyChangedListener.onMoneyChanged();
-                }
-            }
-        });
-    }
     //endregion
 
     private void startTimer() {
@@ -286,6 +263,28 @@ public class Game {
                 }
             }
         }, 0, 500);
+    }
+
+    private void postSlowAdapterRefreshRequest() {
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                if (slowAdapterRefreshListener != null) {
+                    slowAdapterRefreshListener.refreshAdapter();
+                }
+            }
+        });
+    }
+
+    private void postMoneyChanged() {
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                if (moneyChangedListener != null) {
+                    moneyChangedListener.onMoneyChanged();
+                }
+            }
+        });
     }
 
     public void earnMoney(double money) {
@@ -334,9 +333,21 @@ public class Game {
         if (selectedUpgrade instanceof GlobalIncrementUpgrade) {
             recalculateMoneyPerTap();
         }
+        if (selectedUpgrade instanceof GamblingUpgrade) {
+            changeGamblingWinAmount(selectedUpgrade);
+        }
 
         statisticsManager.buyItem(selectedUpgrade.getPrice());
         statisticsManager.buyUpgrade();
+    }
+
+    private void changeGamblingWinAmount(Upgrade selectedUpgrade) {
+        for (Gambling gambling : gamblings) {
+            double multiplier = selectedUpgrade.getMultiplier();
+            gambling.setMinWinAmount(gambling.getMinWinAmount() * multiplier);
+            gambling.setMaxWinAmount(gambling.getMaxWinAmount() * multiplier);
+            gambling.setPrice(gambling.getPrice() * multiplier);
+        }
     }
 
     public void buyGambling(Gambling selectedGambling) {
@@ -350,7 +361,7 @@ public class Game {
             if (leader.isPlayer()) {
                 leader.setMoney(currentMoney);
             } else {
-                leader.setMoney(leader.getMoney() + (leader.getMoney() * (leader.getGrowthRate() - 1)) / 100000);
+                leader.setMoney(leader.getMoney() + (leader.getMoney() * (leader.getGrowthRate() - 1)) / 10000);
             }
         }
     }

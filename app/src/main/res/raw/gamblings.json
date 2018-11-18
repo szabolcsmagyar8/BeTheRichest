@@ -9,19 +9,27 @@
       "imageResourceString": "scratchoff"
     },
     {
-      "name": "Horse Race",
+      "name": "Video Poker",
       "price": 500,
-      "minWinAmount": 1000,
-      "maxWinAmount": 5000,
-      "chance": 25,
+      "minWinAmount": 1500,
+      "maxWinAmount": 7500,
+      "chance": 33.3,
+      "imageResourceString": "videopoker"
+    },
+    {
+      "name": "Horse Race",
+      "price": 5000,
+      "minWinAmount": 25000,
+      "maxWinAmount": 125000,
+      "chance": 20,
       "imageResourceString": "horserace"
     },
     {
       "name": "Slot Machine",
-      "price": 5000,
+      "price": 200,
       "minWinAmount": 20000,
       "maxWinAmount": 100000,
-      "chance": 10,
+      "chance": 1,
       "imageResourceString": "slotmachine"
     }
   ]

@@ -101,7 +101,7 @@ public class GamblingFragment extends Fragment {
 
             @Override
             public void onAnimationEnd(Animation animation) {
-                int wonMoney = calculateWonMoney(adapter.getItem(position));
+                double wonMoney = calculateWonMoney(adapter.getItem(position));
                 String text;
                 if (wonMoney == 0) {
                     text = getString(R.string.gambling_no_win);
@@ -162,12 +162,12 @@ public class GamblingFragment extends Fragment {
         });
     }
 
-    private int calculateWonMoney(Gambling gambling) {
+    private double calculateWonMoney(Gambling gambling) {
         Random rnd = new Random();
         if (rnd.nextInt(10000) < gambling.getChance() * 100) {
-            int minValue = gambling.getMinWinAmount();
-            int maxValue = gambling.getMaxWinAmount();
-            return rnd.nextInt(maxValue - minValue) + minValue;
+            double minValue = gambling.getMinWinAmount();
+            double maxValue = gambling.getMaxWinAmount();
+            return Math.floor(minValue + (maxValue - minValue) * rnd.nextDouble());
         } else {
             return 0;
         }

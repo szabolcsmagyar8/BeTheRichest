@@ -87,12 +87,13 @@ public class InvestmentAdapter extends BaseAdapter {
             investmentImageView.setImageResource(R.drawable.questionmark);
             dollarImageView.setVisibility(View.INVISIBLE);
         } else {
+            App.NF.setMaximumFractionDigits(2);
             listItemView.setEnabled(true);
             nameTextView.setText(investment.getName());
-            priceTextView.setText("Price: " + App.NF.format(investment.getPrice()));
+            priceTextView.setText(String.format("Price: %s", investment.getPrice() >= 1000000000 ? App.convertThousandsToSIUnit(investment.getPrice(), false) : App.NF.format(investment.getPrice())));
             levelTextView.setText(String.valueOf(investment.getLevel()));
-            dpsPerLevelTextView.setText("DPS: " + App.NF.format(investment.getMoneyPerSecPerLevel()));
-            totalDPSTextView.setText("Total: " + App.NF.format((investment.getMoneyPerSec())) + " (" + String.format("%.2f", Game.getInstance().getDPSPercentage(investment)) + "%)");
+            dpsPerLevelTextView.setText(String.format("DPS: %s", App.NF.format(investment.getMoneyPerSecPerLevel())));
+            totalDPSTextView.setText(String.format("Total: %s (%s%%)", App.NF.format((investment.getMoneyPerSec())), String.format("%.2f", Game.getInstance().getDPSPercentage(investment))));
             upsTextView.setText("UPs: " + investment.getPurchasedRelevantUpgrades().size() + "/" + investment.getRelevantUpgrades().size());
             Glide
                     .with(App.getContext())

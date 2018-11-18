@@ -3,9 +3,11 @@ package com.betherichest.android.database;
 import com.betherichest.android.App;
 import com.betherichest.android.GameState;
 import com.betherichest.android.activities.LoginActivity;
+import com.betherichest.android.gameElements.Gambling;
 import com.betherichest.android.gameElements.GameStatistics;
 import com.betherichest.android.gameElements.Investment;
 import com.betherichest.android.gameElements.achievement.Achievement;
+import com.betherichest.android.gameElements.upgrade.GamblingUpgrade;
 import com.betherichest.android.gameElements.upgrade.InvestmentUpgrade;
 import com.betherichest.android.gameElements.upgrade.Upgrade;
 import com.betherichest.android.mangers.Game;
@@ -114,6 +116,14 @@ public class DatabaseManager {
                         Investment inv = ((InvestmentUpgrade) upgrade).getRelevantInvestment();
                         if (!inv.getPurchasedRelevantUpgrades().contains(upgrade)) {
                             inv.addPurchasedRelevantUpgrade(upgrade);
+                        }
+                    }
+                    if (upgrade instanceof GamblingUpgrade) {
+                        for (Gambling gambling : game.getGamblings()) {
+                            double multiplier = upgrade.getMultiplier();
+                            gambling.setMinWinAmount(gambling.getMinWinAmount() * multiplier);
+                            gambling.setMaxWinAmount(gambling.getMaxWinAmount() * multiplier);
+                            gambling.setPrice(gambling.getPrice() * multiplier);
                         }
                     }
                     break;

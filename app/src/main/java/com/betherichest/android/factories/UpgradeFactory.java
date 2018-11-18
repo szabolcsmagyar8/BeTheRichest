@@ -3,6 +3,8 @@ package com.betherichest.android.factories;
 import android.graphics.Color;
 
 import com.betherichest.android.gameElements.Investment;
+import com.betherichest.android.gameElements.upgrade.GamblingUpgrade;
+import com.betherichest.android.gameElements.upgrade.GamblingUpgradeConfig;
 import com.betherichest.android.gameElements.upgrade.GlobalIncrementUpgrade;
 import com.betherichest.android.gameElements.upgrade.GlobalIncrementUpgradeConfig;
 import com.betherichest.android.gameElements.upgrade.InvestmentUpgrade;
@@ -47,6 +49,14 @@ public class UpgradeFactory {
             new GlobalIncrementUpgradeConfig(25000000000d, 2500),
     };
 
+    private static GamblingUpgradeConfig[] gamblingUpgradeConfigs = new GamblingUpgradeConfig[]{
+            new GamblingUpgradeConfig(33300, 5),
+            new GamblingUpgradeConfig(666600, 8),
+            new GamblingUpgradeConfig(9900000, 10),
+            new GamblingUpgradeConfig(55500000, 12),
+            new GamblingUpgradeConfig(888800000, 15),
+    };
+
     private static int[] colors = new int[]{
             Color.parseColor("#ffffff"),   // Simple White
             Color.parseColor("#fff700"),   // Uncommon Yellow
@@ -67,12 +77,23 @@ public class UpgradeFactory {
     public static List<Upgrade> getCreatedUpgrades(List<Investment> investments) {
         createInvestmentUpgrades(investments);
         createTapUpgrades();
-        createGlobalIncrements();
+        createGlobalIncrementUpgrades();
+        createGamblingUpgrades();
 
         return upgrades;
     }
 
-    private static void createGlobalIncrements() {
+    private static void createGamblingUpgrades() {
+        for (int i = 0; i < gamblingUpgradeConfigs.length; i++) {
+            Upgrade upgrade = new GamblingUpgrade(
+                    gamblingUpgradeConfigs[i].getPrice(),
+                    gamblingUpgradeConfigs[i].getGamblingMoneyMultiplier(),
+                    colors[i]);
+            addUpgrade(upgrade);
+        }
+    }
+
+    private static void createGlobalIncrementUpgrades() {
         for (int i = 0; i < globalIncrementConfigs.length; i++) {
             Upgrade upgrade = new GlobalIncrementUpgrade(
                     globalIncrementConfigs[i].getPrice(),

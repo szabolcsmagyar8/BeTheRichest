@@ -16,7 +16,6 @@ import android.widget.TextView;
 
 import com.betherichest.android.App;
 import com.betherichest.android.R;
-import com.betherichest.android.gameElements.upgrade.GlobalIncrementUpgrade;
 import com.betherichest.android.gameElements.upgrade.Upgrade;
 import com.bumptech.glide.Glide;
 
@@ -100,13 +99,9 @@ public class UpgradeAdapter extends BaseAdapter {
     }
 
     private void setUITexts() {
+        App.NF.setMaximumFractionDigits(1);
         priceTextView.setText(App.convertThousandsToSIUnit(upgrade.getPrice(), false));
-
-        if (upgrade instanceof GlobalIncrementUpgrade) {
-            effectTextView.setText("+" + String.valueOf(upgrade.getMultiplier()));
-        } else {
-            effectTextView.setText("X" + String.valueOf((int) upgrade.getMultiplier()));
-        }
+        effectTextView.setText(String.format("X%s", upgrade.getMultiplier() % 1 == 0 ? String.valueOf((int) upgrade.getMultiplier()) : upgrade.getMultiplier()));
         effectTextView.setTextColor(upgrade.getColor());
 
         if (effectTextView.getText().length() > 3) {

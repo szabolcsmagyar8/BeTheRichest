@@ -67,11 +67,12 @@ public class GamblingAdapter extends BaseAdapter {
                 .dontTransform()
                 .into(imageView);
 
-
         nameTextView.setText(gambling.getName());
-        priceTextView.setText("Price: " + String.valueOf((int) gambling.getPrice()));
-        winAmountTextView.setText("Win amount: " + App.NF.format(gambling.getMinWinAmount()) + " - " + App.NF.format(gambling.getMaxWinAmount()) + "$");
-        chanceTextView.setText("Chance: " + String.valueOf((int) gambling.getChance()) + "%");
+        priceTextView.setText(String.format("Price: %s", String.valueOf(App.NF.format(gambling.getPrice()))));
+        winAmountTextView.setText(String.format("Win amount: %s - %s$",
+                (gambling.getMinWinAmount() >= 1000000 ? App.convertThousandsToSIUnit(gambling.getMinWinAmount(), false) : App.NF.format(gambling.getMinWinAmount())),
+                (gambling.getMaxWinAmount() >= 1000000 ? App.convertThousandsToSIUnit(gambling.getMaxWinAmount(), false) : App.NF.format(gambling.getMaxWinAmount()))));
+        chanceTextView.setText(String.format("Chance: %s%%", String.valueOf(gambling.getChance())));
         imageView.setBackgroundResource(gambling.getImageResource());
 
         return listItemView;
