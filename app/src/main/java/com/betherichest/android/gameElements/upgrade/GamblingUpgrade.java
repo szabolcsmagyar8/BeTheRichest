@@ -1,15 +1,20 @@
 package com.betherichest.android.gameElements.upgrade;
 
 import com.betherichest.android.R;
+import com.betherichest.android.StatType;
+import com.betherichest.android.mangers.Game;
 
 public class GamblingUpgrade extends Upgrade {
-    public GamblingUpgrade(double price, double winAmountMultiplier, int color) {
+    private int requiredGambling;
+
+    public GamblingUpgrade(double price, double winAmountMultiplier, int requiredGambling, int color) {
         super(price, winAmountMultiplier, color);
-        this.imageResource = R.mipmap.clover;
+        this.requiredGambling = requiredGambling;
+        this.imageResource = R.drawable.clovermoney;
     }
 
     @Override
     public boolean isDisplayable() {
-        return !purchased;
+        return !purchased && Game.statisticsManager.getStatByType(StatType.TOTAL_GAMBLING).getValue() >= requiredGambling;
     }
 }

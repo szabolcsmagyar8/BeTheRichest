@@ -2,10 +2,13 @@ package com.betherichest.android.factories;
 
 import com.betherichest.android.gameElements.achievement.Achievement;
 import com.betherichest.android.gameElements.achievement.DollarMakerAchievement;
+import com.betherichest.android.gameElements.achievement.GamblingMoneyAchievement;
 import com.betherichest.android.gameElements.achievement.InvestmentLevelAchievement;
 import com.betherichest.android.gameElements.achievement.TapAchievement;
 import com.betherichest.android.gameElements.achievement.TimeInGameAchievement;
+import com.betherichest.android.gameElements.achievement.TotalGamblingAchievement;
 import com.betherichest.android.gameElements.achievement.TotalUpgradeAchievement;
+import com.betherichest.android.gameElements.achievement.VideoWatcherAchievement;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -13,7 +16,6 @@ import java.util.List;
 
 public class AchievementFactory {
     private static List<Achievement> achievements = new ArrayList<>();
-
 
     private static TapAchievement[] tapAchievements = new TapAchievement[]{
             new TapAchievement("Rookie Tapper 10", 10, null),
@@ -59,7 +61,7 @@ public class AchievementFactory {
             new TimeInGameAchievement("Sick Gamer", 300, null),      // 50h
             new TimeInGameAchievement("Crazy Addict", 600, null),           // 100h
             new TimeInGameAchievement("Absolute Fanatic", 1200, null),   // 200h
-            new TimeInGameAchievement("Do you do anything else??", 3000, null)  // 500h
+            new TimeInGameAchievement("Do you have nothing else to do??", 3000, null)  // 500h
     };
 
     private static InvestmentLevelAchievement[] investmentLevelAchievements = new InvestmentLevelAchievement[]{
@@ -75,7 +77,7 @@ public class AchievementFactory {
             new InvestmentLevelAchievement("Why do you need a thousand investment??", 1000, null),
     };
 
-    private static TotalUpgradeAchievement[] totalUpgradeAchievements = new  TotalUpgradeAchievement[]{
+    private static TotalUpgradeAchievement[] totalUpgradeAchievements = new TotalUpgradeAchievement[]{
             new TotalUpgradeAchievement("My First Upgrade", 1, null),
             new TotalUpgradeAchievement("Beginner Upgrader", 3, null),
             new TotalUpgradeAchievement("Excited Upgrader", 5, null),
@@ -88,6 +90,34 @@ public class AchievementFactory {
             new TotalUpgradeAchievement("Did you buy every single upgrade??", 150, null),
     };
 
+    private static GamblingMoneyAchievement[] gamblingMoneyAchievements = new GamblingMoneyAchievement[]{
+            new GamblingMoneyAchievement("The First Win", 200, null),
+            new GamblingMoneyAchievement("Couple of Wins", 50000, null),
+            new GamblingMoneyAchievement("Lucky Gambler", 750000, null),
+            new GamblingMoneyAchievement("Magic Winner", 10000000, null),
+            new GamblingMoneyAchievement("Fortune Magnet", 200000000, null),
+            new GamblingMoneyAchievement("Lottery Winner", 5000000000d, null),
+            new GamblingMoneyAchievement("Fortuna's Right Hand", 20000000000d, null),
+            new GamblingMoneyAchievement("Wow, you hit the Jackpot!", 100000000000d, null),
+    };
+
+    private static TotalGamblingAchievement[] totalGamblingAchievements = new TotalGamblingAchievement[]{
+            new TotalGamblingAchievement("Beginner Gambler", 10, null),
+            new TotalGamblingAchievement("Excited Gambler", 50, null),
+            new TotalGamblingAchievement("Gambling Addict", 100, null),
+            new TotalGamblingAchievement("Obsessed Gambler", 300, null),
+            new TotalGamblingAchievement("Just... Another... One...!", 800, null),
+    };
+
+    private static VideoWatcherAchievement[] videoWatcherAchievements = new VideoWatcherAchievement[]{
+            new VideoWatcherAchievement("First Ad Video", 1, null),
+            new VideoWatcherAchievement("Ad Watcher", 20, null),
+            new VideoWatcherAchievement("Regular Ad Watcher", 50, null),
+            new VideoWatcherAchievement("Ad Lover", 100, null),
+            new VideoWatcherAchievement("Supporter", 250, null),
+            new VideoWatcherAchievement("Enthusiast Supporter", 500, null),
+            new VideoWatcherAchievement("You made us a lot of money, thanks! :)", 1000, null),
+    };
 
     public static List<Achievement> getCreatedAchievements() {
         createAchievements();
@@ -100,5 +130,8 @@ public class AchievementFactory {
         achievements.addAll(Arrays.asList(timeInGameAchievements));
         achievements.addAll(Arrays.asList(investmentLevelAchievements));
         achievements.addAll(Arrays.asList(totalUpgradeAchievements));
+        achievements.addAll(Arrays.asList(gamblingMoneyAchievements));
+        achievements.addAll(Arrays.asList(totalGamblingAchievements));
+        achievements.addAll(Arrays.asList(videoWatcherAchievements));
     }
 }

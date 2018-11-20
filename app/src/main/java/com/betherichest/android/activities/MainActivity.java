@@ -257,7 +257,7 @@ public class MainActivity extends AppCompatActivity {
         builder
                 .setTitle("Video reward")
                 .setMessage("You received " + String.valueOf(NumberFormat.getNumberInstance(Locale.FRANCE).format(rewardMoney)) + "$")
-                .setIcon(android.R.drawable.ic_dialog_info)
+                .setIcon(R.drawable.ic_coin)
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         Game.getInstance().earnMoney(rewardMoney);

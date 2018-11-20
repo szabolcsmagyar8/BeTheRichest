@@ -13,6 +13,6 @@ public class GlobalIncrementUpgrade extends Upgrade {
 
     @Override
     public boolean isDisplayable() {
-        return !purchased && Game.statisticsManager.getStatByType(StatType.TOTAL_MONEY_COLLECTED).getValue() > price * 2;
+        return !purchased && Game.statisticsManager.getStatByType(StatType.TOTAL_MONEY_COLLECTED).getValue() >= price * 3;
     }
 }

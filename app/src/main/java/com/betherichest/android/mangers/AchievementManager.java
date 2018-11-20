@@ -9,10 +9,13 @@ import com.betherichest.android.StatType;
 import com.betherichest.android.activities.AchievementNotificationActivity;
 import com.betherichest.android.gameElements.achievement.Achievement;
 import com.betherichest.android.gameElements.achievement.DollarMakerAchievement;
+import com.betherichest.android.gameElements.achievement.GamblingMoneyAchievement;
 import com.betherichest.android.gameElements.achievement.InvestmentLevelAchievement;
 import com.betherichest.android.gameElements.achievement.TapAchievement;
 import com.betherichest.android.gameElements.achievement.TimeInGameAchievement;
+import com.betherichest.android.gameElements.achievement.TotalGamblingAchievement;
 import com.betherichest.android.gameElements.achievement.TotalUpgradeAchievement;
+import com.betherichest.android.gameElements.achievement.VideoWatcherAchievement;
 import com.betherichest.android.listenerInterfaces.AdapterRefreshListener;
 
 import java.util.List;
@@ -60,6 +63,24 @@ public class AchievementManager implements Observer {
                 }
                 if (value == StatType.UPGRADES_BOUGHT && achievement instanceof TotalUpgradeAchievement) {
                     if (statManager.getStatByType(StatType.UPGRADES_BOUGHT).getValue() >= ((TotalUpgradeAchievement) achievement).getRequiredUpgradeNum()) {
+                        unlockAchievement(achievement);
+                        break;
+                    }
+                }
+                if (value == StatType.MONEY_FROM_GAMBLING && achievement instanceof GamblingMoneyAchievement) {
+                    if (statManager.getStatByType(StatType.MONEY_FROM_GAMBLING).getValue() >= ((GamblingMoneyAchievement) achievement).getRequiredMoneyFromGambling()) {
+                        unlockAchievement(achievement);
+                        break;
+                    }
+                }
+                if (value == StatType.TOTAL_GAMBLING && achievement instanceof TotalGamblingAchievement) {
+                    if (statManager.getStatByType(StatType.TOTAL_GAMBLING).getValue() >= ((TotalGamblingAchievement) achievement).getRequiredTotalGambling()) {
+                        unlockAchievement(achievement);
+                        break;
+                    }
+                }
+                if (value == StatType.VIDEOS_WATCHED && achievement instanceof VideoWatcherAchievement) {
+                    if (statManager.getStatByType(StatType.VIDEOS_WATCHED).getValue() >= ((VideoWatcherAchievement) achievement).getRequiredVideo()) {
                         unlockAchievement(achievement);
                         break;
                     }

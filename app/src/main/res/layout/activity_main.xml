@@ -203,7 +203,6 @@
                 android:layout_alignRight="@+id/adView"
                 android:background="@color/darkerGray"
                 android:gravity="center"
-                android:onClick="removeAds"
                 android:text="@string/ads_by_google"
                 android:textSize="14sp" />
 

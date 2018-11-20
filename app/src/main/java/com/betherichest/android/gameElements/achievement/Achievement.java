@@ -3,7 +3,6 @@ package com.betherichest.android.gameElements.achievement;
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Ignore;
-import android.os.Parcel;
 
 import com.betherichest.android.gameElements.GameElement;
 
@@ -38,10 +37,6 @@ public class Achievement extends GameElement {
         this.id = id;
         this.dateOfAcquiring = dateOfAcquiring;
         this.unlocked = unlocked;
-    }
-
-    protected Achievement(Parcel in) {
-        unlocked = in.readByte() != 0;
     }
 
     public Date getDateOfAcquiring() {

@@ -50,11 +50,11 @@ public class UpgradeFactory {
     };
 
     private static GamblingUpgradeConfig[] gamblingUpgradeConfigs = new GamblingUpgradeConfig[]{
-            new GamblingUpgradeConfig(33300, 5),
-            new GamblingUpgradeConfig(666600, 8),
-            new GamblingUpgradeConfig(9900000, 10),
-            new GamblingUpgradeConfig(55500000, 12),
-            new GamblingUpgradeConfig(888800000, 15),
+            new GamblingUpgradeConfig(33300, 5, 10),
+            new GamblingUpgradeConfig(666600, 8, 50),
+            new GamblingUpgradeConfig(9900000, 10, 100),
+            new GamblingUpgradeConfig(55500000, 12, 300),
+            new GamblingUpgradeConfig(888800000, 15, 800),
     };
 
     private static int[] colors = new int[]{
@@ -88,6 +88,7 @@ public class UpgradeFactory {
             Upgrade upgrade = new GamblingUpgrade(
                     gamblingUpgradeConfigs[i].getPrice(),
                     gamblingUpgradeConfigs[i].getGamblingMoneyMultiplier(),
+                    gamblingUpgradeConfigs[i].getRequiredGambling(),
                     colors[i]);
             addUpgrade(upgrade);
         }
