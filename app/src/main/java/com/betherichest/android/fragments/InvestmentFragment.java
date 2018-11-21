@@ -11,18 +11,52 @@ import android.widget.ListView;
 
 import com.betherichest.android.R;
 import com.betherichest.android.gameElements.Investment;
-import com.betherichest.android.listenerInterfaces.AdapterRefreshListener;
 import com.betherichest.android.mangers.Game;
 import com.betherichest.android.mangers.SoundManager;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class InvestmentFragment extends Fragment {
-    View rootView;
-    ListView listView;
+    private View rootView;
+    private ListView listView;
 
-    Game game = Game.getInstance();
-    ;
+    private Game game = Game.getInstance();
+    private InvestmentAdapter adapter;
+
+    private int index = -1;
+    private Runnable investmentPriceWatch = new Runnable() {
+        @Override
+        public void run() {
+            double act = game.getCurrentMoney();
+            List<Double> investmentPrices = new ArrayList<>();
+            for (Investment investment : game.getInvestments()) {
+                investmentPrices.add(investment.getPrice());
+            }
+            investmentPrices.add(act);
+            Collections.sort(investmentPrices, new Comparator<Double>() {
+                @Override
+                public int compare(Double d1, Double d2) {
+                    return Double.compare(d1, d2);
+
+                }
+            });
+            setIndex(investmentPrices.lastIndexOf(act));
+
+            game.handler.postDelayed(investmentPriceWatch, 100);
+        }
+    };
+
+    public void setIndex(int index) {
+        if (this.index != index) {
+            this.index = index;
+            if (adapter != null) {
+                adapter.notifyDataSetChanged();
+            }
+        }
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -37,15 +71,8 @@ public class InvestmentFragment extends Fragment {
 
         List<Investment> items = game.getInvestments();
 
-        final InvestmentAdapter adapter = new InvestmentAdapter(items);
+        adapter = new InvestmentAdapter(items);
         listView.setAdapter(adapter);
-
-        game.slowAdapterRefreshListener = new AdapterRefreshListener() {
-            @Override
-            public void refreshAdapter() {
-                adapter.notifyDataSetChanged();
-            }
-        };
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -62,11 +89,13 @@ public class InvestmentFragment extends Fragment {
                 }
             }
         });
+
+        game.handler.post(investmentPriceWatch);
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        game.slowAdapterRefreshListener = null;
+        game.handler.removeCallbacks(investmentPriceWatch);
     }
 }

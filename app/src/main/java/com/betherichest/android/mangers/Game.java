@@ -12,6 +12,7 @@ import com.betherichest.android.factories.GamblingFactory;
 import com.betherichest.android.factories.InvestmentFactory;
 import com.betherichest.android.factories.LeaderFactory;
 import com.betherichest.android.factories.UpgradeFactory;
+import com.betherichest.android.fragments.LeaderboardFragment;
 import com.betherichest.android.gameElements.Booster;
 import com.betherichest.android.gameElements.Gambling;
 import com.betherichest.android.gameElements.Investment;
@@ -22,8 +23,8 @@ import com.betherichest.android.gameElements.upgrade.GlobalIncrementUpgrade;
 import com.betherichest.android.gameElements.upgrade.InvestmentUpgrade;
 import com.betherichest.android.gameElements.upgrade.TapUpgrade;
 import com.betherichest.android.gameElements.upgrade.Upgrade;
-import com.betherichest.android.listenerInterfaces.AdapterRefreshListener;
 import com.betherichest.android.listenerInterfaces.MoneyChangedListener;
+import com.betherichest.android.listenerInterfaces.RefreshListener;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -38,19 +39,20 @@ public class Game {
     private static Game instance;
 
     private static final long FPS = 25;
+    public static final double SEC_TO_HOUR_MULTIPLIER = 3600;
     private static final double AD_REWARD_MULTIPLIER = 220;
+    private static final long SECOND = 1000;
+    private static final double START_MONEY_PER_TAP = 1d;
+    private static final double START_MONEY_PER_SEC = 0d;
 
     private double currentMoney = 0d;
     private double moneyPerTap = 1d;
     private double moneyPerSec = 0d;
-    public static boolean soundDisabled;
-    private static double START_MONEY_PER_TAP = 1d;
-    public static final double SEC_TO_HOUR_MULTIPLIER = 3600;
-    private static double START_MONEY_PER_SEC = 0d;
     private static boolean gamblingAnimationRunning = false;
+    public static boolean soundDisabled;
 
-    private Timer T = new Timer();
     private static boolean timerPaused;
+    public RefreshListener smoothRefreshListener;
 
     private List<Investment> investments;
     private List<Upgrade> upgrades;
@@ -65,8 +67,7 @@ public class Game {
 
     public Handler handler;
     public MoneyChangedListener moneyChangedListener;
-    public AdapterRefreshListener smoothAdapterRefreshListener;
-    public AdapterRefreshListener slowAdapterRefreshListener;
+    private Timer T = new Timer();
     //endregion
 
     //region CONSTRUCTORS
@@ -76,6 +77,32 @@ public class Game {
         }
         return instance;
     }
+
+    private Runnable draw = new Runnable() {
+        @Override
+        public void run() {
+            if (!timerPaused) {
+                earnMoney(getMoneyPerSec() / FPS);
+                statisticsManager.earnInvestmentMoney(getMoneyPerSec() / (double) FPS);
+                if (moneyChangedListener != null) {
+                    moneyChangedListener.onMoneyChanged();  // notifies GUIManager to update money texts
+                }
+            }
+            handler.postDelayed(draw, SECOND / FPS);
+        }
+    };
+    // endregion
+    private Runnable drawSmooth = new Runnable() {
+        @Override
+        public void run() {
+            enrichLeaders();
+            LeaderboardFragment.update();
+            if (smoothRefreshListener != null) {
+                smoothRefreshListener.refresh();
+            }
+            handler.postDelayed(drawSmooth, 55);
+        }
+    };
 
     public Game() {
         investments = InvestmentFactory.getCreatedInvestments();
@@ -91,19 +118,10 @@ public class Game {
 
         handler = new Handler(Looper.getMainLooper());
         handler.post(draw);
+        // handler.post(drawSmooth);
+        handler.post(drawSmooth);
         startTimer();
     }
-    // endregion
-
-    Runnable draw = new Runnable() {
-        @Override
-        public void run() {
-            if (smoothAdapterRefreshListener != null) {
-                smoothAdapterRefreshListener.refreshAdapter();
-            }
-            handler.postDelayed(draw, 100);
-        }
-    };
 
     //region PROPERTIES
     public double getCurrentMoney() {
@@ -176,7 +194,8 @@ public class Game {
 
     public List<Upgrade> getDisplayableUpgrades() {
         ArrayList<Upgrade> displayableUpgrades = new ArrayList<>();
-        for (Upgrade upgrade : getUpgrades()) {
+
+        for (Upgrade upgrade : Game.this.getUpgrades()) {
             if (upgrade.isDisplayable()) {
                 displayableUpgrades.add(upgrade);
             }
@@ -212,7 +231,7 @@ public class Game {
 
     public Booster getBoosterBySkuId(String selectedSKU) {
         for (Booster booster : boosters) {
-            if (booster.getSkuId() == selectedSKU) {
+            if (booster.getSkuId().equals(selectedSKU)) {
                 return booster;
             }
         }
@@ -238,53 +257,11 @@ public class Game {
             @Override
             public void run() {
                 if (!timerPaused) {
-                    earnMoney(getMoneyPerSec() / FPS);
-                    statisticsManager.earnInvestmentMoney(getMoneyPerSec() / (double) FPS);
-                    enrichLeaders();
-                }
-            }
-        }, 0, 1000 / FPS);
-
-        T.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                if (!timerPaused) {
                     statisticsManager.addSecond();    // counts the elapsed seconds in the game
                     statisticsManager.onNotify(StatType.TOTAL_MONEY_COLLECTED);
                 }
             }
-        }, 0, 1000);
-
-        T.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                if (!timerPaused) {
-                    postSlowAdapterRefreshRequest();   // the adapters need to be refreshed continuously, providing a constant update in availability colors and displayable elements in the list
-                }
-            }
-        }, 0, 500);
-    }
-
-    private void postSlowAdapterRefreshRequest() {
-        handler.post(new Runnable() {
-            @Override
-            public void run() {
-                if (slowAdapterRefreshListener != null) {
-                    slowAdapterRefreshListener.refreshAdapter();
-                }
-            }
-        });
-    }
-
-    private void postMoneyChanged() {
-        handler.post(new Runnable() {
-            @Override
-            public void run() {
-                if (moneyChangedListener != null) {
-                    moneyChangedListener.onMoneyChanged();
-                }
-            }
-        });
+        }, 0, SECOND);
     }
 
     public void earnMoney(double money) {
@@ -294,7 +271,6 @@ public class Game {
             statisticsManager.setMaxCurrentMoney(currentMoney);
         }
         statisticsManager.earnMoney(money);
-        postMoneyChanged();
     }
 
     private void deduceMoney(double price) {

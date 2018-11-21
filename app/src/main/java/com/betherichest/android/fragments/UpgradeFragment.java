@@ -13,10 +13,12 @@ import android.widget.TextView;
 import com.betherichest.android.App;
 import com.betherichest.android.R;
 import com.betherichest.android.gameElements.upgrade.Upgrade;
-import com.betherichest.android.listenerInterfaces.AdapterRefreshListener;
 import com.betherichest.android.mangers.Game;
 import com.betherichest.android.mangers.SoundManager;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 
@@ -24,24 +26,61 @@ public class UpgradeFragment extends Fragment {
     private View rootView;
     private TextView noUpgradeTextView;
     private Game game = Game.getInstance();
+    private GridView gridView;
 
-    List<Upgrade> items;
+    private List<Upgrade> items;
+
+    private UpgradeAdapter adapter;
+
+    private int index = -1;
+    private Runnable upgradePriceWatch = new Runnable() {
+        @Override
+        public void run() {
+            double act = game.getCurrentMoney();
+            List<Double> upgradePrices = new ArrayList<>();
+            for (Upgrade upgrade : game.getDisplayableUpgrades()) {
+                upgradePrices.add(upgrade.getPrice());
+            }
+            upgradePrices.add(act);
+            Collections.sort(upgradePrices, new Comparator<Double>() {
+                @Override
+                public int compare(Double d1, Double d2) {
+                    return Double.compare(d1, d2);
+
+                }
+            });
+            setIndex(upgradePrices.lastIndexOf(act));
+
+            game.handler.postDelayed(upgradePriceWatch, 100);
+        }
+    };
+
+    public void setIndex(int index) {
+        if (this.index != index) {
+            this.index = index;
+            if (adapter != null) {
+                if (items.size() == 0) {
+                    noUpgradeTextView.setText(App.getContext().getResources().getString(R.string.no_upgrades_available));
+                } else if (noUpgradeTextView.getText() != null) {
+                    noUpgradeTextView.setText(null);
+                }
+                items = game.getDisplayableUpgrades();
+                if (items == null || items.size() == 0) {
+                    int a = 10;
+                }
+                adapter.setItems(items);
+                adapter.notifyDataSetChanged();
+            }
+        }
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_upgrade, container, false);
         noUpgradeTextView = rootView.findViewById(R.id.no_upgrade_textview);
+        gridView = rootView.findViewById(R.id.upgrade_listview);
+
         return rootView;
-    }
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
     }
 
     @Override
@@ -50,33 +89,17 @@ public class UpgradeFragment extends Fragment {
 
         items = game.getDisplayableUpgrades();
 
-        final UpgradeAdapter adapter = new UpgradeAdapter(items, getContext());
-        final GridView listView = rootView.findViewById(R.id.upgrade_listview);
-        listView.setAdapter(adapter);
+        adapter = new UpgradeAdapter(items);
+        gridView.setAdapter(adapter);
 
-        game.slowAdapterRefreshListener = new AdapterRefreshListener() {
-            @Override
-            public void refreshAdapter() {
-                if (items.size() == 0) {
-                    noUpgradeTextView.setText(App.getContext().getResources().getString(R.string.no_upgrades_available));
-                    noUpgradeTextView.setVisibility(View.VISIBLE);
-                } else {
-                    noUpgradeTextView.setText(null);
-                    noUpgradeTextView.setVisibility(View.GONE);
-                }
-                adapter.setItems(game.getDisplayableUpgrades());
-                adapter.notifyDataSetChanged();
-                items = game.getDisplayableUpgrades();
-            }
-        };
-
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Upgrade selectedUpgrade = adapter.getItem(position);
                 if (selectedUpgrade.isBuyable()) {
                     game.buyUpgrade(selectedUpgrade);
-                    adapter.setItems(game.getDisplayableUpgrades());    //refreshing adapter when an upgrade is bought
+                    items = game.getDisplayableUpgrades();
+                    adapter.setItems(items);    //refreshing adapter when an upgrade is bought
                     adapter.notifyDataSetChanged();
                     SoundManager.playSound(SoundManager.soundBuy);
                 } else {
@@ -84,11 +107,13 @@ public class UpgradeFragment extends Fragment {
                 }
             }
         });
+
+        game.handler.post(upgradePriceWatch);
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        game.slowAdapterRefreshListener = null;
+        game.handler.removeCallbacks(upgradePriceWatch);
     }
 }

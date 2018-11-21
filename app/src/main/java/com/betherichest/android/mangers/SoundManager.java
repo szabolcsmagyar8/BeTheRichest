@@ -20,8 +20,8 @@ public class SoundManager {
     public static int soundGambling;
     public static int soundPull;
 
-    private static SoundPool soundPool;
     private static boolean loaded;
+    public static SoundPool soundPool;
 
     public SoundManager(Activity activity) {
         activity.setVolumeControlStream(streamType);

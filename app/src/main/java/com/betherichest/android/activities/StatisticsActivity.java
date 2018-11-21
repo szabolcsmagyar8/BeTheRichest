@@ -72,5 +72,6 @@ public class StatisticsActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        Game.getInstance().smoothRefreshListener = null;
     }
 }

@@ -16,7 +16,7 @@ import com.betherichest.android.StatType;
 import com.betherichest.android.database.DatabaseManager;
 import com.betherichest.android.fragments.AchievementAdapter;
 import com.betherichest.android.gameElements.achievement.Achievement;
-import com.betherichest.android.listenerInterfaces.AdapterRefreshListener;
+import com.betherichest.android.listenerInterfaces.RefreshListener;
 import com.betherichest.android.mangers.AchievementManager;
 import com.betherichest.android.mangers.GUIManager;
 import com.betherichest.android.mangers.Game;
@@ -34,9 +34,9 @@ public class AchievementActivity extends AppCompatActivity {
         unlockedTextView = findViewById(R.id.unlocked_text);
         updateProgressBar();
 
-        AchievementManager.refreshListener = new AdapterRefreshListener() {
+        AchievementManager.refreshListener = new RefreshListener() {
             @Override
-            public void refreshAdapter() {
+            public void refresh() {
                 updateProgressBar();
             }
         };

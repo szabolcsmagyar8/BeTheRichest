@@ -90,12 +90,17 @@ public class MainActivity extends AppCompatActivity {
         soundIcon = navigationView.getHeaderView(0).findViewById(R.id.soundIcon);
         soundIcon.setImageResource(Game.soundDisabled ? R.drawable.soundoff : R.drawable.soundon);
 
-        new SoundManager(this);
-
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
-        guiManager = new GUIManager(this.findViewById(android.R.id.content), getWindowManager(), getSupportActionBar(), fragmentManager, this);
-        initNavigatonViewListener();
+
+        guiManager = new GUIManager(findViewById(android.R.id.content), getWindowManager(), getSupportActionBar(), fragmentManager, this);
         initAdBanner();
+
+        new Thread(new Runnable() {
+            public void run() {
+                new SoundManager(MainActivity.this);
+                initNavigatonViewListener();
+            }
+        }).start();
 
 //        mp = MediaPlayer.create(getApplicationContext(), R.raw.music);
 //        if (!mp.isPlaying()) {
@@ -164,6 +169,12 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 //        mp.release();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        SoundManager.soundPool.release();
     }
 
     @Override

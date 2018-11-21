@@ -9,7 +9,7 @@ import android.widget.TextView;
 import com.betherichest.android.App;
 import com.betherichest.android.R;
 import com.betherichest.android.gameElements.GameStatistics;
-import com.betherichest.android.listenerInterfaces.AdapterRefreshListener;
+import com.betherichest.android.listenerInterfaces.RefreshListener;
 import com.betherichest.android.mangers.Game;
 
 import java.util.List;
@@ -49,9 +49,9 @@ public class StatisticsAdapter extends BaseAdapter {
             listItemView = view;
         }
 
-        Game.getInstance().smoothAdapterRefreshListener = new AdapterRefreshListener() {
+        Game.getInstance().smoothRefreshListener = new RefreshListener() {
             @Override
-            public void refreshAdapter() {
+            public void refresh() {
                 StatisticsAdapter.super.notifyDataSetChanged();
             }
         };

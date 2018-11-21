@@ -20,6 +20,7 @@ import com.betherichest.android.gameElements.achievement.Achievement;
 import com.betherichest.android.mangers.GUIManager;
 import com.betherichest.android.mangers.Game;
 import com.betherichest.android.mangers.SoundManager;
+import com.bumptech.glide.Glide;
 
 public class AchievementNotificationActivity extends Activity {
     TextView achievementNameTextView;
@@ -31,6 +32,7 @@ public class AchievementNotificationActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_achievement_notification);
+        Glide.with(this);
         initializeAnimation();
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
 

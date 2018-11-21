@@ -9,43 +9,28 @@ import android.widget.ListView;
 
 import com.betherichest.android.R;
 import com.betherichest.android.gameElements.Leader;
-import com.betherichest.android.listenerInterfaces.AdapterRefreshListener;
 import com.betherichest.android.mangers.Game;
 
 import java.util.List;
 
 public class LeaderboardFragment extends Fragment {
-    View rootView;
-    ListView listView;
-    Game game = Game.getInstance();
+    private static LeaderboardAdapter adapter;
+    private View rootView;
+    private ListView listView;
+    private Game game = Game.getInstance();
+
+    public static void update() {
+        if (adapter != null) {
+            adapter.notifyDataSetChanged();
+        }
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_leaderboard, container, false);
-        return rootView;
-    }
-
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-
-        List<Leader> items = Game.getInstance().getLeaders();
-
-        if (!playerWasAdded(items)) {
-            items.add(new Leader("Player", Game.getInstance().getCurrentMoney(), true));
-        }
-
-        final LeaderboardAdapter adapter = new LeaderboardAdapter(items);
         listView = rootView.findViewById(R.id.leaderboard_listview);
 
-        listView.setAdapter(adapter);
-
-        game.smoothAdapterRefreshListener = new AdapterRefreshListener() {
-            @Override
-            public void refreshAdapter() {
-                adapter.notifyDataSetChanged();
-            }
-        };
+        return rootView;
     }
 
     private boolean playerWasAdded(List<Leader> leaders) {
@@ -58,8 +43,23 @@ public class LeaderboardFragment extends Fragment {
     }
 
     @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        List<Leader> items = game.getLeaders();
+
+        if (!playerWasAdded(items)) {
+            items.add(new Leader("Player", game.getCurrentMoney(), true));
+        }
+
+        adapter = new LeaderboardAdapter(items);
+
+        listView.setAdapter(adapter);
+    }
+
+    @Override
     public void onDestroyView() {
         super.onDestroyView();
-        game.smoothAdapterRefreshListener = null;
+        game.smoothRefreshListener = null;
     }
 }

@@ -28,13 +28,19 @@ public class UpgradeAdapter extends BaseAdapter {
     private ImageView imageView;
     private TextView effectTextView;
     private RelativeLayout relativeLayout;
-    private Context context;
+    private WindowManager wm;
+    private Display display;
+    private RelativeLayout.LayoutParams layoutParams;
     private Upgrade upgrade;
 
-
-    protected UpgradeAdapter(List<Upgrade> items, Context context) {
+    protected UpgradeAdapter(List<Upgrade> items) {
         this.items = items;
-        this.context = context;
+        wm = (WindowManager) App.getContext().getSystemService(Context.WINDOW_SERVICE);
+
+        display = wm.getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+        layoutParams = new RelativeLayout.LayoutParams(size.x / 5, size.x / 5);
     }
 
     @Override
@@ -73,7 +79,7 @@ public class UpgradeAdapter extends BaseAdapter {
 
         upgrade = items.get(position);
         Glide
-                .with(parent.getContext())
+                .with(App.getContext())
                 .load(upgrade.getImageResource())
                 .asBitmap()
                 .dontAnimate()
@@ -89,12 +95,6 @@ public class UpgradeAdapter extends BaseAdapter {
     }
 
     private void setLayoutParamsByScreenSize() {
-        WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
-        Display display = wm.getDefaultDisplay();
-        Point size = new Point();
-        display.getSize(size);
-
-        RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(size.x / 5, size.x / 5);
         relativeLayout.setBackgroundColor(upgrade.getColor());
         relativeLayout.setLayoutParams(layoutParams);
     }

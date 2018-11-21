@@ -16,7 +16,7 @@ import com.bumptech.glide.Glide;
 import java.util.List;
 
 public class InvestmentAdapter extends BaseAdapter {
-    View listItemView;
+    private View listItemView;
     private List<Investment> items;
     private TextView nameTextView;
     private TextView priceTextView;
@@ -26,7 +26,7 @@ public class InvestmentAdapter extends BaseAdapter {
     private TextView upsTextView;
     private ImageView investmentImageView;
     private ImageView dollarImageView;
-    Investment investment;
+    private Investment investment;
 
     public InvestmentAdapter(List<Investment> items) {
         this.items = items;
@@ -117,6 +117,7 @@ public class InvestmentAdapter extends BaseAdapter {
         }
     }
 
+    @Override
     public void notifyDataSetChanged() {
         super.notifyDataSetChanged();
     }

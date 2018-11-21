@@ -16,7 +16,7 @@ import com.betherichest.android.gameElements.achievement.TimeInGameAchievement;
 import com.betherichest.android.gameElements.achievement.TotalGamblingAchievement;
 import com.betherichest.android.gameElements.achievement.TotalUpgradeAchievement;
 import com.betherichest.android.gameElements.achievement.VideoWatcherAchievement;
-import com.betherichest.android.listenerInterfaces.AdapterRefreshListener;
+import com.betherichest.android.listenerInterfaces.RefreshListener;
 
 import java.util.List;
 import java.util.Observable;
@@ -25,7 +25,7 @@ import java.util.Observer;
 public class AchievementManager implements Observer {
     private List<Achievement> achievements;
     private StatisticsManager statManager;
-    public static AdapterRefreshListener refreshListener;
+    public static RefreshListener refreshListener;
 
     public AchievementManager(List<Achievement> achievements) {
         this.achievements = achievements;
@@ -97,7 +97,7 @@ public class AchievementManager implements Observer {
             @Override
             public void run() {
                 if (refreshListener != null) {
-                    refreshListener.refreshAdapter();
+                    refreshListener.refresh();
                 }
             }
         });
