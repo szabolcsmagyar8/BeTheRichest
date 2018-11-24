@@ -17,10 +17,8 @@ import android.widget.TextView;
 
 import com.betherichest.android.ActionType;
 import com.betherichest.android.App;
-import com.betherichest.android.HTTPMethod;
 import com.betherichest.android.R;
 import com.betherichest.android.database.DatabaseManager;
-import com.betherichest.android.mangers.ConnectionManager;
 import com.betherichest.android.mangers.GUIManager;
 import com.betherichest.android.mangers.Game;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -31,8 +29,6 @@ import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -135,15 +131,13 @@ public class LoginActivity extends AppCompatActivity {
             Map<String, Object> requestParams = new HashMap<>();
             requestParams.put("idToken", idToken);
 
-            new ConnectionManager(new URL(ConnectionManager.BTR_URL + "/muser/tokensignin"), requestParams, null, HTTPMethod.POST, ActionType.LOGIN);
+            App.createConnection("/muser/tokensignin", requestParams, ActionType.LOGIN);
 
             updateUI(account);
             GUIManager.showToast(R.string.login_successful);
         } catch (ApiException e) {
             updateUI(null);
             GUIManager.showToast(R.string.login_failed);
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
         }
     }
 

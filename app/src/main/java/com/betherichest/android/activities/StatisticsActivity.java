@@ -31,14 +31,14 @@ public class StatisticsActivity extends AppCompatActivity {
 
     @Override
     protected void onResume() {
-        super.onResume();
         Game.setTimerPaused(false);
+        super.onResume();
     }
 
     @Override
     protected void onPause() {
-        Game.setTimerPaused(true);
         super.onPause();
+        Game.setTimerPaused(true);
     }
 
     @Override
@@ -66,15 +66,16 @@ public class StatisticsActivity extends AppCompatActivity {
 
     private void setAdapter() {
         final StatisticsAdapter adapter = new StatisticsAdapter(Game.statisticsManager.getGameStatistics());
-        final ListView listView = findViewById(R.id.stat_listview);
-        listView.setAdapter(adapter);
-
         Game.getInstance().smoothRefreshListener = new RefreshListener() {
             @Override
             public void refresh() {
                 adapter.notifyDataSetChanged();
             }
         };
+
+        final ListView listView = findViewById(R.id.stat_listview);
+        listView.setAdapter(adapter);
+
     }
 
     @Override

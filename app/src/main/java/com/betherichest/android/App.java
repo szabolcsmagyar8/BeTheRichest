@@ -4,9 +4,14 @@ import android.content.Context;
 import android.support.multidex.MultiDexApplication;
 import android.util.TypedValue;
 
+import com.betherichest.android.mangers.ConnectionManager;
+
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.text.NumberFormat;
 import java.util.Locale;
+import java.util.Map;
 
 public class App extends MultiDexApplication {
 
@@ -76,5 +81,21 @@ public class App extends MultiDexApplication {
      */
     public static float getPixelFromDP(int dp) {
         return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, getContext().getResources().getDisplayMetrics());
+    }
+
+    public static void createConnection(String endPoint, Map<String, Object> requestParams, ActionType actionType) {
+        if (isOnline()) {
+            HTTPMethod method;
+            try {
+                if (actionType == ActionType.LOG || actionType == ActionType.LOGIN) {
+                    method = HTTPMethod.POST;
+                } else {
+                    method = HTTPMethod.GET;
+                }
+                new ConnectionManager(new URL(ConnectionManager.BTR_URL + endPoint), requestParams, method, actionType);
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }

@@ -3,6 +3,7 @@ package com.betherichest.android.mangers;
 import android.os.Handler;
 import android.os.Looper;
 
+import com.betherichest.android.ActionType;
 import com.betherichest.android.App;
 import com.betherichest.android.GameState;
 import com.betherichest.android.StatType;
@@ -29,6 +30,7 @@ import com.betherichest.android.listenerInterfaces.RefreshListener;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -84,7 +86,7 @@ public class Game {
             if (!timerPaused) {
                 earnMoney(getMoneyPerSec() / FPS);
                 statisticsManager.earnInvestmentMoney(getMoneyPerSec() / (double) FPS);
-                if (moneyChangedListener != null) {
+                if (!GUIManager.isActivityOpened() && moneyChangedListener != null) {
                     moneyChangedListener.onMoneyChanged();  // notifies GUIManager to update money texts
                 }
             }
@@ -92,24 +94,6 @@ public class Game {
         }
     };
     // endregion
-    private Runnable drawLeaders = new Runnable() {
-        @Override
-        public void run() {
-            enrichLeaders();
-            LeaderboardFragment.update();
-            handler.postDelayed(drawLeaders, 500);
-        }
-    };
-
-    private Runnable drawSmooth = new Runnable() {
-        @Override
-        public void run() {
-            if (smoothRefreshListener != null) {
-                smoothRefreshListener.refresh();
-            }
-            handler.postDelayed(drawSmooth, 50);
-        }
-    };
 
     public Game() {
         investments = InvestmentFactory.getCreatedInvestments();
@@ -129,6 +113,25 @@ public class Game {
         handler.post(drawSmooth);
         startTimer();
     }
+
+    private Runnable drawLeaders = new Runnable() {
+        @Override
+        public void run() {
+            enrichLeaders();
+            LeaderboardFragment.update();
+            handler.postDelayed(drawLeaders, 500);
+        }
+    };
+
+    private Runnable drawSmooth = new Runnable() {
+        @Override
+        public void run() {
+            if (smoothRefreshListener != null) {
+                smoothRefreshListener.refresh();
+            }
+            handler.postDelayed(drawSmooth, 50);
+        }
+    };
 
     //region PROPERTIES
     public double getCurrentMoney() {
@@ -293,16 +296,22 @@ public class Game {
         }
     }
 
-    public void buyInvestment(Investment selectedInvestment) {
+    public void buyInvestment(final Investment selectedInvestment) {
         deduceMoney(selectedInvestment.getPrice());
         statisticsManager.buyItem(selectedInvestment.getPrice());
         statisticsManager.buyInvestment();
         selectedInvestment.increaseLevel();
         recalculateMoneyPerSecond();
         recalculateMoneyPerTap();   // for GlobalIncrements
+
+        HashMap<String, Object> params = new HashMap<String, Object>() {{
+            put("investmentId", selectedInvestment.getId());
+            put("investmentRank", selectedInvestment.getLevel());
+        }};
+        App.createConnection("/muser/log-investment", params, ActionType.LOG);
     }
 
-    public void buyUpgrade(Upgrade selectedUpgrade) {
+    public void buyUpgrade(final Upgrade selectedUpgrade) {
         selectedUpgrade.setPurchased(true);
         deduceMoney(selectedUpgrade.getPrice());
 
@@ -319,6 +328,17 @@ public class Game {
 
         statisticsManager.buyItem(selectedUpgrade.getPrice());
         statisticsManager.buyUpgrade();
+
+        HashMap<String, Object> params = new HashMap<String, Object>() {{
+            put("upgradeId", selectedUpgrade.getId());
+        }};
+        App.createConnection("/muser/log-investment", params, ActionType.LOG);
+    }
+
+    public void buyGambling(Gambling selectedGambling) {
+        deduceMoney(selectedGambling.getPrice());
+        statisticsManager.buyItem(selectedGambling.getPrice());
+        statisticsManager.gamble(selectedGambling.getPrice());
     }
 
     private void changeGamblingWinAmount(Upgrade selectedUpgrade) {
@@ -328,12 +348,6 @@ public class Game {
             gambling.setMaxWinAmount(gambling.getMaxWinAmount() * multiplier);
             gambling.setPrice(gambling.getPrice() * multiplier);
         }
-    }
-
-    public void buyGambling(Gambling selectedGambling) {
-        deduceMoney(selectedGambling.getPrice());
-        statisticsManager.buyItem(selectedGambling.getPrice());
-        statisticsManager.gamble(selectedGambling.getPrice());
     }
 
     private void enrichLeaders() {

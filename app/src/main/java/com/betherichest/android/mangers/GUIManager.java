@@ -151,12 +151,14 @@ public class GUIManager {
         game.moneyChangedListener = new MoneyChangedListener() {
             @Override
             public void onMoneyChanged() {
-                setMainUIItems();
+                if (!isActivityOpened()) {
+                    setMainUIItems();
+                }
             }
         };
     }
 
-    public void setMainUIItems() {
+    private void setMainUIItems() {
         currentMoneyText.setText(game.getCurrentMoneyAsString());
         moneyPerSecText.setText(game.getMoneyPerSecAsString());
         moneyPerTapText.setText(game.getMoneyPerTapAsString());

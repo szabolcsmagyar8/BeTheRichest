@@ -16,23 +16,25 @@ import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.HashMap;
 import java.util.Map;
 
 public class ConnectionManager extends AsyncTask<URL, String, Void> {
     private URL url;
     private Map<String, Object> requestParams;
-    private Map<String, String> headerParams;
+    private Map<String, String> headerParams = new HashMap<>();
     private HTTPMethod httpMethod;
     private ActionType actionType;
     public static final String BTR_URL = "https://betherichest-1994.appspot.com";
 
     /**
      * @param requestParams key-value pair request parameters
-     * @param actionType*/
-    public ConnectionManager(URL url, Map<String, Object> requestParams, Map<String, String> headerParams, HTTPMethod httpMethod, ActionType actionType) {
+     * @param actionType
+     */
+    public ConnectionManager(URL url, Map<String, Object> requestParams, HTTPMethod httpMethod, ActionType actionType) {
         this.url = url;
+        headerParams.put("Authorization", LoginActivity.BEARER_TOKEN);
         this.requestParams = requestParams;
-        this.headerParams = headerParams;
         this.httpMethod = httpMethod;
         this.actionType = actionType;
         execute();
@@ -89,7 +91,7 @@ public class ConnectionManager extends AsyncTask<URL, String, Void> {
         InputStream inputStream = null;
         try {
             inputStream = conn.getInputStream();
-        } catch(IOException exception) {
+        } catch (IOException exception) {
             inputStream = conn.getErrorStream();
         }
         BufferedReader br = new BufferedReader(new InputStreamReader(inputStream));
@@ -98,7 +100,7 @@ public class ConnectionManager extends AsyncTask<URL, String, Void> {
         String output;
         while ((output = br.readLine()) != null) {
             response.append(output);
-            if (actionType == ActionType.LOGIN){
+            if (actionType == ActionType.LOGIN) {
                 output = output.replace("\"", "");
                 LoginActivity.BEARER_TOKEN = "Bearer " + output;
             }

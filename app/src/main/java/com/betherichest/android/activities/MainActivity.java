@@ -20,22 +20,18 @@ import android.widget.ImageView;
 
 import com.betherichest.android.ActionType;
 import com.betherichest.android.App;
-import com.betherichest.android.HTTPMethod;
 import com.betherichest.android.R;
 import com.betherichest.android.database.DatabaseManager;
 import com.betherichest.android.fragments.GamblingFragment;
 import com.betherichest.android.fragments.InvestmentFragment;
 import com.betherichest.android.fragments.LeaderboardFragment;
 import com.betherichest.android.fragments.UpgradeFragment;
-import com.betherichest.android.mangers.ConnectionManager;
 import com.betherichest.android.mangers.GUIManager;
 import com.betherichest.android.mangers.Game;
 import com.betherichest.android.mangers.SoundManager;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.text.NumberFormat;
 import java.util.HashMap;
 import java.util.Locale;
@@ -51,9 +47,6 @@ public class MainActivity extends AppCompatActivity {
     private DrawerLayout mDrawerLayout;
     private AdView mAdView;
     private ImageView soundIcon;
-
-
-    //   private MediaPlayer mp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,11 +95,10 @@ public class MainActivity extends AppCompatActivity {
             }
         }).start();
 
-//        mp = MediaPlayer.create(getApplicationContext(), R.raw.music);
-//        if (!mp.isPlaying()) {
-//            mp.start();
-//            mp.setLooping(true);
-//        }
+        HashMap<String, Object> params = new HashMap<String, Object>() {{
+            put("action", "open");
+        }};
+        App.createConnection("/muser/log-ping", params, ActionType.LOG);
     }
 
     private void initAdBanner() {
@@ -137,9 +129,8 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onResume() {
-        super.onResume();
         Game.setTimerPaused(false);
-        //     mp.start();
+        super.onResume();
     }
 
     @Override
@@ -148,7 +139,6 @@ public class MainActivity extends AppCompatActivity {
         if (!GUIManager.isActivityOpened()) {
             Game.setTimerPaused(true);
         }
-//        mp.pause();
     }
 
     @Override
@@ -159,22 +149,18 @@ public class MainActivity extends AppCompatActivity {
         }
         dbManager.saveStateToDb();
 
-        if (App.isOnline() && LoginActivity.BEARER_TOKEN != null) {
-            try {
-                Map<String, String> header = new HashMap<>();
-                header.put("Authorization", LoginActivity.BEARER_TOKEN);
-                new ConnectionManager(new URL(ConnectionManager.BTR_URL + "/muser/log-stats"), Game.statisticsManager.getStatRequestParams(), header, HTTPMethod.POST, ActionType.LOG);
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            }
-        }
-//        mp.release();
+        App.createConnection("/muser/log-stats", Game.statisticsManager.getStatRequestParams(), ActionType.LOG);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         SoundManager.soundPool.release();
+        Map<String, Object> params = new HashMap<String, Object>() {{
+            put("action", "close");
+        }};
+        App.createConnection("/muser/log-ping", params, ActionType.LOG);
+
     }
 
     @Override
@@ -229,18 +215,12 @@ public class MainActivity extends AppCompatActivity {
                                     GUIManager.showToast(R.string.check_net_connection);
                                 }
                                 break;
-//                            case R.id.nav_settings:
-//                                openActivity(new Intent(context, SettingsActivity.class));
-//                                break;
                             case R.id.nav_about:
                                 openActivity(new Intent(context, AboutActivity.class));
                                 break;
                             case R.id.nav_profile:
                                 openActivity(new Intent(context, LoginActivity.class));
                                 break;
-//                            case R.id.nav_help:
-//                                openActivity(new Intent(context, SettingsActivity.class));
-//                                break;
                         }
                         return false;
                     }

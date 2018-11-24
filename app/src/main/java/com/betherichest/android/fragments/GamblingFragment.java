@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.betherichest.android.ActionType;
 import com.betherichest.android.App;
 import com.betherichest.android.R;
 import com.betherichest.android.gameElements.Gambling;
@@ -20,6 +21,7 @@ import com.betherichest.android.mangers.GUIManager;
 import com.betherichest.android.mangers.Game;
 import com.betherichest.android.mangers.SoundManager;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
@@ -90,6 +92,7 @@ public class GamblingFragment extends Fragment {
     }
 
     private void setAnimationListeners(final int position) {
+        final Gambling selectedGambling = adapter.getItem(position);
         growAndRotate.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
@@ -101,7 +104,7 @@ public class GamblingFragment extends Fragment {
 
             @Override
             public void onAnimationEnd(Animation animation) {
-                double wonMoney = calculateWonMoney(adapter.getItem(position));
+                final double wonMoney = calculateWonMoney(selectedGambling);
                 String text;
                 if (wonMoney == 0) {
                     text = getString(R.string.gambling_no_win);
@@ -116,6 +119,12 @@ public class GamblingFragment extends Fragment {
                 wonMoneyText.setVisibility(View.VISIBLE);
                 wonMoneyText.setText(text);
                 wonMoneyText.startAnimation(grow);
+
+                HashMap<String, Object> params = new HashMap<String, Object>() {{
+                    put("gamblingId", selectedGambling.getId());
+                    put("gamblingWon", wonMoney > 0);
+                }};
+                App.createConnection("/muser/log-gambling", params, ActionType.LOG);
             }
 
             @Override
