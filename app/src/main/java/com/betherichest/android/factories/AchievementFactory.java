@@ -102,11 +102,11 @@ public class AchievementFactory {
     };
 
     private static TotalGamblingAchievement[] totalGamblingAchievements = new TotalGamblingAchievement[]{
-            new TotalGamblingAchievement("Beginner Gambler", 10, null),
-            new TotalGamblingAchievement("Excited Gambler", 50, null),
-            new TotalGamblingAchievement("Gambling Addict", 100, null),
-            new TotalGamblingAchievement("Obsessed Gambler", 300, null),
-            new TotalGamblingAchievement("Just... Another... One...!", 800, null),
+            new TotalGamblingAchievement("Beginner Gambler", 5, null),
+            new TotalGamblingAchievement("Excited Gambler", 20, null),
+            new TotalGamblingAchievement("Gambling Addict", 40, null),
+            new TotalGamblingAchievement("Obsessed Gambler", 100, null),
+            new TotalGamblingAchievement("Just... Another... One...!", 200, null),
     };
 
     private static VideoWatcherAchievement[] videoWatcherAchievements = new VideoWatcherAchievement[]{

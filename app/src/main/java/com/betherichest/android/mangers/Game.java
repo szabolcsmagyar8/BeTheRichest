@@ -92,15 +92,22 @@ public class Game {
         }
     };
     // endregion
-    private Runnable drawSmooth = new Runnable() {
+    private Runnable drawLeaders = new Runnable() {
         @Override
         public void run() {
             enrichLeaders();
             LeaderboardFragment.update();
+            handler.postDelayed(drawLeaders, 500);
+        }
+    };
+
+    private Runnable drawSmooth = new Runnable() {
+        @Override
+        public void run() {
             if (smoothRefreshListener != null) {
                 smoothRefreshListener.refresh();
             }
-            handler.postDelayed(drawSmooth, 55);
+            handler.postDelayed(drawSmooth, 50);
         }
     };
 
@@ -118,7 +125,7 @@ public class Game {
 
         handler = new Handler(Looper.getMainLooper());
         handler.post(draw);
-        // handler.post(drawSmooth);
+        handler.post(drawLeaders);
         handler.post(drawSmooth);
         startTimer();
     }
@@ -303,10 +310,7 @@ public class Game {
             ((InvestmentUpgrade) selectedUpgrade).getRelevantInvestment().addPurchasedRelevantUpgrade(selectedUpgrade); // to store the purchased upgrades in a separate list for every investment instance
             recalculateMoneyPerSecond();
         }
-        if (selectedUpgrade instanceof TapUpgrade) {
-            recalculateMoneyPerTap();
-        }
-        if (selectedUpgrade instanceof GlobalIncrementUpgrade) {
+        if (selectedUpgrade instanceof TapUpgrade || selectedUpgrade instanceof GlobalIncrementUpgrade) {
             recalculateMoneyPerTap();
         }
         if (selectedUpgrade instanceof GamblingUpgrade) {

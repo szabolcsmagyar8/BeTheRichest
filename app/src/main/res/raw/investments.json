@@ -27,7 +27,7 @@
     {
       "name": "Bouncy Castle",
       "basePrice": 1150,
-      "baseDpS": 1.6,
+      "baseDpS": 1.5,
       "description": "One of every children's favourite activities, place it in a park and enjoy the income.",
       "imageResourceString": "bouncycastle",
       "upgradeEffectMultipliers": [2, 2, 3, 3, 3, 5, 6]
@@ -59,7 +59,7 @@
     {
       "name": "Apartment",
       "basePrice": 102000,
-      "baseDpS": 25,
+      "baseDpS": 20,
       "description": "Buy apartments that you rent out to people.",
       "imageResourceString": "apartment",
       "upgradeEffectMultipliers": [2, 2, 3, 5, 8]
@@ -67,7 +67,7 @@
     {
       "name": "Family House",
       "basePrice": 319000,
-      "baseDpS": 50,
+      "baseDpS": 40,
       "description": "Buy family houses that you rent out.",
       "imageResourceString": "familyhouse",
       "upgradeEffectMultipliers": [2, 2, 3, 5, 5]
@@ -75,7 +75,7 @@
     {
       "name": "Yacht",
       "basePrice": 985000,
-      "baseDpS": 75,
+      "baseDpS": 70,
       "description": "",
       "imageResourceString": "yacht",
       "upgradeEffectMultipliers": [2, 3, 5, 8]
@@ -83,7 +83,7 @@
     {
       "name": "Mine Truck",
       "basePrice": 3350000,
-      "baseDpS": 180,
+      "baseDpS": 130,
       "description": "",
       "imageResourceString": "minetruck",
       "upgradeEffectMultipliers": [2, 3, 5, 5]
@@ -91,7 +91,7 @@
     {
       "name": "Private Airplane",
       "basePrice": 9370000,
-      "baseDpS": 400,
+      "baseDpS": 280,
       "description": "",
       "imageResourceString": "airplane",
       "upgradeEffectMultipliers": [2, 2, 3, 5]
@@ -99,47 +99,79 @@
     {
       "name": "Luxury Real Estate",
       "basePrice": 21150000,
-      "baseDpS": 850,
+      "baseDpS": 550,
       "description": "",
       "imageResourceString": "luxuryrealestate",
-      "upgradeEffectMultipliers": [2, 5, 8]
+      "upgradeEffectMultipliers": [
+        2,
+        2,
+        3,
+        3
+      ]
     },
     {
       "name": "Casino",
-      "basePrice": 42220000,
-      "baseDpS": 1500,
+      "basePrice": 42250000,
+      "baseDpS": 1000,
       "description": "",
       "imageResourceString": "casino",
-      "upgradeEffectMultipliers": [2, 5, 5]
+      "upgradeEffectMultipliers": [
+        2,
+        2,
+        8
+      ]
     },
     {
       "name": "Office Building",
-      "basePrice": 86699000,
-      "baseDpS": 3000,
+      "basePrice": 86700000,
+      "baseDpS": 1800,
       "description": "",
       "imageResourceString": "officebuilding",
-      "upgradeEffectMultipliers": [2, 3, 5]
+      "upgradeEffectMultipliers": [
+        2,
+        5,
+        5
+      ]
     },
     {
       "name": "Amusement Park",
-      "basePrice": 184400000,
-      "baseDpS": 7000,
+      "basePrice": 20500000,
+      "baseDpS": 3400,
       "description": "An amusement park attracts thousands of visitors daily.",
       "imageResourceString": "funfair",
-      "upgradeEffectMultipliers": [5, 8]
+      "upgradeEffectMultipliers": [
+        2,
+        3,
+        5
+      ]
     },
     {
       "name": "Hotel Chain",
-      "basePrice": 449900000,
-      "baseDpS": 15000,
+      "basePrice": 448900000,
+      "baseDpS": 7000,
       "description": "Tourist have to stay somewhere. Let's be it one of your hotels.",
       "imageResourceString": "hotelchain",
-      "upgradeEffectMultipliers": [5, 5]
+      "upgradeEffectMultipliers": [
+        2,
+        3,
+        3
+      ]
+    },
+    {
+      "name": "Highway System",
+      "basePrice": 950000000,
+      "baseDpS": 13000,
+      "description": "Lots of miles of highway throughout the country.",
+      "imageResourceString": "highwaysystem",
+      "upgradeEffectMultipliers": [
+        2,
+        8
+      ]
     },
     {
       "name": "Oil Rig",
-      "basePrice": 950000000,
-      "baseDpS": 28000,
+      "basePrice": 2390000000,
+      "baseDpS": 25000,
       "description": "Dig deep enough in your garden, and find a valuable material, called oil.",
       "imageResourceString": "oilrig",
       "upgradeEffectMultipliers": [3, 5]
@@ -147,42 +179,83 @@
     {
       "name": "Nuclear Power Plant",
       "basePrice": 5550000000,
-      "baseDpS": 100000,
+      "baseDpS": 50000,
       "description": "Provide the power for a whole city.",
       "imageResourceString": "nuclearplant",
-      "upgradeEffectMultipliers": [8]
+      "upgradeEffectMultipliers": [
+        2,
+        5
+      ]
     },
     {
       "name": "National Airport",
       "basePrice": 12350000000,
-      "baseDpS": 200000,
+      "baseDpS": 100000,
       "description": "Millions of tourists will go through your airport per year.",
       "imageResourceString": "airport",
-      "upgradeEffectMultipliers": [5]
+      "upgradeEffectMultipliers": [
+        3,
+        3
+      ]
     },
     {
       "name": "High-Speed Rail Network",
       "basePrice": 33770000000,
-      "baseDpS": 500000,
+      "baseDpS": 250000,
       "description": "Extremely fast way to travel in he country.",
       "imageResourceString": "railwaysystem",
-      "upgradeEffectMultipliers": [3]
+      "upgradeEffectMultipliers": [
+        2,
+        3
+      ]
     },
     {
       "name": "Space Station",
-      "basePrice": 150000000000,
-      "baseDpS": 2000000,
+      "basePrice": 130000000000,
+      "baseDpS": 1000000,
       "description": "Provide the power for a whole city.",
       "imageResourceString": "spacestation",
-      "upgradeEffectMultipliers": [2]
+      "upgradeEffectMultipliers": [
+        3
+      ]
     },
     {
       "name": "Mars Station",
-      "basePrice": 500000000000,
-      "baseDpS": 5000000,
+      "basePrice": 280000000000,
+      "baseDpS": 1800000,
       "description": "Search for aliens on Mars!",
       "imageResourceString": "marsstation",
+      "upgradeEffectMultipliers": [
+        3
+      ]
+    },
+    {
+      "name": "Intergalactic Spaceship",
+      "basePrice": 500000000000,
+      "baseDpS": 2500000,
+      "description": "Search for aliens on Mars!",
+      "imageResourceString": "intergalacticship",
       "upgradeEffectMultipliers": [2]
+    },
+    {
+      "name": "Time Machine",
+      "basePrice": 700000000000,
+      "baseDpS": 3000000,
+      "description": "Search for aliens on Mars!",
+      "imageResourceString": "timemachine",
+      "upgradeEffectMultipliers": [
+        2
+      ]
+    },
+    {
+      "name": "Particle Transmitter",
+      "basePrice": 1000000000000,
+      "baseDpS": 0,
+      "description": "Search for aliens on Mars!",
+      "imageResourceString": "particletransmitter2",
+      "upgradeEffectMultipliers": [
+        1
+      ]
     }
   ]
 }

@@ -9,6 +9,7 @@ import android.widget.ListView;
 import com.betherichest.android.R;
 import com.betherichest.android.database.DatabaseManager;
 import com.betherichest.android.fragments.StatisticsAdapter;
+import com.betherichest.android.listenerInterfaces.RefreshListener;
 import com.betherichest.android.mangers.GUIManager;
 import com.betherichest.android.mangers.Game;
 
@@ -64,9 +65,16 @@ public class StatisticsActivity extends AppCompatActivity {
     }
 
     private void setAdapter() {
-        StatisticsAdapter adapter = new StatisticsAdapter(Game.statisticsManager.getGameStatistics());
-        ListView listView = findViewById(R.id.stat_listview);
+        final StatisticsAdapter adapter = new StatisticsAdapter(Game.statisticsManager.getGameStatistics());
+        final ListView listView = findViewById(R.id.stat_listview);
         listView.setAdapter(adapter);
+
+        Game.getInstance().smoothRefreshListener = new RefreshListener() {
+            @Override
+            public void refresh() {
+                adapter.notifyDataSetChanged();
+            }
+        };
     }
 
     @Override

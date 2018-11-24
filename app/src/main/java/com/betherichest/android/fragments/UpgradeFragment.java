@@ -65,9 +65,6 @@ public class UpgradeFragment extends Fragment {
                     noUpgradeTextView.setText(null);
                 }
                 items = game.getDisplayableUpgrades();
-                if (items == null || items.size() == 0) {
-                    int a = 10;
-                }
                 adapter.setItems(items);
                 adapter.notifyDataSetChanged();
             }
@@ -98,7 +95,8 @@ public class UpgradeFragment extends Fragment {
                 Upgrade selectedUpgrade = adapter.getItem(position);
                 if (selectedUpgrade.isBuyable()) {
                     game.buyUpgrade(selectedUpgrade);
-                    items = game.getDisplayableUpgrades();
+//                    items = game.getDisplayableUpgrades();
+                    items.remove(selectedUpgrade);
                     adapter.setItems(items);    //refreshing adapter when an upgrade is bought
                     adapter.notifyDataSetChanged();
                     SoundManager.playSound(SoundManager.soundBuy);

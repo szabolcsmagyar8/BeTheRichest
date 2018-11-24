@@ -50,11 +50,11 @@ public class UpgradeFactory {
     };
 
     private static GamblingUpgradeConfig[] gamblingUpgradeConfigs = new GamblingUpgradeConfig[]{
-            new GamblingUpgradeConfig(33300, 5, 10),
-            new GamblingUpgradeConfig(666600, 8, 50),
-            new GamblingUpgradeConfig(9900000, 10, 100),
-            new GamblingUpgradeConfig(55500000, 12, 300),
-            new GamblingUpgradeConfig(888800000, 15, 800),
+            new GamblingUpgradeConfig(33300, 5, 5),
+            new GamblingUpgradeConfig(666600, 8, 20),
+            new GamblingUpgradeConfig(9900000, 10, 40),
+            new GamblingUpgradeConfig(55500000, 12, 100),
+            new GamblingUpgradeConfig(888800000, 15, 200),
     };
 
     private static int[] colors = new int[]{

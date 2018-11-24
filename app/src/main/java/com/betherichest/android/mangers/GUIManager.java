@@ -272,7 +272,7 @@ public class GUIManager {
         toast.show();
     }
 
-    public void initializeActionBar(ActionBar actionbar) {
+    private void initializeActionBar(ActionBar actionbar) {
         if (actionbar != null) {
             actionbar.setDisplayHomeAsUpEnabled(true);
             actionbar.setHomeAsUpIndicator(R.drawable.ic_menu);

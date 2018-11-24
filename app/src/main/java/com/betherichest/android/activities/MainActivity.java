@@ -229,18 +229,18 @@ public class MainActivity extends AppCompatActivity {
                                     GUIManager.showToast(R.string.check_net_connection);
                                 }
                                 break;
-                            case R.id.nav_settings:
-                                openActivity(new Intent(context, SettingsActivity.class));
-                                break;
+//                            case R.id.nav_settings:
+//                                openActivity(new Intent(context, SettingsActivity.class));
+//                                break;
                             case R.id.nav_about:
                                 openActivity(new Intent(context, AboutActivity.class));
                                 break;
                             case R.id.nav_profile:
                                 openActivity(new Intent(context, LoginActivity.class));
                                 break;
-                            case R.id.nav_help:
-                                openActivity(new Intent(context, SettingsActivity.class));
-                                break;
+//                            case R.id.nav_help:
+//                                openActivity(new Intent(context, SettingsActivity.class));
+//                                break;
                         }
                         return false;
                     }

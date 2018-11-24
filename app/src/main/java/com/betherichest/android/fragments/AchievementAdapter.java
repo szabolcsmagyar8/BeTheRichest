@@ -10,7 +10,6 @@ import android.widget.TextView;
 import com.betherichest.android.App;
 import com.betherichest.android.R;
 import com.betherichest.android.gameElements.achievement.Achievement;
-import com.bumptech.glide.Glide;
 
 import java.util.List;
 
@@ -58,12 +57,7 @@ public class AchievementAdapter extends BaseAdapter {
         achievementContainer = listItemView.findViewById(R.id.achievement_container);
 
         if (items.get(i).isUnlocked()) {
-            Glide.with(App.getContext())
-                    .load(achievement.getImageResource())
-                    .asBitmap()
-                    .dontAnimate()
-                    .dontTransform()
-                    .into(iconImageView);
+            iconImageView.setImageResource(achievement.getImageResource());
             achievementContainer.setBackgroundColor(App.getContext().getResources().getColor(R.color.achievement_active));
             labelBackgroundLayout.setVisibility(View.VISIBLE);
             textView.setText(achievement.getText());
