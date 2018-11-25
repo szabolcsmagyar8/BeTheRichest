@@ -14,7 +14,6 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 
 import com.betherichest.android.R;
-import com.betherichest.android.database.DatabaseManager;
 import com.betherichest.android.fragments.BoosterAdapter;
 import com.betherichest.android.gameElements.Booster;
 import com.betherichest.android.mangers.GUIManager;
@@ -101,7 +100,6 @@ public class BoosterActivity extends AppCompatActivity {
 
     @Override
     protected void onStop() {
-        DatabaseManager.instance.saveStateToDb();
         super.onStop();
     }
 

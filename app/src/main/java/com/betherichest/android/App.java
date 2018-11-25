@@ -1,18 +1,23 @@
 package com.betherichest.android;
 
 import android.content.Context;
+import android.os.AsyncTask;
 import android.support.multidex.MultiDexApplication;
 import android.util.TypedValue;
 
-import com.betherichest.android.mangers.ConnectionManager;
+import com.betherichest.android.connection.ActionType;
+import com.betherichest.android.connection.ConnectionManager;
+import com.betherichest.android.connection.HTTPMethod;
+import com.betherichest.android.connection.RequestItem;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
-import java.net.URL;
 import java.text.NumberFormat;
+import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Map;
 
+// Class for methods used a lot of times
 public class App extends MultiDexApplication {
 
     private static Context mContext;
@@ -76,26 +81,45 @@ public class App extends MultiDexApplication {
     }
 
     /**
-     * @return pixel value
      * @param dp density pixel
+     * @return pixel value
      */
     public static float getPixelFromDP(int dp) {
         return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, getContext().getResources().getDisplayMetrics());
     }
 
-    public static void createConnection(String endPoint, Map<String, Object> requestParams, ActionType actionType) {
-        if (isOnline()) {
-            HTTPMethod method;
-            try {
-                if (actionType == ActionType.LOG || actionType == ActionType.LOGIN) {
-                    method = HTTPMethod.POST;
+    public static void createConnection(final String endPoint, final Map<String, Object> requestParams, final ActionType actionType) {
+        AsyncTask.execute(new Runnable() {
+            @Override
+            public void run() {
+                if (isOnline()) {
+                    HTTPMethod method;
+                    if (actionType == ActionType.LOG || actionType == ActionType.LOGIN) {
+                        method = HTTPMethod.POST;
+                    } else {
+                        method = HTTPMethod.GET;
+                    }
+                    try {
+                        new ConnectionManager(endPoint, requestParams, method, actionType);
+                    } catch (MalformedURLException e) {
+                        e.printStackTrace();
+                    }
                 } else {
-                    method = HTTPMethod.GET;
+                    ConnectionManager.requestItems.add(new RequestItem(endPoint, requestParams, actionType));
                 }
-                new ConnectionManager(new URL(ConnectionManager.BTR_URL + endPoint), requestParams, method, actionType);
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
             }
-        }
+        });
+    }
+
+    public static void performQueuedRequests() {
+        AsyncTask.execute(new Runnable() {
+            @Override
+            public void run() {
+                for (RequestItem item : new ArrayList<>(ConnectionManager.requestItems)) {
+                    createConnection(item.getEndPoint(), item.getRequestParams(), item.getActionType());
+                    ConnectionManager.requestItems.remove(item);
+                }
+            }
+        });
     }
 }

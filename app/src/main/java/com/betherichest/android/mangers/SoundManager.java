@@ -23,7 +23,7 @@ public class SoundManager {
     private static boolean loaded;
     public static SoundPool soundPool;
 
-    public SoundManager(Activity activity) {
+    public SoundManager(final Activity activity) {
         activity.setVolumeControlStream(streamType);
         if (Build.VERSION.SDK_INT >= 21) {
             AudioAttributes audioAttrib = new AudioAttributes.Builder()
@@ -34,23 +34,23 @@ public class SoundManager {
             SoundPool.Builder builder = new SoundPool.Builder();
             builder.setAudioAttributes(audioAttrib).setMaxStreams(MAX_STREAMS);
 
-            this.soundPool = builder.build();
+            soundPool = builder.build();
         } else {
-            this.soundPool = new SoundPool(MAX_STREAMS, AudioManager.STREAM_MUSIC, 0);
+            soundPool = new SoundPool(MAX_STREAMS, AudioManager.STREAM_MUSIC, 0);
         }
-        this.soundPool.setOnLoadCompleteListener(new SoundPool.OnLoadCompleteListener() {
+        soundPool.setOnLoadCompleteListener(new SoundPool.OnLoadCompleteListener() {
             @Override
             public void onLoadComplete(SoundPool soundPool, int sampleId, int status) {
                 loaded = true;
             }
         });
-        soundClick = this.soundPool.load(App.getContext(), R.raw.click, 1);
-        soundBuy = this.soundPool.load(App.getContext(), R.raw.buy, 1);
-        soundAchievement = this.soundPool.load(App.getContext(), R.raw.achievement, 1);
-        soundError = this.soundPool.load(App.getContext(), R.raw.error, 1);
-        soundBottle = this.soundPool.load(App.getContext(), R.raw.bottle, 1);
-        soundGambling = this.soundPool.load(App.getContext(), R.raw.gambling, 1);
-        soundPull = this.soundPool.load(App.getContext(), R.raw.pull, 1);
+        soundClick = soundPool.load(App.getContext(), R.raw.click, 1);
+        soundBuy = soundPool.load(App.getContext(), R.raw.buy, 1);
+        soundAchievement = soundPool.load(App.getContext(), R.raw.achievement, 1);
+        soundError = soundPool.load(App.getContext(), R.raw.error, 1);
+        soundBottle = soundPool.load(App.getContext(), R.raw.bottle, 1);
+        soundGambling = soundPool.load(App.getContext(), R.raw.gambling, 1);
+        soundPull = soundPool.load(App.getContext(), R.raw.pull, 1);
     }
 
     public static void playSound(int sound) {

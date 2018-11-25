@@ -7,7 +7,6 @@ import android.view.MenuItem;
 import android.widget.ListView;
 
 import com.betherichest.android.R;
-import com.betherichest.android.database.DatabaseManager;
 import com.betherichest.android.fragments.StatisticsAdapter;
 import com.betherichest.android.listenerInterfaces.RefreshListener;
 import com.betherichest.android.mangers.GUIManager;
@@ -31,8 +30,8 @@ public class StatisticsActivity extends AppCompatActivity {
 
     @Override
     protected void onResume() {
-        Game.setTimerPaused(false);
         super.onResume();
+        Game.setTimerPaused(false);
     }
 
     @Override
@@ -43,7 +42,6 @@ public class StatisticsActivity extends AppCompatActivity {
 
     @Override
     protected void onStop() {
-        DatabaseManager.instance.saveStateToDb();
         super.onStop();
     }
 
@@ -58,7 +56,6 @@ public class StatisticsActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case android.R.id.home:
                 onBackPressed();
-                GUIManager.setActivityOpened(false);
                 return true;
         }
         return super.onOptionsItemSelected(item);

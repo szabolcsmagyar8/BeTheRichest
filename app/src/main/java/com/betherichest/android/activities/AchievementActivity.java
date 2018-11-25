@@ -13,7 +13,6 @@ import android.widget.TextView;
 
 import com.betherichest.android.R;
 import com.betherichest.android.StatType;
-import com.betherichest.android.database.DatabaseManager;
 import com.betherichest.android.fragments.AchievementAdapter;
 import com.betherichest.android.gameElements.achievement.Achievement;
 import com.betherichest.android.listenerInterfaces.RefreshListener;
@@ -75,7 +74,6 @@ public class AchievementActivity extends AppCompatActivity {
 
     @Override
     protected void onStop() {
-        DatabaseManager.instance.saveStateToDb();
         super.onStop();
     }
 

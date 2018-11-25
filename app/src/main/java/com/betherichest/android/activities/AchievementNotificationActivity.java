@@ -15,7 +15,6 @@ import android.widget.TextView;
 
 import com.betherichest.android.App;
 import com.betherichest.android.R;
-import com.betherichest.android.database.DatabaseManager;
 import com.betherichest.android.gameElements.achievement.Achievement;
 import com.betherichest.android.mangers.GUIManager;
 import com.betherichest.android.mangers.Game;
@@ -93,7 +92,6 @@ public class AchievementNotificationActivity extends Activity {
 
     @Override
     protected void onStop() {
-        DatabaseManager.instance.saveStateToDb();
         super.onStop();
     }
 

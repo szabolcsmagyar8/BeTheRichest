@@ -6,7 +6,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import com.betherichest.android.R;
-import com.betherichest.android.database.DatabaseManager;
 import com.betherichest.android.mangers.GUIManager;
 import com.betherichest.android.mangers.Game;
 
@@ -36,7 +35,6 @@ public class AboutActivity extends AppCompatActivity {
 
     @Override
     protected void onStop() {
-        DatabaseManager.instance.saveStateToDb();
         super.onStop();
     }
 

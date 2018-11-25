@@ -15,10 +15,9 @@ import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.betherichest.android.ActionType;
 import com.betherichest.android.App;
 import com.betherichest.android.R;
-import com.betherichest.android.database.DatabaseManager;
+import com.betherichest.android.connection.ActionType;
 import com.betherichest.android.mangers.GUIManager;
 import com.betherichest.android.mangers.Game;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -172,8 +171,8 @@ public class LoginActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        GUIManager.setActivityOpened(false);
         super.onBackPressed();
+        GUIManager.setActivityOpened(false);
     }
 
     @Override
@@ -195,13 +194,12 @@ public class LoginActivity extends AppCompatActivity {
 
     @Override
     protected void onPause() {
-        Game.setTimerPaused(true);
         super.onPause();
+        Game.setTimerPaused(true);
     }
 
     @Override
     protected void onStop() {
-        DatabaseManager.instance.saveStateToDb();
         super.onStop();
     }
 }

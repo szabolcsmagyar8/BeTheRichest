@@ -34,59 +34,64 @@ public class AchievementManager implements Observer {
     }
 
     @Override
-    public void update(Observable observable, Object value) {
-        for (Achievement achievement : achievements) {
-            if (!achievement.isUnlocked()) {
-                if (value == StatType.TOTAL_CLICKS && achievement instanceof TapAchievement) {
-                    if (statManager.getStatByType(StatType.TOTAL_CLICKS).getValue() >= ((TapAchievement) achievement).getRequiredClick()) {
-                        unlockAchievement(achievement);
-                        break;
-                    }
-                }
-                if (value == StatType.TOTAL_MONEY_COLLECTED && achievement instanceof DollarMakerAchievement) {
-                    if (statManager.getStatByType(StatType.TOTAL_MONEY_COLLECTED).getValue() >= ((DollarMakerAchievement) achievement).getRequiredTotalMoney()) {
-                        unlockAchievement(achievement);
-                        break;
-                    }
-                }
-                if (value == StatType.TOTAL_PLAYING_TIME && achievement instanceof TimeInGameAchievement) {
-                    if (statManager.getStatByType(StatType.TOTAL_PLAYING_TIME).getValue() >= ((TimeInGameAchievement) achievement).getRequiredTime()) {
-                        unlockAchievement(achievement);
-                        break;
-                    }
-                }
-                if (value == StatType.TOTAL_INVESTMENT_LEVELS && achievement instanceof InvestmentLevelAchievement) {
-                    if (statManager.getStatByType(StatType.TOTAL_INVESTMENT_LEVELS).getValue() >= ((InvestmentLevelAchievement) achievement).getRequiredInvestmentLevel()) {
-                        unlockAchievement(achievement);
-                        break;
-                    }
-                }
-                if (value == StatType.UPGRADES_BOUGHT && achievement instanceof TotalUpgradeAchievement) {
-                    if (statManager.getStatByType(StatType.UPGRADES_BOUGHT).getValue() >= ((TotalUpgradeAchievement) achievement).getRequiredUpgradeNum()) {
-                        unlockAchievement(achievement);
-                        break;
-                    }
-                }
-                if (value == StatType.MONEY_FROM_GAMBLING && achievement instanceof GamblingMoneyAchievement) {
-                    if (statManager.getStatByType(StatType.MONEY_FROM_GAMBLING).getValue() >= ((GamblingMoneyAchievement) achievement).getRequiredMoneyFromGambling()) {
-                        unlockAchievement(achievement);
-                        break;
-                    }
-                }
-                if (value == StatType.TOTAL_GAMBLING && achievement instanceof TotalGamblingAchievement) {
-                    if (statManager.getStatByType(StatType.TOTAL_GAMBLING).getValue() >= ((TotalGamblingAchievement) achievement).getRequiredTotalGambling()) {
-                        unlockAchievement(achievement);
-                        break;
-                    }
-                }
-                if (value == StatType.VIDEOS_WATCHED && achievement instanceof VideoWatcherAchievement) {
-                    if (statManager.getStatByType(StatType.VIDEOS_WATCHED).getValue() >= ((VideoWatcherAchievement) achievement).getRequiredVideo()) {
-                        unlockAchievement(achievement);
-                        break;
+    public void update(Observable observable, final Object value) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                for (Achievement achievement : achievements) {
+                    if (!achievement.isUnlocked()) {
+                        if (value == StatType.TOTAL_CLICKS && achievement instanceof TapAchievement) {
+                            if (statManager.getStatByType(StatType.TOTAL_CLICKS).getValue() >= ((TapAchievement) achievement).getRequiredClick()) {
+                                unlockAchievement(achievement);
+                                break;
+                            }
+                        }
+                        if (value == StatType.TOTAL_MONEY_COLLECTED && achievement instanceof DollarMakerAchievement) {
+                            if (statManager.getStatByType(StatType.TOTAL_MONEY_COLLECTED).getValue() >= ((DollarMakerAchievement) achievement).getRequiredTotalMoney()) {
+                                unlockAchievement(achievement);
+                                break;
+                            }
+                        }
+                        if (value == StatType.TOTAL_PLAYING_TIME && achievement instanceof TimeInGameAchievement) {
+                            if (statManager.getStatByType(StatType.TOTAL_PLAYING_TIME).getValue() >= ((TimeInGameAchievement) achievement).getRequiredTime()) {
+                                unlockAchievement(achievement);
+                                break;
+                            }
+                        }
+                        if (value == StatType.TOTAL_INVESTMENT_LEVELS && achievement instanceof InvestmentLevelAchievement) {
+                            if (statManager.getStatByType(StatType.TOTAL_INVESTMENT_LEVELS).getValue() >= ((InvestmentLevelAchievement) achievement).getRequiredInvestmentLevel()) {
+                                unlockAchievement(achievement);
+                                break;
+                            }
+                        }
+                        if (value == StatType.UPGRADES_BOUGHT && achievement instanceof TotalUpgradeAchievement) {
+                            if (statManager.getStatByType(StatType.UPGRADES_BOUGHT).getValue() >= ((TotalUpgradeAchievement) achievement).getRequiredUpgradeNum()) {
+                                unlockAchievement(achievement);
+                                break;
+                            }
+                        }
+                        if (value == StatType.MONEY_FROM_GAMBLING && achievement instanceof GamblingMoneyAchievement) {
+                            if (statManager.getStatByType(StatType.MONEY_FROM_GAMBLING).getValue() >= ((GamblingMoneyAchievement) achievement).getRequiredMoneyFromGambling()) {
+                                unlockAchievement(achievement);
+                                break;
+                            }
+                        }
+                        if (value == StatType.TOTAL_GAMBLING && achievement instanceof TotalGamblingAchievement) {
+                            if (statManager.getStatByType(StatType.TOTAL_GAMBLING).getValue() >= ((TotalGamblingAchievement) achievement).getRequiredTotalGambling()) {
+                                unlockAchievement(achievement);
+                                break;
+                            }
+                        }
+                        if (value == StatType.VIDEOS_WATCHED && achievement instanceof VideoWatcherAchievement) {
+                            if (statManager.getStatByType(StatType.VIDEOS_WATCHED).getValue() >= ((VideoWatcherAchievement) achievement).getRequiredVideo()) {
+                                unlockAchievement(achievement);
+                                break;
+                            }
+                        }
                     }
                 }
             }
-        }
+        }).start();
     }
 
     private void unlockAchievement(Achievement achievement) {

@@ -81,7 +81,6 @@
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
 
-
         <service
             android:name=".services.MyFirebaseMessagingService"
             tools:ignore="InnerclassSeparator">

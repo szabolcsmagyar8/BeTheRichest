@@ -33,7 +33,7 @@ public class Achievement extends GameElement {
         this.text = text;
     }
 
-    public Achievement(int id, Date dateOfAcquiring, boolean unlocked) {
+    public Achievement(int id, Date dateOfAcquiring) {
         this.id = id;
         this.dateOfAcquiring = dateOfAcquiring;
         this.unlocked = unlocked;

@@ -16,12 +16,11 @@ import java.util.List;
 
 public class DatabaseManager {
     public static DatabaseManager instance;
-    private Game game;
+    private Game game = Game.getInstance();
 
     private AppDatabase appDatabase;
 
     public DatabaseManager() {
-        game = Game.getInstance();
         if (instance == null) {
             instance = this;
         }
@@ -29,68 +28,81 @@ public class DatabaseManager {
     }
 
     public void saveStateToDb() {
-        GameState state = Game.gameState;
-        state.setCurrentMoney(game.getCurrentMoney());
-        state.setMoneyPerSec(game.getMoneyPerSec());
-        state.setMoneyPerTap(game.getMoneyPerTap());
-        state.setBearerToken(LoginActivity.BEARER_TOKEN);
-        state.setSoundDisabled(Game.soundDisabled);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                GameState state = Game.gameState;
+                state.setCurrentMoney(game.getCurrentMoney());
+                state.setMoneyPerSec(game.getMoneyPerSec());
+                state.setMoneyPerTap(game.getMoneyPerTap());
+                state.setBearerToken(LoginActivity.BEARER_TOKEN);
+                state.setSoundDisabled(Game.soundDisabled);
 
-        appDatabase.gameStateDAO().insertAll(state);
+                appDatabase.gameStateDAO().insertAll(state);
 
-        for (Investment inv : game.getInvestments()) {
-            appDatabase.investmentDao().insertAll(new Investment(inv.getId(), inv.getLevel()));
-        }
-        for (Upgrade upgrade : game.getUpgrades()) {
-            if (upgrade.isPurchased()) {
-                appDatabase.upgradeDao().insertAll(new Upgrade(upgrade.getId()));
+                for (Investment inv : game.getInvestments()) {
+                    appDatabase.investmentDao().insertAll(new Investment(inv.getId(), inv.getLevel()));
+                }
+                for (Upgrade upgrade : game.getUpgrades()) {
+                    if (upgrade.isPurchased()) {
+                        appDatabase.upgradeDao().insertAll(new Upgrade(upgrade.getId()));
+                    }
+                }
+
+                for (GameStatistics stat : Game.statisticsManager.getGameStatistics()) {
+                    appDatabase.gameStatisticsDao().insertAll(new GameStatistics(stat.getId(), stat.getValue()));
+                }
+
+                for (Achievement achievement : game.getAchievements()) {
+                    if (achievement.isUnlocked()) {
+                        appDatabase.achievementDao().insertAll(new Achievement(achievement.getId(), achievement.getDateOfAcquiring()));
+                    }
+                }
             }
-        }
-
-        for (GameStatistics stat : Game.statisticsManager.getGameStatistics()) {
-            appDatabase.gameStatisticsDao().insertAll(new GameStatistics(stat.getId(), stat.getValue()));
-        }
-
-        for (Achievement achievement : game.getAchievements()) {
-            appDatabase.achievementDao().insertAll(new Achievement(achievement.getId(), achievement.getDateOfAcquiring(), achievement.isUnlocked()));
-        }
+        }).start();
     }
 
     public void loadStateFromDb() {
-        List<GameState> states = appDatabase.gameStateDAO().getGameState();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                List<GameState> states = appDatabase.gameStateDAO().getGameState();
 
-        if (states.size() == 0) {
-            appDatabase.gameStateDAO().insertAll(new GameState());
-        } else {
-            GameState state = states.get(0);
-            game.setCurrentMoney(state.getCurrentMoney());
-            game.setMoneyPerSec(state.getMoneyPerSec());
-            game.setMoneyPerTap(state.getMoneyPerTap());
-            Game.gameState.setFirstDollarClick(state.isFirstDollarClick());
-            Game.gameState.setMaxCurrentMoney(state.getMaxCurrentMoney());
-            LoginActivity.BEARER_TOKEN = state.getBearerToken();
-            Game.soundDisabled = state.getSoundDisabled();
-        }
+                if (states.size() == 0) {
+                    appDatabase.gameStateDAO().insertAll(new GameState());
+                } else {
+                    GameState state = states.get(0);
+                    game.setCurrentMoney(state.getCurrentMoney());
+                    game.setMoneyPerSec(state.getMoneyPerSec());
+                    game.setMoneyPerTap(state.getMoneyPerTap());
+                    Game.gameState.setFirstDollarClick(state.isFirstDollarClick());
+                    Game.gameState.setMaxCurrentMoney(state.getMaxCurrentMoney());
+                    Game.setSoundDisabled(state.getSoundDisabled());
+                    LoginActivity.BEARER_TOKEN = state.getBearerToken();
+                }
 
-        if (appDatabase.investmentDao().getInvestments().size() != 0) {
-            loadInvestments(appDatabase.investmentDao().getInvestments());
-        }
-        if (appDatabase.upgradeDao().getUpgrades().size() != 0) {
-            loadUpgrades(appDatabase.upgradeDao().getUpgrades());
-        }
-        if (appDatabase.gameStatisticsDao().geGameStatistics().size() != 0) {
-            loadGameStatistics(appDatabase.gameStatisticsDao().geGameStatistics());
-        }
-        if (appDatabase.achievementDao().getAchievements().size() != 0) {
-            loadAchievements(appDatabase.achievementDao().getAchievements());
-        }
+                if (appDatabase.achievementDao().getAchievements().size() != 0) {
+                    loadAchievements(appDatabase.achievementDao().getAchievements());
+                }
+                if (appDatabase.investmentDao().getInvestments().size() != 0) {
+                    loadInvestments(appDatabase.investmentDao().getInvestments());
+                }
+                if (appDatabase.upgradeDao().getUpgrades().size() != 0) {
+                    loadUpgrades(appDatabase.upgradeDao().getUpgrades());
+                }
+                if (appDatabase.gameStatisticsDao().geGameStatistics().size() != 0) {
+                    loadGameStatistics(appDatabase.gameStatisticsDao().geGameStatistics());
+                }
+            }
+        }).start();
     }
+
 
     private void loadAchievements(List<Achievement> savedAchievements) {
         for (Achievement savedAchievement : savedAchievements) {
             for (Achievement achievement : game.getAchievements()) {
                 if (achievement.getId() == savedAchievement.getId()) {
-                    achievement.setUnlocked(savedAchievement.isUnlocked());
+                    achievement.setUnlocked(true);
                     achievement.setDateOfAcquiring(savedAchievement.getDateOfAcquiring());
                 }
             }

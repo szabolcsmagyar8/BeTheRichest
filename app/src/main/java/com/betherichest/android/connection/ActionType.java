@@ -1,4 +1,4 @@
-package com.betherichest.android;
+package com.betherichest.android.connection;
 
 public enum ActionType {
     LOGIN,

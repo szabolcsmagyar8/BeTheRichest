@@ -48,6 +48,9 @@ public class GameStatistics extends GameElement {
             long days = getDifferenceDays(new Date((long) value), new Date());
             return String.valueOf(days > 1 ? days + " days ago" : days + " day ago");
         }
+        if (name.equals(c.getString(R.string.gambling_balance))) {
+            return value > 0 ? "+" + String.valueOf(App.NF.format(Math.round(value))) : String.valueOf(App.NF.format(Math.round(value)));
+        }
 
         return String.valueOf(App.NF.format(Math.round(value)));
     }

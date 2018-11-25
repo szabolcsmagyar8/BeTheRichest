@@ -13,9 +13,9 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.betherichest.android.ActionType;
 import com.betherichest.android.App;
 import com.betherichest.android.R;
+import com.betherichest.android.connection.ActionType;
 import com.betherichest.android.gameElements.Gambling;
 import com.betherichest.android.mangers.GUIManager;
 import com.betherichest.android.mangers.Game;

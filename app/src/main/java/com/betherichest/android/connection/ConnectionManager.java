@@ -1,9 +1,7 @@
-package com.betherichest.android.mangers;
+package com.betherichest.android.connection;
 
 import android.os.AsyncTask;
 
-import com.betherichest.android.ActionType;
-import com.betherichest.android.HTTPMethod;
 import com.betherichest.android.activities.LoginActivity;
 
 import java.io.BufferedReader;
@@ -17,22 +15,29 @@ import java.net.ProtocolException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Map;
+import java.util.Queue;
 
 public class ConnectionManager extends AsyncTask<URL, String, Void> {
+    public static Queue<RequestItem> requestItems = new LinkedList<>();
     private URL url;
     private Map<String, Object> requestParams;
     private Map<String, String> headerParams = new HashMap<>();
     private HTTPMethod httpMethod;
     private ActionType actionType;
     public static final String BTR_URL = "https://betherichest-1994.appspot.com";
+    private String endpoint;
+
 
     /**
+     * @param endpoint
      * @param requestParams key-value pair request parameters
      * @param actionType
      */
-    public ConnectionManager(URL url, Map<String, Object> requestParams, HTTPMethod httpMethod, ActionType actionType) {
-        this.url = url;
+    public ConnectionManager(String endpoint, Map<String, Object> requestParams, HTTPMethod httpMethod, ActionType actionType) throws MalformedURLException {
+        this.endpoint = endpoint;
+        this.url = new URL(BTR_URL + endpoint);
         headerParams.put("Authorization", LoginActivity.BEARER_TOKEN);
         this.requestParams = requestParams;
         this.httpMethod = httpMethod;
@@ -60,14 +65,13 @@ public class ConnectionManager extends AsyncTask<URL, String, Void> {
 
             printResponse(conn);
 
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         } catch (ProtocolException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
+            requestItems.add(new RequestItem(endpoint, requestParams, actionType));
         }
         return null;
     }
@@ -106,5 +110,6 @@ public class ConnectionManager extends AsyncTask<URL, String, Void> {
             }
         }
         System.out.println(response.toString());
+        inputStream.close();
     }
 }

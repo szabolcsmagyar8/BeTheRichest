@@ -3,10 +3,12 @@ package com.betherichest.android.mangers;
 import android.os.Handler;
 import android.os.Looper;
 
-import com.betherichest.android.ActionType;
 import com.betherichest.android.App;
 import com.betherichest.android.GameState;
+import com.betherichest.android.R;
 import com.betherichest.android.StatType;
+import com.betherichest.android.activities.MainActivity;
+import com.betherichest.android.connection.ActionType;
 import com.betherichest.android.factories.AchievementFactory;
 import com.betherichest.android.factories.BoosterFactory;
 import com.betherichest.android.factories.GamblingFactory;
@@ -51,6 +53,7 @@ public class Game {
     private double moneyPerTap = 1d;
     private double moneyPerSec = 0d;
     private static boolean gamblingAnimationRunning = false;
+
     public static boolean soundDisabled;
 
     private static boolean timerPaused;
@@ -80,21 +83,7 @@ public class Game {
         return instance;
     }
 
-    private Runnable draw = new Runnable() {
-        @Override
-        public void run() {
-            if (!timerPaused) {
-                earnMoney(getMoneyPerSec() / FPS);
-                statisticsManager.earnInvestmentMoney(getMoneyPerSec() / (double) FPS);
-                if (!GUIManager.isActivityOpened() && moneyChangedListener != null) {
-                    moneyChangedListener.onMoneyChanged();  // notifies GUIManager to update money texts
-                }
-            }
-            handler.postDelayed(draw, SECOND / FPS);
-        }
-    };
     // endregion
-
     public Game() {
         investments = InvestmentFactory.getCreatedInvestments();
         upgrades = UpgradeFactory.getCreatedUpgrades(investments);
@@ -114,22 +103,40 @@ public class Game {
         startTimer();
     }
 
+    private Runnable draw = new Runnable() {
+        @Override
+        public void run() {
+            if (!timerPaused) {
+                earnMoney(getMoneyPerSec() / FPS);
+                statisticsManager.earnInvestmentMoney(getMoneyPerSec() / (double) FPS);
+                if (!GUIManager.isActivityOpened() && moneyChangedListener != null) {
+                    moneyChangedListener.onMoneyChanged();  // notifies GUIManager to update money texts
+                }
+            }
+            handler.postDelayed(draw, SECOND / FPS);
+        }
+    };
+
     private Runnable drawLeaders = new Runnable() {
         @Override
         public void run() {
-            enrichLeaders();
-            LeaderboardFragment.update();
-            handler.postDelayed(drawLeaders, 500);
+            if (!timerPaused) {
+                enrichLeaders();
+                LeaderboardFragment.update();
+            }
+            handler.postDelayed(drawLeaders, SECOND / 2);
         }
     };
 
     private Runnable drawSmooth = new Runnable() {
         @Override
         public void run() {
-            if (smoothRefreshListener != null) {
-                smoothRefreshListener.refresh();
+            if (!timerPaused) {
+                if (smoothRefreshListener != null) {
+                    smoothRefreshListener.refresh();
+                }
             }
-            handler.postDelayed(drawSmooth, 50);
+            handler.postDelayed(drawSmooth, SECOND / FPS);
         }
     };
 
@@ -260,6 +267,11 @@ public class Game {
         return moneyPerSec * AD_REWARD_MULTIPLIER;
     }
 
+    public static void setSoundDisabled(boolean soundDisabled) {
+        Game.soundDisabled = soundDisabled;
+        MainActivity.soundIcon.setImageResource(soundDisabled ? R.drawable.soundoff : R.drawable.soundon);
+    }
+
     //endregion
 
     private void startTimer() {
@@ -288,51 +300,66 @@ public class Game {
     }
 
     public void dollarClick() {
-        earnMoney(moneyPerTap);
-        statisticsManager.dollarClick(moneyPerTap);
-        if (gameState.isFirstDollarClick()) {
-            statisticsManager.firstDollarClick();
-            gameState.setFirstDollarClick(false);
-        }
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                earnMoney(moneyPerTap);
+                statisticsManager.dollarClick(moneyPerTap);
+                if (gameState.isFirstDollarClick()) {
+                    statisticsManager.firstDollarClick();
+                    gameState.setFirstDollarClick(false);
+                }
+            }
+        }).start();
     }
 
     public void buyInvestment(final Investment selectedInvestment) {
-        deduceMoney(selectedInvestment.getPrice());
-        statisticsManager.buyItem(selectedInvestment.getPrice());
-        statisticsManager.buyInvestment();
-        selectedInvestment.increaseLevel();
-        recalculateMoneyPerSecond();
-        recalculateMoneyPerTap();   // for GlobalIncrements
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                deduceMoney(selectedInvestment.getPrice());
+                statisticsManager.buyItem(selectedInvestment.getPrice());
+                statisticsManager.buyInvestment();
+                selectedInvestment.increaseLevel();
+                recalculateMoneyPerSecond();
+                recalculateMoneyPerTap();   // for GlobalIncrements
 
-        HashMap<String, Object> params = new HashMap<String, Object>() {{
-            put("investmentId", selectedInvestment.getId());
-            put("investmentRank", selectedInvestment.getLevel());
-        }};
-        App.createConnection("/muser/log-investment", params, ActionType.LOG);
+                HashMap<String, Object> params = new HashMap<String, Object>() {{
+                    put("investmentId", selectedInvestment.getId());
+                    put("investmentRank", selectedInvestment.getLevel());
+                }};
+                App.createConnection("/muser/log-investment", params, ActionType.LOG);
+            }
+        }).start();
     }
 
     public void buyUpgrade(final Upgrade selectedUpgrade) {
-        selectedUpgrade.setPurchased(true);
-        deduceMoney(selectedUpgrade.getPrice());
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                selectedUpgrade.setPurchased(true);
+                deduceMoney(selectedUpgrade.getPrice());
 
-        if (selectedUpgrade instanceof InvestmentUpgrade) {
-            ((InvestmentUpgrade) selectedUpgrade).getRelevantInvestment().addPurchasedRelevantUpgrade(selectedUpgrade); // to store the purchased upgrades in a separate list for every investment instance
-            recalculateMoneyPerSecond();
-        }
-        if (selectedUpgrade instanceof TapUpgrade || selectedUpgrade instanceof GlobalIncrementUpgrade) {
-            recalculateMoneyPerTap();
-        }
-        if (selectedUpgrade instanceof GamblingUpgrade) {
-            changeGamblingWinAmount(selectedUpgrade);
-        }
+                if (selectedUpgrade instanceof InvestmentUpgrade) {
+                    ((InvestmentUpgrade) selectedUpgrade).getRelevantInvestment().addPurchasedRelevantUpgrade(selectedUpgrade); // to store the purchased upgrades in a separate list for every investment instance
+                    recalculateMoneyPerSecond();
+                }
+                if (selectedUpgrade instanceof TapUpgrade || selectedUpgrade instanceof GlobalIncrementUpgrade) {
+                    recalculateMoneyPerTap();
+                }
+                if (selectedUpgrade instanceof GamblingUpgrade) {
+                    changeGamblingWinAmount(selectedUpgrade);
+                }
 
-        statisticsManager.buyItem(selectedUpgrade.getPrice());
-        statisticsManager.buyUpgrade();
+                statisticsManager.buyItem(selectedUpgrade.getPrice());
+                statisticsManager.buyUpgrade();
 
-        HashMap<String, Object> params = new HashMap<String, Object>() {{
-            put("upgradeId", selectedUpgrade.getId());
-        }};
-        App.createConnection("/muser/log-investment", params, ActionType.LOG);
+                HashMap<String, Object> params = new HashMap<String, Object>() {{
+                    put("upgradeId", selectedUpgrade.getId());
+                }};
+                App.createConnection("/muser/log-investment", params, ActionType.LOG);
+            }
+        }).start();
     }
 
     public void buyGambling(Gambling selectedGambling) {
@@ -351,36 +378,52 @@ public class Game {
     }
 
     private void enrichLeaders() {
-        for (Leader leader : leaders) {
-            if (leader.isPlayer()) {
-                leader.setMoney(currentMoney);
-            } else {
-                leader.setMoney(leader.getMoney() + (leader.getMoney() * (leader.getGrowthRate() - 1)) / 10000);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                for (Leader leader : leaders) {
+                    if (leader.isPlayer()) {
+                        leader.setMoney(currentMoney);
+                    } else {
+                        leader.setMoney(leader.getMoney() + (leader.getMoney() * (leader.getGrowthRate() - 1)) / 10000);
+                    }
+                }
             }
-        }
+        }).start();
     }
 
     private void recalculateMoneyPerSecond() {
-        double sum = START_MONEY_PER_SEC;
-        for (Investment investment : investments) {
-            sum += investment.getMoneyPerSec();
-        }
-        moneyPerSec = sum;
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                double sum = START_MONEY_PER_SEC;
+                for (Investment investment : investments) {
+                    sum += investment.getMoneyPerSec();
+                }
+                moneyPerSec = sum;
+            }
+        }).start();
     }
 
     private void recalculateMoneyPerTap() {
-        double sum = START_MONEY_PER_TAP;
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                double sum = START_MONEY_PER_TAP;
 
-        for (Upgrade upgrade : getPurchasedUpgrades()) {
-            if (upgrade.isPurchased() && upgrade instanceof GlobalIncrementUpgrade) {
-                double globalIncrementReward = getTotalInvestmentLevels() * upgrade.getMultiplier();
-                sum += globalIncrementReward;
+                for (Upgrade upgrade : getPurchasedUpgrades()) {
+                    if (upgrade.isPurchased() && upgrade instanceof GlobalIncrementUpgrade) {
+                        double globalIncrementReward = getTotalInvestmentLevels() * upgrade.getMultiplier();
+                        sum += globalIncrementReward;
+                    }
+                    if (upgrade.isPurchased() && upgrade instanceof TapUpgrade) {
+                        sum *= upgrade.getMultiplier();
+                    }
+                }
+                moneyPerTap = sum;
             }
-            if (upgrade.isPurchased() && upgrade instanceof TapUpgrade) {
-                sum *= upgrade.getMultiplier();
-            }
-        }
-        moneyPerTap = sum;
+        }).start();
+
     }
 
     public void cheat() {

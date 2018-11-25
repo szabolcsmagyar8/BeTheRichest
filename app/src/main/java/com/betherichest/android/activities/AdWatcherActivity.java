@@ -8,7 +8,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
 import com.betherichest.android.R;
-import com.betherichest.android.database.DatabaseManager;
 import com.betherichest.android.mangers.GUIManager;
 import com.betherichest.android.mangers.Game;
 import com.google.android.gms.ads.AdRequest;
@@ -95,34 +94,33 @@ public class AdWatcherActivity extends AppCompatActivity implements RewardedVide
 
     @Override
     public void onResume() {
+        super.onResume();
         mRewardedVideoAd.resume(this);
         Game.setTimerPaused(false);
-        super.onResume();
     }
 
     @Override
     public void onPause() {
+        super.onPause();
         mRewardedVideoAd.pause(this);
         Game.setTimerPaused(true);
-        super.onPause();
     }
 
     @Override
     protected void onStop() {
-        DatabaseManager.instance.saveStateToDb();
-        GUIManager.setActivityOpened(false);
         super.onStop();
+        GUIManager.setActivityOpened(false);
     }
 
     @Override
     public void onBackPressed() {
-        GUIManager.setActivityOpened(false);
         super.onBackPressed();
+        GUIManager.setActivityOpened(false);
     }
 
     @Override
     public void onDestroy() {
-        mRewardedVideoAd.destroy(this);
         super.onDestroy();
+        mRewardedVideoAd.destroy(this);
     }
 }

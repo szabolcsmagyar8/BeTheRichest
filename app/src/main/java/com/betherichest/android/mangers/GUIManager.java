@@ -151,9 +151,7 @@ public class GUIManager {
         game.moneyChangedListener = new MoneyChangedListener() {
             @Override
             public void onMoneyChanged() {
-                if (!isActivityOpened()) {
-                    setMainUIItems();
-                }
+                setMainUIItems();
             }
         };
     }
@@ -173,7 +171,7 @@ public class GUIManager {
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
 
         final TextView tapText = (TextView) View.inflate(context, R.layout.text_dollar_tap_popup, null);
-        tapText.setText("+" + String.valueOf(App.NF.format((int) game.getMoneyPerTap()) + "$"));
+        tapText.setText(String.format("+%s", String.valueOf(App.NF.format((int) game.getMoneyPerTap()) + "$")));
 
         tapText.measure(0, 0);
 
@@ -243,7 +241,7 @@ public class GUIManager {
         return marginLeft;
     }
 
-    public void openFragment(int containerId, Fragment fragment) {
+    public void openFragment(final int containerId, final Fragment fragment) {
         if (SystemClock.elapsedRealtime() - mLastClickTime < 500) {
             return;
         }
@@ -254,6 +252,7 @@ public class GUIManager {
         ft.setCustomAnimations(R.anim.slide_in_from_bottom, R.anim.slide_out_to_bottom, R.anim.slide_in_from_bottom, R.anim.slide_out_to_bottom);
         ft.addToBackStack(null);
         ft.replace(containerId, fragment).commit();
+
         relocateDollarImage(true);
         SoundManager.playSound(SoundManager.soundPull);
     }
@@ -282,6 +281,7 @@ public class GUIManager {
     }
 
     public void relocateDollarImage(boolean toUp) {
+
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
         if (toUp) {
             params.addRule(RelativeLayout.BELOW, R.id.moneyPerTapText);

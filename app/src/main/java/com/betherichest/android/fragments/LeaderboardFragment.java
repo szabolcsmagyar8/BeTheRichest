@@ -60,6 +60,6 @@ public class LeaderboardFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        game.smoothRefreshListener = null;
+        adapter = null;
     }
 }

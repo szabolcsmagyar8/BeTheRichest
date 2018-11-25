@@ -1,9 +1,13 @@
 package com.betherichest.android.activities;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -13,14 +17,15 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.betherichest.android.ActionType;
 import com.betherichest.android.App;
 import com.betherichest.android.R;
+import com.betherichest.android.connection.ActionType;
 import com.betherichest.android.database.DatabaseManager;
 import com.betherichest.android.fragments.GamblingFragment;
 import com.betherichest.android.fragments.InvestmentFragment;
@@ -46,7 +51,20 @@ public class MainActivity extends AppCompatActivity {
 
     private DrawerLayout mDrawerLayout;
     private AdView mAdView;
-    private ImageView soundIcon;
+    public static ImageView soundIcon;
+
+    private BroadcastReceiver networkChangeReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Log.d("app", "Network connectivity change");
+            ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+
+            NetworkInfo network = cm.getActiveNetworkInfo();
+            if (network != null) {
+                App.performQueuedRequests();
+            }
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,7 +104,7 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
 
         guiManager = new GUIManager(findViewById(android.R.id.content), getWindowManager(), getSupportActionBar(), fragmentManager, this);
-        initAdBanner();
+        initializeAdBanner();
 
         new Thread(new Runnable() {
             public void run() {
@@ -101,7 +119,7 @@ public class MainActivity extends AppCompatActivity {
         App.createConnection("/muser/log-ping", params, ActionType.LOG);
     }
 
-    private void initAdBanner() {
+    private void initializeAdBanner() {
         mAdView = findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
@@ -129,8 +147,11 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onResume() {
-        Game.setTimerPaused(false);
         super.onResume();
+        Game.setTimerPaused(false);
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
+        registerReceiver(networkChangeReceiver, intentFilter);
     }
 
     @Override
@@ -139,6 +160,7 @@ public class MainActivity extends AppCompatActivity {
         if (!GUIManager.isActivityOpened()) {
             Game.setTimerPaused(true);
         }
+        unregisterReceiver(networkChangeReceiver);
     }
 
     @Override
@@ -147,9 +169,9 @@ public class MainActivity extends AppCompatActivity {
         if (!GUIManager.isActivityOpened()) {
             Game.setTimerPaused(true);
         }
-        dbManager.saveStateToDb();
 
         App.createConnection("/muser/log-stats", Game.statisticsManager.getStatRequestParams(), ActionType.LOG);
+        dbManager.saveStateToDb();
     }
 
     @Override
@@ -160,7 +182,6 @@ public class MainActivity extends AppCompatActivity {
             put("action", "close");
         }};
         App.createConnection("/muser/log-ping", params, ActionType.LOG);
-
     }
 
     @Override
@@ -259,11 +280,9 @@ public class MainActivity extends AppCompatActivity {
 
     public void onSoundIconClick(View view) {
         if (Game.soundDisabled) {
-            soundIcon.setImageResource(R.drawable.soundon);
-            Game.soundDisabled = false;
+            Game.setSoundDisabled(false);
         } else {
-            soundIcon.setImageResource(R.drawable.soundoff);
-            Game.soundDisabled = true;
+            Game.setSoundDisabled(true);
         }
     }
 }
