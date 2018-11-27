@@ -25,6 +25,7 @@ public class InvestmentFragment extends Fragment {
 
     private Game game = Game.getInstance();
     private InvestmentAdapter adapter;
+    private List<Investment> investments = game.getInvestments();
 
     private int index = -1;
     private Runnable investmentPriceWatch = new Runnable() {
@@ -32,7 +33,7 @@ public class InvestmentFragment extends Fragment {
         public void run() {
             double act = game.getCurrentMoney();
             List<Double> investmentPrices = new ArrayList<>();
-            for (Investment investment : game.getInvestments()) {
+            for (Investment investment : investments) {
                 investmentPrices.add(investment.getPrice());
             }
             investmentPrices.add(act);
@@ -69,9 +70,7 @@ public class InvestmentFragment extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        List<Investment> items = game.getInvestments();
-
-        adapter = new InvestmentAdapter(items);
+        adapter = new InvestmentAdapter(investments);
         listView.setAdapter(adapter);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {

@@ -1,5 +1,6 @@
 package com.betherichest.android.fragments;
 
+import android.graphics.Color;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -74,7 +75,16 @@ public class GamblingAdapter extends BaseAdapter {
                 (gambling.getMaxWinAmount() >= 1000000 ? App.convertThousandsToSIUnit(gambling.getMaxWinAmount(), false) : App.NF.format(gambling.getMaxWinAmount()))));
         chanceTextView.setText(String.format("Chance: %s%%", String.valueOf(gambling.getChance())));
         imageView.setBackgroundResource(gambling.getImageResource());
+        setTextColorByAvailability(gambling);
 
         return listItemView;
+    }
+
+    private void setTextColorByAvailability(Gambling gambling) {
+        if (gambling.isBuyable()) {
+            nameTextView.setTextColor(Color.parseColor("#FFFEAA"));
+        } else {
+            nameTextView.setTextColor(Color.parseColor("#FF0027"));
+        }
     }
 }

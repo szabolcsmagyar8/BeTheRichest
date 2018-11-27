@@ -6,11 +6,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.TextView;
 
+import com.betherichest.android.App;
 import com.betherichest.android.R;
 import com.betherichest.android.gameElements.Leader;
+import com.betherichest.android.listenerInterfaces.RefreshListener;
 import com.betherichest.android.mangers.Game;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class LeaderboardFragment extends Fragment {
@@ -18,10 +24,36 @@ public class LeaderboardFragment extends Fragment {
     private View rootView;
     private ListView listView;
     private Game game = Game.getInstance();
+    private List<Leader> leaders = game.getLeaders();
 
-    public static void update() {
-        if (adapter != null) {
-            adapter.notifyDataSetChanged();
+    private int index = -1;
+    private Runnable leaderMoneyWatch = new Runnable() {
+        @Override
+        public void run() {
+            double act = game.getCurrentMoney();
+            List<Double> leaderMoneys = new ArrayList<>();
+            for (Leader leader : leaders) {
+                leaderMoneys.add(leader.getMoney());
+            }
+            leaderMoneys.add(act);
+            Collections.sort(leaderMoneys, new Comparator<Double>() {
+                @Override
+                public int compare(Double d1, Double d2) {
+                    return Double.compare(d1, d2);
+                }
+            });
+            setIndex(leaderMoneys.lastIndexOf(act));
+
+            game.handler.postDelayed(leaderMoneyWatch, 100);
+        }
+    };
+
+    public void setIndex(int index) {
+        if (this.index != index) {
+            this.index = index;
+            if (adapter != null) {
+                adapter.notifyDataSetChanged();
+            }
         }
     }
 
@@ -33,33 +65,34 @@ public class LeaderboardFragment extends Fragment {
         return rootView;
     }
 
-    private boolean playerWasAdded(List<Leader> leaders) {
-        for (Leader leader : leaders) {
-            if (leader.isPlayer()) {
-                return true;
-            }
-        }
-        return false;
-    }
-
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        List<Leader> items = game.getLeaders();
-
-        if (!playerWasAdded(items)) {
-            items.add(new Leader("Player", game.getCurrentMoney(), true));
-        }
-
-        adapter = new LeaderboardAdapter(items);
-
+        adapter = new LeaderboardAdapter(leaders);
         listView.setAdapter(adapter);
+
+        Game.getInstance().leaderRefreshListener = new RefreshListener() {
+            @Override
+            public void refresh() {
+                for (int i = listView.getFirstVisiblePosition(); i < listView.getLastVisiblePosition(); i++) {
+                    setMoneyTextViewByPosition(i);
+                }
+            }
+        };
+        game.handler.post(leaderMoneyWatch);
+    }
+
+    private void setMoneyTextViewByPosition(int pos) {
+        TextView valueTextView = listView.getChildAt(pos - listView.getFirstVisiblePosition()).findViewById(R.id.leader_money_text);
+        App.NF.setMaximumFractionDigits(0);
+        valueTextView.setText(String.valueOf(App.NF.format(leaders.get(pos).getMoney())));
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         adapter = null;
+        game.leaderRefreshListener = null;
     }
 }

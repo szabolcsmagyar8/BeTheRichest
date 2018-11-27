@@ -65,7 +65,6 @@ class LeaderboardAdapter extends BaseAdapter {
         });
 
         leader = items.get(position);
-
         initializeListUIElements(position);
 
         return listItemView;

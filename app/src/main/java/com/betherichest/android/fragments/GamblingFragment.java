@@ -21,6 +21,9 @@ import com.betherichest.android.mangers.GUIManager;
 import com.betherichest.android.mangers.Game;
 import com.betherichest.android.mangers.SoundManager;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
@@ -35,6 +38,39 @@ public class GamblingFragment extends Fragment {
     private Game game = Game.getInstance();
 
     private Animation growAndRotate, grow, fade;
+
+    private int index = -1;
+
+    private Runnable gamblingPriceWatch = new Runnable() {
+        @Override
+        public void run() {
+            double act = game.getCurrentMoney();
+            List<Double> gamblingPrices = new ArrayList<>();
+            for (Gambling gambling : game.getGamblings()) {
+                gamblingPrices.add(gambling.getPrice());
+            }
+            gamblingPrices.add(act);
+            Collections.sort(gamblingPrices, new Comparator<Double>() {
+                @Override
+                public int compare(Double d1, Double d2) {
+                    return Double.compare(d1, d2);
+
+                }
+            });
+            setIndex(gamblingPrices.lastIndexOf(act));
+
+            game.handler.postDelayed(gamblingPriceWatch, 100);
+        }
+    };
+
+    public void setIndex(int index) {
+        if (this.index != index) {
+            this.index = index;
+            if (adapter != null) {
+                adapter.notifyDataSetChanged();
+            }
+        }
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -66,6 +102,7 @@ public class GamblingFragment extends Fragment {
         closeImageView = rootView.findViewById(R.id.closeIcon);
 
         setListeners();
+        game.handler.postDelayed(gamblingPriceWatch, 100);
     }
 
     private void setListeners() {

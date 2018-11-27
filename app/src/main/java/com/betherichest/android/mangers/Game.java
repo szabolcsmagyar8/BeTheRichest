@@ -15,7 +15,6 @@ import com.betherichest.android.factories.GamblingFactory;
 import com.betherichest.android.factories.InvestmentFactory;
 import com.betherichest.android.factories.LeaderFactory;
 import com.betherichest.android.factories.UpgradeFactory;
-import com.betherichest.android.fragments.LeaderboardFragment;
 import com.betherichest.android.gameElements.Booster;
 import com.betherichest.android.gameElements.Gambling;
 import com.betherichest.android.gameElements.Investment;
@@ -43,21 +42,19 @@ public class Game {
     private static Game instance;
 
     private static final long FPS = 25;
-    public static final double SEC_TO_HOUR_MULTIPLIER = 3600;
     private static final double AD_REWARD_MULTIPLIER = 220;
     private static final long SECOND = 1000;
     private static final double START_MONEY_PER_TAP = 1d;
     private static final double START_MONEY_PER_SEC = 0d;
+    public static final double SEC_TO_HOUR_MULTIPLIER = 3600;
 
     private double currentMoney = 0d;
     private double moneyPerTap = 1d;
     private double moneyPerSec = 0d;
+
     private static boolean gamblingAnimationRunning = false;
-
-    public static boolean soundDisabled;
-
     private static boolean timerPaused;
-    public RefreshListener smoothRefreshListener;
+    public static boolean soundDisabled;
 
     private List<Investment> investments;
     private List<Upgrade> upgrades;
@@ -72,6 +69,9 @@ public class Game {
 
     public Handler handler;
     public MoneyChangedListener moneyChangedListener;
+    public RefreshListener smoothRefreshListener;
+    public RefreshListener leaderRefreshListener;
+
     private Timer T = new Timer();
     //endregion
 
@@ -98,7 +98,6 @@ public class Game {
 
         handler = new Handler(Looper.getMainLooper());
         handler.post(draw);
-        handler.post(drawLeaders);
         handler.post(drawSmooth);
         startTimer();
     }
@@ -117,23 +116,16 @@ public class Game {
         }
     };
 
-    private Runnable drawLeaders = new Runnable() {
-        @Override
-        public void run() {
-            if (!timerPaused) {
-                enrichLeaders();
-                LeaderboardFragment.update();
-            }
-            handler.postDelayed(drawLeaders, SECOND / 2);
-        }
-    };
-
     private Runnable drawSmooth = new Runnable() {
         @Override
         public void run() {
             if (!timerPaused) {
+                enrichLeaders();
                 if (smoothRefreshListener != null) {
                     smoothRefreshListener.refresh();
+                }
+                if (leaderRefreshListener != null) {
+                    leaderRefreshListener.refresh();
                 }
             }
             handler.postDelayed(drawSmooth, SECOND / FPS);

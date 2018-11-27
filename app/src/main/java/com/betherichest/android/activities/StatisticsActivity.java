@@ -5,15 +5,20 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.betherichest.android.R;
 import com.betherichest.android.fragments.StatisticsAdapter;
+import com.betherichest.android.gameElements.GameStatistics;
 import com.betherichest.android.listenerInterfaces.RefreshListener;
 import com.betherichest.android.mangers.GUIManager;
 import com.betherichest.android.mangers.Game;
 
-public class StatisticsActivity extends AppCompatActivity {
+import java.util.List;
 
+public class StatisticsActivity extends AppCompatActivity {
+    private ListView listView;
+    private List<GameStatistics> gameStatistics = Game.statisticsManager.getGameStatistics();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,22 +67,27 @@ public class StatisticsActivity extends AppCompatActivity {
     }
 
     private void setAdapter() {
-        final StatisticsAdapter adapter = new StatisticsAdapter(Game.statisticsManager.getGameStatistics());
+        final StatisticsAdapter adapter = new StatisticsAdapter(gameStatistics);
+        listView = findViewById(R.id.stat_listview);
+        listView.setAdapter(adapter);
+
         Game.getInstance().smoothRefreshListener = new RefreshListener() {
             @Override
             public void refresh() {
-                adapter.notifyDataSetChanged();
+                for (int i = listView.getFirstVisiblePosition(); i < listView.getLastVisiblePosition(); i++) {
+                    setValueTextViewByPosition(i);
+                }
             }
         };
-
-        final ListView listView = findViewById(R.id.stat_listview);
-        listView.setAdapter(adapter);
-
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Game.getInstance().smoothRefreshListener = null;
+    }
+
+    private void setValueTextViewByPosition(int pos) {
+        TextView valueTextView = listView.getChildAt(pos - listView.getFirstVisiblePosition()).findViewById(R.id.statValueText);
+        valueTextView.setText(gameStatistics.get(pos).getValueAsString());
     }
 }

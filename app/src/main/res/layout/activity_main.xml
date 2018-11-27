@@ -36,7 +36,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/content_frame"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="5dp">
+            android:layout_marginTop="4dp">
 
             <TextView
                 android:id="@+id/currentMoneyText"
@@ -44,13 +44,13 @@
                 android:layout_height="wrap_content"
                 android:text="10000"
                 android:textColor="@color/mainTextColor"
-                android:textSize="31sp"
+                android:textSize="27sp"
                 android:textStyle="bold" />
 
             <ImageView
                 android:id="@+id/smallDollar"
-                android:layout_width="44dp"
-                android:layout_height="22dp"
+                android:layout_width="40dp"
+                android:layout_height="20dp"
                 android:layout_centerInParent="true"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="5dp"
@@ -69,8 +69,8 @@
             android:textAlignment="center"
             android:textAllCaps="false"
             android:textColor="@color/mainTextColor"
-            android:textSize="16sp"
-            android:textStyle="normal|bold" />
+            android:textSize="14sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/moneyPerTapText"
@@ -82,8 +82,8 @@
             android:textAlignment="center"
             android:textAllCaps="false"
             android:textColor="@color/mainTextColor"
-            android:textSize="16sp"
-            android:textStyle="normal|bold" />
+            android:textSize="14sp"
+            android:textStyle="bold" />
 
         <ImageView
             android:id="@+id/dollarImage"
@@ -120,7 +120,7 @@
                     android:layout_below="@+id/investmentsIcon"
                     android:layout_centerHorizontal="true"
                     android:text="@string/investments"
-                    android:textSize="15sp" />
+                    android:textSize="14sp" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -142,7 +142,7 @@
                     android:layout_below="@+id/upgradesIcon"
                     android:layout_centerHorizontal="true"
                     android:text="@string/upgrades"
-                    android:textSize="15sp" />
+                    android:textSize="14sp" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -164,7 +164,7 @@
                     android:layout_below="@+id/gamblingIcon"
                     android:layout_centerHorizontal="true"
                     android:text="@string/gambling"
-                    android:textSize="15sp" />
+                    android:textSize="14sp" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -186,7 +186,7 @@
                     android:layout_below="@+id/leaderboardIcon"
                     android:layout_centerHorizontal="true"
                     android:text="@string/leaderboard"
-                    android:textSize="15sp" />
+                    android:textSize="14sp" />
             </RelativeLayout>
         </LinearLayout>
 

@@ -48,11 +48,9 @@ public class DatabaseManager {
                         appDatabase.upgradeDao().insertAll(new Upgrade(upgrade.getId()));
                     }
                 }
-
                 for (GameStatistics stat : Game.statisticsManager.getGameStatistics()) {
                     appDatabase.gameStatisticsDao().insertAll(new GameStatistics(stat.getId(), stat.getValue()));
                 }
-
                 for (Achievement achievement : game.getAchievements()) {
                     if (achievement.isUnlocked()) {
                         appDatabase.achievementDao().insertAll(new Achievement(achievement.getId(), achievement.getDateOfAcquiring()));

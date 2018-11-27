@@ -40,7 +40,6 @@ import com.google.android.gms.ads.AdView;
 import java.text.NumberFormat;
 import java.util.HashMap;
 import java.util.Locale;
-import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
     private static Context context;
@@ -178,10 +177,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         SoundManager.soundPool.release();
-        Map<String, Object> params = new HashMap<String, Object>() {{
-            put("action", "close");
-        }};
-        App.createConnection("/muser/log-ping", params, ActionType.LOG);
     }
 
     @Override
