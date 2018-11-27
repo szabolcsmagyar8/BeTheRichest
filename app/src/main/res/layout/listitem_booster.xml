@@ -59,7 +59,7 @@
         </LinearLayout>
 
         <TextView
-            android:id="@+id/price"
+            android:id="@+id/investment_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/reward_layout"

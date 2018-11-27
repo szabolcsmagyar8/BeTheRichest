@@ -84,9 +84,9 @@ public class LeaderboardFragment extends Fragment {
     }
 
     private void setMoneyTextViewByPosition(int pos) {
-        TextView valueTextView = listView.getChildAt(pos - listView.getFirstVisiblePosition()).findViewById(R.id.leader_money_text);
+        TextView moneyTextView = listView.getChildAt(pos - listView.getFirstVisiblePosition()).findViewById(R.id.leader_money_text);
         App.NF.setMaximumFractionDigits(0);
-        valueTextView.setText(String.valueOf(App.NF.format(leaders.get(pos).getMoney())));
+        moneyTextView.setText(String.valueOf(App.NF.format(leaders.get(pos).getMoney())));
     }
 
     @Override
@@ -94,5 +94,6 @@ public class LeaderboardFragment extends Fragment {
         super.onDestroyView();
         adapter = null;
         game.leaderRefreshListener = null;
+        game.handler.removeCallbacks(leaderMoneyWatch);
     }
 }

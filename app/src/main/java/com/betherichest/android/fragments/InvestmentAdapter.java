@@ -65,8 +65,8 @@ public class InvestmentAdapter extends BaseAdapter {
     }
 
     private void initializeListUIElements() {
-        nameTextView = listItemView.findViewById(R.id.name);
-        priceTextView = listItemView.findViewById(R.id.price);
+        nameTextView = listItemView.findViewById(R.id.investment_name);
+        priceTextView = listItemView.findViewById(R.id.investment_price);
         dpsPerLevelTextView = listItemView.findViewById(R.id.dpsPerLevel);
         levelTextView = listItemView.findViewById(R.id.level);
         totalDPSTextView = listItemView.findViewById(R.id.total);
@@ -107,7 +107,7 @@ public class InvestmentAdapter extends BaseAdapter {
         setTextColorByAvailability(investment);
     }
 
-    private void setTextColorByAvailability(Investment investment) {
+    public void setTextColorByAvailability(Investment investment) {
         if (investment.isLocked()) {
             nameTextView.setTextColor(App.getContext().getResources().getColor(R.color.darkerGray));//App.getContext().getResources().getColor(R.color.black));
         } else if (investment.isBuyable()) {

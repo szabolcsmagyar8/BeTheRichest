@@ -6,6 +6,7 @@ import com.betherichest.android.activities.LoginActivity;
 import com.betherichest.android.gameElements.Gambling;
 import com.betherichest.android.gameElements.GameStatistics;
 import com.betherichest.android.gameElements.Investment;
+import com.betherichest.android.gameElements.Leader;
 import com.betherichest.android.gameElements.achievement.Achievement;
 import com.betherichest.android.gameElements.upgrade.GamblingUpgrade;
 import com.betherichest.android.gameElements.upgrade.InvestmentUpgrade;
@@ -56,6 +57,9 @@ public class DatabaseManager {
                         appDatabase.achievementDao().insertAll(new Achievement(achievement.getId(), achievement.getDateOfAcquiring()));
                     }
                 }
+                for (Leader leader : game.getLeaders()) {
+                    appDatabase.leaderDao().insertAll(new Leader(leader.getId(), leader.getMoney()));
+                }
             }
         }).start();
     }
@@ -91,8 +95,22 @@ public class DatabaseManager {
                 if (appDatabase.gameStatisticsDao().geGameStatistics().size() != 0) {
                     loadGameStatistics(appDatabase.gameStatisticsDao().geGameStatistics());
                 }
+                if (appDatabase.leaderDao().getLeaders().size() != 0) {
+                    loadLeaders(appDatabase.leaderDao().getLeaders());
+                }
             }
         }).start();
+    }
+
+    private void loadLeaders(List<Leader> savedLeaders) {
+        for (Leader savedLeader : savedLeaders) {
+            for (Leader leader : game.getLeaders()) {
+                if (leader.getId() == savedLeader.getId()) {
+                    leader.setMoney(savedLeader.getMoney());
+                    break;
+                }
+            }
+        }
     }
 
 
@@ -102,6 +120,7 @@ public class DatabaseManager {
                 if (achievement.getId() == savedAchievement.getId()) {
                     achievement.setUnlocked(true);
                     achievement.setDateOfAcquiring(savedAchievement.getDateOfAcquiring());
+                    break;
                 }
             }
         }
@@ -112,6 +131,7 @@ public class DatabaseManager {
             for (GameStatistics stat : Game.statisticsManager.getGameStatistics()) {
                 if (stat.getId() == savedStat.getId()) {
                     stat.setValue(savedStat.getValue());
+                    break;
                 }
             }
         }
@@ -126,6 +146,7 @@ public class DatabaseManager {
                         Investment inv = ((InvestmentUpgrade) upgrade).getRelevantInvestment();
                         if (!inv.getPurchasedRelevantUpgrades().contains(upgrade)) {
                             inv.addPurchasedRelevantUpgrade(upgrade);
+                            break;
                         }
                     }
                     if (upgrade instanceof GamblingUpgrade) {
@@ -135,8 +156,8 @@ public class DatabaseManager {
                             gambling.setMaxWinAmount(gambling.getMaxWinAmount() * multiplier);
                             gambling.setPrice(gambling.getPrice() * multiplier);
                         }
+                        break;
                     }
-                    break;
                 }
             }
         }

@@ -53,8 +53,8 @@ public class GamblingAdapter extends BaseAdapter {
             listItemView = view;
         }
 
-        nameTextView = listItemView.findViewById(R.id.name);
-        priceTextView = listItemView.findViewById(R.id.price);
+        nameTextView = listItemView.findViewById(R.id.investment_name);
+        priceTextView = listItemView.findViewById(R.id.investment_price);
         winAmountTextView = listItemView.findViewById(R.id.winAmount);
         chanceTextView = listItemView.findViewById(R.id.chance);
         imageView = listItemView.findViewById(R.id.gamblingIcon);

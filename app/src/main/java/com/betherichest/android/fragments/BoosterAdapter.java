@@ -53,7 +53,7 @@ public class BoosterAdapter extends BaseAdapter {
 
         nameTextView = listItemView.findViewById(R.id.interval);
         rewardTextView = listItemView.findViewById(R.id.reward);
-        priceTextView = listItemView.findViewById(R.id.price);
+        priceTextView = listItemView.findViewById(R.id.investment_price);
         iconImageView = listItemView.findViewById(R.id.booster_icon);
 
         nameTextView.setText(items.get(i).getTitle());

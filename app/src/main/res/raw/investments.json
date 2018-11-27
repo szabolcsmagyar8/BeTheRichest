@@ -135,7 +135,7 @@
     },
     {
       "name": "Amusement Park",
-      "basePrice": 20500000,
+      "basePrice": 205000000,
       "baseDpS": 3400,
       "description": "An amusement park attracts thousands of visitors daily.",
       "imageResourceString": "funfair",

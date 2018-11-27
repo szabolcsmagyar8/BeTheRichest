@@ -81,11 +81,6 @@ public class StatisticsActivity extends AppCompatActivity {
         };
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-    }
-
     private void setValueTextViewByPosition(int pos) {
         TextView valueTextView = listView.getChildAt(pos - listView.getFirstVisiblePosition()).findViewById(R.id.statValueText);
         valueTextView.setText(gameStatistics.get(pos).getValueAsString());
