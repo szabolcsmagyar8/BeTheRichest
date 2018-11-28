@@ -3,6 +3,8 @@ package com.betherichest.android.database;
 import com.betherichest.android.App;
 import com.betherichest.android.GameState;
 import com.betherichest.android.activities.LoginActivity;
+import com.betherichest.android.connection.ConnectionManager;
+import com.betherichest.android.connection.RequestItem;
 import com.betherichest.android.gameElements.Gambling;
 import com.betherichest.android.gameElements.GameStatistics;
 import com.betherichest.android.gameElements.Investment;
@@ -13,6 +15,7 @@ import com.betherichest.android.gameElements.upgrade.InvestmentUpgrade;
 import com.betherichest.android.gameElements.upgrade.Upgrade;
 import com.betherichest.android.mangers.Game;
 
+import java.util.LinkedList;
 import java.util.List;
 
 public class DatabaseManager {
@@ -98,8 +101,15 @@ public class DatabaseManager {
                 if (appDatabase.leaderDao().getLeaders().size() != 0) {
                     loadLeaders(appDatabase.leaderDao().getLeaders());
                 }
+                if (appDatabase.requestItemDao().getRequestItems().size() != 0) {
+                    loadRequestItems(appDatabase.requestItemDao().getRequestItems());
+                }
             }
         }).start();
+    }
+
+    private void loadRequestItems(List<RequestItem> savedRequestItems) {
+        ConnectionManager.requestItems = new LinkedList<>(savedRequestItems);
     }
 
     private void loadLeaders(List<Leader> savedLeaders) {
@@ -112,7 +122,6 @@ public class DatabaseManager {
             }
         }
     }
-
 
     private void loadAchievements(List<Achievement> savedAchievements) {
         for (Achievement savedAchievement : savedAchievements) {
@@ -172,5 +181,13 @@ public class DatabaseManager {
                 }
             }
         }
+    }
+
+    public void saveRequestItemToDb(RequestItem requestItem) {
+        appDatabase.requestItemDao().insertAll(requestItem);
+    }
+
+    public void removeRequestItem(RequestItem requestItem) {
+        appDatabase.requestItemDao().deleteRequestItem(requestItem);
     }
 }

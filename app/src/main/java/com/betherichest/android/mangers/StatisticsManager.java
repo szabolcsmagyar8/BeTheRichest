@@ -4,6 +4,7 @@ import android.os.Build;
 import android.support.annotation.RequiresApi;
 
 import com.betherichest.android.StatType;
+import com.betherichest.android.connection.RequestParam;
 import com.betherichest.android.factories.StatisticsFactory;
 import com.betherichest.android.gameElements.GameStatistics;
 
@@ -12,8 +13,8 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 import java.util.Observable;
 
 public class StatisticsManager extends Observable {
@@ -109,24 +110,24 @@ public class StatisticsManager extends Observable {
         notifyObservers(value);
     }
 
-    public Map<String, Object> getStatRequestParams() {
-        Map<String, Object> params = new HashMap<>();
-        params.put("currentMoney", Game.getInstance().getCurrentMoney());
-        params.put("currentClicks", getStatByType(StatType.TOTAL_CLICKS).getValue());
-        params.put("currentPlaytime", getStatByType(StatType.TOTAL_PLAYING_TIME).getValue());
-        params.put("totalMoneyCollected", getStatByType(StatType.TOTAL_MONEY_COLLECTED).getValue());
-        params.put("totalMoneySpent", getStatByType(StatType.MONEY_SPENT).getValue());
-        params.put("totalInvestmentLevels", getStatByType(StatType.TOTAL_INVESTMENT_LEVELS).getValue());
-        params.put("upgradesBought", getStatByType(StatType.UPGRADES_BOUGHT).getValue());
-        params.put("moneyFromInvestments", getStatByType(StatType.MONEY_FROM_INVESTMENTS).getValue());
-        params.put("achievementsUnlocked", getStatByType(StatType.ACHIEVEMENTS_UNLOCKED).getValue());
-        params.put("moneyFromVideos", getStatByType(StatType.MONEY_FROM_VIDEOS).getValue());
-        params.put("moneyFromGambling", getStatByType(StatType.MONEY_FROM_GAMBLING).getValue());
-        params.put("moneyFromClicks", getStatByType(StatType.MONEY_FROM_CLICKS).getValue());
-        params.put("highestMoney", getStatByType(StatType.HIGHEST_MONEY).getValue());
-        params.put("videosWatched", getStatByType(StatType.VIDEOS_WATCHED).getValue());
-        params.put("moneySpentGambling", getStatByType(StatType.MONEY_SPENT_ON_GAMBLING).getValue());
-        params.put("gamblingBalance", getStatByType(StatType.GAMBLING_BALANCE).getValue());
+    public List<RequestParam> getStatRequestParams() {
+        List<RequestParam> params = new LinkedList<>();
+        params.add(new RequestParam("currentMoney", String.valueOf(Game.getInstance().getCurrentMoney())));
+        params.add(new RequestParam("currentClicks", String.valueOf(getStatByType(StatType.TOTAL_CLICKS).getValue())));
+        params.add(new RequestParam("currentPlaytime", String.valueOf(getStatByType(StatType.TOTAL_PLAYING_TIME).getValue())));
+        params.add(new RequestParam("totalMoneyCollected", String.valueOf(getStatByType(StatType.TOTAL_MONEY_COLLECTED).getValue())));
+        params.add(new RequestParam("totalMoneySpent", String.valueOf(getStatByType(StatType.MONEY_SPENT).getValue())));
+        params.add(new RequestParam("totalInvestmentLevels", String.valueOf(getStatByType(StatType.TOTAL_INVESTMENT_LEVELS).getValue())));
+        params.add(new RequestParam("upgradesBought", String.valueOf(getStatByType(StatType.UPGRADES_BOUGHT).getValue())));
+        params.add(new RequestParam("moneyFromInvestments", String.valueOf(getStatByType(StatType.MONEY_FROM_INVESTMENTS).getValue())));
+        params.add(new RequestParam("achievementsUnlocked", String.valueOf(getStatByType(StatType.ACHIEVEMENTS_UNLOCKED).getValue())));
+        params.add(new RequestParam("moneyFromVideos", String.valueOf(getStatByType(StatType.MONEY_FROM_VIDEOS).getValue())));
+        params.add(new RequestParam("moneyFromGambling", String.valueOf(getStatByType(StatType.MONEY_FROM_GAMBLING).getValue())));
+        params.add(new RequestParam("moneyFromClicks", String.valueOf(getStatByType(StatType.MONEY_FROM_CLICKS).getValue())));
+        params.add(new RequestParam("highestMoney", String.valueOf(getStatByType(StatType.HIGHEST_MONEY).getValue())));
+        params.add(new RequestParam("videosWatched", String.valueOf(getStatByType(StatType.VIDEOS_WATCHED).getValue())));
+        params.add(new RequestParam("moneySpentGambling", String.valueOf(getStatByType(StatType.MONEY_SPENT_ON_GAMBLING).getValue())));
+        params.add(new RequestParam("gamblingBalance", String.valueOf(getStatByType(StatType.GAMBLING_BALANCE).getValue())));
         return params;
     }
 

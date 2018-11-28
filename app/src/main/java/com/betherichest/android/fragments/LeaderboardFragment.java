@@ -75,7 +75,7 @@ public class LeaderboardFragment extends Fragment {
         Game.getInstance().leaderRefreshListener = new RefreshListener() {
             @Override
             public void refresh() {
-                for (int i = listView.getFirstVisiblePosition(); i < listView.getLastVisiblePosition(); i++) {
+                for (int i = listView.getFirstVisiblePosition(); i < listView.getLastVisiblePosition() + 1; i++) {
                     setMoneyTextViewByPosition(i);
                 }
             }

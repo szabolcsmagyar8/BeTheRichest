@@ -7,15 +7,16 @@ import android.util.TypedValue;
 
 import com.betherichest.android.connection.ActionType;
 import com.betherichest.android.connection.ConnectionManager;
-import com.betherichest.android.connection.HTTPMethod;
 import com.betherichest.android.connection.RequestItem;
+import com.betherichest.android.connection.RequestParam;
+import com.betherichest.android.database.DatabaseManager;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
 // Class for methods used a lot of times
 public class App extends MultiDexApplication {
@@ -88,24 +89,19 @@ public class App extends MultiDexApplication {
         return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, getContext().getResources().getDisplayMetrics());
     }
 
-    public static void createConnection(final String endPoint, final Map<String, Object> requestParams, final ActionType actionType) {
+    public static void createConnection(final String endPoint, final List<RequestParam> requestParams, final ActionType actionType) {
         AsyncTask.execute(new Runnable() {
             @Override
             public void run() {
                 if (isOnline()) {
-                    HTTPMethod method;
-                    if (actionType == ActionType.LOG || actionType == ActionType.LOGIN) {
-                        method = HTTPMethod.POST;
-                    } else {
-                        method = HTTPMethod.GET;
-                    }
+                    RequestItem requestItem = new RequestItem(endPoint, requestParams, actionType);
                     try {
-                        new ConnectionManager(endPoint, requestParams, method, actionType);
+                        new ConnectionManager(requestItem);
                     } catch (MalformedURLException e) {
                         e.printStackTrace();
                     }
                 } else {
-                    ConnectionManager.requestItems.add(new RequestItem(endPoint, requestParams, actionType));
+                    DatabaseManager.instance.saveRequestItemToDb(new RequestItem(endPoint, requestParams, actionType));
                 }
             }
         });
@@ -117,7 +113,6 @@ public class App extends MultiDexApplication {
             public void run() {
                 for (RequestItem item : new ArrayList<>(ConnectionManager.requestItems)) {
                     createConnection(item.getEndPoint(), item.getRequestParams(), item.getActionType());
-                    ConnectionManager.requestItems.remove(item);
                 }
             }
         });

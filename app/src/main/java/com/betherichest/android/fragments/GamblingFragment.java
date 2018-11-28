@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.betherichest.android.App;
 import com.betherichest.android.R;
 import com.betherichest.android.connection.ActionType;
+import com.betherichest.android.connection.RequestParam;
 import com.betherichest.android.gameElements.Gambling;
 import com.betherichest.android.mangers.GUIManager;
 import com.betherichest.android.mangers.Game;
@@ -24,7 +25,7 @@ import com.betherichest.android.mangers.SoundManager;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
@@ -157,10 +158,9 @@ public class GamblingFragment extends Fragment {
                 wonMoneyText.setText(text);
                 wonMoneyText.startAnimation(grow);
 
-                HashMap<String, Object> params = new HashMap<String, Object>() {{
-                    put("gamblingId", selectedGambling.getId());
-                    put("gamblingWon", wonMoney > 0);
-                }};
+                List<RequestParam> params = new LinkedList<>();
+                params.add(new RequestParam("gamblingId", String.valueOf(selectedGambling.getId())));
+                params.add(new RequestParam("gamblingWon", String.valueOf(wonMoney > 0)));
                 App.createConnection("/muser/log-gambling", params, ActionType.LOG);
             }
 

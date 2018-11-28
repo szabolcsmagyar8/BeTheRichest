@@ -3,6 +3,7 @@ package com.betherichest.android.connection;
 import android.os.AsyncTask;
 
 import com.betherichest.android.activities.LoginActivity;
+import com.betherichest.android.database.DatabaseManager;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -16,32 +17,29 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
-import java.util.Queue;
 
 public class ConnectionManager extends AsyncTask<URL, String, Void> {
-    public static Queue<RequestItem> requestItems = new LinkedList<>();
+    public static final String BTR_URL = "http://krisz094.asuscomm.com";
+    public static final String AUTHORIZATION = "Authorization";
     private URL url;
-    private Map<String, Object> requestParams;
+    public static List<RequestItem> requestItems = new LinkedList<>();
     private Map<String, String> headerParams = new HashMap<>();
     private HTTPMethod httpMethod;
     private ActionType actionType;
-    public static final String BTR_URL = "https://betherichest-1994.appspot.com";
+    private RequestItem requestItem;
+    private List<RequestParam> requestParams;
     private String endpoint;
 
-
-    /**
-     * @param endpoint
-     * @param requestParams key-value pair request parameters
-     * @param actionType
-     */
-    public ConnectionManager(String endpoint, Map<String, Object> requestParams, HTTPMethod httpMethod, ActionType actionType) throws MalformedURLException {
-        this.endpoint = endpoint;
-        this.url = new URL(BTR_URL + endpoint);
-        headerParams.put("Authorization", LoginActivity.BEARER_TOKEN);
-        this.requestParams = requestParams;
-        this.httpMethod = httpMethod;
-        this.actionType = actionType;
+    public ConnectionManager(RequestItem requestItem) throws MalformedURLException {
+        this.requestItem = requestItem;
+        endpoint = requestItem.getEndPoint();
+        url = new URL(BTR_URL + endpoint);
+        headerParams.put(AUTHORIZATION, LoginActivity.BEARER_TOKEN);
+        requestParams = requestItem.getRequestParams();
+        httpMethod = requestItem.getActionType() == ActionType.LOG || requestItem.getActionType() == ActionType.LOGIN ? HTTPMethod.POST : HTTPMethod.GET;
+        actionType = requestItem.getActionType();
         execute();
     }
 
@@ -52,11 +50,7 @@ public class ConnectionManager extends AsyncTask<URL, String, Void> {
 
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
-            if (headerParams != null) {
-                for (Map.Entry<String, String> param : headerParams.entrySet()) {
-                    conn.setRequestProperty(param.getKey(), param.getValue());
-                }
-            }
+            conn.setRequestProperty(AUTHORIZATION, headerParams.get(AUTHORIZATION));
             conn.setRequestMethod(httpMethod.name());
             conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
             conn.setRequestProperty("Content-Length", String.valueOf(postDataBytes.length));
@@ -71,7 +65,7 @@ public class ConnectionManager extends AsyncTask<URL, String, Void> {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
-            requestItems.add(new RequestItem(endpoint, requestParams, actionType));
+            requestItems.add(requestItem);
         }
         return null;
     }
@@ -80,8 +74,10 @@ public class ConnectionManager extends AsyncTask<URL, String, Void> {
         StringBuilder postData = new StringBuilder();
         String encoding = System.getProperty("file.encoding");
 
-        for (Map.Entry<String, Object> param : requestParams.entrySet()) {
-            if (postData.length() != 0) postData.append('&');
+        for (RequestParam param : requestParams) {
+            if (postData.length() != 0) {
+                postData.append('&');
+            }
             postData.append(URLEncoder.encode(param.getKey(), encoding));
             postData.append('=');
             postData.append(URLEncoder.encode(String.valueOf(param.getValue()), encoding));
@@ -110,6 +106,8 @@ public class ConnectionManager extends AsyncTask<URL, String, Void> {
             }
         }
         System.out.println(response.toString());
+        requestItems.remove(requestItem);
+        DatabaseManager.instance.removeRequestItem(requestItem);
         inputStream.close();
     }
 }

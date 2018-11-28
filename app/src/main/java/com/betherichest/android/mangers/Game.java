@@ -9,6 +9,7 @@ import com.betherichest.android.R;
 import com.betherichest.android.StatType;
 import com.betherichest.android.activities.MainActivity;
 import com.betherichest.android.connection.ActionType;
+import com.betherichest.android.connection.RequestParam;
 import com.betherichest.android.factories.AchievementFactory;
 import com.betherichest.android.factories.BoosterFactory;
 import com.betherichest.android.factories.GamblingFactory;
@@ -31,7 +32,7 @@ import com.betherichest.android.listenerInterfaces.RefreshListener;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -316,11 +317,10 @@ public class Game {
                 recalculateMoneyPerSecond();
                 recalculateMoneyPerTap();   // for GlobalIncrements
 
-                HashMap<String, Object> params = new HashMap<String, Object>() {{
-                    put("investmentId", selectedInvestment.getId());
-                    put("investmentRank", selectedInvestment.getLevel());
-                }};
-                App.createConnection("/muser/log-investment", params, ActionType.LOG);
+                List<RequestParam> requestParams = new LinkedList<>();
+                requestParams.add(new RequestParam("investmentId", String.valueOf(selectedInvestment.getId())));
+                requestParams.add(new RequestParam("investmentRank", String.valueOf(selectedInvestment.getLevel())));
+                App.createConnection("/muser/log-investment", requestParams, ActionType.LOG);
             }
         }).start();
     }
@@ -346,10 +346,9 @@ public class Game {
                 statisticsManager.buyItem(selectedUpgrade.getPrice());
                 statisticsManager.buyUpgrade();
 
-                HashMap<String, Object> params = new HashMap<String, Object>() {{
-                    put("upgradeId", selectedUpgrade.getId());
-                }};
-                App.createConnection("/muser/log-investment", params, ActionType.LOG);
+                List<RequestParam> requestParams = new LinkedList<>();
+                requestParams.add(new RequestParam("upgradeId", String.valueOf(selectedUpgrade.getId())));
+                App.createConnection("/muser/log-investment", requestParams, ActionType.LOG);
             }
         }).start();
     }

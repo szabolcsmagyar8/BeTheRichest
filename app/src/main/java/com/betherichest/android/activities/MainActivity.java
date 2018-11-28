@@ -26,6 +26,7 @@ import android.widget.ImageView;
 import com.betherichest.android.App;
 import com.betherichest.android.R;
 import com.betherichest.android.connection.ActionType;
+import com.betherichest.android.connection.RequestParam;
 import com.betherichest.android.database.DatabaseManager;
 import com.betherichest.android.fragments.GamblingFragment;
 import com.betherichest.android.fragments.InvestmentFragment;
@@ -38,7 +39,8 @@ import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 
 import java.text.NumberFormat;
-import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
@@ -111,10 +113,8 @@ public class MainActivity extends AppCompatActivity {
                 initNavigatonViewListener();
             }
         }).start();
-
-        HashMap<String, Object> params = new HashMap<String, Object>() {{
-            put("action", "open");
-        }};
+        List<RequestParam> params = new LinkedList<>();
+        params.add(new RequestParam("action", "open"));
         App.createConnection("/muser/log-ping", params, ActionType.LOG);
     }
 
@@ -168,7 +168,6 @@ public class MainActivity extends AppCompatActivity {
         if (!GUIManager.isActivityOpened()) {
             Game.setTimerPaused(true);
         }
-
         App.createConnection("/muser/log-stats", Game.statisticsManager.getStatRequestParams(), ActionType.LOG);
         dbManager.saveStateToDb();
     }

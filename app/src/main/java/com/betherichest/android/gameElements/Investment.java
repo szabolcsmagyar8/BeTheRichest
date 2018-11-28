@@ -14,28 +14,20 @@ import java.util.List;
 public class Investment extends GameElement {
     @Ignore
     static int currentId = 0;
-
     @ColumnInfo(name = "level")
     private int level = 0;
-
     @Ignore
     private double basePrice;
-
     @Ignore
     private double baseDpS;
-
     @Ignore
     private final double coefficient = 1.15;
-
     @Ignore
     private int[] upgradeEffectMultipliers;
-
     @Ignore
     private List<Upgrade> relevantUpgrades = new ArrayList<>();
-
     @Ignore
     private List<Upgrade> purchasedRelevantUpgrades = new ArrayList<>();
-
     @Ignore
     private boolean locked;
 

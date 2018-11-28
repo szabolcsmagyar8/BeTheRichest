@@ -10,13 +10,15 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 
 import com.betherichest.android.GameState;
+import com.betherichest.android.connection.RequestItem;
+import com.betherichest.android.connection.RequestParam;
 import com.betherichest.android.gameElements.GameStatistics;
 import com.betherichest.android.gameElements.Investment;
 import com.betherichest.android.gameElements.Leader;
 import com.betherichest.android.gameElements.achievement.Achievement;
 import com.betherichest.android.gameElements.upgrade.Upgrade;
 
-@Database(entities = {GameState.class, Investment.class, Upgrade.class, GameStatistics.class, Achievement.class, Leader.class}, version = 3)
+@Database(entities = {GameState.class, Investment.class, Upgrade.class, GameStatistics.class, Achievement.class, Leader.class, RequestItem.class, RequestParam.class}, version = 4)
 @TypeConverters({Converters.class})
 public abstract class AppDatabase extends RoomDatabase {
 
@@ -32,13 +34,13 @@ public abstract class AppDatabase extends RoomDatabase {
 
     public abstract AchievementDao achievementDao();
 
-    static final Migration MIGRATION_A_B = new Migration(2, 3) {
+    static final Migration MIGRATION_A_B = new Migration(3, 4) {
         @Override
         public void migrate(@NonNull SupportSQLiteDatabase database) {
-            // database.execSQL("ALTER TABLE 'gamestate' ADD COLUMN 'sound_disabled' INTEGER DEFAULT 0 NOT NULL");
-            database.execSQL("CREATE TABLE 'Leader' ('id' INTEGER NOT NULL PRIMARY KEY, 'money' REAL NOT NULL)");
         }
     };
+
+    public abstract RequestItemDao requestItemDao();
 
     public static AppDatabase getAppDatabase(Context context) {
         if (INSTANCE == null) {

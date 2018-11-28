@@ -18,6 +18,7 @@ import android.widget.TextView;
 import com.betherichest.android.App;
 import com.betherichest.android.R;
 import com.betherichest.android.connection.ActionType;
+import com.betherichest.android.connection.RequestParam;
 import com.betherichest.android.mangers.GUIManager;
 import com.betherichest.android.mangers.Game;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -28,8 +29,8 @@ import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.LinkedList;
+import java.util.List;
 
 public class LoginActivity extends AppCompatActivity {
     private TextView userTextView;
@@ -127,8 +128,8 @@ public class LoginActivity extends AppCompatActivity {
 
             String idToken = account.getIdToken();
 
-            Map<String, Object> requestParams = new HashMap<>();
-            requestParams.put("idToken", idToken);
+            List<RequestParam> requestParams = new LinkedList<>();
+            requestParams.add(new RequestParam("idToken", idToken));
 
             App.createConnection("/muser/tokensignin", requestParams, ActionType.LOGIN);
 

@@ -12,16 +12,12 @@ import java.util.Date;
 public class Achievement extends GameElement {
     @Ignore
     static int currentId = 0;
-
     @ColumnInfo(name = "dateOfAcquiring")
     protected Date dateOfAcquiring;
-
     @ColumnInfo(name = "unlocked")
     protected boolean unlocked = false;
-
     @Ignore
     protected Object reward;
-
     @Ignore
     protected String text;
 
