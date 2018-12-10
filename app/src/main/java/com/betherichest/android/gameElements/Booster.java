@@ -4,13 +4,9 @@ import com.betherichest.android.mangers.Game;
 
 public class Booster extends GameElement {
     private static int currentId = 0;
-
     private double interval;
-
     private String skuId;
-
     private String title;
-
     private String priceText;
 
     public Booster() {
@@ -26,7 +22,7 @@ public class Booster extends GameElement {
     }
 
     public double getActualReward() {
-        return Game.getInstance().getMoneyPerSec() * Game.SEC_TO_HOUR_MULTIPLIER * (double) interval;
+        return Game.getInstance().getMoneyPerSec() * Game.SEC_TO_HOUR_MULTIPLIER * interval;
     }
 
     public String getTitle() {

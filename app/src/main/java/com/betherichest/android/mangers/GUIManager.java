@@ -241,20 +241,13 @@ public class GUIManager {
         return marginLeft;
     }
 
-    public void openFragment(final int containerId, final Fragment fragment) {
-        if (SystemClock.elapsedRealtime() - mLastClickTime < 500) {
-            return;
+    // for test purposes
+    public static void showToast(String text) {
+        if (toast != null) {
+            toast.cancel();
         }
-
-        mLastClickTime = SystemClock.elapsedRealtime();
-        FragmentTransaction ft = fragmentManager.beginTransaction();
-
-        ft.setCustomAnimations(R.anim.slide_in_from_bottom, R.anim.slide_out_to_bottom, R.anim.slide_in_from_bottom, R.anim.slide_out_to_bottom);
-        ft.addToBackStack(null);
-        ft.replace(containerId, fragment).commit();
-
-        relocateDollarImage(true);
-        SoundManager.playSound(SoundManager.soundPull);
+        toast = Toast.makeText(App.getContext(), text, Toast.LENGTH_SHORT);
+        toast.show();
     }
 
     public static void showToast(int stringResource) {
@@ -265,12 +258,20 @@ public class GUIManager {
         toast.show();
     }
 
-    public static void showToast(String text) {
-        if (toast != null) {
-            toast.cancel();
+    public void openFragment(final int containerId, final Fragment fragment) {
+        if (SystemClock.elapsedRealtime() - mLastClickTime < 500) {
+            return;
         }
-        toast = Toast.makeText(App.getContext(), text, Toast.LENGTH_SHORT);
-        toast.show();
+
+        mLastClickTime = SystemClock.elapsedRealtime();
+        FragmentTransaction ft = fragmentManager.beginTransaction();
+
+        ft.setCustomAnimations(R.anim.slide_in_from_bottom, R.anim.slide_out_to_bottom, R.anim.slide_in_from_bottom, R.anim.slide_out_to_bottom);
+        ft.addToBackStack(null);
+        ft.replace(containerId, fragment).commitAllowingStateLoss();
+
+        relocateDollarImage(true);
+        SoundManager.playSound(SoundManager.soundPull);
     }
 
     private void initializeActionBar(ActionBar actionbar) {
@@ -281,7 +282,6 @@ public class GUIManager {
     }
 
     public void relocateDollarImage(boolean toUp) {
-
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
         if (toUp) {
             params.addRule(RelativeLayout.BELOW, R.id.moneyPerTapText);

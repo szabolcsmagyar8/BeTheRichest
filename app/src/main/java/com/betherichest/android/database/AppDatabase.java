@@ -12,13 +12,14 @@ import android.support.annotation.NonNull;
 import com.betherichest.android.GameState;
 import com.betherichest.android.connection.RequestItem;
 import com.betherichest.android.connection.RequestParam;
+import com.betherichest.android.gameElements.Gambling;
 import com.betherichest.android.gameElements.GameStatistics;
 import com.betherichest.android.gameElements.Investment;
 import com.betherichest.android.gameElements.Leader;
 import com.betherichest.android.gameElements.achievement.Achievement;
 import com.betherichest.android.gameElements.upgrade.Upgrade;
 
-@Database(entities = {GameState.class, Investment.class, Upgrade.class, GameStatistics.class, Achievement.class, Leader.class, RequestItem.class, RequestParam.class}, version = 4)
+@Database(entities = {GameState.class, Investment.class, Upgrade.class, GameStatistics.class, Achievement.class, Leader.class, RequestItem.class, RequestParam.class, Gambling.class}, version = 4)
 @TypeConverters({Converters.class})
 public abstract class AppDatabase extends RoomDatabase {
 
@@ -33,6 +34,8 @@ public abstract class AppDatabase extends RoomDatabase {
     public abstract GameStatisticsDao gameStatisticsDao();
 
     public abstract AchievementDao achievementDao();
+
+    public abstract GamblingDao gamblingDao();
 
     static final Migration MIGRATION_A_B = new Migration(3, 4) {
         @Override

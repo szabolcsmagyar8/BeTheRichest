@@ -18,9 +18,7 @@ public class AchievementFactory {
     private static List<Achievement> achievements = new ArrayList<>();
 
     private static TapAchievement[] tapAchievements = new TapAchievement[]{
-            new TapAchievement("Rookie Tapper 10", 10, null),
             new TapAchievement("Rookie Tapper 100", 100, null),
-            new TapAchievement("Rookie Tapper 200", 200, null),
             new TapAchievement("Rookie Tapper 500", 500, null),
             new TapAchievement("Rookie Tapper", 1000, null),
             new TapAchievement("Good Tapper", 5000, null),
@@ -49,8 +47,6 @@ public class AchievementFactory {
     };
 
     private static TimeInGameAchievement[] timeInGameAchievements = new TimeInGameAchievement[]{
-            new TimeInGameAchievement("Fresh Player 0", 0.1, null),     // 1m
-            new TimeInGameAchievement("Fresh Player", 0.3, null),     // 3m
             new TimeInGameAchievement("Interested Player", 1, null),          // 10m
             new TimeInGameAchievement("Casual Visitor", 3, null),            // 30m
             new TimeInGameAchievement("Frequent Visitor", 6, null),                // 1h

@@ -27,8 +27,8 @@
     {
       "name": "Slot Machine",
       "price": 200,
-      "minWinAmount": 10000,
-      "maxWinAmount": 20000,
+      "minWinAmount": 25000,
+      "maxWinAmount": 50000,
       "chance": 1,
       "imageResourceString": "slotmachine"
     }

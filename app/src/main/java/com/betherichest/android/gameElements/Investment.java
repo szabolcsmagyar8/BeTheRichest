@@ -66,7 +66,6 @@ public class Investment extends GameElement {
         return id - 1 >= 0 && invs.get(id - 1).getLevel() == 0;
     }
 
-    @Override
     public double getPrice() {
         return (double) Math.round(basePrice * Math.pow(coefficient, level));
     }
@@ -91,7 +90,6 @@ public class Investment extends GameElement {
         return level == 0 ? baseDpS : getMoneyPerSec() / level;
     }
 
-    @Override
     public boolean isBuyable() {
         return Game.getInstance().getCurrentMoney() >= getPrice() && !isLocked();
     }

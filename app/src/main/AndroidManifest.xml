@@ -78,7 +78,6 @@
             tools:ignore="InnerclassSeparator" />
         <activity
             android:name=".activities.AchievementNotificationActivity"
-            android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
 
         <service

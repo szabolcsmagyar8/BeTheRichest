@@ -38,10 +38,8 @@ import com.betherichest.android.mangers.SoundManager;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 
-import java.text.NumberFormat;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
     private static Context context;
@@ -69,6 +67,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         MainActivity.context = getApplicationContext();
         setContentView(R.layout.activity_main);
@@ -221,7 +220,7 @@ public class MainActivity extends AppCompatActivity {
                                 openActivity(new Intent(context, AchievementActivity.class));
                                 break;
                             case R.id.nav_ads:
-                                if (App.isOnline()) {
+                                if (App.isOnline() && App.isInternetAvailable()) {
                                     mDrawerLayout.closeDrawers();
                                     Intent intent = new Intent(context, AdWatcherActivity.class);
                                     startActivityForResult(intent, 1);
@@ -262,7 +261,7 @@ public class MainActivity extends AppCompatActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder
                 .setTitle("Video reward")
-                .setMessage("You received " + String.valueOf(NumberFormat.getNumberInstance(Locale.FRANCE).format(rewardMoney)) + "$")
+                .setMessage("You received " + String.valueOf(App.NF.format((rewardMoney)) + "$"))
                 .setIcon(R.drawable.ic_coin)
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {

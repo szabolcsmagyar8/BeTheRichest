@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import com.betherichest.android.App;
 import com.betherichest.android.R;
+import com.betherichest.android.StatType;
 import com.betherichest.android.activities.LoginActivity;
 import com.betherichest.android.gameElements.Leader;
 import com.betherichest.android.mangers.Game;
@@ -75,13 +76,12 @@ class LeaderboardAdapter extends BaseAdapter {
         moneyTextView = listItemView.findViewById(R.id.leader_money_text);
         rankTextView = listItemView.findViewById(R.id.rank_circle);
         listitemContent = listItemView.findViewById(R.id.listitem_content);
-        App.NF.setMaximumFractionDigits(0);
         rankTextView.setText(String.format("#%s", String.valueOf(position + 1)));
 
         // highlights the player in the list
         if (leader.isPlayer()) {
             listitemContent.setBackground(App.getContext().getResources().getDrawable(R.drawable.background_leaderboard_player));
-            moneyTextView.setText(String.valueOf(App.NF.format(Game.getInstance().getCurrentMoney())));
+            moneyTextView.setText(App.convertThousandsToSIUnit(Game.statisticsManager.getStatByType(StatType.TOTAL_MONEY_COLLECTED).getValue(), false));
             if (LoginActivity.account != null) {
                 nameTextView.setText(LoginActivity.account.getDisplayName());
             } else {
@@ -90,7 +90,7 @@ class LeaderboardAdapter extends BaseAdapter {
 
         } else {
             listitemContent.setBackgroundColor(App.getContext().getResources().getColor(R.color.transparent));
-            moneyTextView.setText(String.valueOf(App.NF.format(leader.getMoney())));
+            moneyTextView.setText(App.convertThousandsToSIUnit(leader.getMoney(), false));
             nameTextView.setText(leader.getName());
         }
     }

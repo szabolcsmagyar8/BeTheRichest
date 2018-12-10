@@ -7,12 +7,22 @@
     },
     {
       "name": "Billy, the Rocker ",
-      "money": 5000000000000,
+      "money": 6000000000000,
+      "growthRate": 1.1
+    },
+    {
+      "name": "Warren",
+      "money": 4000000000000,
+      "growthRate": 1.1
+    },
+    {
+      "name": "Bradley",
+      "money": 2500000000000,
       "growthRate": 1.1
     },
     {
       "name": "Cameron",
-      "money": 2500000000000,
+      "money": 1500000000000,
       "growthRate": 1.1
     },
     {
@@ -36,8 +46,13 @@
       "growthRate": 1.1
     },
     {
-      "name": "Jonas",
+      "name": "Yen",
       "money": 300000000000,
+      "growthRate": 1.1
+    },
+    {
+      "name": "Jonas",
+      "money": 150000000000,
       "growthRate": 1.1
     },
     {
@@ -66,8 +81,13 @@
       "growthRate": 1.1
     },
     {
-      "name": "Elisabeth",
+      "name": "Conor",
       "money": 15000000000,
+      "growthRate": 1.1
+    },
+    {
+      "name": "Elisabeth",
+      "money": 10000000000,
       "growthRate": 1.1
     },
     {
@@ -86,8 +106,18 @@
       "growthRate": 1.1
     },
     {
-      "name": "Jillian ",
+      "name": "Jillian",
       "money": 2000000000,
+      "growthRate": 1.1
+    },
+    {
+      "name": "Pablo",
+      "money": 1500000000,
+      "growthRate": 1.1
+    },
+    {
+      "name": "Max",
+      "money": 1200000000,
       "growthRate": 1.1
     },
     {
@@ -111,8 +141,13 @@
       "growthRate": 1.1
     },
     {
-      "name": "Benjamin ",
+      "name": "Benjamin",
       "money": 300000000,
+      "growthRate": 1.1
+    },
+    {
+      "name": "Fernanda",
+      "money": 200000000,
       "growthRate": 1.1
     },
     {
@@ -138,6 +173,11 @@
     {
       "name": "Christian",
       "money": 20000000,
+      "growthRate": 1.1
+    },
+    {
+      "name": "Yvette",
+      "money": 15000000,
       "growthRate": 1.1
     },
     {

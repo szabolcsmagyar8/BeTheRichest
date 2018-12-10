@@ -63,6 +63,9 @@ public class DatabaseManager {
                 for (Leader leader : game.getLeaders()) {
                     appDatabase.leaderDao().insertAll(new Leader(leader.getId(), leader.getMoney()));
                 }
+                for (Gambling gambling : game.getGamblings()) {
+                    appDatabase.gamblingDao().insertAll(new Gambling(gambling.getId(), gambling.getMinWinAmount(), gambling.getMaxWinAmount(), gambling.getPrice()));
+                }
             }
         }).start();
     }
@@ -104,8 +107,24 @@ public class DatabaseManager {
                 if (appDatabase.requestItemDao().getRequestItems().size() != 0) {
                     loadRequestItems(appDatabase.requestItemDao().getRequestItems());
                 }
+                if (appDatabase.gamblingDao().getGamblings().size() != 0) {
+                    loadGamblings(appDatabase.gamblingDao().getGamblings());
+                }
             }
         }).start();
+    }
+
+    private void loadGamblings(List<Gambling> savedGamblings) {
+        for (Gambling savedGambling : savedGamblings) {
+            for (Gambling gambling : game.getGamblings()) {
+                if (gambling.getId() == savedGambling.getId()) {
+                    gambling.setMinWinAmount(savedGambling.getMinWinAmount());
+                    gambling.setMaxWinAmount(savedGambling.getMaxWinAmount());
+                    gambling.setPrice(savedGambling.getPrice());
+                    break;
+                }
+            }
+        }
     }
 
     private void loadRequestItems(List<RequestItem> savedRequestItems) {

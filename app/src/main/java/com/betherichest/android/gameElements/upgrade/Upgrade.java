@@ -1,23 +1,22 @@
 package com.betherichest.android.gameElements.upgrade;
 
-import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Ignore;
 
 import com.betherichest.android.gameElements.GameElement;
+import com.betherichest.android.mangers.Game;
 
 @Entity
 public class Upgrade extends GameElement {
     @Ignore
     static int currentId = 0;
-
+    @Ignore
+    protected double price;
     @Ignore
     private double multiplier;
-
     @Ignore
     private int color;
-
-    @ColumnInfo(name = "purchased")
+    @Ignore
     protected boolean purchased = false;
 
     public Upgrade(double price, double multiplier, int color) {
@@ -49,5 +48,17 @@ public class Upgrade extends GameElement {
 
     public void setPurchased(boolean purchased) {
         this.purchased = purchased;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    public boolean isBuyable() {
+        return Game.getInstance().getCurrentMoney() >= price;
     }
 }

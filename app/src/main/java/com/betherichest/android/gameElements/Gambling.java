@@ -1,14 +1,34 @@
 package com.betherichest.android.gameElements;
 
-public class Gambling extends GameElement {
-    private static int currentId = 0;
+import android.arch.persistence.room.ColumnInfo;
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Ignore;
 
+import com.betherichest.android.mangers.Game;
+
+@Entity
+public class Gambling extends GameElement {
+    @Ignore
+    private static int currentId = 0;
+    @ColumnInfo
     private double minWinAmount;
+    @ColumnInfo
     private double maxWinAmount;
+    @ColumnInfo
+    private double price;
+    @Ignore
     private double chance;
 
+    @Ignore
     public Gambling() {
         this.id = currentId++;
+    }
+
+    public Gambling(int id, double minWinAmount, double maxWinAmount, double price) {
+        this.id = id;
+        this.maxWinAmount = maxWinAmount;
+        this.minWinAmount = minWinAmount;
+        this.price = price;
     }
 
     public double getMinWinAmount() {
@@ -37,5 +57,13 @@ public class Gambling extends GameElement {
 
     public void setPrice(double price) {
         this.price = price;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public boolean isBuyable() {
+        return Game.getInstance().getCurrentMoney() >= price;
     }
 }

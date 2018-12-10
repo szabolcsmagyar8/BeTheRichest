@@ -1,11 +1,11 @@
 package com.betherichest.android.activities;
 
 import android.app.Activity;
-import android.content.Intent;
+import android.content.pm.ActivityInfo;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.MenuItem;
-import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -22,14 +22,17 @@ import com.betherichest.android.mangers.SoundManager;
 import com.bumptech.glide.Glide;
 
 public class AchievementNotificationActivity extends Activity {
-    TextView achievementNameTextView;
-    ImageView achievementImageView;
-    RelativeLayout notificationLayout;
+    private TextView achievementNameTextView;
+    private ImageView achievementImageView;
+    private RelativeLayout notificationLayout;
     private Animation slide_in_from_top, slide_out_to_top;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        }
         setContentView(R.layout.activity_achievement_notification);
         Glide.with(this);
         initializeAnimation();
@@ -110,11 +113,5 @@ public class AchievementNotificationActivity extends Activity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    public void onClick(View view) {
-        GUIManager.showToast("Siker! :)");
-        Intent intent = new Intent(App.getContext(), AchievementActivity.class);
-        App.getContext().startActivity(intent);
     }
 }

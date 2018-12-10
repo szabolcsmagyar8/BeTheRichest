@@ -84,6 +84,44 @@ public class Game {
         return instance;
     }
 
+    private Runnable drawSmooth = new Runnable() {
+        @Override
+        public void run() {
+            if (!timerPaused) {
+                enrichLeaders();
+                if (smoothRefreshListener != null) {
+                    smoothRefreshListener.refresh();
+                }
+            }
+            handler.postDelayed(drawSmooth, SECOND / FPS);
+        }
+    };
+
+    private Runnable draw = new Runnable() {
+        @Override
+        public void run() {
+            if (!timerPaused) {
+                earnMoney(getMoneyPerSec() / FPS);
+                statisticsManager.earnInvestmentMoney(getMoneyPerSec() / (double) FPS);
+                if (!GUIManager.isActivityOpened() && moneyChangedListener != null) {
+                    moneyChangedListener.onMoneyChanged();  // notifies GUIManager to update money texts
+                }
+            }
+            handler.postDelayed(draw, SECOND / FPS);
+        }
+    };
+    private Runnable drawLeaders = new Runnable() {
+        @Override
+        public void run() {
+            if (!timerPaused) {
+                if (leaderRefreshListener != null) {
+                    leaderRefreshListener.refresh();
+                }
+            }
+            handler.postDelayed(drawLeaders, 100);
+        }
+    };
+
     // endregion
     public Game() {
         investments = InvestmentFactory.getCreatedInvestments();
@@ -100,38 +138,9 @@ public class Game {
         handler = new Handler(Looper.getMainLooper());
         handler.post(draw);
         handler.post(drawSmooth);
+        handler.post(drawLeaders);
         startTimer();
     }
-
-    private Runnable draw = new Runnable() {
-        @Override
-        public void run() {
-            if (!timerPaused) {
-                earnMoney(getMoneyPerSec() / FPS);
-                statisticsManager.earnInvestmentMoney(getMoneyPerSec() / (double) FPS);
-                if (!GUIManager.isActivityOpened() && moneyChangedListener != null) {
-                    moneyChangedListener.onMoneyChanged();  // notifies GUIManager to update money texts
-                }
-            }
-            handler.postDelayed(draw, SECOND / FPS);
-        }
-    };
-
-    private Runnable drawSmooth = new Runnable() {
-        @Override
-        public void run() {
-            if (!timerPaused) {
-                enrichLeaders();
-                if (smoothRefreshListener != null) {
-                    smoothRefreshListener.refresh();
-                }
-                if (leaderRefreshListener != null) {
-                    leaderRefreshListener.refresh();
-                }
-            }
-            handler.postDelayed(drawSmooth, SECOND / FPS);
-        }
-    };
 
     //region PROPERTIES
     public double getCurrentMoney() {
@@ -192,6 +201,15 @@ public class Game {
 
     public List<Leader> getLeaders() {
         return leaders;
+    }
+
+    public int getPlayerPostition() {
+        for (int i = 0; i < leaders.size(); i++) {
+            if (leaders.get(i).isPlayer()) {
+                return i;
+            }
+        }
+        return 0;
     }
 
     public List<Booster> getBoosters() {
@@ -374,7 +392,7 @@ public class Game {
             public void run() {
                 for (Leader leader : leaders) {
                     if (leader.isPlayer()) {
-                        leader.setMoney(currentMoney);
+                        leader.setMoney(statisticsManager.getStatByType(StatType.TOTAL_MONEY_COLLECTED).getValue());
                     } else {
                         leader.setMoney(leader.getMoney() + (leader.getMoney() * (leader.getGrowthRate() - 1)) / 10000);
                     }

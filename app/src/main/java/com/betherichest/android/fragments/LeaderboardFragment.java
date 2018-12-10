@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.betherichest.android.App;
 import com.betherichest.android.R;
+import com.betherichest.android.StatType;
 import com.betherichest.android.gameElements.Leader;
 import com.betherichest.android.listenerInterfaces.RefreshListener;
 import com.betherichest.android.mangers.Game;
@@ -26,11 +27,11 @@ public class LeaderboardFragment extends Fragment {
     private Game game = Game.getInstance();
     private List<Leader> leaders = game.getLeaders();
 
-    private int index = -1;
+    private int index = 0;
     private Runnable leaderMoneyWatch = new Runnable() {
         @Override
         public void run() {
-            double act = game.getCurrentMoney();
+            double act = Game.statisticsManager.getStatByType(StatType.TOTAL_MONEY_COLLECTED).getValue();
             List<Double> leaderMoneys = new ArrayList<>();
             for (Leader leader : leaders) {
                 leaderMoneys.add(leader.getMoney());
@@ -71,6 +72,7 @@ public class LeaderboardFragment extends Fragment {
 
         adapter = new LeaderboardAdapter(leaders);
         listView.setAdapter(adapter);
+        listView.setSelectionFromTop(game.getPlayerPostition() - 3 >= 0 ? game.getPlayerPostition() - 3 : 0, 0);
 
         Game.getInstance().leaderRefreshListener = new RefreshListener() {
             @Override
@@ -85,8 +87,7 @@ public class LeaderboardFragment extends Fragment {
 
     private void setMoneyTextViewByPosition(int pos) {
         TextView moneyTextView = listView.getChildAt(pos - listView.getFirstVisiblePosition()).findViewById(R.id.leader_money_text);
-        App.NF.setMaximumFractionDigits(0);
-        moneyTextView.setText(String.valueOf(App.NF.format(leaders.get(pos).getMoney())));
+        moneyTextView.setText(App.convertThousandsToSIUnit(leaders.get(pos).getMoney(), false));
     }
 
     @Override

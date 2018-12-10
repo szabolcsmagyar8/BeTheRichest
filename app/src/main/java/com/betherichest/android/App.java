@@ -1,8 +1,10 @@
 package com.betherichest.android;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.multidex.MultiDexApplication;
+import android.util.Log;
 import android.util.TypedValue;
 
 import com.betherichest.android.connection.ActionType;
@@ -22,6 +24,29 @@ import java.util.Locale;
 public class App extends MultiDexApplication {
 
     private static Context mContext;
+    private Thread.UncaughtExceptionHandler defaultUEH;
+    private Thread.UncaughtExceptionHandler _unCaughtExceptionHandler =
+            new Thread.UncaughtExceptionHandler() {
+                @Override
+                public void uncaughtException(Thread thread, Throwable ex) {
+                    String stackTrace = Log.getStackTraceString(ex);
+                    String message = ex.getMessage();
+
+                    Intent intent = new Intent(Intent.ACTION_SEND);
+                    intent.setType("message/rfc822");
+                    intent.putExtra(Intent.EXTRA_EMAIL, new String[]{"ubulon@gmail.com"});
+                    intent.putExtra(Intent.EXTRA_SUBJECT, "Be The Richest Crash Log");
+                    intent.putExtra(Intent.EXTRA_TEXT, stackTrace);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK); // required when starting from Application
+                    startActivity(intent);
+                    defaultUEH.uncaughtException(thread, ex);
+                }
+            };
+
+    public App() {
+        this.defaultUEH = Thread.getDefaultUncaughtExceptionHandler();
+        Thread.setDefaultUncaughtExceptionHandler(_unCaughtExceptionHandler);
+    }
 
     public static Context getContext() {
         return mContext;
@@ -47,6 +72,18 @@ public class App extends MultiDexApplication {
             e.printStackTrace();
         }
 
+        return false;
+    }
+
+    public static boolean isInternetAvailable() {
+        final String command = "ping -c 1 google.com";
+        try {
+            return Runtime.getRuntime().exec(command).waitFor() == 0;
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         return false;
     }
 
