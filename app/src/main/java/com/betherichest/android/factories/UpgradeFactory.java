@@ -37,6 +37,17 @@ public class UpgradeFactory {
             new TapUpgradeConfig(5000000, 5, 20000),
             new TapUpgradeConfig(20000000, 8, 30000),
     };
+//
+//    private static GlobalIncrementUpgradeConfig[] globalIncrementConfigs = new GlobalIncrementUpgradeConfig[]{
+//            new GlobalIncrementUpgradeConfig(100000, 0.1),
+//            new GlobalIncrementUpgradeConfig(500000, 0.5),
+//            new GlobalIncrementUpgradeConfig(3000000, 3),
+//            new GlobalIncrementUpgradeConfig(15000000, 10),
+//            new GlobalIncrementUpgradeConfig(80000000, 30),
+//            new GlobalIncrementUpgradeConfig(500000000, 100),
+//            new GlobalIncrementUpgradeConfig(3000000000d, 500),
+//            new GlobalIncrementUpgradeConfig(25000000000d, 2500),
+//    };
 
     private static GlobalIncrementUpgradeConfig[] globalIncrementConfigs = new GlobalIncrementUpgradeConfig[]{
             new GlobalIncrementUpgradeConfig(100000, 0.1),
